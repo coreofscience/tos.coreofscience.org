@@ -2,6 +2,8 @@ import React, { FC, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
 
+import looksLikeIsi from "../utils/looksLikeIsi";
+
 const DropzoneRoot = styled.div<{ hoveringFile?: boolean }>`
   border-collapse: separate;
   font-family: sans-serif;
@@ -21,11 +23,16 @@ const DropzoneRoot = styled.div<{ hoveringFile?: boolean }>`
 `;
 
 const FileDropper: FC<{}> = () => {
-  const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles);
+  const onDrop = useCallback((acceptedFiles: Blob[]) => {
+    acceptedFiles.forEach((file) => {
+      file.text().then((data) => console.log(looksLikeIsi(data)));
+    });
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: "text/*",
+  });
   return (
     <DropzoneRoot {...getRootProps()} hoveringFile={isDragActive}>
       <input style={{ display: "none" }} {...getInputProps()} />
