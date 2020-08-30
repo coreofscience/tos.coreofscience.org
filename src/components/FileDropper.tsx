@@ -1,6 +1,7 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
+import md5 from "md5";
 
 import looksLikeIsi from "../utils/looksLikeIsi";
 
@@ -20,28 +21,54 @@ const DropzoneRoot = styled.div<{ hoveringFile?: boolean }>`
   color: #bdbdbd;
   outline: none;
   transition: border 0.24s ease-in-out;
+  cursor: pointer;
 `;
 
-const FileDropper: FC<{}> = () => {
+interface BlobMap {
+  [hash: string]: Blob;
+}
+
+interface Props {
+  onNewFiles?: (files: BlobMap) => any;
+}
+
+const FileDropper: FC<Props> = ({ onNewFiles }: Props) => {
+  const [validFiles, setValidFiles] = useState<BlobMap>({});
+
   const onDrop = useCallback((acceptedFiles: Blob[]) => {
-    acceptedFiles.forEach((file) => {
-      file.text().then((data) => console.log(looksLikeIsi(data)));
+    const valid: BlobMap = {};
+    Promise.all(
+      acceptedFiles.map((file) => file.text().then((text) => ({ text, file })))
+    ).then((data) => {
+      data.forEach(({ text, file }) => {
+        if (looksLikeIsi(text)) {
+          valid[md5(text)] = file;
+        }
+      });
+      setValidFiles((current) => ({ ...current, ...valid }));
     });
   }, []);
+
+  useEffect(() => {
+    if (onNewFiles) onNewFiles(validFiles);
+  }, [validFiles, onNewFiles]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: "text/*",
   });
   return (
-    <DropzoneRoot {...getRootProps()} hoveringFile={isDragActive}>
-      <input style={{ display: "none" }} {...getInputProps()} />
-      {isDragActive ? (
-        <p>Drop the files here ...</p>
-      ) : (
-        <p>Drag &amp; drop some files here, or click to select files</p>
-      )}
-    </DropzoneRoot>
+    <div>
+      <DropzoneRoot {...getRootProps()} hoveringFile={isDragActive}>
+        <input style={{ display: "none" }} {...getInputProps()} />
+        {isDragActive ? (
+          <p>Drop the files here ...</p>
+        ) : (
+          <p>Drag &amp; drop some files here, or click to select files</p>
+        )}
+      </DropzoneRoot>
+      <pre>{JSON.stringify(Object.keys(validFiles), null, 2)}</pre>
+    </div>
   );
 };
 
