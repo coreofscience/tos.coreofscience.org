@@ -4,6 +4,7 @@ import styled from "styled-components";
 import md5 from "md5";
 
 import looksLikeIsi from "../utils/looksLikeIsi";
+import { BlobMap } from "../utils/customTypes";
 
 const DropzoneRoot = styled.div<{ hoveringFile?: boolean }>`
   border-collapse: separate;
@@ -23,10 +24,6 @@ const DropzoneRoot = styled.div<{ hoveringFile?: boolean }>`
   transition: border 0.24s ease-in-out;
   cursor: pointer;
 `;
-
-interface BlobMap {
-  [hash: string]: Blob;
-}
 
 interface Props {
   onNewFiles?: (files: BlobMap) => any;
@@ -51,24 +48,21 @@ const FileDropper: FC<Props> = ({ onNewFiles }: Props) => {
 
   useEffect(() => {
     if (onNewFiles) onNewFiles(validFiles);
-  }, [validFiles, onNewFiles]);
+  }, [validFiles]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: "text/*",
   });
   return (
-    <div>
-      <DropzoneRoot {...getRootProps()} hoveringFile={isDragActive}>
-        <input style={{ display: "none" }} {...getInputProps()} />
-        {isDragActive ? (
-          <p>Drop the files here ...</p>
-        ) : (
-          <p>Drag &amp; drop some files here, or click to select files</p>
-        )}
-      </DropzoneRoot>
-      <pre>{JSON.stringify(Object.keys(validFiles), null, 2)}</pre>
-    </div>
+    <DropzoneRoot {...getRootProps()} hoveringFile={isDragActive}>
+      <input style={{ display: "none" }} {...getInputProps()} />
+      {isDragActive ? (
+        <p>Drop the files here ...</p>
+      ) : (
+        <p>Drag &amp; drop some files here, or click to select files</p>
+      )}
+    </DropzoneRoot>
   );
 };
 

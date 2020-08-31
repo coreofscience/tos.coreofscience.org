@@ -1,8 +1,10 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styled from "styled-components";
 
 import FileDropper from "./components/FileDropper";
 import UploadIndicator from "./components/UploadIndicator";
+
+import { BlobMap } from "./utils/customTypes";
 
 const AppLayout = styled.div`
   margin: 0 10px;
@@ -16,14 +18,20 @@ const AppLayout = styled.div`
 `;
 
 const App: FC<{}> = () => {
+  const [validFiles, setValidFiles] = useState<BlobMap>({});
+
+  const appendFiles = (files: BlobMap) => {
+    setValidFiles((current) => ({ ...current, ...files }));
+  };
+
   return (
     <AppLayout>
       <header>
         <h1>SAP</h1>
       </header>
       <main>
-        <FileDropper />
-        <UploadIndicator />
+        <FileDropper onNewFiles={appendFiles} />
+        <UploadIndicator files={validFiles} />
         <div>Summary.</div>
         <div>Action button</div>
       </main>
