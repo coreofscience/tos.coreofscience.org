@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import Home from './components/Home';
 import NotFound from './components/NotFound';
+import Tree from './components/Tree';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -27,6 +28,9 @@ const App: FC<{}> = () => {
           <Switch>
             <Route exact path='/'>
               <Home />
+            </Route>
+            <Route path='/tree/:treeId'>
+              <Tree />
             </Route>
             <Route path='*'>
               <NotFound />
