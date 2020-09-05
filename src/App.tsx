@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Home from "./components/Home";
+import Home from "./components/upload/Home";
 import NotFound from "./components/NotFound";
-import Tree from "./components/Tree";
+import Tree from "./components/tree/Tree";
 
 const AppLayout = styled.div`
   margin: 0 10px;

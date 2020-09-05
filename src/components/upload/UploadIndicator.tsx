@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 
-import { BlobMap } from "../utils/customTypes";
+import { BlobMap } from "../../utils/customTypes";
 import FileDiv from "./FileDiv";
 
 const UploadZone = styled.div`

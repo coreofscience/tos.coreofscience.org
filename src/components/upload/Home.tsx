@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import FileDropper from "./FileDropper";
 import UploadIndicator from "./UploadIndicator";
-import { BlobMap } from "../utils/customTypes";
+import { BlobMap } from "../../utils/customTypes";
 
 const Home: FC<{}> = () => {
   const [validFiles, setValidFiles] = useState<BlobMap>({});
@@ -15,6 +15,7 @@ const Home: FC<{}> = () => {
     delete newFiles[hash];
     setValidFiles({ ...newFiles });
   };
+
   return (
     <main>
       <FileDropper onNewFiles={appendFiles} />
