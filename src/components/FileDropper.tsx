@@ -13,7 +13,6 @@ const DropzoneRoot = styled.div<{ hoveringFile?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
   border: 2px dashed;
   border-color: ${({ hoveringFile }) =>
     hoveringFile ? "lightblue" : "#eeeeee"};
@@ -23,6 +22,9 @@ const DropzoneRoot = styled.div<{ hoveringFile?: boolean }>`
   outline: none;
   transition: border 0.24s ease-in-out;
   cursor: pointer;
+  & p {
+    padding: 20px;
+  }
 `;
 
 interface Props {
@@ -30,21 +32,26 @@ interface Props {
 }
 
 const FileDropper: FC<Props> = ({ onNewFiles }: Props) => {
-  const onDrop = useCallback((acceptedFiles: Blob[]) => {
-    const valid: BlobMap = {};
-    Promise.all(
-      acceptedFiles.map((file) => file.text().then((text) => ({ text, file })))
-    ).then((data) => {
-      data.forEach(({ text, file }) => {
-        if (looksLikeIsi(text)) {
-          valid[md5(text)] = file;
+  const onDrop = useCallback(
+    (acceptedFiles: Blob[]) => {
+      const valid: BlobMap = {};
+      Promise.all(
+        acceptedFiles.map((file) =>
+          file.text().then((text) => ({ text, file }))
+        )
+      ).then((data) => {
+        data.forEach(({ text, file }) => {
+          if (looksLikeIsi(text)) {
+            valid[md5(text)] = file;
+          }
+        });
+        if (onNewFiles) {
+          onNewFiles(valid);
         }
       });
-      if (onNewFiles) {
-        onNewFiles(valid);
-      }
-    });
-  }, [onNewFiles]);
+    },
+    [onNewFiles]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
