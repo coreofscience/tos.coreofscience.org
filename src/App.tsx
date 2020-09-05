@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
-import Home from './components/Home';
-import NotFound from './components/NotFound';
-import Tree from './components/Tree';
+import React, { FC } from "react";
+import styled from "styled-components";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from "./components/Home";
+import NotFound from "./components/NotFound";
+import Tree from "./components/Tree";
 
 const AppLayout = styled.div`
   margin: 0 10px;
@@ -26,13 +26,13 @@ const App: FC<{}> = () => {
         </header>
         <main>
           <Switch>
-            <Route exact path='/'>
+            <Route exact path="/">
               <Home />
             </Route>
-            <Route path='/tree/:treeId'>
+            <Route path="/tree/:treeId">
               <Tree />
             </Route>
-            <Route path='*'>
+            <Route path="*">
               <NotFound />
             </Route>
           </Switch>
