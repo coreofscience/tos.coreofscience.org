@@ -1,8 +1,9 @@
-import React, { FC } from "react";
-import styled from "styled-components";
+import React, { FC } from 'react';
+import styled from 'styled-components';
+import Home from './components/Home';
+import NotFound from './components/NotFound';
 
-import FileDropper from "./components/FileDropper";
-import UploadIndicator from "./components/UploadIndicator";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const AppLayout = styled.div`
   margin: 0 10px;
@@ -17,18 +18,24 @@ const AppLayout = styled.div`
 
 const App: FC<{}> = () => {
   return (
-    <AppLayout>
-      <header>
-        <h1>SAP</h1>
-      </header>
-      <main>
-        <FileDropper />
-        <UploadIndicator />
-        <div>Summary.</div>
-        <div>Action button</div>
-      </main>
-      <footer>References</footer>
-    </AppLayout>
+    <Router>
+      <AppLayout>
+        <header>
+          <h1>SAP</h1>
+        </header>
+        <main>
+          <Switch>
+            <Route exact path='/'>
+              <Home />
+            </Route>
+            <Route path='*'>
+              <NotFound />
+            </Route>
+          </Switch>
+        </main>
+        <footer>References</footer>
+      </AppLayout>
+    </Router>
   );
 };
 
