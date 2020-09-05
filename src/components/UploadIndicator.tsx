@@ -14,9 +14,10 @@ const UploadZone = styled.div`
 
 interface Props {
   files: BlobMap;
+  onRemoveFile: (hash: string) => any;
 }
 
-const UploadIndicator: FC<Props> = ({ files }: Props) => {
+const UploadIndicator: FC<Props> = ({ files, onRemoveFile }: Props) => {
   return (
     <UploadZone>
       <h2>Upload zone</h2>
@@ -25,8 +26,10 @@ const UploadIndicator: FC<Props> = ({ files }: Props) => {
           return (
             <FileDiv
               key={hash}
+              hash={hash}
               fileBlob={fileBlob}
               fileName={Object(fileBlob).name}
+              onRemoveFile={onRemoveFile}
             />
           );
         })}

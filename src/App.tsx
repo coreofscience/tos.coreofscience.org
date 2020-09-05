@@ -24,6 +24,12 @@ const App: FC<{}> = () => {
     setValidFiles((current) => ({ ...current, ...files }));
   };
 
+  const removeFile = (hash: string) => {
+    let newFiles = { ...validFiles };
+    delete newFiles[hash];
+    setValidFiles({ ...newFiles });
+  };
+
   return (
     <AppLayout>
       <header>
@@ -31,7 +37,7 @@ const App: FC<{}> = () => {
       </header>
       <main>
         <FileDropper onNewFiles={appendFiles} />
-        <UploadIndicator files={validFiles} />
+        <UploadIndicator files={validFiles} onRemoveFile={removeFile} />
         <div>Summary.</div>
         <div>Action button</div>
       </main>

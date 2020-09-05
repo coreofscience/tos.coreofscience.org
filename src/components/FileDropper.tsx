@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState, useEffect } from "react";
+import React, { FC, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
 import md5 from "md5";
@@ -30,8 +30,6 @@ interface Props {
 }
 
 const FileDropper: FC<Props> = ({ onNewFiles }: Props) => {
-  const [validFiles, setValidFiles] = useState<BlobMap>({});
-
   const onDrop = useCallback((acceptedFiles: Blob[]) => {
     const valid: BlobMap = {};
     Promise.all(
@@ -42,13 +40,11 @@ const FileDropper: FC<Props> = ({ onNewFiles }: Props) => {
           valid[md5(text)] = file;
         }
       });
-      setValidFiles((current) => ({ ...current, ...valid }));
+      if (onNewFiles) {
+        onNewFiles(valid);
+      }
     });
-  }, []);
-
-  useEffect(() => {
-    if (onNewFiles) onNewFiles(validFiles);
-  }, [validFiles]);
+  }, [onNewFiles]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,

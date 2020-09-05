@@ -6,17 +6,25 @@ const FileZone = styled.div<{ hover?: boolean }>`
   background-color: ${({ hover }) => (hover ? "pink" : "gold")};
   border: 2px solid black;
   border-radius: 10px;
-  margin: 20px;
+  margin-left: 20px;
+  margin-bottom: 10px;
   padding: 10px;
   transition: 300ms;
 `;
 
 interface Props {
+  hash: string;
   fileBlob: Blob;
   fileName: string;
+  onRemoveFile: (file: string) => any;
 }
 
-const FileDiv: FC<Props> = ({ fileBlob, fileName }: Props) => {
+const FileDiv: FC<Props> = ({
+  hash,
+  fileBlob,
+  fileName,
+  onRemoveFile,
+}: Props) => {
   const [hover, setHover] = useState(false);
 
   return (
@@ -26,7 +34,7 @@ const FileDiv: FC<Props> = ({ fileBlob, fileName }: Props) => {
         className="close-button"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        onClick={() => console.log(fileName)}
+        onClick={() => onRemoveFile(hash)}
       />
     </FileZone>
   );
