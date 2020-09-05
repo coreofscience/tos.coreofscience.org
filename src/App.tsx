@@ -1,10 +1,10 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import FileDropper from "./components/FileDropper";
-import UploadIndicator from "./components/UploadIndicator";
-
-import { BlobMap } from "./utils/customTypes";
+import Home from "./components/Home";
+import NotFound from "./components/NotFound";
+import Tree from "./components/Tree";
 
 const AppLayout = styled.div`
   margin: 0 10px;
@@ -18,31 +18,28 @@ const AppLayout = styled.div`
 `;
 
 const App: FC<{}> = () => {
-  const [validFiles, setValidFiles] = useState<BlobMap>({});
-
-  const appendFiles = (files: BlobMap) => {
-    setValidFiles((current) => ({ ...current, ...files }));
-  };
-
-  const removeFile = (hash: string) => {
-    let newFiles = { ...validFiles };
-    delete newFiles[hash];
-    setValidFiles({ ...newFiles });
-  };
-
   return (
-    <AppLayout>
-      <header>
-        <h1>SAP</h1>
-      </header>
-      <main>
-        <FileDropper onNewFiles={appendFiles} />
-        <UploadIndicator files={validFiles} onRemoveFile={removeFile} />
-        <div>Summary.</div>
-        <div>Action button</div>
-      </main>
-      <footer>References</footer>
-    </AppLayout>
+    <Router>
+      <AppLayout>
+        <header>
+          <h1>SAP</h1>
+        </header>
+        <main>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/tree/:treeId">
+              <Tree />
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+        </main>
+        <footer>References</footer>
+      </AppLayout>
+    </Router>
   );
 };
 
