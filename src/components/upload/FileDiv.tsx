@@ -1,6 +1,8 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
 
+// TODO: Make it look like this https://www.figma.com/file/c3WgeyN7inEdtMxQHAqPga/tos.coreofcience.org?node-id=1%3A2
+
 const FileCard = styled.div<{ hover?: boolean }>`
   background-color: ${({ hover }) => (hover ? "pink" : "gold")};
   border: 2px solid black;

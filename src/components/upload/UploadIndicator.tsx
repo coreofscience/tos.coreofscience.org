@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { BlobMap } from "../../utils/customTypes";
 import FileDiv from "./FileDiv";
 
+// TODO: Use fluid grid https://gridbyexample.com/examples/example28/
+
 const UploadZone = styled.div`
   margin-top: 10px;
   padding-left: 10px;
