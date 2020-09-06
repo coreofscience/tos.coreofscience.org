@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import styled from "styled-components";
 
 // TODO: Make it look like this https://www.figma.com/file/c3WgeyN7inEdtMxQHAqPga/tos.coreofcience.org?node-id=1%3A2
@@ -10,7 +10,7 @@ const FileCard = styled.div<{ hover?: boolean }>`
   border-radius: 10px;
   margin-left: 20px;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 20px;
   transition: 300ms;
   position: relative;
   display: flex;
@@ -23,7 +23,7 @@ const FileCard = styled.div<{ hover?: boolean }>`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 90%;
+    max-width: 100%;
   }
 
   & .close-button {
@@ -82,6 +82,10 @@ const FileCard = styled.div<{ hover?: boolean }>`
   & progress::-webkit-progress-value {
     border-radius: 10px;
   }
+
+  & hr {
+    width: 100%;
+  }
 `;
 
 interface Props {
@@ -91,17 +95,85 @@ interface Props {
   onRemoveFile: (file: string) => any;
 }
 
-const FileDiv: FC<Props> = ({ hash, fileName, onRemoveFile }: Props) => {
+const FileDiv: FC<Props> = ({
+  hash,
+  fileName,
+  fileBlob,
+  onRemoveFile,
+}: Props) => {
   const [hover, setHover] = useState<boolean>(false);
+  const [keywords, setKeywords] = useState<string[]>([]);
+  const [numArticles, setNumArticles] = useState<number>(0);
+  const [numReferences, setNumReferences] = useState<number>(0);
   const [loadingProgress, setLoadingProgress] = useState<number>(80);
+
+  const getKeywordsList = (text: string) => {
+    const identifier = "ID ";
+    const keywordsLines = text
+      .split("\n")
+      .filter((line) => line.startsWith(identifier));
+    return keywordsLines
+      .map((line) =>
+        line
+          .replace(identifier, "")
+          .trim()
+          .split(";")
+          .map((keyword) => keyword.trim().toLowerCase())
+          .filter((keyword) => Boolean(keyword))
+      )
+      .flat();
+  };
+
+  const mostCommonKeywords = (text: string, max: number = 3) => {
+    const keywordsList = getKeywordsList(text);
+    let count: { [keyword: string]: number } = {};
+    for (let keyword of keywordsList) {
+      count[keyword] = (count[keyword] ? count[keyword] : 0) + 1;
+    }
+    const sortCount = Object.entries(count).sort((first, second) =>
+      first[1] < second[1] ? 1 : -1
+    );
+    return sortCount.slice(0, max).map((item) => item[0]);
+  };
+
+  const countArticles = (text: string) => {
+    const identifier = "PT ";
+    return text.split("\n").filter((line) => line.startsWith(identifier))
+      .length;
+  };
+
+  const countReferences = (text: string) => {
+    const identifier = "NR ";
+    return text
+      .split("\n")
+      .filter((line) => line.startsWith(identifier))
+      .map((line) => parseInt(line.replace(identifier, "")))
+      .reduce((n, m) => n + m);
+  };
+
+  useEffect(() => {
+    fileBlob.text().then((text) => {
+      setKeywords(mostCommonKeywords(text, 3));
+      setNumArticles(countArticles(text));
+      setNumReferences(countReferences(text));
+    });
+  }, [fileBlob]);
 
   return (
     <FileCard hover={hover}>
       <h3 className="article-title">{fileName}</h3>
-
-      <span>keyword, keyword, keyword</span>
-      <span>200 articles</span>
-      <span>600 references</span>
+      <hr />
+      <span>
+        <strong>Keywords: </strong>
+        {keywords.join("; ")}
+      </span>
+      <hr />
+      <span>
+        {numArticles} {numArticles > 1 ? "articles" : "article"}
+      </span>
+      <span>
+        {numReferences} {numReferences > 1 ? "references" : "reference"}
+      </span>
       <progress value={loadingProgress} max={100} />
       <div
         className="close-button"
