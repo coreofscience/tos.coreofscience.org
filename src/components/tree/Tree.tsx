@@ -1,31 +1,69 @@
-import React, { FC } from "react";
-import { useParams } from "react-router";
+import React, { FC } from 'react';
+import { useParams } from 'react-router';
+import { Tree as TreeCss, TreeSegment, Info } from '../StyleComponents';
 
 // TODO: Import this https://github.com/coreofscience/python-sap/blob/main/src/sap/template.html
+// REFERENCE FORMAT: https://github.com/coreofscience/python-sap/blob/main/src/sap/widget.py#L37-L97
 
-import DATA from "./data.json";
+import DATA from './data.json';
 
 const Tree: FC<{}> = () => {
   const { treeId } = useParams();
   const { root, trunk, leaf } = DATA;
   return (
-    <main>
-      <div>
-        <h2> Id : {treeId} Aquí va el arbolito :)</h2>
-        <h3>Root</h3>
-        {root.map((article) => (
-          <p>{article.title || article.label}</p>
-        ))}
-        <h3>Trunk</h3>
-        {trunk.map((article) => (
-          <p>{article.title}</p>
-        ))}
-        <h3>Leaf</h3>
-        {leaf.map((article) => (
-          <p>{article.title}</p>
-        ))}
-      </div>
-    </main>
+    <TreeCss>
+      <TreeSegment className='root'>
+        <div className='info'>
+          <Info>
+            <h3>Root</h3>
+            <p>
+              Here you should find seminal articles from the original articles
+              of your topic of interest.
+            </p>
+          </Info>
+        </div>
+        <div className='articles'>
+          {root.map((article) => (
+            <p>{article.title || article.label}</p>
+          ))}
+        </div>
+      </TreeSegment>
+
+      <TreeSegment className='trunk'>
+        <div className='info'>
+          <Info>
+            <h3>Trunk</h3>
+            <p>
+              Here you should find articles where your topic of interest got a
+              structure, these should be the first authors to discover the
+              applicability of your topic of interest
+            </p>
+          </Info>
+        </div>
+        <div className='articles'>
+          {trunk.map((article) => (
+            <p>{article.title}</p>
+          ))}
+        </div>
+      </TreeSegment>
+      <TreeSegment className='leaf'>
+        <div className='info'>
+          <Info>
+            <h3>Leaves</h3>
+            <p>
+              Here you should find recent articles and reviews that should
+              condense very well your topics.
+            </p>
+          </Info>
+        </div>
+
+        <div className='articles'>
+          {leaf.map((article) => (
+            <p>{article.title}</p>
+          ))}
+        </div>
+      </TreeSegment>
+    </TreeCss>
   );
 };
 export default Tree;
