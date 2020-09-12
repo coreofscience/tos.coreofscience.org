@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 
 // TODO: Make it look like this https://www.figma.com/file/c3WgeyN7inEdtMxQHAqPga/tos.coreofcience.org?node-id=1%3A2
@@ -105,7 +105,7 @@ const FileDiv: FC<Props> = ({
   const [keywords, setKeywords] = useState<string[]>([]);
   const [numArticles, setNumArticles] = useState<number>(0);
   const [numReferences, setNumReferences] = useState<number>(0);
-  const [loadingProgress, setLoadingProgress] = useState<number>(80);
+  const [loadingProgress] = useState<number>(80);
 
   const getKeywordsList = (text: string) => {
     const identifier = "ID ";
@@ -124,7 +124,7 @@ const FileDiv: FC<Props> = ({
       .flat();
   };
 
-  const mostCommonKeywords = (text: string, max: number = 3) => {
+  const mostCommonKeywords = useCallback((text: string, max: number = 3) => {
     const keywordsList = getKeywordsList(text);
     let count: { [keyword: string]: number } = {};
     for (let keyword of keywordsList) {
@@ -134,7 +134,7 @@ const FileDiv: FC<Props> = ({
       first[1] < second[1] ? 1 : -1
     );
     return sortCount.slice(0, max).map((item) => item[0]);
-  };
+  }, []);
 
   const countArticles = (text: string) => {
     const identifier = "PT ";
@@ -157,7 +157,7 @@ const FileDiv: FC<Props> = ({
       setNumArticles(countArticles(text));
       setNumReferences(countReferences(text));
     });
-  }, [fileBlob]);
+  }, [fileBlob, mostCommonKeywords]);
 
   return (
     <FileCard hover={hover}>
