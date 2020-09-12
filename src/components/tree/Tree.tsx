@@ -1,19 +1,20 @@
-import React, { FC } from 'react';
-import { useParams } from 'react-router';
-import { Tree as TreeCss, TreeSegment, Info } from '../StyleComponents';
+import React, { FC } from "react";
+import { useParams } from "react-router";
+import { Tree as TreeCss, TreeSegment, Info } from "../StyleComponents";
+import Reference from "./Reference";
 
 // TODO: Import this https://github.com/coreofscience/python-sap/blob/main/src/sap/template.html
 // REFERENCE FORMAT: https://github.com/coreofscience/python-sap/blob/main/src/sap/widget.py#L37-L97
 
-import DATA from './data.json';
+import DATA from "./data.json";
 
 const Tree: FC<{}> = () => {
   const { treeId } = useParams();
   const { root, trunk, leaf } = DATA;
   return (
     <TreeCss>
-      <TreeSegment className='root'>
-        <div className='info'>
+      <TreeSegment className="root">
+        <div className="info">
           <Info>
             <h3>Root</h3>
             <p>
@@ -22,15 +23,15 @@ const Tree: FC<{}> = () => {
             </p>
           </Info>
         </div>
-        <div className='articles'>
+        <div className="articles">
           {root.map((article) => (
-            <p>{article.title || article.label}</p>
+            <Reference {...article} />
           ))}
         </div>
       </TreeSegment>
 
-      <TreeSegment className='trunk'>
-        <div className='info'>
+      <TreeSegment className="trunk">
+        <div className="info">
           <Info>
             <h3>Trunk</h3>
             <p>
@@ -40,14 +41,14 @@ const Tree: FC<{}> = () => {
             </p>
           </Info>
         </div>
-        <div className='articles'>
+        <div className="articles">
           {trunk.map((article) => (
-            <p>{article.title}</p>
+            <Reference {...article} />
           ))}
         </div>
       </TreeSegment>
-      <TreeSegment className='leaf'>
-        <div className='info'>
+      <TreeSegment className="leaf">
+        <div className="info">
           <Info>
             <h3>Leaves</h3>
             <p>
@@ -57,9 +58,9 @@ const Tree: FC<{}> = () => {
           </Info>
         </div>
 
-        <div className='articles'>
+        <div className="articles">
           {leaf.map((article) => (
-            <p>{article.title}</p>
+            <Reference {...article} />
           ))}
         </div>
       </TreeSegment>
