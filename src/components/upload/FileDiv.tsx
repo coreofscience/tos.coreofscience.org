@@ -1,22 +1,35 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 
 // TODO: Make it look like this https://www.figma.com/file/c3WgeyN7inEdtMxQHAqPga/tos.coreofcience.org?node-id=1%3A2
 
 const FileCard = styled.div<{ hover?: boolean }>`
-  background-color: ${({ hover }) => (hover ? "pink" : "gold")};
+  background-color: ${({ hover }) => (hover ? "pink" : "#f3f3f3")};
   border: 2px solid black;
+  width: 200px;
   border-radius: 10px;
   margin-left: 20px;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 20px;
   transition: 300ms;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  & .article-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
 
   & .close-button {
-    width: 16px;
-    height: 16px;
-    border-radius: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
     background: #000000;
     display: inline-block;
     z-index: 200;
@@ -50,6 +63,29 @@ const FileCard = styled.div<{ hover?: boolean }>`
   & .close-button:hover:after {
     transform: rotate(180deg);
   }
+
+  & progress {
+    width: 90%;
+    background: #c0c0c0;
+    border-radius: 10px;
+    padding: 2px;
+    height: 10px;
+    margin-top: 10px;
+  }
+  & progress::-moz-progress-bar,
+  & progress::-webkit-progress-bar,
+  & progress[bar] {
+    border-radius: 10px;
+    background: #4cac33;
+  }
+  & progress[value],
+  & progress::-webkit-progress-value {
+    border-radius: 10px;
+  }
+
+  & hr {
+    width: 100%;
+  }
 `;
 
 interface Props {
@@ -59,12 +95,86 @@ interface Props {
   onRemoveFile: (file: string) => any;
 }
 
-const FileDiv: FC<Props> = ({ hash, fileName, onRemoveFile }: Props) => {
-  const [hover, setHover] = useState(false);
+const FileDiv: FC<Props> = ({
+  hash,
+  fileName,
+  fileBlob,
+  onRemoveFile,
+}: Props) => {
+  const [hover, setHover] = useState<boolean>(false);
+  const [keywords, setKeywords] = useState<string[]>([]);
+  const [numArticles, setNumArticles] = useState<number>(0);
+  const [numReferences, setNumReferences] = useState<number>(0);
+  const [loadingProgress] = useState<number>(80);
+
+  const getKeywordsList = (text: string) => {
+    const identifier = "ID ";
+    const keywordsLines = text
+      .split("\n")
+      .filter((line) => line.startsWith(identifier));
+    return keywordsLines
+      .map((line) =>
+        line
+          .replace(identifier, "")
+          .trim()
+          .split(";")
+          .map((keyword) => keyword.trim().toLowerCase())
+          .filter((keyword) => Boolean(keyword))
+      )
+      .flat();
+  };
+
+  const mostCommonKeywords = useCallback((text: string, max: number = 3) => {
+    const keywordsList = getKeywordsList(text);
+    let count: { [keyword: string]: number } = {};
+    for (let keyword of keywordsList) {
+      count[keyword] = (count[keyword] ? count[keyword] : 0) + 1;
+    }
+    const sortCount = Object.entries(count).sort((first, second) =>
+      first[1] < second[1] ? 1 : -1
+    );
+    return sortCount.slice(0, max).map((item) => item[0]);
+  }, []);
+
+  const countArticles = (text: string) => {
+    const identifier = "PT ";
+    return text.split("\n").filter((line) => line.startsWith(identifier))
+      .length;
+  };
+
+  const countReferences = (text: string) => {
+    const identifier = "NR ";
+    return text
+      .split("\n")
+      .filter((line) => line.startsWith(identifier))
+      .map((line) => parseInt(line.replace(identifier, "")))
+      .reduce((n, m) => n + m);
+  };
+
+  useEffect(() => {
+    fileBlob.text().then((text) => {
+      setKeywords(mostCommonKeywords(text, 3));
+      setNumArticles(countArticles(text));
+      setNumReferences(countReferences(text));
+    });
+  }, [fileBlob, mostCommonKeywords]);
 
   return (
     <FileCard hover={hover}>
-      <span>{fileName}</span>
+      <h3 className="article-title">{fileName}</h3>
+      <hr />
+      <span>
+        <strong>Keywords: </strong>
+        {keywords.join("; ")}
+      </span>
+      <hr />
+      <span>
+        {numArticles} {numArticles > 1 ? "articles" : "article"}
+      </span>
+      <span>
+        {numReferences} {numReferences > 1 ? "references" : "reference"}
+      </span>
+      <progress value={loadingProgress} max={100} />
       <div
         className="close-button"
         onMouseEnter={() => setHover(true)}

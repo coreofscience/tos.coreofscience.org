@@ -11,7 +11,11 @@ const UploadZone = styled.div`
   padding-left: 10px;
   padding-right: 10px;
   border: 2px solid #eeeeee;
-  background-color: #fafafa;
+  background: linear-gradient(
+    90deg,
+    rgba(245, 162, 0, 0.5536414394859506) 15%,
+    rgba(76, 172, 51, 0.6572828960685837) 100%
+  );
 `;
 
 interface Props {
