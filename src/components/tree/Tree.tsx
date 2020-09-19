@@ -1,12 +1,11 @@
-import React, { FC, useState } from 'react';
-import { useParams } from 'react-router';
-import { Tree as TreeCss, TreeSegment, Info } from '../StyleComponents';
-import Reference from './Reference';
+import React, { FC, useState } from "react";
+import styled from "styled-components";
 
-// TODO: Import this https://github.com/coreofscience/python-sap/blob/main/src/sap/template.html
-// REFERENCE FORMAT: https://github.com/coreofscience/python-sap/blob/main/src/sap/widget.py#L37-L97
+import TreeSegment from "./TreeSegment";
+import Info from "./Info";
+import Reference from "./Reference";
 
-import DATA from './data.json';
+import DATA from "./data.json";
 
 const PAGE_SIZE = 50;
 
@@ -16,13 +15,24 @@ const DEFAULT_SHOW = {
   leaf: 1,
 };
 
+const TreeMenu = styled.div`
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: row;
+
+  & button {
+    padding: 1em 3em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
 const Tree: FC<{}> = () => {
-  const { treeId } = useParams();
   const data = DATA;
   const { root, trunk, leaf } = data;
 
   const [show, setShow] = useState(DEFAULT_SHOW);
-  const [simple, setSimple] = useState(false);
 
   const showMore = (part: keyof typeof DEFAULT_SHOW) => {
     setShow((current) => {
@@ -50,15 +60,23 @@ const Tree: FC<{}> = () => {
   };
 
   return (
-    <TreeCss>
-      <code>
-        <pre>{JSON.stringify(show, null, 2)}</pre>
-      </code>
-      <button onClick={() => setSimple((current) => !current)}>
-        show {simple ? 'more' : 'less'} information
-      </button>
-      <TreeSegment className='root'>
-        <div className='info'>
+    <div>
+      <TreeMenu>
+        <button>
+          <strong>Root</strong>
+          <small>{root.length} articles</small>
+        </button>
+        <button>
+          <strong>Trunk</strong>
+          <small>{root.length} articles</small>
+        </button>
+        <button>
+          <strong>Leaves</strong>
+          <small>{root.length} articles</small>
+        </button>
+      </TreeMenu>
+      <TreeSegment className="root">
+        <div className="info">
           <Info>
             <h3>Root</h3>
             <p>
@@ -67,14 +85,14 @@ const Tree: FC<{}> = () => {
             </p>
           </Info>
         </div>
-        <div className='articles'>
+        <div className="articles">
           {root.slice(0, show.root * PAGE_SIZE).map((article) => (
-            <Reference key={article.label} simple={simple} {...article} />
+            <Reference key={article.label} {...article} />
           ))}
         </div>
       </TreeSegment>
-      <TreeSegment className='trunk'>
-        <div className='info'>
+      <TreeSegment className="trunk">
+        <div className="info">
           <Info>
             <h3>Trunk</h3>
             <p>
@@ -84,22 +102,22 @@ const Tree: FC<{}> = () => {
             </p>
           </Info>
         </div>
-        <div className='articles'>
+        <div className="articles">
           Mostrando del 0 al {show.trunk * PAGE_SIZE}
           <br />
           {trunk.slice(0, show.trunk * PAGE_SIZE).map((article) => (
-            <Reference key={article.label} simple={simple} {...article} />
+            <Reference key={article.label} {...article} />
           ))}
           {show.trunk * PAGE_SIZE < trunk.length && (
-            <button onClick={() => showMore('trunk')}>show more</button>
+            <button onClick={() => showMore("trunk")}>show more</button>
           )}
           {show.trunk > 1 && (
-            <button onClick={() => showLess('trunk')}>show Less</button>
+            <button onClick={() => showLess("trunk")}>show Less</button>
           )}
         </div>
       </TreeSegment>
-      <TreeSegment className='leaf'>
-        <div className='info'>
+      <TreeSegment className="leaf">
+        <div className="info">
           <Info>
             <h3>Leaves</h3>
             <p>
@@ -109,13 +127,13 @@ const Tree: FC<{}> = () => {
           </Info>
         </div>
 
-        <div className='articles'>
+        <div className="articles">
           {leaf.slice(0, show.leaf * PAGE_SIZE).map((article) => (
-            <Reference key={article.label} simple={simple} {...article} />
+            <Reference key={article.label} {...article} />
           ))}
         </div>
       </TreeSegment>
-    </TreeCss>
+    </div>
   );
 };
 export default Tree;
