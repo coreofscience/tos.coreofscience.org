@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Tree = styled.div`
   width: 100%;
 `;
 
-const TreeSegment = styled.div<{ className: "root" | "trunk" | "leaf" }>`
+const TreeSegment = styled.div<{ className: 'root' | 'trunk' | 'leaf' }>`
   --color: 245, 162, 0;
   margin-bottom: 15px;
   display: flex;
