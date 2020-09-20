@@ -154,6 +154,14 @@ const FileDiv: FC<Props> = ({
       .reduce((n, m) => n + m);
   };
 
+  const fileExists = useCallback(() => {
+    const storageRef = firebaseApp.storage().ref("isi_files/" + hash);
+    return storageRef
+      .getDownloadURL()
+      .then(() => true)
+      .catch(() => false);
+  }, [hash]);
+
   const uploadFile = useCallback(() => {
     const storageRef = firebaseApp.storage().ref("isi_files/" + hash);
     const newTask = storageRef.put(fileBlob);
@@ -183,8 +191,14 @@ const FileDiv: FC<Props> = ({
       setNumArticles(countArticles(text));
       setNumReferences(countReferences(text));
     });
-    uploadFile();
-  }, [fileBlob, mostCommonKeywords, uploadFile]);
+    fileExists().then((exists) => {
+      if (exists) {
+        setUploadProgress(100);
+      } else {
+        uploadFile();
+      }
+    });
+  }, [fileBlob, mostCommonKeywords, uploadFile, fileExists]);
 
   const onRemove = () => {
     onRemoveFile(hash);
