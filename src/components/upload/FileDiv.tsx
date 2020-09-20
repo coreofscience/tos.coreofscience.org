@@ -1,7 +1,11 @@
 import React, { FC, useState, useEffect, useCallback, useContext } from "react";
 import styled from "styled-components";
 import FirebaseContext from "../../context/firebase";
-
+import {
+  mostCommonKeywords,
+  countArticles,
+  countReferences,
+} from "../../utils/isiUtils";
 // TODO: Make it look like this https://www.figma.com/file/c3WgeyN7inEdtMxQHAqPga/tos.coreofcience.org?node-id=1%3A2
 
 const FileCard = styled.div<{ hover?: boolean }>`
@@ -110,50 +114,6 @@ const FileDiv: FC<Props> = ({
   const [task, setTask] = useState<firebase.storage.UploadTask>();
   const app = useContext(FirebaseContext);
 
-  const getKeywordsList = (text: string) => {
-    const identifier = "ID ";
-    const keywordsLines = text
-      .split("\n")
-      .filter((line) => line.startsWith(identifier));
-    return keywordsLines
-      .map((line) =>
-        line
-          .replace(identifier, "")
-          .trim()
-          .split(";")
-          .map((keyword) => keyword.trim().toLowerCase())
-          .filter((keyword) => Boolean(keyword))
-      )
-      .flat();
-  };
-
-  const mostCommonKeywords = useCallback((text: string, max: number = 3) => {
-    const keywordsList = getKeywordsList(text);
-    let count: { [keyword: string]: number } = {};
-    for (let keyword of keywordsList) {
-      count[keyword] = (count[keyword] ? count[keyword] : 0) + 1;
-    }
-    const sortCount = Object.entries(count).sort((first, second) =>
-      first[1] < second[1] ? 1 : -1
-    );
-    return sortCount.slice(0, max).map((item) => item[0]);
-  }, []);
-
-  const countArticles = (text: string) => {
-    const identifier = "PT ";
-    return text.split("\n").filter((line) => line.startsWith(identifier))
-      .length;
-  };
-
-  const countReferences = (text: string) => {
-    const identifier = "NR ";
-    return text
-      .split("\n")
-      .filter((line) => line.startsWith(identifier))
-      .map((line) => parseInt(line.replace(identifier, "")))
-      .reduce((n, m) => n + m);
-  };
-
   const uploadFile = useCallback(() => {
     if (!app) return;
     const storageRef = app.storage().ref("isi_files/" + hash);
@@ -178,11 +138,23 @@ const FileDiv: FC<Props> = ({
     );
   }, [hash, fileBlob, app]);
 
-  // fileBlob.text().then((text) => {
-  //   setKeywords(mostCommonKeywords(text, 3));
-  //   setNumArticles(countArticles(text));
-  //   setNumReferences(countReferences(text));
-  // })
+  useEffect(() => {
+    fileBlob.text().then((text) => {
+      setKeywords(mostCommonKeywords(text, 3));
+    });
+  });
+
+  useEffect(() => {
+    fileBlob.text().then((text) => {
+      setNumArticles(countArticles(text));
+    });
+  });
+
+  useEffect(() => {
+    fileBlob.text().then((text) => {
+      setNumReferences(countReferences(text));
+    });
+  });
 
   useEffect(() => {
     if (!app) return;
