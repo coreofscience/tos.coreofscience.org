@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useCallback, useContext } from "react";
+import React, { FC, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import FirebaseContext from "../../context/firebase";
 import {
@@ -107,54 +107,48 @@ const FileDiv: FC<Props> = ({
   onRemoveFile,
 }: Props) => {
   const [hover, setHover] = useState<boolean>(false);
+  const [requiresUpload, setRequiresUpload] = useState<boolean>(false);
   const [keywords, setKeywords] = useState<string[]>([]);
   const [numArticles, setNumArticles] = useState<number>(0);
   const [numReferences, setNumReferences] = useState<number>(0);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
-  const [task, setTask] = useState<firebase.storage.UploadTask>();
   const app = useContext(FirebaseContext);
 
-  const uploadFile = useCallback(() => {
-    if (!app) return;
+  const uploadFile = useEffect(() => {
+    if (!app || !requiresUpload) return;
     const storageRef = app.storage().ref("isi_files/" + hash);
     const newTask = storageRef.put(fileBlob);
-    setTask(newTask);
-
-    newTask.on(
+    const unsuscribe = newTask.on(
       "state_changed",
       (snapshot) => {
         let percentage =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setUploadProgress(percentage);
       },
-
       (err) => {
         alert(err.message);
-      },
-
-      () => {
-        // when completed
       }
     );
-  }, [hash, fileBlob, app]);
+    return () => unsuscribe();
+  }, [hash, fileBlob, app, requiresUpload]);
 
   useEffect(() => {
     fileBlob.text().then((text) => {
       setKeywords(mostCommonKeywords(text, 3));
     });
-  });
+  }, [fileBlob]);
 
   useEffect(() => {
     fileBlob.text().then((text) => {
       setNumArticles(countArticles(text));
     });
-  });
+  }, [fileBlob]);
 
   useEffect(() => {
     fileBlob.text().then((text) => {
       setNumReferences(countReferences(text));
     });
-  });
+  }, [fileBlob]);
 
   useEffect(() => {
     if (!app) return;
@@ -165,16 +159,9 @@ const FileDiv: FC<Props> = ({
         setUploadProgress(100);
       })
       .catch(() => {
-        uploadFile();
+        setRequiresUpload(true);
       });
   }, [app, hash, uploadFile]);
-
-  const onRemove = () => {
-    onRemoveFile(hash);
-    if (task) {
-      task.cancel();
-    }
-  };
 
   return (
     <FileCard hover={hover}>
@@ -196,7 +183,7 @@ const FileDiv: FC<Props> = ({
         className="close-button"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        onClick={onRemove}
+        onClick={() => onRemoveFile(hash)}
       />
     </FileCard>
   );
