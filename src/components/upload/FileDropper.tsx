@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
 import md5 from "md5";
 
-import looksLikeIsi from "../../utils/looksLikeIsi";
+import { looksLikeIsi } from "../../utils/isiUtils";
 import { BlobMap } from "../../utils/customTypes";
 
 const DropzoneRoot = styled.div<{ hoveringFile?: boolean }>`

@@ -1,6 +1,11 @@
-import React, { FC, useState, useEffect, useCallback } from "react";
+import React, { FC, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-
+import FirebaseContext from "../../context/firebase";
+import {
+  mostCommonKeywords,
+  countArticles,
+  countReferences,
+} from "../../utils/isiUtils";
 // TODO: Make it look like this https://www.figma.com/file/c3WgeyN7inEdtMxQHAqPga/tos.coreofcience.org?node-id=1%3A2
 
 const FileCard = styled.div<{ hover?: boolean }>`
@@ -102,62 +107,61 @@ const FileDiv: FC<Props> = ({
   onRemoveFile,
 }: Props) => {
   const [hover, setHover] = useState<boolean>(false);
+  const [requiresUpload, setRequiresUpload] = useState<boolean>(false);
   const [keywords, setKeywords] = useState<string[]>([]);
   const [numArticles, setNumArticles] = useState<number>(0);
   const [numReferences, setNumReferences] = useState<number>(0);
-  const [loadingProgress] = useState<number>(80);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const app = useContext(FirebaseContext);
 
-  const getKeywordsList = (text: string) => {
-    const identifier = "ID ";
-    const keywordsLines = text
-      .split("\n")
-      .filter((line) => line.startsWith(identifier));
-    return keywordsLines
-      .map((line) =>
-        line
-          .replace(identifier, "")
-          .trim()
-          .split(";")
-          .map((keyword) => keyword.trim().toLowerCase())
-          .filter((keyword) => Boolean(keyword))
-      )
-      .flat();
-  };
-
-  const mostCommonKeywords = useCallback((text: string, max: number = 3) => {
-    const keywordsList = getKeywordsList(text);
-    let count: { [keyword: string]: number } = {};
-    for (let keyword of keywordsList) {
-      count[keyword] = (count[keyword] ? count[keyword] : 0) + 1;
-    }
-    const sortCount = Object.entries(count).sort((first, second) =>
-      first[1] < second[1] ? 1 : -1
+  const uploadFile = useEffect(() => {
+    if (!app || !requiresUpload) return;
+    const storageRef = app.storage().ref("isi_files/" + hash);
+    const newTask = storageRef.put(fileBlob);
+    const unsuscribe = newTask.on(
+      "state_changed",
+      (snapshot) => {
+        let percentage =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadProgress(percentage);
+      },
+      (err) => {
+        alert(err.message);
+      }
     );
-    return sortCount.slice(0, max).map((item) => item[0]);
-  }, []);
-
-  const countArticles = (text: string) => {
-    const identifier = "PT ";
-    return text.split("\n").filter((line) => line.startsWith(identifier))
-      .length;
-  };
-
-  const countReferences = (text: string) => {
-    const identifier = "NR ";
-    return text
-      .split("\n")
-      .filter((line) => line.startsWith(identifier))
-      .map((line) => parseInt(line.replace(identifier, "")))
-      .reduce((n, m) => n + m);
-  };
+    return () => unsuscribe();
+  }, [hash, fileBlob, app, requiresUpload]);
 
   useEffect(() => {
     fileBlob.text().then((text) => {
       setKeywords(mostCommonKeywords(text, 3));
+    });
+  }, [fileBlob]);
+
+  useEffect(() => {
+    fileBlob.text().then((text) => {
       setNumArticles(countArticles(text));
+    });
+  }, [fileBlob]);
+
+  useEffect(() => {
+    fileBlob.text().then((text) => {
       setNumReferences(countReferences(text));
     });
-  }, [fileBlob, mostCommonKeywords]);
+  }, [fileBlob]);
+
+  useEffect(() => {
+    if (!app) return;
+    const storageRef = app.storage().ref("isi_files/" + hash);
+    storageRef
+      .getDownloadURL()
+      .then(() => {
+        setUploadProgress(100);
+      })
+      .catch(() => {
+        setRequiresUpload(true);
+      });
+  }, [app, hash, uploadFile]);
 
   return (
     <FileCard hover={hover}>
@@ -174,7 +178,7 @@ const FileDiv: FC<Props> = ({
       <span>
         {numReferences} {numReferences > 1 ? "references" : "reference"}
       </span>
-      <progress value={loadingProgress} max={100} />
+      <progress value={uploadProgress} max={100} />
       <div
         className="close-button"
         onMouseEnter={() => setHover(true)}
