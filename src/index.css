@@ -351,9 +351,9 @@ template {
 }
 
 :root {
-  --color-tos-green: #009d35;
-  --color-tos-yellow: #f0972f;
-  --color-tos-brown: #904c14;
+  --color-tree-leaf: #009d35;
+  --color-tree-root: #f0972f;
+  --color-tree-trunk: #904c14;
   --color-bg: #fcfcfc;
   --color-link: #366fc6;
   --color-text: #0a0a0a;

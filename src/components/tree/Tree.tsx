@@ -1,9 +1,8 @@
 import React, { FC, useState } from "react";
-import styled from "styled-components";
 
-import TreeSegment from "./TreeSegment";
-import Info from "./Info";
 import Reference from "./Reference";
+
+import "./Tree.css";
 
 import DATA from "./data.json";
 
@@ -14,19 +13,6 @@ const DEFAULT_SHOW = {
   trunk: 1,
   leaf: 1,
 };
-
-const TreeMenu = styled.div`
-  margin-bottom: 2em;
-  display: flex;
-  flex-direction: row;
-
-  & button {
-    padding: 1em 3em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-`;
 
 const Tree: FC<{}> = () => {
   const data = DATA;
@@ -61,46 +47,48 @@ const Tree: FC<{}> = () => {
 
   return (
     <div>
-      <TreeMenu>
-        <button>
+      <div className="tree-menu">
+        <button className="root">
           <strong>Root</strong>
           <small>{root.length} articles</small>
         </button>
-        <button>
+        <button className="trunk">
           <strong>Trunk</strong>
           <small>{root.length} articles</small>
         </button>
-        <button>
+        <button className="leaves">
           <strong>Leaves</strong>
           <small>{root.length} articles</small>
         </button>
-      </TreeMenu>
-      <TreeSegment className="root">
+      </div>
+      <div className="tree-segment root">
         <div className="info">
-          <Info>
-            <h3>Root</h3>
-            <p>
-              Here you should find seminal articles from the original articles
-              of your topic of interest.
-            </p>
-          </Info>
+          <h2>Root</h2>
+          <p>
+            Here you should find seminal articles from the original articles of
+            your topic of interest.
+          </p>
+          <p>
+            <strong>Keywords:</strong> keyword, keyword, keyword
+          </p>
         </div>
         <div className="articles">
           {root.slice(0, show.root * PAGE_SIZE).map((article) => (
             <Reference key={article.label} {...article} />
           ))}
         </div>
-      </TreeSegment>
-      <TreeSegment className="trunk">
+      </div>
+      <div className="tree-segment trunk">
         <div className="info">
-          <Info>
-            <h3>Trunk</h3>
-            <p>
-              Here you should find articles where your topic of interest got a
-              structure, these should be the first authors to discover the
-              applicability of your topic of interest
-            </p>
-          </Info>
+          <h2>Trunk</h2>
+          <p>
+            Here you should find articles where your topic of interest got a
+            structure, these should be the first authors to discover the
+            applicability of your topic of interest
+          </p>
+          <p>
+            <strong>Keywords:</strong> keyword, keyword, keyword
+          </p>
         </div>
         <div className="articles">
           Mostrando del 0 al {show.trunk * PAGE_SIZE}
@@ -115,16 +103,18 @@ const Tree: FC<{}> = () => {
             <button onClick={() => showLess("trunk")}>show Less</button>
           )}
         </div>
-      </TreeSegment>
-      <TreeSegment className="leaf">
+      </div>
+      <div className="tree-segment leaves">
         <div className="info">
-          <Info>
-            <h3>Leaves</h3>
-            <p>
-              Here you should find recent articles and reviews that should
-              condense very well your topics.
-            </p>
-          </Info>
+          <h2>Leaves</h2>
+          <p>
+            Here you should find recent articles and reviews that should
+            condense very well your topics.
+          </p>
+
+          <p>
+            <strong>Keywords:</strong> keyword, keyword, keyword
+          </p>
         </div>
 
         <div className="articles">
@@ -132,7 +122,7 @@ const Tree: FC<{}> = () => {
             <Reference key={article.label} {...article} />
           ))}
         </div>
-      </TreeSegment>
+      </div>
     </div>
   );
 };

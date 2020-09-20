@@ -5,8 +5,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/upload/Home";
 import NotFound from "./components/NotFound";
 import Tree from "./components/tree/Tree";
-
-import ToS from "./treeofscience.svg";
+import CoreOfScience from "./components/vectors/CoreOfScience";
+import TreeOfScience from "./components/vectors/TreeOfScience";
 
 const AppLayout = styled.div`
   margin: 0 10px;
@@ -20,7 +20,7 @@ const AppLayout = styled.div`
 `;
 
 const Header = styled.header`
-  color: var(--color-tos-green, green);
+  color: var(--color-tree-leaf, green);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -29,6 +29,11 @@ const Header = styled.header`
   & h1 {
     margin-left: 0.5em;
   }
+
+  & img {
+    width: 80px;
+    height: 80px;
+  }
 `;
 
 const App: FC<{}> = () => {
@@ -36,7 +41,7 @@ const App: FC<{}> = () => {
     <Router>
       <AppLayout>
         <Header>
-          <img src={ToS} alt="tree of science logo" />
+          <TreeOfScience />
           <h1>Tree of Science</h1>
         </Header>
         <main>
@@ -52,7 +57,9 @@ const App: FC<{}> = () => {
             </Route>
           </Switch>
         </main>
-        <footer>References</footer>
+        <footer>
+          <CoreOfScience />
+        </footer>
       </AppLayout>
     </Router>
   );
