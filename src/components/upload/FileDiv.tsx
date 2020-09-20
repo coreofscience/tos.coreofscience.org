@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { firebaseApp } from "../../firebaseApp";
+import * as firebase from "firebase";
 
 // TODO: Make it look like this https://www.figma.com/file/c3WgeyN7inEdtMxQHAqPga/tos.coreofcience.org?node-id=1%3A2
 
@@ -107,6 +108,7 @@ const FileDiv: FC<Props> = ({
   const [numArticles, setNumArticles] = useState<number>(0);
   const [numReferences, setNumReferences] = useState<number>(0);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [task, setTask] = useState<firebase.storage.UploadTask>();
 
   const getKeywordsList = (text: string) => {
     const identifier = "ID ";
@@ -154,9 +156,10 @@ const FileDiv: FC<Props> = ({
 
   const uploadFile = useCallback(() => {
     const storageRef = firebaseApp.storage().ref("isi_files/" + hash);
-    let task = storageRef.put(fileBlob);
+    const newTask = storageRef.put(fileBlob);
+    setTask(newTask);
 
-    task.on(
+    newTask.on(
       "state_changed",
       (snapshot) => {
         let percentage =
@@ -183,6 +186,13 @@ const FileDiv: FC<Props> = ({
     uploadFile();
   }, [fileBlob, mostCommonKeywords, uploadFile]);
 
+  const onRemove = () => {
+    onRemoveFile(hash);
+    if (task) {
+      task.cancel();
+    }
+  };
+
   return (
     <FileCard hover={hover}>
       <h3 className="article-title">{fileName}</h3>
@@ -203,7 +213,7 @@ const FileDiv: FC<Props> = ({
         className="close-button"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        onClick={() => onRemoveFile(hash)}
+        onClick={onRemove}
       />
     </FileCard>
   );
