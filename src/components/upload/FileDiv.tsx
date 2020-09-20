@@ -1,7 +1,6 @@
-import React, { FC, useState, useEffect, useCallback } from "react";
+import React, { FC, useState, useEffect, useCallback, useContext } from "react";
 import styled from "styled-components";
-import { firebaseApp } from "../../firebaseApp";
-import * as firebase from "firebase";
+import FirebaseContext from "../../context/firebase";
 
 // TODO: Make it look like this https://www.figma.com/file/c3WgeyN7inEdtMxQHAqPga/tos.coreofcience.org?node-id=1%3A2
 
@@ -109,6 +108,7 @@ const FileDiv: FC<Props> = ({
   const [numReferences, setNumReferences] = useState<number>(0);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [task, setTask] = useState<firebase.storage.UploadTask>();
+  const app = useContext(FirebaseContext);
 
   const getKeywordsList = (text: string) => {
     const identifier = "ID ";
@@ -154,16 +154,9 @@ const FileDiv: FC<Props> = ({
       .reduce((n, m) => n + m);
   };
 
-  const fileExists = useCallback(() => {
-    const storageRef = firebaseApp.storage().ref("isi_files/" + hash);
-    return storageRef
-      .getDownloadURL()
-      .then(() => true)
-      .catch(() => false);
-  }, [hash]);
-
   const uploadFile = useCallback(() => {
-    const storageRef = firebaseApp.storage().ref("isi_files/" + hash);
+    if (!app) return;
+    const storageRef = app.storage().ref("isi_files/" + hash);
     const newTask = storageRef.put(fileBlob);
     setTask(newTask);
 
@@ -183,22 +176,26 @@ const FileDiv: FC<Props> = ({
         // when completed
       }
     );
-  }, [hash, fileBlob]);
+  }, [hash, fileBlob, app]);
+
+  // fileBlob.text().then((text) => {
+  //   setKeywords(mostCommonKeywords(text, 3));
+  //   setNumArticles(countArticles(text));
+  //   setNumReferences(countReferences(text));
+  // })
 
   useEffect(() => {
-    fileBlob.text().then((text) => {
-      setKeywords(mostCommonKeywords(text, 3));
-      setNumArticles(countArticles(text));
-      setNumReferences(countReferences(text));
-    });
-    fileExists().then((exists) => {
-      if (exists) {
+    if (!app) return;
+    const storageRef = app.storage().ref("isi_files/" + hash);
+    storageRef
+      .getDownloadURL()
+      .then(() => {
         setUploadProgress(100);
-      } else {
+      })
+      .catch(() => {
         uploadFile();
-      }
-    });
-  }, [fileBlob, mostCommonKeywords, uploadFile, fileExists]);
+      });
+  }, [app, hash, uploadFile]);
 
   const onRemove = () => {
     onRemoveFile(hash);

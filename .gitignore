@@ -26,4 +26,6 @@ yarn-error.log*
 # vscode
 .vscode
 
-credentials.json
+# More envs
+.env
+.env.*
