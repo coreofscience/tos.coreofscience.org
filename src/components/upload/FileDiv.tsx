@@ -1,5 +1,6 @@
 import React, { FC, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
+import { firebaseApp } from "../../firebaseApp";
 
 // TODO: Make it look like this https://www.figma.com/file/c3WgeyN7inEdtMxQHAqPga/tos.coreofcience.org?node-id=1%3A2
 
@@ -105,7 +106,7 @@ const FileDiv: FC<Props> = ({
   const [keywords, setKeywords] = useState<string[]>([]);
   const [numArticles, setNumArticles] = useState<number>(0);
   const [numReferences, setNumReferences] = useState<number>(0);
-  const [loadingProgress] = useState<number>(80);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
 
   const getKeywordsList = (text: string) => {
     const identifier = "ID ";
@@ -151,13 +152,36 @@ const FileDiv: FC<Props> = ({
       .reduce((n, m) => n + m);
   };
 
+  const uploadFile = useCallback(() => {
+    const storageRef = firebaseApp.storage().ref("isi_files/" + hash);
+    let task = storageRef.put(fileBlob);
+
+    task.on(
+      "state_changed",
+      (snapshot) => {
+        let percentage =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadProgress(percentage);
+      },
+
+      (err) => {
+        alert(err.message);
+      },
+
+      () => {
+        // when completed
+      }
+    );
+  }, [hash, fileBlob]);
+
   useEffect(() => {
     fileBlob.text().then((text) => {
       setKeywords(mostCommonKeywords(text, 3));
       setNumArticles(countArticles(text));
       setNumReferences(countReferences(text));
     });
-  }, [fileBlob, mostCommonKeywords]);
+    uploadFile();
+  }, [fileBlob, mostCommonKeywords, uploadFile]);
 
   return (
     <FileCard hover={hover}>
@@ -174,7 +198,7 @@ const FileDiv: FC<Props> = ({
       <span>
         {numReferences} {numReferences > 1 ? "references" : "reference"}
       </span>
-      <progress value={loadingProgress} max={100} />
+      <progress value={uploadProgress} max={100} />
       <div
         className="close-button"
         onMouseEnter={() => setHover(true)}
