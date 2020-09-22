@@ -1,0 +1,56 @@
+.tree-menu {
+  margin-bottom: 2em;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat(auto-fill, 6em);
+  grid-gap: 1em;
+}
+
+.tree-menu button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 0;
+  color: white;
+}
+
+.tree-menu button.root {
+  background-color: var(--color-tree-root);
+}
+
+.tree-menu button.trunk {
+  background-color: var(--color-tree-trunk);
+}
+
+.tree-menu button.leaves {
+  background-color: var(--color-tree-leaf);
+}
+
+.tree-segment.root h2 {
+  color: var(--color-tree-root);
+  text-transform: uppercase;
+}
+
+.tree-segment.trunk h2 {
+  color: var(--color-tree-trunk);
+  text-transform: uppercase;
+}
+
+.tree-segment.leaves h2 {
+  color: var(--color-tree-leaf);
+  text-transform: uppercase;
+}
+
+.article {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
+  align-items: center;
+}
+.article img {
+  margin-left: 0.5em;
+  width: 1.1em;
+  height: 1.1em;
+}
