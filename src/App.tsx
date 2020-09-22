@@ -5,8 +5,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/upload/Home';
 import NotFound from './components/NotFound';
 import Tree from './components/tree/Tree';
-import CoreOfScience from './components/vectors/CoreOfScience';
+
 import TreeOfScience from './components/vectors/TreeOfScience';
+
+import FirebaseProvider from "./components/providers/FirebaseProvider";
 
 const AppLayout = styled.div`
   margin: 0 10px;
@@ -38,30 +40,29 @@ const Header = styled.header`
 
 const App: FC<{}> = () => {
   return (
-    <Router>
-      <AppLayout>
-        <Header>
-          <TreeOfScience />
-          <h1>Tree of Science</h1>
-        </Header>
-        <main>
-          <Switch>
-            <Route exact path='/'>
-              <Home />
-            </Route>
-            <Route path='/tree/:treeId'>
-              <Tree />
-            </Route>
-            <Route path='*'>
-              <NotFound />
-            </Route>
-          </Switch>
-        </main>
-        <footer>
-          <CoreOfScience />
-        </footer>
-      </AppLayout>
-    </Router>
+    <FirebaseProvider>
+      <Router>
+        <AppLayout>
+          <header>
+            <h1>SAP</h1>
+          </header>
+          <main>
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/tree/:treeId">
+                <Tree />
+              </Route>
+              <Route path="*">
+                <NotFound />
+              </Route>
+            </Switch>
+          </main>
+          <footer>References</footer>
+        </AppLayout>
+      </Router>
+    </FirebaseProvider>
   );
 };
 
