@@ -1,12 +1,12 @@
-import React, { FC } from "react";
-import styled from "styled-components";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { FC } from 'react';
+import styled from 'styled-components';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Home from "./components/upload/Home";
-import NotFound from "./components/NotFound";
-import Tree from "./components/tree/Tree";
-import CoreOfScience from "./components/vectors/CoreOfScience";
-import TreeOfScience from "./components/vectors/TreeOfScience";
+import Home from './components/upload/Home';
+import NotFound from './components/NotFound';
+import Tree from './components/tree/Tree';
+import CoreOfScience from './components/vectors/CoreOfScience';
+import TreeOfScience from './components/vectors/TreeOfScience';
 
 const AppLayout = styled.div`
   margin: 0 10px;
@@ -46,13 +46,13 @@ const App: FC<{}> = () => {
         </Header>
         <main>
           <Switch>
-            <Route exact path="/">
+            <Route exact path='/'>
               <Home />
             </Route>
-            <Route path="/tree/:treeId">
+            <Route path='/tree/:treeId'>
               <Tree />
             </Route>
-            <Route path="*">
+            <Route path='*'>
               <NotFound />
             </Route>
           </Switch>

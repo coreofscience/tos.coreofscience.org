@@ -30,12 +30,27 @@
 
 .tree-segment.root h2 {
   color: var(--color-tree-root);
+  text-transform: uppercase;
 }
 
 .tree-segment.trunk h2 {
   color: var(--color-tree-trunk);
+  text-transform: uppercase;
 }
 
 .tree-segment.leaves h2 {
   color: var(--color-tree-leaf);
+  text-transform: uppercase;
+}
+
+.article {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
+  align-items: center;
+}
+.article img {
+  margin-left: 0.5em;
+  width: 1.1em;
+  height: 1.1em;
 }

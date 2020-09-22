@@ -1,5 +1,5 @@
 import React, { FC, Fragment } from 'react';
-import styled from 'styled-components';
+import './Reference.css';
 
 interface Props {
   label: string;
@@ -21,51 +21,6 @@ const titleCase = (sentence: string): string =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 
-const ReferenceWrapper = styled.div`
-  transition: background 0.5s ease;
-  box-shadow: 0 3px 5px -5px black;
-  margin-top: 5px;
-  padding: 15px;
-  width: calc(100% - 30px);
-  border-left: 5px solid rgb(var(--color));
-  position: relative;
-
-  &::after {
-    content: ' ';
-    display: block;
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-top: 2.5px solid transparent;
-    border-bottom: 2.5px solid transparent;
-    border-left: 2.5px solid rgb(var(--color));
-    left: 0px;
-    top: calc(50% - 2.5px);
-    transition: transform 0.5s ease-in-out;
-    transform-origin: 0 50%;
-    transform: scale(0, 0);
-  }
-
-  &:hover::after {
-    transform: scale(1, 1);
-  }
-
-  &:hover {
-    background-color: rgba(var(--color), 0.1);
-  }
-
-  & .doi {
-    text-decoration: none;
-    color: lightseagreen;
-    filter: brightness(60%);
-    transition: all 0.5 ease-in-out;
-  }
-
-  & .doi:hover {
-    filter: brightness(90%);
-  }
-`;
-
 const Reference: FC<Props> = ({
   label,
   authors,
@@ -78,7 +33,7 @@ const Reference: FC<Props> = ({
   doi,
   simple = false,
 }: Props) => (
-  <ReferenceWrapper id={label}>
+  <div className='reference' id={label}>
     {!!authors && (
       <Fragment>
         <span className='authors'>
@@ -131,7 +86,7 @@ const Reference: FC<Props> = ({
         {`https://dx.doi.org/${doi}`}
       </a>
     )}
-  </ReferenceWrapper>
+  </div>
 );
 
 export default Reference;
