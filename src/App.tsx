@@ -8,7 +8,7 @@ import Tree from './components/tree/Tree';
 
 import TreeOfScience from './components/vectors/TreeOfScience';
 
-import FirebaseProvider from "./components/providers/FirebaseProvider";
+import FirebaseProvider from './components/providers/FirebaseProvider';
 
 const AppLayout = styled.div`
   margin: 0 10px;
@@ -30,6 +30,7 @@ const Header = styled.header`
 
   & h1 {
     margin-left: 0.5em;
+    color: var(--color-tree-leaf, green);
   }
 
   & img {
@@ -43,23 +44,24 @@ const App: FC<{}> = () => {
     <FirebaseProvider>
       <Router>
         <AppLayout>
-          <header>
-            <h1>SAP</h1>
-          </header>
+          <Header>
+            <TreeOfScience />
+            <h1>Tree of Science</h1>
+          </Header>
           <main>
             <Switch>
-              <Route exact path="/">
+              <Route exact path='/'>
                 <Home />
               </Route>
-              <Route path="/tree/:treeId">
+              <Route path='/tree/:treeId'>
                 <Tree />
               </Route>
-              <Route path="*">
+              <Route path='*'>
                 <NotFound />
               </Route>
             </Switch>
           </main>
-          <footer>References</footer>
+          <footer>references</footer>
         </AppLayout>
       </Router>
     </FirebaseProvider>
