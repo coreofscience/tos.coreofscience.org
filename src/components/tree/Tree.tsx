@@ -7,7 +7,6 @@ import Reference from './Reference';
 
 import './Tree.css';
 import DATA from './data.json';
-import src from '*.bmp';
 
 const PAGE_SIZE = 50;
 
