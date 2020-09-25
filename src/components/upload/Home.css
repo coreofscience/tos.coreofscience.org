@@ -1,0 +1,38 @@
+.information-cant-article {
+  display: flex;
+  display: grid;
+  flex-direction: row;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 1em;
+}
+.frame-article {
+  height: 100px;
+  background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.button-coninue {
+  display: flex;
+  width: 248px;
+  height: 86px;
+  justify-content: center;
+  align-items: center;
+  background: #009d35;
+  margin-top: 3em;
+}
+.frame-article .total-articles {
+  font-size: 24px;
+  font-weight: 600;
+}
+.frame-article .articles {
+  font-size: 14px;
+  color: #5b5b5b;
+}
+.button-coninue {
+  font-family: Oswald, Pacifico;
+  font-size: 24px;
+  color: #f0f0f0;
+  font-weight: bold;
+}

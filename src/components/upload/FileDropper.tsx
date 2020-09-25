@@ -1,10 +1,10 @@
-import React, { FC, useCallback } from "react";
-import { useDropzone } from "react-dropzone";
-import styled from "styled-components";
-import md5 from "md5";
+import React, { FC, useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
+import styled from 'styled-components';
+import md5 from 'md5';
 
-import { looksLikeIsi } from "../../utils/isiUtils";
-import { BlobMap } from "../../utils/customTypes";
+import { looksLikeIsi } from '../../utils/isiUtils';
+import { BlobMap } from '../../utils/customTypes';
 
 const DropzoneRoot = styled.div<{ hoveringFile?: boolean }>`
   border-collapse: separate;
@@ -15,7 +15,7 @@ const DropzoneRoot = styled.div<{ hoveringFile?: boolean }>`
   align-items: center;
   border: 2px dashed;
   border-color: ${({ hoveringFile }) =>
-    hoveringFile ? "lightblue" : "#eeeeee"};
+    hoveringFile ? 'lightblue' : '#eeeeee'};
   border-radius: 2px;
   background-color: #fafafa;
   color: #bdbdbd;
@@ -55,15 +55,15 @@ const FileDropper: FC<Props> = ({ onNewFiles }: Props) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: "text/*",
+    accept: 'text/*',
   });
   return (
     <DropzoneRoot {...getRootProps()} hoveringFile={isDragActive}>
-      <input style={{ display: "none" }} {...getInputProps()} />
+      <input style={{ display: 'none' }} {...getInputProps()} />
       {isDragActive ? (
         <p>Drop the files here ...</p>
       ) : (
-        <p>Drag &amp; drop some files here, or click to select files</p>
+        <p>Drop &amp; your seed files here, or choose your files</p>
       )}
     </DropzoneRoot>
   );
