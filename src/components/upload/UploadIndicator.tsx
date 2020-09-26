@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { BlobMap } from "../../utils/customTypes";
 import FileDiv from "./FileDiv";
+import FileCard from "./FileCard";
 
 // TODO: Use fluid grid https://gridbyexample.com/examples/example28/
 
@@ -19,9 +20,35 @@ const UploadIndicator: FC<Props> = ({ files, onRemoveFile }: Props) => {
   return (
     <UploadZone>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {Object.entries(files).length === 0 && (
-          <div className="file-div tumbstone">Drag some files up there</div>
-        )}
+        <FileCard
+          name="file.isi"
+          articles={5}
+          citations={25}
+          keywords={["hola", "que", "hace"]}
+          progress={30}
+        />
+        <FileCard
+          name="file.isi"
+          articles={5}
+          citations={25}
+          keywords={[
+            "these",
+            "are",
+            "a",
+            "lot",
+            "of",
+            "keywords",
+            "big",
+            "words",
+          ]}
+        />
+        <FileCard
+          name="very big file name.isi"
+          articles={5}
+          citations={25}
+          keywords={["hola", "que", "hace"]}
+          progress={75}
+        />
         {Object.entries(files).map(([hash, fileBlob]) => {
           return (
             <FileDiv
