@@ -1,0 +1,79 @@
+.fileCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+  position: relative;
+  padding: 35px 1em;
+  text-align: center;
+  margin-top: 1em;
+}
+
+.fileCard .fileCard__closeButton {
+  background: #f0972f;
+  color: #fcfcfc;
+  height: 30px;
+  width: 30px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.fileCard .fileCard__closeButton img {
+  width: 14px;
+  height: 14px;
+}
+
+.fileCard .fileCard__name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 1.5em;
+  max-width: 75%;
+}
+
+.fileCard .fileCard__keywords {
+  margin-top: 1em;
+  font-size: 16px;
+  color: #5b5b5b;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 90%;
+}
+
+.fileCard .fileCard__stats {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fileCard .fileCard__stats__count {
+  font-size: 24px;
+  font-weight: 600;
+}
+.fileCard .fileCard__stats__unit {
+  font-size: 14px;
+  color: #5b5b5b;
+}
+.fileCard_progressBar {
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: #f0f0f0;
+}
+.fileCard_progressBar .fileCard_progressAdjustment {
+  background: #009d35;
+  width: 100%;
+  transform-origin: 0%;
+  height: 3px;
+  margin: 0;
+}

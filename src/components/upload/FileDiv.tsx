@@ -9,12 +9,7 @@ import {
 // TODO: Make it look like this https://www.figma.com/file/c3WgeyN7inEdtMxQHAqPga/tos.coreofcience.org?node-id=1%3A2
 
 const FileCard = styled.div<{ hover?: boolean }>`
-  background-color: ${({ hover }) => (hover ? "pink" : "#f3f3f3")};
-  border: 2px solid black;
   width: 200px;
-  border-radius: 10px;
-  margin-left: 20px;
-  margin-bottom: 10px;
   padding: 20px;
   transition: 300ms;
   position: relative;
@@ -22,7 +17,11 @@ const FileCard = styled.div<{ hover?: boolean }>`
   flex-direction: column;
   align-items: center;
 
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+
+  & span {
+    margin-top: 1em;
+  }
 
   & .article-title {
     white-space: nowrap;
@@ -106,7 +105,6 @@ const FileDiv: FC<Props> = ({
   fileBlob,
   onRemoveFile,
 }: Props) => {
-  const [hover, setHover] = useState<boolean>(false);
   const [requiresUpload, setRequiresUpload] = useState<boolean>(false);
   const [keywords, setKeywords] = useState<string[]>([]);
   const [numArticles, setNumArticles] = useState<number>(0);
@@ -164,14 +162,12 @@ const FileDiv: FC<Props> = ({
   }, [app, hash, uploadFile]);
 
   return (
-    <FileCard hover={hover}>
+    <FileCard>
       <h3 className="article-title">{fileName}</h3>
-      <hr />
       <span>
         <strong>Keywords: </strong>
         {keywords.join("; ")}
       </span>
-      <hr />
       <span>
         {numArticles} {numArticles > 1 ? "articles" : "article"}
       </span>
@@ -179,12 +175,7 @@ const FileDiv: FC<Props> = ({
         {numReferences} {numReferences > 1 ? "references" : "reference"}
       </span>
       <progress value={uploadProgress} max={100} />
-      <div
-        className="close-button"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        onClick={() => onRemoveFile(hash)}
-      />
+      <div className="close-button" onClick={() => onRemoveFile(hash)} />
     </FileCard>
   );
 };
