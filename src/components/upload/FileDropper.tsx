@@ -8,22 +8,29 @@ import { BlobMap } from '../../utils/customTypes';
 
 const DropzoneRoot = styled.div<{ hoveringFile?: boolean }>`
   border-collapse: separate;
-  font-family: sans-serif;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 2px dashed;
   border-color: ${({ hoveringFile }) =>
     hoveringFile ? 'lightblue' : '#eeeeee'};
-  border-radius: 2px;
-  background-color: #fafafa;
-  color: #bdbdbd;
+  background-color: #f0f0f0;
+  color: #5b5b5b;
   outline: none;
   transition: border 0.24s ease-in-out;
   cursor: pointer;
+  padding: 10px;
+  height: 636px;
+  height: 153px;
   & p {
-    padding: 20px;
+    display: flex;
+    width: 100%;
+    height: 10em;
+    border: 1px dashed #5b5b5b;
+    box-sizing: border-box;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
