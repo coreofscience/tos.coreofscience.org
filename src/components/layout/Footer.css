@@ -1,0 +1,29 @@
+.Footer {
+  background-color: var(--color-bg-accent);
+  padding: 1em 0;
+  min-height: 8em;
+  width: 100%;
+  margin-top: 3em;
+  position: relative;
+}
+
+.Footer::before {
+  z-index: -1;
+  content: " ";
+  background-color: var(--color-bg-accent);
+  height: 100%;
+  width: 98vw;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-bg) 0%,
+    var(--color-bg-accent) 5%,
+    var(--color-bg-accent) 95%,
+    var(--color-bg) 100%
+  );
+}
