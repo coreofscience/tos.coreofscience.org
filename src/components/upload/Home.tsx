@@ -37,7 +37,9 @@ const Home: FC<{}> = () => {
       </div>
       <br></br>
       <div>Time to create your Tree of Science.</div>
-      <div className="btn btn-large btn-leaf button-continue">CONTINUE</div>
+      <button className="btn btn-large btn-leaf button-continue">
+        CONTINUE
+      </button>
     </main>
   );
 };

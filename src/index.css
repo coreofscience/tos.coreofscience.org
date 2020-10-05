@@ -416,6 +416,7 @@ h4 {
   color: var(--color-bg);
   background-color: var(--color-link);
   padding: 1.25em 3em;
+  border: none;
 }
 
 .btn.btn-large small {
