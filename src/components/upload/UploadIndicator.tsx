@@ -21,7 +21,7 @@ const UploadIndicator: FC<Props> = () => {
     <UploadZone>
       {files.map((file) => (
         <FileCard
-          name="file.isi"
+          name={file.name}
           articles={file.articles}
           citations={file.citations}
           keywords={file.keywords}

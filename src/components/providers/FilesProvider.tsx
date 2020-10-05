@@ -27,7 +27,7 @@ const FilesProvider: FC<Props> = ({ children }: Props) => {
             name,
             blob,
             uuid: hash,
-            progress: 0,
+            progress: Math.random() * 100,
             // TODO: Las otras cosas
           },
         ];

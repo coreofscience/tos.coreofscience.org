@@ -23,7 +23,9 @@ const FileCard: FC<Props> = ({
     <button onClick={remove} className="fileCard__closeButton">
       <CancelFile />
     </button>
-    <strong className="fileCard__name">{name}</strong>
+    <strong className="fileCard__name" title={name}>
+      {name}
+    </strong>
     <small className="fileCard__keywords">{keywords.join(", ")}</small>
     <span className="fileCard__stats">
       <strong className="fileCard__stats__count">{articles}</strong>

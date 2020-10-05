@@ -1,21 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
+
 import FileDropper from "./FileDropper";
 import UploadIndicator from "./UploadIndicator";
-import { BlobMap } from "../../utils/customTypes";
+
 import "./Home.css";
+
 const Home: FC<{}> = () => {
-  const [validFiles, setValidFiles] = useState<BlobMap>({});
-
-  const appendFiles = (files: BlobMap) => {
-    setValidFiles((current) => ({ ...current, ...files }));
-  };
-
-  const removeFile = (hash: string) => {
-    let newFiles = { ...validFiles };
-    delete newFiles[hash];
-    setValidFiles({ ...newFiles });
-  };
-
   return (
     <main>
       <div>
@@ -43,4 +33,5 @@ const Home: FC<{}> = () => {
     </main>
   );
 };
+
 export default Home;
