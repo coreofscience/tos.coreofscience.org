@@ -22,8 +22,8 @@ const Home: FC<{}> = () => {
         <p>Get your seed files from web of knowledge.</p>
         <p>The upload your files for processing.</p>
       </div>
-      <FileDropper onNewFiles={appendFiles} />
-      <UploadIndicator files={validFiles} onRemoveFile={removeFile} />
+      <FileDropper />
+      <UploadIndicator />
       <p>Review your input:</p>
       <div className="information-cant-article">
         <div className="frame-article">

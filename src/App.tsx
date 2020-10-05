@@ -8,25 +8,28 @@ import NotFound from "./components/NotFound";
 import Tree from "./components/tree/Tree";
 
 import FirebaseProvider from "./components/providers/FirebaseProvider";
+import FilesProvider from "./components/providers/FilesProvider";
 
 const App: FC<{}> = () => {
   return (
     <FirebaseProvider>
-      <Router>
-        <AppLayout>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/tree/:treeId">
-              <Tree />
-            </Route>
-            <Route path="*">
-              <NotFound />
-            </Route>
-          </Switch>
-        </AppLayout>
-      </Router>
+      <FilesProvider>
+        <Router>
+          <AppLayout>
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/tree/:treeId">
+                <Tree />
+              </Route>
+              <Route path="*">
+                <NotFound />
+              </Route>
+            </Switch>
+          </AppLayout>
+        </Router>
+      </FilesProvider>
     </FirebaseProvider>
   );
 };
