@@ -1,19 +1,16 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useContext } from "react";
 import { useDropzone } from "react-dropzone";
-import md5 from "md5";
 import "./FileDropper.css";
 
 import { looksLikeIsi } from "../../utils/isiUtils";
-import { BlobMap } from "../../utils/customTypes";
+import FileContext from "../../context/files";
 
-interface Props {
-  onNewFiles?: (files: BlobMap) => any;
-}
+interface Props {}
 
-const FileDropper: FC<Props> = ({ onNewFiles }: Props) => {
+const FileDropper: FC<Props> = () => {
+  const { upload } = useContext(FileContext);
   const onDrop = useCallback(
     (acceptedFiles: Blob[]) => {
-      const valid: BlobMap = {};
       Promise.all(
         acceptedFiles.map((file) =>
           file.text().then((text) => ({ text, file }))
@@ -21,20 +18,16 @@ const FileDropper: FC<Props> = ({ onNewFiles }: Props) => {
       ).then((data) => {
         data.forEach(({ text, file }) => {
           if (looksLikeIsi(text)) {
-            valid[md5(text)] = file;
+            upload(Object(file).name, file);
           }
         });
-        if (onNewFiles) {
-          onNewFiles(valid);
-        }
       });
     },
-    [onNewFiles]
+    [upload]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: "text/*",
   });
   return (
     <div className="fileDropper" {...getRootProps()}>

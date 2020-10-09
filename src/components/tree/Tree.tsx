@@ -1,12 +1,12 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState } from "react";
 
-import CopyImage from '../vectors/CopyImage';
-import StarImgage from '../vectors/StarImage';
+import CopyImage from "../vectors/CopyImage";
+import StarImgage from "../vectors/StarImage";
 
-import Reference from './Reference';
+import Reference from "./Reference";
 
-import './Tree.css';
-import DATA from './data.json';
+import "./Tree.css";
+import DATA from "./data.json";
 
 const PAGE_SIZE = 50;
 
@@ -49,22 +49,22 @@ const Tree: FC<{}> = () => {
 
   return (
     <div>
-      <div className='tree-menu'>
-        <button className='root'>
+      <div className="tree-menu">
+        <button className="root">
           <strong>Root</strong>
           <small>{root.length} articles</small>
         </button>
-        <button className='trunk'>
+        <button className="trunk">
           <strong>Trunk</strong>
           <small>{root.length} articles</small>
         </button>
-        <button className='leaves'>
+        <button className="leaves">
           <strong>Leaves</strong>
           <small>{root.length} articles</small>
         </button>
       </div>
-      <div className='tree-segment root'>
-        <div className='info'>
+      <div className="tree-segment root">
+        <div className="info">
           <h2>Root</h2>
           <p>
             Here you should find seminal articles from the original articles of
@@ -74,9 +74,9 @@ const Tree: FC<{}> = () => {
             <strong>Keywords:</strong> keyword, keyword, keyword
           </p>
         </div>
-        <div className='articles'>
+        <div className="articles">
           {root.slice(0, show.root * PAGE_SIZE).map((article) => (
-            <div className='article'>
+            <div className="article">
               <Reference key={article.label} {...article} />
               <CopyImage />
               <StarImgage />
@@ -84,8 +84,8 @@ const Tree: FC<{}> = () => {
           ))}
         </div>
       </div>
-      <div className='tree-segment trunk'>
-        <div className='info'>
+      <div className="tree-segment trunk">
+        <div className="info">
           <h2>Trunk</h2>
           <p>
             Here you should find articles where your topic of interest got a
@@ -96,26 +96,26 @@ const Tree: FC<{}> = () => {
             <strong>Keywords:</strong> keyword, keyword, keyword
           </p>
         </div>
-        <div className='articles'>
+        <div className="articles">
           Mostrando del 0 al {show.trunk * PAGE_SIZE}
           <br />
           {trunk.slice(0, show.trunk * PAGE_SIZE).map((article) => (
-            <div className='article'>
+            <div className="article">
               <Reference key={article.label} {...article} />
               <CopyImage />
               <StarImgage />
             </div>
           ))}
           {show.trunk * PAGE_SIZE < trunk.length && (
-            <button onClick={() => showMore('trunk')}>show more</button>
+            <button onClick={() => showMore("trunk")}>show more</button>
           )}
           {show.trunk > 1 && (
-            <button onClick={() => showLess('trunk')}>show Less</button>
+            <button onClick={() => showLess("trunk")}>show Less</button>
           )}
         </div>
       </div>
-      <div className='tree-segment leaves'>
-        <div className='info'>
+      <div className="tree-segment leaves">
+        <div className="info">
           <h2>Leaves</h2>
           <p>
             Here you should find recent articles and reviews that should
@@ -127,9 +127,9 @@ const Tree: FC<{}> = () => {
           </p>
         </div>
 
-        <div className='articles'>
+        <div className="articles">
           {leaf.slice(0, show.leaf * PAGE_SIZE).map((article) => (
-            <div className='article'>
+            <div className="article">
               <Reference key={article.label} {...article} />
               <CopyImage />
               <StarImgage />

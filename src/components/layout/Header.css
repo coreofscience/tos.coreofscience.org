@@ -1,0 +1,16 @@
+.Header {
+  color: var(--color-tree-leaf, green);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4em 0 1em 0;
+}
+.Header h1 {
+  margin-left: 0.5em;
+  color: var(--color-tree-leaf, green);
+}
+
+.Header img {
+  width: 80px;
+  height: 80px;
+}

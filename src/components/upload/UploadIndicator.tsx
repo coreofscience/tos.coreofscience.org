@@ -1,9 +1,8 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC, useContext } from "react";
+import styled from "styled-components";
 
-import { BlobMap } from '../../utils/customTypes';
-import FileDiv from './FileDiv';
-import FileCard from './FileCard';
+import FileCard from "./FileCard";
+import FileContext from "../../context/files";
 
 // TODO: Use fluid grid https://gridbyexample.com/examples/example28/
 
@@ -14,60 +13,23 @@ const UploadZone = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 `;
 
-interface Props {
-  files: BlobMap;
-  onRemoveFile: (hash: string) => any;
-}
+interface Props {}
 
-const UploadIndicator: FC<Props> = ({ files, onRemoveFile }: Props) => {
+const UploadIndicator: FC<Props> = () => {
+  const { files, remove } = useContext(FileContext);
   return (
     <UploadZone>
-      <FileCard
-        name='file.isi'
-        articles={300}
-        citations={3500}
-        keywords={['hola', 'que', 'hace']}
-        progress={30}
-      />
-      <FileCard
-        name='file.isi'
-        articles={5}
-        citations={25}
-        keywords={[
-          'these',
-          'are',
-          'a',
-          'lot',
-          'of',
-          'keywords',
-          'big',
-          'words',
-          'words',
-          'words',
-          'words',
-          'words',
-          'words',
-          'words',
-        ]}
-      />
-      <FileCard
-        name='very big file name.isi'
-        articles={5}
-        citations={25}
-        keywords={['hola', 'que', 'hace']}
-        progress={75}
-      />
-      {Object.entries(files).map(([hash, fileBlob]) => {
-        return (
-          <FileDiv
-            key={hash}
-            hash={hash}
-            fileBlob={fileBlob}
-            fileName={Object(fileBlob).name}
-            onRemoveFile={onRemoveFile}
-          />
-        );
-      })}
+      {files.map((file) => (
+        <FileCard
+          name={file.name}
+          articles={file.articles}
+          citations={file.citations}
+          keywords={file.keywords}
+          progress={file.progress}
+          remove={() => remove(file.uuid)}
+          key={file.uuid}
+        />
+      ))}
     </UploadZone>
   );
 };
