@@ -28,7 +28,6 @@ const FileDropper: FC<Props> = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: "text/*",
   });
   return (
     <div className="fileDropper" {...getRootProps()}>

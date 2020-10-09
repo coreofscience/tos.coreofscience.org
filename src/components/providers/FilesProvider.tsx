@@ -2,22 +2,24 @@ import md5 from "md5";
 import React, { FC, useCallback, useMemo, useState } from "react";
 import FileContext from "../../context/files";
 import { FileMetadata } from "../../utils/customTypes";
+import {
+  countArticles,
+  countReferences,
+  mostCommonKeywords,
+} from "../../utils/isiUtils";
 
 interface Props {
   children?: React.ReactElement;
 }
 
-const uuid = (blob: Blob): Promise<string> => {
-  return blob.text().then((text) => md5(text));
-};
-
 const FilesProvider: FC<Props> = ({ children }: Props) => {
   const [files, setFiles] = useState<FileMetadata[]>([]);
 
   const upload = useCallback((name: string, blob: Blob) => {
-    uuid(blob).then((hash) => {
+    blob.text().then((text) => {
+      const uuid = md5(text);
       setFiles((current) => {
-        const instance = current.find((file) => file.uuid === hash);
+        const instance = current.find((file) => file.uuid === uuid);
         if (instance) {
           return current;
         }
@@ -26,9 +28,11 @@ const FilesProvider: FC<Props> = ({ children }: Props) => {
           {
             name,
             blob,
-            uuid: hash,
+            uuid,
+            keywords: mostCommonKeywords(text, 3),
+            articles: countArticles(text),
+            citations: countReferences(text),
             progress: Math.random() * 100,
-            // TODO: Las otras cosas
           },
         ];
       });
