@@ -19,7 +19,10 @@ const createTree = async ({
   app: firebase.app.App;
   files: string[];
 }) => {
-  // TODO: Return error if there are no files
+  if (!files.length) {
+    throw new Error("Files cannot be empty.");
+  }
+
   const database = app.database();
   const result = await database.ref("trees").push({
     files,
@@ -31,9 +34,14 @@ const createTree = async ({
   return btoa(result.key);
 };
 
+const hasFinished = (progress: { [hash: string]: number }): boolean => {
+  const total = Object.values(progress).reduce((a, b) => a + b, 0);
+  return total === Object.keys(progress).length * 100;
+};
+
 const Home: FC<{}> = () => {
-  // TODO: @jdalzatec Bring progress here
-  const { files } = useContext(FileContext);
+  const { files, progress } = useContext(FileContext);
+  const finished = hasFinished(progress);
   const firebase = useContext(FirebaseContext);
   const history = useHistory();
 
@@ -55,6 +63,7 @@ const Home: FC<{}> = () => {
 
   const [create, { isLoading, isError }] = useMutation(createTree, {
     onSuccess: (treeId) => history.push(`/tree/${treeId}`),
+    // onError: console.log,
   });
 
   return (
@@ -86,10 +95,12 @@ const Home: FC<{}> = () => {
       <div>Time to create your Tree of Science.</div>
       <button
         className="btn btn-large btn-leaf button-continue"
-        disabled={isLoading || totalArticles === 0 || totalCitations === 0}
+        disabled={
+          isLoading || !finished || totalArticles === 0 || totalCitations === 0
+        }
         onClick={() =>
           firebase &&
-          // TODO: @jdalzatec only enabled if all the files are loaded
+          finished &&
           create({ app: firebase, files: files.map((file) => file.hash) })
         }
       >
