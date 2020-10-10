@@ -22,6 +22,7 @@ const FileCard: FC<Props> = ({
   citations = 0,
   remove = () => {},
 }: Props) => {
+  // TODO @jdalzatec get rid of this hook
   const progress = useProgress(hash);
   return (
     <div className="fileCard">

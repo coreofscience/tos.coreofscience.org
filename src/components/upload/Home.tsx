@@ -1,4 +1,5 @@
 import React, { FC, useContext } from "react";
+import { useMutation } from "react-query";
 
 import FileContext from "../../context/FileContext";
 import FileDropper from "./FileDropper";
@@ -6,11 +7,35 @@ import UploadIndicator from "./UploadIndicator";
 
 import "./Home.css";
 import { FileMetadata } from "../../utils/customTypes";
+import FirebaseContext from "../../context/FirebaseContext";
+import { useHistory } from "react-router";
 
 const numberFormat = new Intl.NumberFormat();
 
+const createTree = async ({
+  app,
+  files,
+}: {
+  app: firebase.app.App;
+  files: string[];
+}) => {
+  // TODO: Return error if there are no files
+  const database = app.database();
+  const result = await database.ref("trees").push({
+    files,
+    createdDate: new Date().getTime(),
+  });
+  if (!result.key) {
+    throw new Error("Failed to retrieve a new key.");
+  }
+  return btoa(result.key);
+};
+
 const Home: FC<{}> = () => {
+  // TODO: @jdalzatec Bring progress here
   const { files } = useContext(FileContext);
+  const firebase = useContext(FirebaseContext);
+  const history = useHistory();
 
   const totalArticles = files.reduce((acc, el) => acc + (el.articles || 0), 0);
   const totalCitations = files.reduce(
@@ -27,6 +52,10 @@ const Home: FC<{}> = () => {
       []
     )
     .reduce((acc, el) => acc + (el.citations || 0), 0);
+
+  const [create, { isLoading, isError }] = useMutation(createTree, {
+    onSuccess: (treeId) => history.push(`/tree/${treeId}`),
+  });
 
   return (
     <main>
@@ -57,10 +86,18 @@ const Home: FC<{}> = () => {
       <div>Time to create your Tree of Science.</div>
       <button
         className="btn btn-large btn-leaf button-continue"
-        disabled={totalArticles === 0 || totalCitations === 0}
+        disabled={isLoading || totalArticles === 0 || totalCitations === 0}
+        onClick={() =>
+          firebase &&
+          // TODO: @jdalzatec only enabled if all the files are loaded
+          create({ app: firebase, files: files.map((file) => file.hash) })
+        }
       >
-        CONTINUE
+        {isLoading ? "LOADING..." : "CONTINUE"}
       </button>
+      {isError && (
+        <div className="error">There was an errror creating the thing.</div>
+      )}
     </main>
   );
 };

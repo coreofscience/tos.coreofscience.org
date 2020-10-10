@@ -7,6 +7,7 @@ import FileContext from "../../context/FileContext";
 interface Props {}
 
 const UploadIndicator: FC<Props> = () => {
+  // TODO: Bring progress here
   const { files, remove } = useContext(FileContext);
   return (
     <div className="uploadIndicator">
