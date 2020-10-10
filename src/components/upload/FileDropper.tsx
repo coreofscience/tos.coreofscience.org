@@ -4,11 +4,13 @@ import "./FileDropper.css";
 
 import { looksLikeIsi } from "../../utils/isiUtils";
 import FileContext from "../../context/FileContext";
+import useUpload from "../../hooks/useUpload";
 
 interface Props {}
 
 const FileDropper: FC<Props> = () => {
-  const { upload } = useContext(FileContext);
+  const { add } = useContext(FileContext);
+  const uploadFirebase = useUpload();
   const onDrop = useCallback(
     (acceptedFiles: Blob[]) => {
       Promise.all(
@@ -18,12 +20,13 @@ const FileDropper: FC<Props> = () => {
       ).then((data) => {
         data.forEach(({ text, file }) => {
           if (looksLikeIsi(text)) {
-            upload(Object(file).name, file);
+            add(Object(file).name, file);
+            uploadFirebase(Object(file).name, file);
           }
         });
       });
     },
-    [upload]
+    [add, uploadFirebase]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

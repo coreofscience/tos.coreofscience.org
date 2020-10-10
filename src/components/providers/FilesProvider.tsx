@@ -14,8 +14,9 @@ interface Props {
 
 const FilesProvider: FC<Props> = ({ children }: Props) => {
   const [files, setFiles] = useState<FileMetadata[]>([]);
+  const [progress, setProgress] = useState<{ [hash: string]: number }>({});
 
-  const upload = useCallback((name: string, blob: Blob) => {
+  const add = useCallback((name: string, blob: Blob) => {
     blob.text().then((text) => {
       const hash = md5(text);
       setFiles((current) => {
@@ -32,7 +33,6 @@ const FilesProvider: FC<Props> = ({ children }: Props) => {
             keywords: mostCommonKeywords(text, 3),
             articles: countArticles(text),
             citations: countReferences(text),
-            progress: Math.random() * 100,
           },
         ];
       });
@@ -49,13 +49,25 @@ const FilesProvider: FC<Props> = ({ children }: Props) => {
     });
   }, []);
 
+  const track = useCallback((hash: string, value: number) => {
+    setProgress((prev) => {
+      const current = prev[hash];
+      if (current === value) {
+        return prev;
+      }
+      return { ...prev, [hash]: value };
+    });
+  }, []);
+
   const value = useMemo(
     () => ({
-      upload,
+      add,
       files,
       remove,
+      track,
+      progress,
     }),
-    [upload, files, remove]
+    [add, files, remove, track, progress]
   );
 
   return <FileContext.Provider value={value}>{children}</FileContext.Provider>;
