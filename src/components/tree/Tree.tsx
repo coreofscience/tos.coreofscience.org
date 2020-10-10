@@ -1,7 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, useCallback, useState } from "react";
 
 import CopyImage from "../vectors/CopyImage";
 import StarImgage from "../vectors/StarImage";
+import StarOutline from "../vectors/StarOutline";
 
 import Reference from "./Reference";
 import { Article } from "../../utils/customTypes";
@@ -36,44 +37,76 @@ const INFO: {
   },
 };
 
+const DEFAULT_SHOW = {
+  root: true,
+  trunk: true,
+  leaf: true,
+};
+
 const Tree: FC<{}> = () => {
   const data: { [section: string]: Article[] } = DATA;
+  const [star, setStar] = useState<{ [label: string]: boolean }>({});
+  const [show, setShow] = useState<{ [section: string]: boolean }>(
+    DEFAULT_SHOW
+  );
+
+  const toggleStar = useCallback((label: string) => {
+    setStar((current) => ({ ...current, [label]: !current[label] }));
+  }, []);
+
+  const toggleShow = useCallback((label: string) => {
+    // TODO: make this handle clicks
+    setShow((curr) => curr);
+  }, []);
 
   return (
     <div>
       <div className="tree-menu">
         {Object.entries(data).map(([sectionName, articles]) => (
-          <button className={`btn btn-${sectionName} ${sectionName}`}>
+          <button
+            className={`btn btn-${sectionName} ${sectionName}`}
+            title="Show only trunk"
+            onClick={() => toggleShow(sectionName)}
+            key={`menu-${sectionName}`}
+          >
             <strong>{(INFO[sectionName] || { title: "" }).title}</strong>
             <small>{articles.length} articles</small>
           </button>
         ))}
       </div>
 
-      {Object.entries(data).map(([sectionName, articles]) => (
-        <div className={`tree-segment ${sectionName}`}>
-          <div className="info">
-            <h2>{(INFO[sectionName] || { title: "" }).title}</h2>
-            <p>
-              {(INFO[sectionName] || { info: "" }).info}
-              Here you should find seminal articles from the original articles
-              of your topic of interest.
-            </p>
-            <p>
-              <strong>Keywords:</strong> keyword, keyword, keyword
-            </p>
-          </div>
-          <div className="articles">
-            {articles.map((article) => (
-              <div className="article">
-                <Reference key={article.label} {...article} />
-                <CopyImage />
-                <StarImgage />
+      {Object.entries(data).map(
+        ([sectionName, articles]) =>
+          !!show[sectionName] && (
+            <div
+              className={`tree-segment ${sectionName}`}
+              key={`tree-segment-${sectionName}`}
+            >
+              <div className="info">
+                <h2>{(INFO[sectionName] || { title: "" }).title}</h2>
+                <p>
+                  {(INFO[sectionName] || { info: "" }).info}
+                  Here you should find seminal articles from the original
+                  articles of your topic of interest.
+                </p>
+                <p>
+                  <strong>Keywords:</strong> keyword, keyword, keyword
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
-      ))}
+              <div className="articles">
+                {articles.map((article) => (
+                  <div className="article" key={`article-${article.label}`}>
+                    <Reference key={article.label} {...article} />
+                    <CopyImage />
+                    <button onClick={() => toggleStar(article.label)}>
+                      {!!star[article.label] ? <StarImgage /> : <StarOutline />}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+      )}
     </div>
   );
 };
