@@ -1,27 +1,27 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useState } from 'react';
 
-import CopyImage from "../vectors/CopyImage";
-import StarImgage from "../vectors/StarImage";
-import StarOutline from "../vectors/StarOutline";
+import CopyImage from '../vectors/CopyImage';
+import StarImgage from '../vectors/StarImage';
+import StarOutline from '../vectors/StarOutline';
 
-import Reference from "./Reference";
-import { Article } from "../../utils/customTypes";
+import Reference from './Reference';
+import { Article } from '../../utils/customTypes';
 
-import "./Tree.css";
-import DATA from "./data.json";
+import './Tree.css';
+import DATA from './data.json';
 
 const INFO: {
   [key: string]: { title: string; info: string };
 } = {
   root: {
-    title: "Root",
+    title: 'Root',
     info: `
       Here you should find seminal articles from the original articles of
       your topic of interest.
     `,
   },
   trunk: {
-    title: "Trunk",
+    title: 'Trunk',
     info: `
       Here you should find articles where your topic of interest got a
       structure, these should be the first authors to discover the
@@ -29,7 +29,7 @@ const INFO: {
     `,
   },
   leaf: {
-    title: "Leaves",
+    title: 'Leaves',
     info: `
       Here you should find recent articles and reviews that should
       condense very well your topics.
@@ -61,15 +61,14 @@ const Tree: FC<{}> = () => {
 
   return (
     <div>
-      <div className="tree-menu">
+      <div className='tree-menu'>
         {Object.entries(data).map(([sectionName, articles]) => (
           <button
             className={`btn btn-${sectionName} ${sectionName}`}
-            title="Show only trunk"
+            title='Show only trunk'
             onClick={() => toggleShow(sectionName)}
-            key={`menu-${sectionName}`}
-          >
-            <strong>{(INFO[sectionName] || { title: "" }).title}</strong>
+            key={`menu-${sectionName}`}>
+            <strong>{(INFO[sectionName] || { title: '' }).title}</strong>
             <small>{articles.length} articles</small>
           </button>
         ))}
@@ -80,12 +79,11 @@ const Tree: FC<{}> = () => {
           !!show[sectionName] && (
             <div
               className={`tree-segment ${sectionName}`}
-              key={`tree-segment-${sectionName}`}
-            >
-              <div className="info">
-                <h2>{(INFO[sectionName] || { title: "" }).title}</h2>
+              key={`tree-segment-${sectionName}`}>
+              <div className='info'>
+                <h2>{(INFO[sectionName] || { title: '' }).title}</h2>
                 <p>
-                  {(INFO[sectionName] || { info: "" }).info}
+                  {(INFO[sectionName] || { info: '' }).info}
                   Here you should find seminal articles from the original
                   articles of your topic of interest.
                 </p>
@@ -93,12 +91,15 @@ const Tree: FC<{}> = () => {
                   <strong>Keywords:</strong> keyword, keyword, keyword
                 </p>
               </div>
-              <div className="articles">
+              <div className='articles'>
                 {articles.map((article) => (
-                  <div className="article" key={`article-${article.label}`}>
+                  <div className='article' key={`article-${article.label}`}>
                     <Reference key={article.label} {...article} />
                     <CopyImage />
-                    <button onClick={() => toggleStar(article.label)}>
+
+                    <button
+                      className='btn-star'
+                      onClick={() => toggleStar(article.label)}>
                       {!!star[article.label] ? <StarImgage /> : <StarOutline />}
                     </button>
                   </div>

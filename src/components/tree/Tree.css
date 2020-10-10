@@ -50,7 +50,13 @@
   align-items: center;
 }
 .article img {
-  margin-left: 0.5em;
   width: 1.1em;
   height: 1.1em;
+}
+.btn-star,
+.btn-star:active {
+  margin-left: 0.5em;
+  border: none;
+  background: transparent;
+  outline: none;
 }
