@@ -1,12 +1,6 @@
-import md5 from "md5";
 import React, { FC, useCallback, useMemo, useState } from "react";
 import FileContext from "../../context/FileContext";
 import { FileMetadata } from "../../utils/customTypes";
-import {
-  countArticles,
-  countReferences,
-  mostCommonKeywords,
-} from "../../utils/isiUtils";
 
 interface Props {
   children?: React.ReactElement;
@@ -16,26 +10,14 @@ const FilesProvider: FC<Props> = ({ children }: Props) => {
   const [files, setFiles] = useState<FileMetadata[]>([]);
   const [progress, setProgress] = useState<{ [hash: string]: number }>({});
 
-  const add = useCallback((name: string, blob: Blob) => {
-    blob.text().then((text) => {
-      const hash = md5(text);
-      setFiles((current) => {
-        const instance = current.find((file) => file.hash === hash);
-        if (instance) {
-          return current;
-        }
-        return [
-          ...current,
-          {
-            name,
-            blob,
-            hash,
-            keywords: mostCommonKeywords(text, 3),
-            articles: countArticles(text),
-            citations: countReferences(text),
-          },
-        ];
-      });
+  const add = useCallback((metadata: FileMetadata) => {
+    const { hash } = metadata;
+    setFiles((current) => {
+      const instance = current.find((file) => file.hash === hash);
+      if (instance) {
+        return current;
+      }
+      return [...current, metadata];
     });
   }, []);
 

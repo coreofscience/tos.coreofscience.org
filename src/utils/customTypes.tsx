@@ -8,7 +8,7 @@ export interface FileMetadata {
 }
 
 export interface FileContexType {
-  add: (name: string, blob: Blob) => void;
+  add: (metadata: FileMetadata) => void;
   remove: (hash: string) => void;
   track: (hash: string, progress: number) => void;
   progress: { [hash: string]: number };

@@ -40,22 +40,25 @@ const Home: FC<{}> = () => {
       <div className="information-cant-article">
         <div className="frame-article">
           <span className="total-articles">
-            {numberFormat.format(totalArticles)}/
-            {numberFormat.format(articleCap)}
+            {numberFormat.format(articleCap)}/
+            {numberFormat.format(totalArticles)}
           </span>
-          <span className="articles">article</span>
+          <span className="articles">articles</span>
         </div>
         <div className="frame-article">
           <span className="total-articles">
-            {numberFormat.format(totalCitations)}/
-            {numberFormat.format(citationCap)}
+            {numberFormat.format(citationCap)}/
+            {numberFormat.format(totalCitations)}
           </span>
           <span className="articles">citations</span>
         </div>
       </div>
       <br></br>
       <div>Time to create your Tree of Science.</div>
-      <button className="btn btn-large btn-leaf button-continue">
+      <button
+        className="btn btn-large btn-leaf button-continue"
+        disabled={totalArticles === 0 || totalCitations === 0}
+      >
         CONTINUE
       </button>
     </main>
