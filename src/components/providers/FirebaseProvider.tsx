@@ -2,7 +2,7 @@ import React, { FC, ReactNode, useEffect, useState } from "react";
 import firebase from "firebase/app";
 import "firebase/storage";
 
-import FirebaseContext from "../../context/firebase";
+import FirebaseContext from "../../context/FirebaseContext";
 
 const CONFIG = {
   apiKey: process.env.REACT_APP_APIKEY,
@@ -29,6 +29,8 @@ const FirebaseProvider: FC<Props> = ({ children }: Props) => {
       setApp(firebase.initializeApp(CONFIG));
     }
   }, []);
+
+  if (app === null) return <div>Loading...</div>;
 
   return (
     <FirebaseContext.Provider value={app}>{children}</FirebaseContext.Provider>

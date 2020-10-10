@@ -1,6 +1,6 @@
 import React, { FC, useContext } from "react";
 
-import FileContext from "../../context/files";
+import FileContext from "../../context/FileContext";
 import FileDropper from "./FileDropper";
 import UploadIndicator from "./UploadIndicator";
 

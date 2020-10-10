@@ -1,6 +1,6 @@
 import md5 from "md5";
 import React, { FC, useCallback, useMemo, useState } from "react";
-import FileContext from "../../context/files";
+import FileContext from "../../context/FileContext";
 import { FileMetadata } from "../../utils/customTypes";
 import {
   countArticles,
@@ -17,9 +17,9 @@ const FilesProvider: FC<Props> = ({ children }: Props) => {
 
   const upload = useCallback((name: string, blob: Blob) => {
     blob.text().then((text) => {
-      const uuid = md5(text);
+      const hash = md5(text);
       setFiles((current) => {
-        const instance = current.find((file) => file.uuid === uuid);
+        const instance = current.find((file) => file.hash === hash);
         if (instance) {
           return current;
         }
@@ -28,7 +28,7 @@ const FilesProvider: FC<Props> = ({ children }: Props) => {
           {
             name,
             blob,
-            uuid,
+            hash,
             keywords: mostCommonKeywords(text, 3),
             articles: countArticles(text),
             citations: countReferences(text),
@@ -39,9 +39,9 @@ const FilesProvider: FC<Props> = ({ children }: Props) => {
     });
   }, []);
 
-  const remove = useCallback((uuid: string) => {
+  const remove = useCallback((hash: string) => {
     setFiles((prev) => {
-      const index = prev.findIndex((file) => file.uuid === uuid);
+      const index = prev.findIndex((file) => file.hash === hash);
       if (index < 0) {
         return prev;
       }

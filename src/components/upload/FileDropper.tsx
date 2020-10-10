@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 import "./FileDropper.css";
 
 import { looksLikeIsi } from "../../utils/isiUtils";
-import FileContext from "../../context/files";
+import FileContext from "../../context/FileContext";
 
 interface Props {}
 
