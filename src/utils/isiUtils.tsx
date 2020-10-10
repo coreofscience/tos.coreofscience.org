@@ -54,7 +54,7 @@ const countReferences = (text: string) => {
     .split("\n")
     .filter((line) => line.startsWith(identifier))
     .map((line) => parseInt(line.replace(identifier, "")))
-    .reduce((n, m) => n + m);
+    .reduce((n, m) => n + m, 0);
 };
 
 export {

@@ -1,16 +1,17 @@
 export interface FileMetadata {
   name: string;
-  uuid: string;
+  hash: string;
   blob: Blob;
   keywords?: string[];
   articles?: number;
   citations?: number;
-  progress: number;
 }
 
 export interface FileContexType {
-  upload: (name: string, blob: Blob) => void;
-  remove: (uuid: string) => void;
+  add: (metadata: FileMetadata) => void;
+  remove: (hash: string) => void;
+  track: (hash: string, progress: number) => void;
+  progress: { [hash: string]: number };
   files: FileMetadata[];
 }
 

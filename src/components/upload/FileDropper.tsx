@@ -1,14 +1,14 @@
-import React, { FC, useCallback, useContext } from "react";
+import React, { FC, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import "./FileDropper.css";
 
 import { looksLikeIsi } from "../../utils/isiUtils";
-import FileContext from "../../context/files";
+import useUpload from "../../hooks/useUpload";
 
 interface Props {}
 
 const FileDropper: FC<Props> = () => {
-  const { upload } = useContext(FileContext);
+  const upload = useUpload();
   const onDrop = useCallback(
     (acceptedFiles: Blob[]) => {
       Promise.all(
