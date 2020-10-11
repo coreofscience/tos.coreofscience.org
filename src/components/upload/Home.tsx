@@ -37,13 +37,11 @@ const createTree = async ({
 const hasFinished = (
   files: string[],
   progress: { [hash: string]: number }
-): boolean => {
-  const total = Object.entries(progress)
-    .filter((pair) => files.includes(pair[0]))
-    .map((pair) => pair[1])
-    .reduce((a, b) => a + b, 0);
-  return total === files.length * 100;
-};
+): boolean =>
+  files.reduce(
+    (curr: boolean, hash: string) => curr && progress[hash] === 100,
+    true
+  );
 
 const Home: FC<{}> = () => {
   const { files, progress } = useContext(FileContext);
@@ -110,7 +108,7 @@ const Home: FC<{}> = () => {
           create({ app: firebase, files: files.map((file) => file.hash) })
         }
       >
-        {isLoading ? "LOADING..." : "CONTINUE"}
+        {isLoading ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
       </button>
       {isError && (
         <div className="error">There was an errror creating the thing.</div>
