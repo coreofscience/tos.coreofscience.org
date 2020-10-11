@@ -16,7 +16,7 @@
   background-color: var(--color-bg-accent);
 }
 
-@media (min-width: calc(4 * 225px + 5rem)) {
+@media (min-width: calc(980px)) {
   .App > * > .App__content {
     margin: 0 auto;
   }
