@@ -5,7 +5,7 @@
 
 .footer .footer__mainLinks {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
 }
 
 .footer .footer__sectionHeader {
@@ -17,6 +17,10 @@
   margin-top: 0;
   list-style: none;
   padding: 0;
+}
+
+.footer ul.footer__sectionLinks li {
+  margin-top: 3px;
 }
 
 .footer .footer__copy {

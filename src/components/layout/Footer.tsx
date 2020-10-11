@@ -50,9 +50,42 @@ const Footer = () => (
       <section className="footer__section">
         <h4 className="footer__sectionHeader">Social media</h4>
         <ul className="footer__sectionLinks social">
-          <li>GitHub</li>
-          <li>Facebook</li>
-          <li>YouTube</li>
+          <li>
+            <a
+              href="https://github.com/coreofscience/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.facebook.com/coreofscience"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.youtube.com/channel/UCgFXO_IbFGkZRyj6heWpEBw"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              YouTube
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://twitter.com/core_of_science"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Twitter
+            </a>
+          </li>
         </ul>
       </section>
     </div>
