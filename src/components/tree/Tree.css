@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: repeat(auto-fill, 6em);
-  grid-gap: 1em;
+  grid-gap: 1rem;
 }
 
 .tree-menu button {

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState, Fragment } from 'react';
 import sortBy from 'lodash.sortby';
 
 import CopyImage from '../vectors/CopyImage';
@@ -80,7 +80,7 @@ const Tree: FC<{}> = () => {
   }, []);
 
   return (
-    <div>
+    <Fragment>
       <div className='tree-menu'>
         {Object.entries(data).map(([sectionName, articles]) => (
           <button
@@ -136,7 +136,7 @@ const Tree: FC<{}> = () => {
             </div>
           )
       )}
-    </div>
+    </Fragment>
   );
 };
 export default Tree;
