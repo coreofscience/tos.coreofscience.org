@@ -8,7 +8,7 @@
 
 .App > * > .App__content {
   margin: 0 1rem;
-  max-width: calc(4 * 200px + 3rem);
+  max-width: calc(4 * 225px + 3rem);
 }
 
 .App > footer {
@@ -16,7 +16,7 @@
   background-color: var(--color-bg-accent);
 }
 
-@media (min-width: 880px) {
+@media (min-width: calc(4 * 225px + 5rem)) {
   .App > * > .App__content {
     margin: 0 auto;
   }

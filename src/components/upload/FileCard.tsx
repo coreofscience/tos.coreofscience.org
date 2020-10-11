@@ -33,18 +33,20 @@ const FileCard: FC<Props> = ({
         {name}
       </strong>
       <small className="fileCard__keywords">{keywords.join(", ")}</small>
-      <span className="fileCard__stats">
-        <strong className="fileCard__stats__count">{articles}</strong>
-        <small className="fileCard__stats__unit">
-          {articles === 1 ? "article" : "articles"}
-        </small>
-      </span>
-      <span className="fileCard__stats">
-        <strong className="fileCard__stats__count">{citations}</strong>
-        <small className="fileCard__stats__unit">
-          {citations === 1 ? "citation" : "citations"}
-        </small>
-      </span>
+      <div className="fileCard__statGroup">
+        <span className="fileCard__stats">
+          <strong className="fileCard__stats__count">{articles}</strong>
+          <small className="fileCard__stats__unit">
+            {articles === 1 ? "article" : "articles"}
+          </small>
+        </span>
+        <span className="fileCard__stats">
+          <strong className="fileCard__stats__count">{citations}</strong>
+          <small className="fileCard__stats__unit">
+            {citations === 1 ? "citation" : "citations"}
+          </small>
+        </span>
+      </div>
       <div className="fileCard_progressBar">
         <div
           className="fileCard_progressAdjustment"
