@@ -29,6 +29,14 @@ jobs:
           npm run build
         env:
           CI: true
+          REACT_APP_APIKEY: "AIzaSyCaUQDmZpbvdHQfykowEIv9Af94dJ9ozNA"
+          REACT_APP_AUTHDOMAIN: "coreofscience-dev.firebaseapp.com"
+          REACT_APP_DATABASEURL: "https://coreofscience-dev.firebaseio.com"
+          REACT_APP_PROJECTID: "coreofscience-dev"
+          REACT_APP_STORAGEBUCKET: "coreofscience-dev.appspot.com"
+          REACT_APP_MESSAGINGSENDERID: "421154467745"
+          REACT_APP_APPID: "1:421154467745:web:54c3fe255236a2fca765e0"
+          REACT_APP_MEASUREMENTID: "G-VK6JQJ8XPN"
 
       - name: Deploy
         run: |
