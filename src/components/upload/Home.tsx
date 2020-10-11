@@ -34,14 +34,21 @@ const createTree = async ({
   return btoa(result.key);
 };
 
-const hasFinished = (progress: { [hash: string]: number }): boolean => {
-  const total = Object.values(progress).reduce((a, b) => a + b, 0);
-  return total === Object.keys(progress).length * 100;
+const hasFinished = (
+  files: string[],
+  progress: { [hash: string]: number }
+): boolean => {
+  const total = Object.entries(progress)
+    .filter((pair) => files.includes(pair[0]))
+    .map((pair) => pair[1])
+    .reduce((a, b) => a + b, 0);
+  return total === files.length * 100;
 };
 
 const Home: FC<{}> = () => {
   const { files, progress } = useContext(FileContext);
-  const finished = hasFinished(progress);
+  const hashes = files.map((file) => file.hash);
+  const finished = hasFinished(hashes, progress);
   const firebase = useContext(FirebaseContext);
   const history = useHistory();
 
