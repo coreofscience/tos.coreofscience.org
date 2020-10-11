@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, Fragment } from "react";
 
 import CopyImage from "../vectors/CopyImage";
 import StarImgage from "../vectors/StarImage";
@@ -40,7 +40,7 @@ const Tree: FC<{}> = () => {
   const data: { [section: string]: Article[] } = DATA;
 
   return (
-    <div>
+    <Fragment>
       <div className="tree-menu">
         {Object.entries(data).map(([sectionName, articles]) => (
           <button className={`btn btn-${sectionName} ${sectionName}`}>
@@ -74,7 +74,7 @@ const Tree: FC<{}> = () => {
           </div>
         </div>
       ))}
-    </div>
+    </Fragment>
   );
 };
 export default Tree;
