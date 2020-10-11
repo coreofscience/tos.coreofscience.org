@@ -13,19 +13,24 @@
   justify-content: center;
   border: none;
   border-radius: 0;
+}
+
+.tree-menu button strong {
+  font-family: Oswald;
   color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 24px;
 }
 
-.tree-menu button.root {
-  background-color: var(--color-tree-root);
+.tree-menu button small {
+  color: var(--color-bg-accent);
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.tree-menu button.trunk {
-  background-color: var(--color-tree-trunk);
-}
-
-.tree-menu button.leaf {
-  background-color: var(--color-tree-leaf);
+.tree-menu button.inactive {
+  opacity: 0.5;
 }
 
 .tree-segment.root h2 {
@@ -50,7 +55,13 @@
   align-items: center;
 }
 .article img {
-  margin-left: 0.5em;
   width: 1.1em;
   height: 1.1em;
+}
+.btn-star,
+.btn-star:active {
+  margin-left: 0.5em;
+  border: none;
+  background: transparent;
+  outline: none;
 }

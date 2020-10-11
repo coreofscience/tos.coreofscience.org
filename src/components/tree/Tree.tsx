@@ -1,7 +1,9 @@
-import React, { FC, Fragment } from "react";
+import React, { FC, useCallback, useState, Fragment } from "react";
+import sortBy from "lodash.sortby";
 
 import CopyImage from "../vectors/CopyImage";
 import StarImgage from "../vectors/StarImage";
+import StarOutline from "../vectors/StarOutline";
 
 import Reference from "./Reference";
 import { Article } from "../../utils/customTypes";
@@ -38,42 +40,78 @@ const INFO: {
 
 const Tree: FC<{}> = () => {
   const data: { [section: string]: Article[] } = DATA;
+  const [star, setStar] = useState<{ [label: string]: boolean }>({});
+  const [show, setShow] = useState<"root" | "trunk" | "leaf" | null>(null);
+
+  const toggleStar = useCallback((label: string) => {
+    setStar((current) => ({ ...current, [label]: !current[label] }));
+  }, []);
+
+  const toggleShow = useCallback((label: "root" | "trunk" | "leaf") => {
+    setShow((curr) => {
+      if (curr === label) {
+        return null;
+      }
+      return label;
+    });
+  }, []);
 
   return (
     <Fragment>
       <div className="tree-menu">
         {Object.entries(data).map(([sectionName, articles]) => (
-          <button className={`btn btn-${sectionName} ${sectionName}`}>
+          <button
+            className={`btn btn-${sectionName} ${sectionName} ${
+              !show || show === sectionName ? "active" : "inactive"
+            }`}
+            title="Show only trunk"
+            onClick={() => toggleShow(sectionName as "root" | "trunk" | "leaf")}
+            key={`menu-${sectionName}`}
+          >
             <strong>{(INFO[sectionName] || { title: "" }).title}</strong>
             <small>{articles.length} articles</small>
           </button>
         ))}
       </div>
 
-      {Object.entries(data).map(([sectionName, articles]) => (
-        <div className={`tree-segment ${sectionName}`}>
-          <div className="info">
-            <h2>{(INFO[sectionName] || { title: "" }).title}</h2>
-            <p>
-              {(INFO[sectionName] || { info: "" }).info}
-              Here you should find seminal articles from the original articles
-              of your topic of interest.
-            </p>
-            <p>
-              <strong>Keywords:</strong> keyword, keyword, keyword
-            </p>
-          </div>
-          <div className="articles">
-            {articles.map((article) => (
-              <div className="article">
-                <Reference key={article.label} {...article} />
-                <CopyImage />
-                <StarImgage />
+      {Object.entries(data).map(
+        ([sectionName, articles]) =>
+          (!show || show === sectionName) && (
+            <div
+              className={`tree-segment ${sectionName}`}
+              key={`tree-segment-${sectionName}`}
+            >
+              <div className="info">
+                <h2>{(INFO[sectionName] || { title: "" }).title}</h2>
+                <p>
+                  {(INFO[sectionName] || { info: "" }).info}
+                  Here you should find seminal articles from the original
+                  articles of your topic of interest.
+                </p>
+                <p>
+                  <strong>Keywords:</strong> keyword, keyword, keyword
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
-      ))}
+              <div className="articles">
+                {sortBy(articles, (article) =>
+                  !star[article.label] ? 1 : 0
+                ).map((article) => (
+                  <div className="article" key={`article-${article.label}`}>
+                    <Reference key={article.label} {...article} />
+                    <CopyImage />
+
+                    <button
+                      className="btn-star"
+                      onClick={() => toggleStar(article.label)}
+                    >
+                      {!!star[article.label] ? <StarImgage /> : <StarOutline />}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+      )}
     </Fragment>
   );
 };
