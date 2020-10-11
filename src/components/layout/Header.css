@@ -5,12 +5,13 @@
   align-items: center;
   padding: 4em 0 1em 0;
 }
-.Header h1 {
+
+.Header .Header__title {
   margin-left: 0.5em;
   color: var(--color-tree-leaf, green);
 }
 
-.Header img {
+.Header .Header__branding {
   width: 80px;
   height: 80px;
 }

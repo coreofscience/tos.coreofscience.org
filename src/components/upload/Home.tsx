@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import React, { FC, Fragment, useContext } from "react";
 import { useMutation } from "react-query";
 
 import FileContext from "../../context/FileContext";
@@ -18,7 +18,7 @@ const createTree = async ({
 }: {
   app: firebase.app.App;
   files: string[];
-}) => {
+}): Promise<string> => {
   // TODO: Return error if there are no files
   const database = app.database();
   const result = await database.ref("trees").push({
@@ -54,11 +54,11 @@ const Home: FC<{}> = () => {
     .reduce((acc, el) => acc + (el.citations || 0), 0);
 
   const [create, { isLoading, isError }] = useMutation(createTree, {
-    onSuccess: (treeId) => history.push(`/tree/${treeId}`),
+    onSuccess: (treeId: string) => history.push(`/tree/${treeId}`),
   });
 
   return (
-    <main>
+    <Fragment>
       <div>
         <p>Get your seed files from web of knowledge.</p>
         <p>The upload your files for processing.</p>
@@ -98,7 +98,7 @@ const Home: FC<{}> = () => {
       {isError && (
         <div className="error">There was an errror creating the thing.</div>
       )}
-    </main>
+    </Fragment>
   );
 };
 

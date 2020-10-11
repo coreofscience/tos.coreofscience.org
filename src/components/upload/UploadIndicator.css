@@ -1,6 +1,6 @@
 .uploadIndicator {
   margin-top: 10px;
   display: grid;
-  grid-gap: 1em;
+  grid-gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
