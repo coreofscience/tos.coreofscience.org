@@ -93,25 +93,21 @@ const Tree: FC<{}> = () => {
                 </p>
               </div>
               <div className="articles">
-                {sortBy(articles, (article) => star[article.label]).map(
-                  (article) => (
-                    <div className="article" key={`article-${article.label}`}>
-                      <Reference key={article.label} {...article} />
-                      <CopyImage />
+                {sortBy(articles, (article) =>
+                  !star[article.label] ? 1 : 0
+                ).map((article) => (
+                  <div className="article" key={`article-${article.label}`}>
+                    <Reference key={article.label} {...article} />
+                    <CopyImage />
 
-                      <button
-                        className="btn-star"
-                        onClick={() => toggleStar(article.label)}
-                      >
-                        {!!star[article.label] ? (
-                          <StarImgage />
-                        ) : (
-                          <StarOutline />
-                        )}
-                      </button>
-                    </div>
-                  )
-                )}
+                    <button
+                      className="btn-star"
+                      onClick={() => toggleStar(article.label)}
+                    >
+                      {!!star[article.label] ? <StarImgage /> : <StarOutline />}
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           )
