@@ -1,29 +1,25 @@
 import React, { FC } from "react";
 
-import useProgress from "../../hooks/useProgress";
-
 import CancelFile from "../vectors/CancelFile";
 import "./FileCard.css";
 
 interface Props {
   name: string;
-  hash: string;
   keywords?: string[];
   articles?: number;
   citations?: number;
   remove?: () => void;
+  progress: number;
 }
 
 const FileCard: FC<Props> = ({
   name,
-  hash,
   keywords = [],
   articles = 0,
   citations = 0,
+  progress = 0,
   remove = () => {},
 }: Props) => {
-  // TODO @jdalzatec get rid of this hook
-  const progress = useProgress(hash);
   return (
     <div className="fileCard">
       <button onClick={remove} className="fileCard__closeButton">

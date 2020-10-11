@@ -19,7 +19,10 @@ const createTree = async ({
   app: firebase.app.App;
   files: string[];
 }): Promise<string> => {
-  // TODO: Return error if there are no files
+  if (!files.length) {
+    throw new Error("Files cannot be empty.");
+  }
+
   const database = app.database();
   const result = await database.ref("trees").push({
     files,
@@ -31,9 +34,19 @@ const createTree = async ({
   return btoa(result.key);
 };
 
+const hasFinished = (
+  files: string[],
+  progress: { [hash: string]: number }
+): boolean =>
+  files.reduce(
+    (curr: boolean, hash: string) => curr && progress[hash] === 100,
+    true
+  );
+
 const Home: FC<{}> = () => {
-  // TODO: @jdalzatec Bring progress here
-  const { files } = useContext(FileContext);
+  const { files, progress } = useContext(FileContext);
+  const hashes = files.map((file) => file.hash);
+  const finished = hasFinished(hashes, progress);
   const firebase = useContext(FirebaseContext);
   const history = useHistory();
 
@@ -86,14 +99,16 @@ const Home: FC<{}> = () => {
       <div>Time to create your Tree of Science.</div>
       <button
         className="btn btn-large btn-leaf button-continue"
-        disabled={isLoading || totalArticles === 0 || totalCitations === 0}
+        disabled={
+          isLoading || !finished || totalArticles === 0 || totalCitations === 0
+        }
         onClick={() =>
           firebase &&
-          // TODO: @jdalzatec only enabled if all the files are loaded
+          finished &&
           create({ app: firebase, files: files.map((file) => file.hash) })
         }
       >
-        {isLoading ? "LOADING..." : "CONTINUE"}
+        {isLoading ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
       </button>
       {isError && (
         <div className="error">There was an errror creating the thing.</div>

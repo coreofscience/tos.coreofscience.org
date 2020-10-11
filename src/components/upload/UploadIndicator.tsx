@@ -7,21 +7,23 @@ import FileContext from "../../context/FileContext";
 interface Props {}
 
 const UploadIndicator: FC<Props> = () => {
-  // TODO: Bring progress here
   const { files, remove } = useContext(FileContext);
+  const { progress } = useContext(FileContext);
   return (
     <div className="uploadIndicator">
-      {files.map((file) => (
-        <FileCard
-          name={file.name}
-          hash={file.hash}
-          articles={file.articles}
-          citations={file.citations}
-          keywords={file.keywords}
-          remove={() => remove(file.hash)}
-          key={file.hash}
-        />
-      ))}
+      {files.map((file) => {
+        return (
+          <FileCard
+            name={file.name}
+            progress={progress[file.hash]}
+            articles={file.articles}
+            citations={file.citations}
+            keywords={file.keywords}
+            remove={() => remove(file.hash)}
+            key={file.hash}
+          />
+        );
+      })}
     </div>
   );
 };
