@@ -1,10 +1,23 @@
 .App {
-  margin: 0 1em;
-  max-width: 650px;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
 }
 
-@media (min-width: 700px) {
-  .App {
+.App > * > .App__content {
+  margin: 0 1rem;
+  max-width: calc(4 * 225px + 3rem);
+}
+
+.App > footer {
+  margin-top: 3em;
+  background-color: var(--color-bg-accent);
+}
+
+@media (min-width: calc(980px)) {
+  .App > * > .App__content {
     margin: 0 auto;
   }
-} ;
+}

@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: repeat(auto-fill, 6em);
-  grid-gap: 1em;
+  grid-gap: 1rem;
 }
 
 .tree-menu button {
@@ -24,7 +24,7 @@
   background-color: var(--color-tree-trunk);
 }
 
-.tree-menu button.leaves {
+.tree-menu button.leaf {
   background-color: var(--color-tree-leaf);
 }
 
@@ -38,7 +38,7 @@
   text-transform: uppercase;
 }
 
-.tree-segment.leaves h2 {
+.tree-segment.leaf h2 {
   color: var(--color-tree-leaf);
   text-transform: uppercase;
 }

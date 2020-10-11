@@ -11,9 +11,19 @@ interface Props {
 const AppLayout: FC<Props> = ({ children }: Props) => {
   return (
     <div className="App">
-      <Header />
-      <main>{children}</main>
-      <Footer />
+      <header>
+        <div className="App__content">
+          <Header />
+        </div>
+      </header>
+      <main>
+        <div className="App__content">{children}</div>
+      </main>
+      <footer>
+        <div className="App__content">
+          <Footer />
+        </div>
+      </footer>
     </div>
   );
 };

@@ -18,3 +18,16 @@ export interface FileContexType {
 export interface BlobMap {
   [hash: string]: Blob;
 }
+
+export interface Article {
+  label: string;
+  authors?: string[];
+  year?: number | null;
+  title?: string | null;
+  journal?: string | null;
+  volume?: string | null;
+  issue?: string | null;
+  page?: string | null;
+  doi?: string | null;
+  simple?: boolean;
+}
