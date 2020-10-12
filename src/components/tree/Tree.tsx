@@ -1,9 +1,7 @@
 import React, { FC, useCallback, useState, Fragment } from "react";
 import sortBy from "lodash.sortby";
 
-import CopyImage from "../vectors/CopyImage";
 import StarImgage from "../vectors/StarImage";
-import StarOutline from "../vectors/StarOutline";
 
 import Reference from "./Reference";
 import { Article } from "../../utils/customTypes";
