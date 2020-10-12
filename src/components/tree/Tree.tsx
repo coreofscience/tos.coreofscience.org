@@ -98,8 +98,9 @@ const Tree: FC<{}> = () => {
                 ).map((article) => (
                   <div className="article" key={`article-${article.label}`}>
                     <Reference key={article.label} {...article} />
-                    <CopyImage />
-
+                    <button className="btn-star">
+                      <CopyImage />
+                    </button>
                     <button
                       className="btn-star"
                       onClick={() => toggleStar(article.label)}
