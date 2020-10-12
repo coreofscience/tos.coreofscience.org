@@ -25,6 +25,7 @@ const useUpload = () => {
           keywords: mostCommonKeywords(text, 3),
           articles: countArticles(text),
           citations: countReferences(text),
+          valid: true,
         };
         add(metadata);
         const ref = firebase.storage().ref(`isi-files/${hash}`);

@@ -4,6 +4,7 @@ import { useMutation } from "react-query";
 import FileContext from "../../context/FileContext";
 import FileDropper from "./FileDropper";
 import UploadIndicator from "./UploadIndicator";
+import FileErrors from "./FileErrors";
 
 import "./Home.css";
 import { FileMetadata } from "../../utils/customTypes";
@@ -78,6 +79,7 @@ const Home: FC<{}> = () => {
       </div>
       <FileDropper />
       <UploadIndicator />
+      <FileErrors />
       <p>Review your input:</p>
       <div className="information-cant-article">
         <div className="frame-article">
