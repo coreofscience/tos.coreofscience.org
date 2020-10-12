@@ -6,9 +6,12 @@
     "rules": "./firebase/storage.rules"
   },
   "hosting": {
-    "site": "tos-coreofscience-dev",
     "public": "build",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "**",

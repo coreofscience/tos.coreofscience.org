@@ -11,19 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - run: npm ci && npm run build
-        env:
-          CI: true
-          REACT_APP_APIKEY: ${{ secrets.DEV_API_KEY }}
-          REACT_APP_AUTHDOMAIN: "coreofscience-dev.firebaseapp.com"
-          REACT_APP_DATABASEURL: "https://coreofscience-dev.firebaseio.com"
-          REACT_APP_PROJECTID: "coreofscience-dev"
-          REACT_APP_STORAGEBUCKET: "coreofscience-dev.appspot.com"
-          REACT_APP_MESSAGINGSENDERID: "421154467745"
-          REACT_APP_APPID: "1:421154467745:web:d7dd5ed17243869ba765e0"
-          REACT_APP_MEASUREMENTID: "G-N2245DYRQN"
-
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
