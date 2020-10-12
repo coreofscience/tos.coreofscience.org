@@ -4,11 +4,13 @@ import "./FileDropper.css";
 
 import { looksLikeIsi } from "../../utils/isiUtils";
 import useUpload from "../../hooks/useUpload";
+import useError from "../../hooks/useError";
 
 interface Props {}
 
 const FileDropper: FC<Props> = () => {
   const upload = useUpload();
+  const error = useError();
   const onDrop = useCallback(
     (acceptedFiles: Blob[]) => {
       Promise.all(
@@ -19,11 +21,13 @@ const FileDropper: FC<Props> = () => {
         data.forEach(({ text, file }) => {
           if (looksLikeIsi(text)) {
             upload(Object(file).name, file);
+          } else {
+            error(Object(file).name, file);
           }
         });
       });
     },
-    [upload]
+    [upload, error]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

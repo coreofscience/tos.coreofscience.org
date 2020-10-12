@@ -147,6 +147,14 @@ sup {
 
 img {
   border-style: none;
+  max-width: 100%;
+}
+
+/**
+ * Make svgs wide by default.
+ */
+svg {
+  width: 100%;
 }
 
 /* Forms

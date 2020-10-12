@@ -3,12 +3,14 @@ import "./UploadIndicator.css";
 
 import FileCard from "./FileCard";
 import FileContext from "../../context/FileContext";
+import useFiles from "../../hooks/useFiles";
 
 interface Props {}
 
 const UploadIndicator: FC<Props> = () => {
-  const { files, remove } = useContext(FileContext);
+  const { remove } = useContext(FileContext);
   const { progress } = useContext(FileContext);
+  const files = useFiles();
   return (
     <div className="uploadIndicator">
       {files.map((file) => {
