@@ -1,9 +1,7 @@
 import React, { FC, useCallback, useState, Fragment } from "react";
 import sortBy from "lodash.sortby";
 
-import CopyImage from "../vectors/CopyImage";
 import StarImgage from "../vectors/StarImage";
-import StarOutline from "../vectors/StarOutline";
 
 import Reference from "./Reference";
 import { Article } from "../../utils/customTypes";
@@ -100,13 +98,16 @@ const Tree: FC<Props> = ({ data }: Props) => {
                 ).map((article) => (
                   <div className="article" key={`article-${article.label}`}>
                     <Reference key={article.label} {...article} />
-                    <CopyImage />
-
+                    {/* <button className="btn-star">
+                      <CopyImage />
+                    </button> */}
                     <button
-                      className="btn-star"
+                      className={`btn-star ${
+                        star[article.label] ? "favorite" : ""
+                      }`}
                       onClick={() => toggleStar(article.label)}
                     >
-                      {!!star[article.label] ? <StarImgage /> : <StarOutline />}
+                      {!!star[article.label] ? <StarImgage /> : <StarImgage />}
                     </button>
                   </div>
                 ))}
