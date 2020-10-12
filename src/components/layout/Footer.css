@@ -20,8 +20,24 @@
   padding: 0;
 }
 
+.footer ul.footer__sectionLinks.social {
+  display: flex;
+}
+
 .footer ul.footer__sectionLinks li {
   margin-top: 3px;
+}
+
+.footer ul.footer__sectionLinks svg {
+  fill: var(--color-label);
+  width: 2rem;
+  height: 2rem;
+  margin-right: 1rem;
+  transition: 100ms;
+}
+
+.footer ul.footer__sectionLinks.social svg:hover {
+  transform: scale(1.1);
 }
 
 .footer .footer__copy {
