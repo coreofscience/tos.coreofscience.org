@@ -4,8 +4,13 @@
   margin-right: 2em;
 }
 
-.reference .tittle {
+.reference .title {
   font-weight: 600;
+}
+
+.reference div.title {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
 }
 
 .reference .doi {
