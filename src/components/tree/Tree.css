@@ -61,6 +61,7 @@
 }
 .tree-segment .btn-star svg.star-svg-icon {
   opacity: 0.25;
+  width: 25px;
 }
 .tree-segment .btn-star.favorite svg.star-svg-icon {
   opacity: 1;
