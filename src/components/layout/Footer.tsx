@@ -1,5 +1,9 @@
 import React from "react";
 import CoreOfScience from "../vectors/CoreOfScience";
+import GitHubIcon from "../vectors/GitHubIcon";
+import FacebookIcon from "../vectors/FacebookIcon";
+import YoutubeIcon from "../vectors/YoutubeIcon";
+import TwitterIcon from "../vectors/TwitterIcon";
 
 import "./Footer.css";
 
@@ -8,7 +12,7 @@ const Footer = () => (
     <div className="footer__mainLinks">
       <section className="footer__section">
         <h4 className="footer__sectionHeader">This project on GitHub</h4>
-        <ul className="footer__sectionLinks social">
+        <ul className="footer__sectionLinks">
           <li>
             <a
               href="https://github.com/coreofscience/sap.coreofscience.com"
@@ -55,8 +59,9 @@ const Footer = () => (
               href="https://github.com/coreofscience/"
               target="_blank"
               rel="noopener noreferrer"
+              title="GitHub"
             >
-              GitHub
+              <GitHubIcon />
             </a>
           </li>
           <li>
@@ -64,8 +69,9 @@ const Footer = () => (
               href="https://www.facebook.com/coreofscience"
               target="_blank"
               rel="noopener noreferrer"
+              title="facebook"
             >
-              Facebook
+              <FacebookIcon />
             </a>
           </li>
           <li>
@@ -73,8 +79,9 @@ const Footer = () => (
               href="https://www.youtube.com/channel/UCgFXO_IbFGkZRyj6heWpEBw"
               target="_blank"
               rel="noopener noreferrer"
+              title="youtube"
             >
-              YouTube
+              <YoutubeIcon />
             </a>
           </li>
           <li>
@@ -82,8 +89,9 @@ const Footer = () => (
               href="https://twitter.com/core_of_science"
               target="_blank"
               rel="noopener noreferrer"
+              title="twitter"
             >
-              Twitter
+              <TwitterIcon />
             </a>
           </li>
         </ul>
