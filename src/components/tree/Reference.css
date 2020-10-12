@@ -1,6 +1,11 @@
 .reference {
   transition: background 0.5s ease;
   flex-grow: 1;
+  margin-right: 2em;
+}
+
+.reference .tittle {
+  font-family: border;
 }
 
 .reference .doi {
