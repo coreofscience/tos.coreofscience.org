@@ -1,6 +1,13 @@
 {
   "rules": {
-    ".read": "now < 1604898000000",
-    ".write": "now < 1604898000000"
+    "trees": {
+      "$treeId": {
+        "createdDate": { ".validate": true },
+        "files": { ".validate": true },
+        "$other": { ".validate": false },
+        ".read": true,
+        ".write": true
+      }
+    }
   }
 }
