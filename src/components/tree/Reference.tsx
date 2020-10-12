@@ -1,5 +1,5 @@
-import React, { FC, Fragment } from 'react';
-import './Reference.css';
+import React, { FC, Fragment } from "react";
+import "./Reference.css";
 
 interface Props {
   label: string;
@@ -17,9 +17,9 @@ interface Props {
 const titleCase = (sentence: string): string =>
   sentence
     .toLowerCase()
-    .split(' ')
+    .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(" ");
 
 const Reference: FC<Props> = ({
   label,
@@ -31,59 +31,61 @@ const Reference: FC<Props> = ({
   issue,
   page,
   doi,
-  simple = false,
+  simple = true,
 }: Props) => (
-  <div className='reference' id={label}>
+  <div className="reference" id={label}>
+    {!!title && simple && <div className="tittle">{title}</div>}
     {!!authors && (
       <Fragment>
-        <span className='authors'>
+        <span className="authors">
           {(simple ? authors.slice(0, 1) : authors)
-            .map((author) => `${author.replace('.', '')}.`)
-            .join('; ')}
-        </span>{' '}
+            .map((author) => `${author.replace(".", "")}.`)
+            .join("; ")}
+        </span>{" "}
       </Fragment>
     )}
     {!!year && (
       <Fragment>
-        <span className='year'>({year})</span>
-        {'. '}
+        <span className="year">({year})</span>
+        {". "}
       </Fragment>
     )}
     {!!title && !simple && (
       <Fragment>
-        <span className='tittle'>{title}</span>
-        {'. '}
+        <span className="tittle">{title}</span>
+        {". "}
       </Fragment>
     )}
     {(!!journal || !!volume) && (
       <Fragment>
         <em>
-          {!!journal && <span className='journal'>{titleCase(journal)}</span>}
+          {!!journal && <span className="journal">{titleCase(journal)}</span>}
           {!!journal && !!volume && (
             <Fragment>
-              {', '}
-              <span className='volume'>{volume}</span>
+              {", "}
+              <span className="volume">{volume}</span>
             </Fragment>
           )}
         </em>
-        {!!issue && <span className='issue'>({issue})</span>}
+        {!!issue && <span className="issue">({issue})</span>}
         {!!page && (
           <Fragment>
-            {', '}
-            <span className='page'>{page}</span>
+            {", "}
+            <span className="page">{page}</span>
           </Fragment>
         )}
 
-        {'. '}
+        {". "}
       </Fragment>
     )}
     {!!doi && (
       <a
-        className='doi'
+        className="doi"
         href={`https://dx.doi.org/${doi}`}
-        target='_blank'
-        rel='noopener noreferrer'>
-        {`https://dx.doi.org/${doi}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {`${doi}`}
       </a>
     )}
   </div>

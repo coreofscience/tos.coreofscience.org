@@ -8,6 +8,11 @@
   font-weight: 600;
 }
 
+.reference div.tittle {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
 .reference .doi {
   text-decoration: none;
   color: var(--color-link, lightseagreen);

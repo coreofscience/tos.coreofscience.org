@@ -1,9 +1,16 @@
 .tree-menu {
   margin-bottom: 2em;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: repeat(auto-fill, 6em);
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 6em);
   grid-gap: 1rem;
+}
+
+@media (min-width: 440px) {
+  .tree-menu {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 6em;
+  }
 }
 
 .tree-menu button {
@@ -51,8 +58,12 @@
 .article {
   display: flex;
   flex-direction: row;
-  margin-top: 1.5em;
+  padding: 0.5rem 0;
   align-items: center;
+}
+
+.article:nth-child(2n + 1) {
+  background-color: var(--color-bg-accent);
 }
 
 .article svg.copy-image-icon {
