@@ -33,11 +33,9 @@ const useUpload = () => {
         ref
           .getDownloadURL()
           .then(() => {
-            console.log("file already exists");
             track(hash, 100);
           })
           .catch(() => {
-            console.log("file does not exist");
             const task = ref.put(blob);
             task.on(
               "state_changed",
