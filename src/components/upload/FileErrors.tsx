@@ -10,16 +10,16 @@ interface Props {}
 const FileErrors: FC<Props> = () => {
   const { files, remove } = useContext(FileContext);
   return (
-    <div>
+    <div className="fileErrors">
       {files
         .filter((file) => !file.valid)
         .map((file) => {
           return (
-            <div className="error-card" key={file.hash}>
-              <div>
+            <div className="errorCard" key={file.hash}>
+              <span>
                 <strong>{file.name}</strong> does not look like an ISI valid
-                file.{" "}
-              </div>
+                file.
+              </span>
               <button
                 onClick={() => remove(file.hash)}
                 className="close-button"
