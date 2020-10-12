@@ -61,7 +61,7 @@ const Tree: FC<Props> = ({ data }: Props) => {
   return (
     <Fragment>
       <div className="tree-menu">
-        {Object.entries(data).map(([sectionName, articles]) => (
+        {Object.entries(INFO).map(([sectionName, info]) => (
           <button
             className={`btn btn-${sectionName} ${sectionName} ${
               !show || show === sectionName ? "active" : "inactive"
@@ -70,8 +70,8 @@ const Tree: FC<Props> = ({ data }: Props) => {
             onClick={() => toggleShow(sectionName as "root" | "trunk" | "leaf")}
             key={`menu-${sectionName}`}
           >
-            <strong>{(INFO[sectionName] || { title: "" }).title}</strong>
-            <small>{articles.length} articles</small>
+            <strong>{(info || { title: "" }).title}</strong>
+            <small>{data[sectionName].length} articles</small>
           </button>
         ))}
       </div>
