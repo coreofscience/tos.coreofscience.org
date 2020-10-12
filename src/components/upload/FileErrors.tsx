@@ -23,6 +23,7 @@ const FileErrors: FC<Props> = () => {
               <button
                 onClick={() => remove(file.hash)}
                 className="close-button"
+                title="dismiss"
               >
                 <CancelFile />
               </button>
