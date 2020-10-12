@@ -28,14 +28,15 @@
   margin-top: 3px;
 }
 
-.footer ul.footer__sectionLinks img {
+.footer ul.footer__sectionLinks svg {
+  fill: var(--color-label);
   width: 2rem;
   height: 2rem;
   margin-right: 1rem;
   transition: 100ms;
 }
 
-.footer ul.footer__sectionLinks.social img:hover {
+.footer ul.footer__sectionLinks.social svg:hover {
   transform: scale(1.1);
 }
 
