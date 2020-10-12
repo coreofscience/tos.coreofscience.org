@@ -29,21 +29,27 @@ const useUpload = () => {
         };
         add(metadata);
         const ref = firebase.storage().ref(`isi-files/${hash}`);
-        const task = ref.put(blob);
-        task.on(
-          "state_changed",
-          (snapshot) => {
-            const percent =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            track(hash, percent);
-          },
-          (error) => {
-            alert(error);
-          },
-          () => {
+
+        ref
+          .getDownloadURL()
+          .then(() => {
             track(hash, 100);
-          }
-        );
+          })
+          .catch(() => {
+            const task = ref.put(blob);
+            task.on(
+              "state_changed",
+              (snapshot) => {
+                const percent =
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                track(hash, percent);
+              },
+              (error) => console.log,
+              () => {
+                track(hash, 100);
+              }
+            );
+          });
       });
     },
     [add, track, firebase]
