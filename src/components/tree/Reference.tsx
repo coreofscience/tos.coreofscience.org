@@ -85,7 +85,7 @@ const Reference: FC<Props> = ({
         target="_blank"
         rel="noopener noreferrer"
       >
-        {`${doi}`}
+        {simple ? doi : `https://dx.doi.org/${doi}`}
       </a>
     )}
   </div>
