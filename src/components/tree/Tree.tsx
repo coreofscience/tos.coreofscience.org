@@ -76,17 +76,17 @@ const Tree: FC<Props> = ({ data }: Props) => {
         ))}
       </div>
 
-      {Object.entries(data).map(
-        ([sectionName, articles]) =>
+      {Object.entries(INFO).map(
+        ([sectionName, info]) =>
           (!show || show === sectionName) && (
             <div
               className={`tree-segment ${sectionName}`}
               key={`tree-segment-${sectionName}`}
             >
               <div className="info">
-                <h2>{(INFO[sectionName] || { title: "" }).title}</h2>
+                <h2>{(info || { title: "" }).title}</h2>
                 <p>
-                  {(INFO[sectionName] || { info: "" }).info}
+                  {(info || { info: "" }).info}
                   Here you should find seminal articles from the original
                   articles of your topic of interest.
                 </p>
@@ -95,7 +95,7 @@ const Tree: FC<Props> = ({ data }: Props) => {
                 </p>
               </div>
               <div className="articles">
-                {sortBy(articles, (article) =>
+                {sortBy(data[sectionName], (article) =>
                   !star[article.label] ? 1 : 0
                 ).map((article) => (
                   <div className="article" key={`article-${article.label}`}>
