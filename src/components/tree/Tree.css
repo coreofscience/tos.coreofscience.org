@@ -59,6 +59,35 @@
   width: 22px;
   height: 22px;
 }
+.tree-segment .btn-star svg.star-svg-icon {
+  opacity: 0.25;
+}
+.tree-segment .btn-star.favorite svg.star-svg-icon {
+  opacity: 1;
+}
+
+.tree-segment .btn-star:hover svg.star-svg-icon,
+.tree-segment .btn-star:active svg.star-svg-icon {
+  opacity: 0.75;
+}
+
+.tree-segment .btn-star.favorite:hover svg.star-svg-icon,
+.tree-segment .btn-star.favorite:active svg.star-svg-icon {
+  opacity: 0.5;
+}
+
+.tree-segment.leaf .article svg.star-svg-icon {
+  fill: var(--color-tree-leaf);
+}
+
+.tree-segment.root .article svg.star-svg-icon {
+  fill: var(--color-tree-root);
+}
+
+.tree-segment.tree-segment.trunk .article svg.star-svg-icon {
+  fill: var(--color-tree-trunk);
+}
+
 .btn-star,
 .btn-star:active {
   margin-left: 0.5em;
