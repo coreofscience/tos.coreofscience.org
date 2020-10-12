@@ -41,5 +41,4 @@ jobs:
       - name: Deploy
         run: |
           npm install firebase-tools
-          npm run deploy -- --token=${{ secrets.FIREBASE_TOKEN }} --except hosting -P coreofscience-dev
-          npm run deploy -- --token=${{ secrets.FIREBASE_TOKEN }} --only hosting -P tos-coreofscience-dev
+          npm run deploy -- --token=${{ secrets.FIREBASE_TOKEN }} -P coreofscience-dev
