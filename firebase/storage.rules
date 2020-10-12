@@ -1,9 +1,11 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
+    match /isi-files/{fileHash} {
+      allow read, write: if true;
+    }
     match /{allPaths=**} {
-      allow read: if false;
-      allow write: if true;
+      allow read, write: if false;
     }
   }
 }
