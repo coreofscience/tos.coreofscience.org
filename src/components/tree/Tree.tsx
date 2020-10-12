@@ -7,10 +7,7 @@ import Reference from "./Reference";
 import { Article } from "../../utils/customTypes";
 
 import "./Tree.css";
-
-interface Props {
-  data: { [section: string]: Article[] };
-}
+import DATA from "./data.json";
 
 const INFO: {
   [key: string]: { title: string; info: string };
@@ -39,7 +36,8 @@ const INFO: {
   },
 };
 
-const Tree: FC<Props> = ({ data }: Props) => {
+const Tree: FC<{}> = () => {
+  const data: { [section: string]: Article[] } = DATA;
   const [star, setStar] = useState<{ [label: string]: boolean }>({});
   const [show, setShow] = useState<"root" | "trunk" | "leaf" | null>(null);
 
@@ -59,7 +57,7 @@ const Tree: FC<Props> = ({ data }: Props) => {
   return (
     <Fragment>
       <div className="tree-menu">
-        {Object.entries(INFO).map(([sectionName, info]) => (
+        {Object.entries(data).map(([sectionName, articles]) => (
           <button
             className={`btn btn-${sectionName} ${sectionName} ${
               !show || show === sectionName ? "active" : "inactive"
@@ -68,23 +66,23 @@ const Tree: FC<Props> = ({ data }: Props) => {
             onClick={() => toggleShow(sectionName as "root" | "trunk" | "leaf")}
             key={`menu-${sectionName}`}
           >
-            <strong>{(info || { title: "" }).title}</strong>
-            <small>{data[sectionName].length} articles</small>
+            <strong>{(INFO[sectionName] || { title: "" }).title}</strong>
+            <small>{articles.length} articles</small>
           </button>
         ))}
       </div>
 
-      {Object.entries(INFO).map(
-        ([sectionName, info]) =>
+      {Object.entries(data).map(
+        ([sectionName, articles]) =>
           (!show || show === sectionName) && (
             <div
               className={`tree-segment ${sectionName}`}
               key={`tree-segment-${sectionName}`}
             >
               <div className="info">
-                <h2>{(info || { title: "" }).title}</h2>
+                <h2>{(INFO[sectionName] || { title: "" }).title}</h2>
                 <p>
-                  {(info || { info: "" }).info}
+                  {(INFO[sectionName] || { info: "" }).info}
                   Here you should find seminal articles from the original
                   articles of your topic of interest.
                 </p>
@@ -93,7 +91,7 @@ const Tree: FC<Props> = ({ data }: Props) => {
                 </p>
               </div>
               <div className="articles">
-                {sortBy(data[sectionName], (article) =>
+                {sortBy(articles, (article) =>
                   !star[article.label] ? 1 : 0
                 ).map((article) => (
                   <div className="article" key={`article-${article.label}`}>

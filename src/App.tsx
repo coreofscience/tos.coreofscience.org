@@ -5,7 +5,7 @@ import AppLayout from "./components/layout/AppLayout";
 
 import Home from "./components/upload/Home";
 import NotFound from "./components/NotFound";
-import Result from "./components/tree/Result";
+import Tree from "./components/tree/Tree";
 
 import FirebaseProvider from "./components/providers/FirebaseProvider";
 import FilesProvider from "./components/providers/FilesProvider";
@@ -21,7 +21,7 @@ const App: FC<{}> = () => {
                 <Home />
               </Route>
               <Route path="/tree/:treeId">
-                <Result />
+                <Tree />
               </Route>
               <Route path="*">
                 <NotFound />
