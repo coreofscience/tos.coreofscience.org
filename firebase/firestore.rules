@@ -1,7 +1,7 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /trees/{document=**} {
+    match /results/{document=**} {
       allow read: if
           request.time < timestamp.date(2021, 11, 10);
     }
