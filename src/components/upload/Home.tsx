@@ -31,7 +31,7 @@ const createTree = async ({
   if (!result.key) {
     throw new Error("Failed to retrieve a new key.");
   }
-  return btoa(result.key);
+  return result.key;
 };
 
 const hasFinished = (
