@@ -9,7 +9,10 @@ import Reference from "./Reference";
 import { Article } from "../../utils/customTypes";
 
 import "./Tree.css";
-import DATA from "./data.json";
+
+interface Props {
+  data: { [section: string]: Article[] };
+}
 
 const INFO: {
   [key: string]: { title: string; info: string };
@@ -38,8 +41,7 @@ const INFO: {
   },
 };
 
-const Tree: FC<{}> = () => {
-  const data: { [section: string]: Article[] } = DATA;
+const Tree: FC<Props> = ({ data }: Props) => {
   const [star, setStar] = useState<{ [label: string]: boolean }>({});
   const [show, setShow] = useState<"root" | "trunk" | "leaf" | null>(null);
 
