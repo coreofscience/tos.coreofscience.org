@@ -59,7 +59,7 @@ const Footer = () => (
             <Reference
               label=""
               authors={["Robledo, S.", "Osorio, G.", "Lopez, C."]}
-              year={2020}
+              year={2014}
               title="Networking en pequeña empresa: una revisión bibliográfica utilizando la teoria de grafos"
               journal="Revista vínculos"
               volume="11"
