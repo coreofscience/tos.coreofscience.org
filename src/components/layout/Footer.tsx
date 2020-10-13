@@ -159,10 +159,23 @@ const Footer = () => (
       </section>
     </div>
     <div className="footer__copy">
-      <CoreOfScience />
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://coreofscience.com"
+      >
+        <CoreOfScience />
+      </a>
       <span>
-        A <a href="https://coreofscience.com">Core of Science</a> project.
-        &copy; 2020 Core of Science.
+        A{" "}
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://coreofscience.com"
+        >
+          Core of Science
+        </a>{" "}
+        project. &copy; 2020 Core of Science.
       </span>
     </div>
   </div>
