@@ -17,7 +17,7 @@ const FileErrors: FC<Props> = () => {
         return (
           <div className="errorCard" key={file.hash}>
             <span>
-              <strong>{file.name}</strong> does not look like an ISI valid file.
+              <strong>{file.name}</strong> {file.error}.
             </span>
             <button
               onClick={() => remove(file.hash)}

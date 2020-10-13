@@ -7,7 +7,6 @@ const looksLikeIsi = (content: string): boolean => {
     }
     const match = line.match(ISI_PATTERN);
     if (!match) {
-      console.log(`${line} doesn't look like isi`);
       return false;
     }
   }
