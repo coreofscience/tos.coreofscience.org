@@ -15,9 +15,9 @@
 
 .footer .footer__mainLinks {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 0px 0px;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto 1fr;
+  gap: 0px 2rem;
   grid-template-areas:
     "repo-links citations-links citations-links citations-links"
     "social-links citations-links citations-links citations-links";
