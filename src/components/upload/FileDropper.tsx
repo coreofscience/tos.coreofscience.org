@@ -6,6 +6,8 @@ import { looksLikeIsi } from "../../utils/isiUtils";
 import useUpload from "../../hooks/useUpload";
 import useError from "../../hooks/useError";
 
+import FileErrorMap, { MAX_FILE_SIZE } from "./errors";
+
 interface Props {}
 
 const FileDropper: FC<Props> = () => {
@@ -13,16 +15,22 @@ const FileDropper: FC<Props> = () => {
   const error = useError();
   const onDrop = useCallback(
     (acceptedFiles: Blob[]) => {
+      acceptedFiles
+        .filter((file) => file.size / 2 ** 20 > MAX_FILE_SIZE)
+        .forEach((file) => {
+          error(Object(file).name, file, FileErrorMap.max_size);
+        });
+
       Promise.all(
-        acceptedFiles.map((file) =>
-          file.text().then((text) => ({ text, file }))
-        )
+        acceptedFiles
+          .filter((file) => file.size / 2 ** 20 <= MAX_FILE_SIZE)
+          .map((file) => file.text().then((text) => ({ text, file })))
       ).then((data) => {
         data.forEach(({ text, file }) => {
           if (looksLikeIsi(text)) {
             upload(Object(file).name, file);
           } else {
-            error(Object(file).name, file);
+            error(Object(file).name, file, FileErrorMap.isi);
           }
         });
       });

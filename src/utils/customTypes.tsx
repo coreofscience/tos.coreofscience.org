@@ -6,6 +6,7 @@ export interface FileMetadata {
   keywords?: string[];
   articles?: number;
   citations?: number;
+  error?: string;
 }
 
 export interface FileContexType {
