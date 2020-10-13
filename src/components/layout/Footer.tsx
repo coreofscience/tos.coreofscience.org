@@ -11,7 +11,7 @@ import "./Footer.css";
 const Footer = () => (
   <div className="footer">
     <div className="footer__mainLinks">
-      <section className="footer__section repo-links">
+      <section className="footer__section repoLinks">
         <h4 className="footer__sectionHeader">This project on GitHub</h4>
         <ul className="footer__sectionLinks">
           <li>
@@ -52,12 +52,8 @@ const Footer = () => (
           </li>
         </ul>
       </section>
-      <section className="footer__section citations-links">
+      <section className="footer__section citationLinks">
         <h4 className="footer__sectionHeader">Citing Tree of Science</h4>
-        <p>
-          If Tree of Science contributes to a project that leads to a scientific
-          publication, please acknowledge this fact by citing:
-        </p>
         <ul className="footer__sectionLinks citations">
           <li>
             <Reference
@@ -76,7 +72,7 @@ const Footer = () => (
               issue="1"
               page="45-49"
               doi="10.15446/ing.investig.v40n1.77718"
-              simple={true}
+              simple={false}
             />
           </li>
           <li>
@@ -97,7 +93,7 @@ const Footer = () => (
               issue="25"
               page="121-138"
               doi="10.22490/24629448.1735"
-              simple={true}
+              simple={false}
             />
           </li>
           <li>
@@ -111,12 +107,12 @@ const Footer = () => (
               issue="2"
               page="6-16"
               doi="10.14483/2322939X.9664"
-              simple={true}
+              simple={false}
             />
           </li>
         </ul>
       </section>
-      <section className="footer__section social-links">
+      <section className="footer__section socialLinks">
         <h4 className="footer__sectionHeader">Social media</h4>
         <ul className="footer__sectionLinks social">
           <li>

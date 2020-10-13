@@ -3,24 +3,10 @@
   min-height: 8em;
 }
 
-.repo-links {
-  grid-area: repo-links;
-}
-.social-links {
-  grid-area: social-links;
-}
-.citations-links {
-  grid-area: citations-links;
-}
-
 .footer .footer__mainLinks {
   display: grid;
-  grid-template-columns: auto auto;
-  grid-template-rows: auto 1fr;
-  gap: 0px 2rem;
-  grid-template-areas:
-    "repo-links citations-links citations-links citations-links"
-    "social-links citations-links citations-links citations-links";
+  grid-template-columns: 1fr;
+  grid-gap: 2rem;
 }
 
 .footer .footer__sectionHeader {
@@ -36,6 +22,7 @@
 
 .footer ul.footer__sectionLinks.social {
   display: flex;
+  flex-direction: row;
 }
 
 .footer ul.footer__sectionLinks li {
@@ -43,7 +30,7 @@
 }
 
 .footer ul.footer__sectionLinks.citations li {
-  margin-bottom: 1rem;
+  margin-top: 0.5rem;
 }
 
 .footer ul.footer__sectionLinks svg {
@@ -69,4 +56,19 @@
   width: 2rem;
   height: 2rem;
   margin-right: 1rem;
+}
+
+@media (min-width: 800px) {
+  .footer__mainLinks {
+    grid-template-areas: "git cite" "social cite";
+  }
+  .footer__section.socialLinks {
+    grid-area: social;
+  }
+  .footer__section.repoLinks {
+    grid-area: git;
+  }
+  .footer__section.citationLinks {
+    grid-area: cite;
+  }
 }
