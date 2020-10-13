@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import "./UploadIndicator.css";
 
 import FileCard from "./FileCard";
@@ -11,6 +11,18 @@ const UploadIndicator: FC<Props> = () => {
   const { remove } = useContext(FileContext);
   const { progress } = useContext(FileContext);
   const files = useFiles();
+
+  const [cappedFiles, setCappedFiles] = useState<{ [hash: string]: boolean }>(
+    {}
+  );
+
+  useEffect(() => {
+    let count = 0;
+    for (const file of files) {
+      console.log(file);
+    }
+  }, [files]);
+
   return (
     <div className="uploadIndicator">
       {files.map((file) => {

@@ -7,6 +7,7 @@ export interface FileMetadata {
   articles?: number;
   citations?: number;
   error?: string;
+  capped?: boolean;
 }
 
 export interface FileContexType {
