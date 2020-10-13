@@ -3,10 +3,24 @@
   min-height: 8em;
 }
 
+.repo-links {
+  grid-area: repo-links;
+}
+.social-links {
+  grid-area: social-links;
+}
+.citations-links {
+  grid-area: citations-links;
+}
+
 .footer .footer__mainLinks {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  grid-gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "repo-links citations-links citations-links citations-links"
+    "social-links citations-links citations-links citations-links";
 }
 
 .footer .footer__sectionHeader {
@@ -28,6 +42,10 @@
   margin-top: 3px;
 }
 
+.footer ul.footer__sectionLinks.citations li {
+  margin-bottom: 1rem;
+}
+
 .footer ul.footer__sectionLinks svg {
   fill: var(--color-label);
   width: 2rem;
@@ -41,7 +59,7 @@
 }
 
 .footer .footer__copy {
-  margin-top: 3rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: row;
   align-items: flex-end;

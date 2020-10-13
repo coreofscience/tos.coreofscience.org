@@ -4,63 +4,14 @@ import GitHubIcon from "../vectors/GitHubIcon";
 import FacebookIcon from "../vectors/FacebookIcon";
 import YoutubeIcon from "../vectors/YoutubeIcon";
 import TwitterIcon from "../vectors/TwitterIcon";
+import Reference from "../tree/Reference";
 
 import "./Footer.css";
 
 const Footer = () => (
   <div className="footer">
-    <div>
-      <h4 className="footer__sectionHeader">Citing Tree of Science</h4>
-      <p>
-        If Tree of Science contributes to a project that leads to a scientific
-        publication, please acknowledge this fact by citing:
-        <ul className="footer__sectionLinks citations">
-          <li>
-            <a
-              target="blank"
-              rel="noopener noreferrer"
-              href="https://revistas.unal.edu.co/index.php/ingeinv/article/view/77718/0"
-            >
-              {/* Valencia-Hernandez, D. S., Robledo, S., Pinilla, R., Duque-Méndez,
-              N. D., & Olivar-Tost, G. (2020). Algoritmo SAP para análisis de
-              citaciones: Una mejora al Árbol de la Ciencia. Ingeniería E
-              Investigación, 40(1), 45-49. */}
-              Algoritmo SAP para análisis de citaciones: Una mejora al Árbol de
-              la Ciencia
-            </a>
-          </li>
-          <li>
-            <a
-              target="blank"
-              rel="noopener noreferrer"
-              href="http://www.scielo.org.co/scielo.php?script=sci_arttext&pid=S1794-24702016000100010"
-            >
-              {/* Zuluaga, Martha, Robledo, Sebastian, Osorio-Zuluaga, German A,
-              Yathe, Laura, Gonzalez, Diana, & Taborda, Gonzalo. (2016).
-              Metabolomics and pesticides: systematic literature review using
-              graph theory for analysis of references. Nova, 14(25), 121-138. */}
-              Metabolomics and pesticides: systematic literature review using
-              graph theory for analysis of references
-            </a>
-          </li>
-          <li>
-            <a
-              target="blank"
-              rel="noopener noreferrer"
-              href="https://revistas.udistrital.edu.co/index.php/vinculos/article/view/9664"
-            >
-              {/* Robledo, S., Osorio, G., & Lopez, C. (2014). Networking en pequeña
-              empresa: una revisión bibliográfica utilizando la teoria de
-              grafos. Revista vínculos, 11(2), 6-16. */}
-              Networking en pequeña empresa: una revisión bibliográfica
-              utilizando la teoria de grafos
-            </a>
-          </li>
-        </ul>
-      </p>
-    </div>
     <div className="footer__mainLinks">
-      <section className="footer__section">
+      <section className="footer__section repo-links">
         <h4 className="footer__sectionHeader">This project on GitHub</h4>
         <ul className="footer__sectionLinks">
           <li>
@@ -101,7 +52,71 @@ const Footer = () => (
           </li>
         </ul>
       </section>
-      <section className="footer__section">
+      <section className="footer__section citations-links">
+        <h4 className="footer__sectionHeader">Citing Tree of Science</h4>
+        <p>
+          If Tree of Science contributes to a project that leads to a scientific
+          publication, please acknowledge this fact by citing:
+        </p>
+        <ul className="footer__sectionLinks citations">
+          <li>
+            <Reference
+              label=""
+              authors={[
+                "Valencia-Hernandez, D. S.",
+                "Robledo, S.",
+                "Pinilla, R.",
+                "Duque-Méndez, N. D.",
+                "Olivar-Tost, G.",
+              ]}
+              year={2020}
+              title="Algoritmo SAP para análisis de citaciones: Una mejora al Árbol de la Ciencia"
+              journal="Ingeniería E Investigación"
+              volume="40"
+              issue="1"
+              page="45-49"
+              doi="10.15446/ing.investig.v40n1.77718"
+              simple={true}
+            />
+          </li>
+          <li>
+            <Reference
+              label=""
+              authors={[
+                "Zuluaga, M.",
+                "Robledo, S.",
+                "Osorio-Zuluaga, G. A",
+                "Yathe, L.",
+                "Gonzalez, D.",
+                "Taborda, G.",
+              ]}
+              year={2016}
+              title="Metabolomics and pesticides: systematic literature review usinggraph theory for analysis of references"
+              journal="Nova"
+              volume="14"
+              issue="25"
+              page="121-138"
+              doi="10.22490/24629448.1735"
+              simple={true}
+            />
+          </li>
+          <li>
+            <Reference
+              label=""
+              authors={["Robledo, S.", "Osorio, G.", "Lopez, C."]}
+              year={2020}
+              title="Networking en pequeña empresa: una revisión bibliográfica utilizando la teoria de grafos"
+              journal="Revista vínculos"
+              volume="11"
+              issue="2"
+              page="6-16"
+              doi="10.14483/2322939X.9664"
+              simple={true}
+            />
+          </li>
+        </ul>
+      </section>
+      <section className="footer__section social-links">
         <h4 className="footer__sectionHeader">Social media</h4>
         <ul className="footer__sectionLinks social">
           <li>
