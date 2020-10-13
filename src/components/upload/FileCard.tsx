@@ -10,7 +10,7 @@ interface Props {
   citations?: number;
   remove?: () => void;
   progress: number;
-  caped?: boolean;
+  capped?: boolean;
 }
 
 const FileCard: FC<Props> = ({
@@ -20,10 +20,10 @@ const FileCard: FC<Props> = ({
   citations = 0,
   progress = 0,
   remove = () => {},
-  caped = true,
+  capped = true,
 }: Props) => {
   return (
-    <div className={caped ? "fileCard capped" : "fileCard"}>
+    <div className={capped ? "fileCard capped" : "fileCard"}>
       <button onClick={remove} className="fileCard__closeButton">
         <CancelFile />
       </button>

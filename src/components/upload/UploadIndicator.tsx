@@ -19,7 +19,13 @@ const UploadIndicator: FC<Props> = () => {
   useEffect(() => {
     let count = 0;
     for (const file of files) {
-      console.log(file);
+      count += file.articles || 0;
+
+      if (count <= 500) {
+        setCappedFiles((prev) => ({ ...prev, [file.hash]: false }));
+      } else {
+        setCappedFiles((prev) => ({ ...prev, [file.hash]: true }));
+      }
     }
   }, [files]);
 
@@ -34,6 +40,7 @@ const UploadIndicator: FC<Props> = () => {
             citations={file.citations}
             keywords={file.keywords}
             remove={() => remove(file.hash)}
+            capped={cappedFiles[file.hash]}
             key={file.hash}
           />
         );
