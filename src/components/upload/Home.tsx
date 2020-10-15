@@ -7,13 +7,13 @@ import FileDropper from "./FileDropper";
 import UploadIndicator from "./UploadIndicator";
 import FileErrors from "./FileErrors";
 
-import { FileMetadata } from "../../utils/customTypes";
 import useFiles from "../../hooks/useFiles";
 import FirebaseContext from "../../context/FirebaseContext";
 
 import "./Home.css";
 
 const numberFormat = new Intl.NumberFormat();
+const MAX_SIZE = 3; // MB
 
 const createTree = async ({
   app,
@@ -59,16 +59,18 @@ const Home: FC<{}> = () => {
     (acc, el) => acc + (el.citations || 0),
     0
   );
-  const articleCap = Math.min(totalArticles, 500);
-  const citationCap = files
-    .reduce(
-      (acc: FileMetadata[], el) =>
-        acc.reduce((acc, el) => acc + (el.articles || 0), 0) >= articleCap
-          ? acc
-          : [...acc, el],
-      []
-    )
-    .reduce((acc, el) => acc + (el.citations || 0), 0);
+
+  let articleCap = 0;
+  let citationCap = 0;
+  let currentSize = 0;
+  for (let file of files) {
+    currentSize += file.blob.size / 2 ** 20;
+    if (currentSize > MAX_SIZE) {
+      break;
+    }
+    articleCap += file.articles || 0;
+    citationCap += file.citations || 0;
+  }
 
   const [create, { isLoading, isError }] = useMutation(createTree, {
     onSuccess: (treeId: string) => history.push(`/tree/${treeId}`),
