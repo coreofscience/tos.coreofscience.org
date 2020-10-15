@@ -11,6 +11,7 @@ interface Props {
   articles?: number;
   citations?: number;
   remove?: () => void;
+  move?: () => void;
   progress: number;
   capped?: boolean;
   size: number;
@@ -23,6 +24,7 @@ const FileCard: FC<Props> = ({
   citations = 0,
   progress = 0,
   remove = () => {},
+  move = () => {},
   capped = true,
   size = 0,
 }: Props) => {
@@ -36,7 +38,7 @@ const FileCard: FC<Props> = ({
       onMouseLeave={() => setShowMoveButton(false)}
     >
       {showMoveButton && (
-        <button onClick={remove} className="fileCard__moveButton">
+        <button onClick={move} className="fileCard__moveButton">
           <MoveFirstIcon />
         </button>
       )}

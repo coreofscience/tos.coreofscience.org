@@ -9,7 +9,7 @@ import { MAX_SIZE } from "../../utils/computeQuantities";
 interface Props {}
 
 const UploadIndicator: FC<Props> = () => {
-  const { remove } = useContext(FileContext);
+  const { remove, swap } = useContext(FileContext);
   const { progress } = useContext(FileContext);
   const files = useFiles();
 
@@ -41,6 +41,7 @@ const UploadIndicator: FC<Props> = () => {
             citations={file.citations}
             keywords={file.keywords}
             remove={() => remove(file.hash)}
+            move={() => swap(file.hash)}
             capped={cappedFiles[file.hash]}
             size={file.blob.size / 2 ** 20}
             key={file.hash}
