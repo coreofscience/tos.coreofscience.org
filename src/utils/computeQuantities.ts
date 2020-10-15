@@ -1,6 +1,6 @@
 import { FileMetadata } from "./customTypes";
 
-export const MAX_SIZE = 3; // MB
+export const MAX_SIZE = 5; // MB
 
 const computeQuantities = (
   files: FileMetadata[]

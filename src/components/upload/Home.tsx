@@ -81,12 +81,6 @@ const Home: FC<{}> = () => {
       <div className="information-cant-article">
         <div className="frame-article">
           <span className="total-articles">
-            {numberFormat.format(sizeCap)}/{numberFormat.format(totalSize)}
-          </span>
-          <span className="articles">size [MB]</span>
-        </div>
-        <div className="frame-article">
-          <span className="total-articles">
             {numberFormat.format(articleCap)}/
             {numberFormat.format(totalArticles)}
           </span>
@@ -98,6 +92,12 @@ const Home: FC<{}> = () => {
             {numberFormat.format(totalCitations)}
           </span>
           <span className="articles">citations</span>
+        </div>
+        <div className="frame-article">
+          <span className="total-articles">
+            {numberFormat.format(sizeCap)}/{numberFormat.format(totalSize)}
+          </span>
+          <span className="articles">size [MB]</span>
         </div>
       </div>
       <br></br>
