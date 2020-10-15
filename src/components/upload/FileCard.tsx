@@ -1,6 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 import CancelFile from "../vectors/CancelFile";
+import MoveFirstIcon from "../vectors/MoveFirstIcon";
+
 import "./FileCard.css";
 
 interface Props {
@@ -25,9 +27,19 @@ const FileCard: FC<Props> = ({
   size = 0,
 }: Props) => {
   const numberFormat = new Intl.NumberFormat();
+  const [showMoveButton, setShowMoveButton] = useState<boolean>(false);
 
   return (
-    <div className={capped ? "fileCard capped" : "fileCard"}>
+    <div
+      className={capped ? "fileCard capped" : "fileCard"}
+      onMouseEnter={() => setShowMoveButton(true)}
+      onMouseLeave={() => setShowMoveButton(false)}
+    >
+      {showMoveButton && (
+        <button onClick={remove} className="fileCard__moveButton">
+          <MoveFirstIcon />
+        </button>
+      )}
       <button onClick={remove} className="fileCard__closeButton">
         <CancelFile />
       </button>

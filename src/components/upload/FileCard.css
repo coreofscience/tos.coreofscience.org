@@ -94,3 +94,28 @@
     ),
     linear-gradient(to bottom, #eee, #999);
 }
+
+.fileCard .fileCard__moveButton {
+  background-color: #f0972f;
+  color: #fcfcfc;
+  height: 30px;
+  width: 30px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: background-color 200ms cubic-bezier(0.42, 0, 0.56, 1.7);
+}
+
+.fileCard .fileCard__moveButton:hover,
+.fileCard .fileCard__moveButton:active {
+  background-color: var(--color-tree-leaf);
+}
+
+.fileCard .fileCard__moveButton img {
+  width: 14px;
+  height: 14px;
+}
