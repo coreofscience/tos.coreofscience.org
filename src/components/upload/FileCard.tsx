@@ -11,6 +11,7 @@ interface Props {
   remove?: () => void;
   progress: number;
   capped?: boolean;
+  size: number;
 }
 
 const FileCard: FC<Props> = ({
@@ -21,7 +22,10 @@ const FileCard: FC<Props> = ({
   progress = 0,
   remove = () => {},
   capped = true,
+  size = 0,
 }: Props) => {
+  const numberFormat = new Intl.NumberFormat();
+
   return (
     <div className={capped ? "fileCard capped" : "fileCard"}>
       <button onClick={remove} className="fileCard__closeButton">
@@ -43,6 +47,12 @@ const FileCard: FC<Props> = ({
           <small className="fileCard__stats__unit">
             {citations === 1 ? "citation" : "citations"}
           </small>
+        </span>
+        <span className="fileCard__stats">
+          <strong className="fileCard__stats__count">
+            {numberFormat.format(size)}
+          </strong>
+          <small className="fileCard__stats__unit">size [MB]</small>
         </span>
       </div>
       <div className="fileCard_progressBar">
