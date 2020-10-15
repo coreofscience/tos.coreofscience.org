@@ -10,10 +10,11 @@ import FileErrors from "./FileErrors";
 import useFiles from "../../hooks/useFiles";
 import FirebaseContext from "../../context/FirebaseContext";
 
+import computeQuantities from "../../utils/computeQuantities";
+
 import "./Home.css";
 
 const numberFormat = new Intl.NumberFormat();
-const MAX_SIZE = 3; // MB
 
 const createTree = async ({
   app,
@@ -54,23 +55,14 @@ const Home: FC<{}> = () => {
   const firebase = useContext(FirebaseContext);
   const history = useHistory();
 
-  const totalArticles = files.reduce((acc, el) => acc + (el.articles || 0), 0);
-  const totalCitations = files.reduce(
-    (acc, el) => acc + (el.citations || 0),
-    0
-  );
-
-  let articleCap = 0;
-  let citationCap = 0;
-  let currentSize = 0;
-  for (let file of files) {
-    currentSize += file.blob.size / 2 ** 20;
-    if (currentSize > MAX_SIZE) {
-      break;
-    }
-    articleCap += file.articles || 0;
-    citationCap += file.citations || 0;
-  }
+  const {
+    totalArticles,
+    totalCitations,
+    totalSize,
+    articleCap,
+    citationCap,
+    sizeCap,
+  } = computeQuantities(files);
 
   const [create, { isLoading, isError }] = useMutation(createTree, {
     onSuccess: (treeId: string) => history.push(`/tree/${treeId}`),
@@ -87,6 +79,12 @@ const Home: FC<{}> = () => {
       <FileErrors />
       <p>Review your input:</p>
       <div className="information-cant-article">
+        <div className="frame-article">
+          <span className="total-articles">
+            {numberFormat.format(sizeCap)}/{numberFormat.format(totalSize)}
+          </span>
+          <span className="articles">size [MB]</span>
+        </div>
         <div className="frame-article">
           <span className="total-articles">
             {numberFormat.format(articleCap)}/
