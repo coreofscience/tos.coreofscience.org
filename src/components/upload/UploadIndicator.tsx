@@ -4,6 +4,7 @@ import "./UploadIndicator.css";
 import FileCard from "./FileCard";
 import FileContext from "../../context/FileContext";
 import useFiles from "../../hooks/useFiles";
+import { MAX_SIZE } from "../../utils/computeQuantities";
 
 interface Props {}
 
@@ -17,11 +18,11 @@ const UploadIndicator: FC<Props> = () => {
   );
 
   useEffect(() => {
-    let count = 0;
+    let size = 0;
     for (const file of files) {
-      count += file.articles || 0;
+      size += file.blob.size / 2 ** 20;
 
-      if (count <= 500) {
+      if (size <= MAX_SIZE) {
         setCappedFiles((prev) => ({ ...prev, [file.hash]: false }));
       } else {
         setCappedFiles((prev) => ({ ...prev, [file.hash]: true }));

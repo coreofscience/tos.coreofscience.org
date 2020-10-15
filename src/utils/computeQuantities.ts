@@ -1,6 +1,6 @@
 import { FileMetadata } from "./customTypes";
 
-const MAX_SIZE = 3; // MB
+export const MAX_SIZE = 3; // MB
 
 const computeQuantities = (
   files: FileMetadata[]
@@ -30,6 +30,7 @@ const computeQuantities = (
   for (let file of files) {
     sizeCap += file.blob.size / 2 ** 20;
     if (sizeCap > MAX_SIZE) {
+      sizeCap -= file.blob.size / 2 ** 20;
       break;
     }
     articleCap += file.articles || 0;
