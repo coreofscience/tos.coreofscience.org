@@ -112,3 +112,7 @@
   width: 14px;
   height: 14px;
 }
+
+.fileCard .fileCard__moveButton svg.move-icon path {
+  fill: var(--color-bg);
+}
