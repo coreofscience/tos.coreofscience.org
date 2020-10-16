@@ -4,6 +4,7 @@ import CancelFile from "../vectors/CancelFile";
 import MoveFirstIcon from "../vectors/MoveFirstIcon";
 
 import { round } from "../../utils/mathUtils";
+import { MAX_SIZE } from "../../utils/computeQuantities";
 
 import "./FileCard.css";
 
@@ -70,7 +71,8 @@ const FileCard: FC<Props> = ({
             size: {numberFormat.format(round(size, 1))}MB
           </small>
           <small className="fileCard__stats__unit">
-            cum. size: {numberFormat.format(round(cumSize, 1))}MB
+            cum. size: {numberFormat.format(round(cumSize, 1))}MB/
+            {numberFormat.format(round(MAX_SIZE, 1))}MB
           </small>
         </span>
       </div>

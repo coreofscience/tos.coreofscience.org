@@ -10,7 +10,7 @@ import FileErrors from "./FileErrors";
 import useFiles from "../../hooks/useFiles";
 import FirebaseContext from "../../context/FirebaseContext";
 
-import computeQuantities from "../../utils/computeQuantities";
+import computeQuantities, { MAX_SIZE } from "../../utils/computeQuantities";
 import { round } from "../../utils/mathUtils";
 
 import "./Home.css";
@@ -59,7 +59,6 @@ const Home: FC<{}> = () => {
   const {
     totalArticles,
     totalCitations,
-    totalSize,
     articleCap,
     citationCap,
     sizeCap,
@@ -97,7 +96,7 @@ const Home: FC<{}> = () => {
         <div className="frame-article">
           <span className="total-articles">
             {numberFormat.format(round(sizeCap, 1))}/
-            {numberFormat.format(round(totalSize, 1))}
+            {numberFormat.format(round(MAX_SIZE, 1))}
           </span>
           <span className="articles">size [MB]</span>
         </div>
