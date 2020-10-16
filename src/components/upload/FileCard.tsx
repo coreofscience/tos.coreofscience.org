@@ -29,15 +29,10 @@ const FileCard: FC<Props> = ({
   size = 0,
 }: Props) => {
   const numberFormat = new Intl.NumberFormat();
-  const [showMoveButton, setShowMoveButton] = useState<boolean>(false);
 
   return (
-    <div
-      className={capped ? "fileCard capped" : "fileCard"}
-      onMouseEnter={() => setShowMoveButton(true)}
-      onMouseLeave={() => setShowMoveButton(false)}
-    >
-      {showMoveButton && (
+    <div className={capped ? "fileCard capped" : "fileCard"}>
+      {capped && (
         <button onClick={move} className="fileCard__moveButton">
           <MoveFirstIcon />
         </button>
