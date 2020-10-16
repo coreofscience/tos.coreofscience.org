@@ -85,14 +85,7 @@
 }
 
 .capped {
-  background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgb(223, 221, 221) 10px,
-      rgb(223, 221, 221) 20px
-    ),
-    linear-gradient(to bottom, #eee, #999);
+  background: var(--color-bg-accent);
 }
 
 .fileCard .fileCard__moveButton {

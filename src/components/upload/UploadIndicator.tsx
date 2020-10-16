@@ -17,6 +17,8 @@ const UploadIndicator: FC<Props> = () => {
     {}
   );
 
+  let cumSize = 0;
+
   useEffect(() => {
     let size = 0;
     for (const file of files) {
@@ -33,6 +35,7 @@ const UploadIndicator: FC<Props> = () => {
   return (
     <div className="uploadIndicator">
       {files.map((file) => {
+        cumSize += file.blob.size / 2 ** 20;
         return (
           <FileCard
             name={file.name}
@@ -44,6 +47,7 @@ const UploadIndicator: FC<Props> = () => {
             move={() => swap(file.hash)}
             capped={cappedFiles[file.hash]}
             size={file.blob.size / 2 ** 20}
+            cumSize={cumSize}
             key={file.hash}
           />
         );

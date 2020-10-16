@@ -11,6 +11,7 @@ import useFiles from "../../hooks/useFiles";
 import FirebaseContext from "../../context/FirebaseContext";
 
 import computeQuantities from "../../utils/computeQuantities";
+import { round } from "../../utils/mathUtils";
 
 import "./Home.css";
 
@@ -95,7 +96,8 @@ const Home: FC<{}> = () => {
         </div>
         <div className="frame-article">
           <span className="total-articles">
-            {numberFormat.format(sizeCap)}/{numberFormat.format(totalSize)}
+            {numberFormat.format(round(sizeCap, 1))}/
+            {numberFormat.format(round(totalSize, 1))}
           </span>
           <span className="articles">size [MB]</span>
         </div>
