@@ -7,6 +7,7 @@ import Reference from "./Reference";
 import { Article } from "../../utils/customTypes";
 
 import "./Tree.css";
+import { mostCommon } from "../../utils/isiUtils";
 
 interface Props {
   data: { [section: string]: Article[] };
@@ -42,6 +43,24 @@ const INFO: {
 const Tree: FC<Props> = ({ data }: Props) => {
   const [star, setStar] = useState<{ [label: string]: boolean }>({});
   const [show, setShow] = useState<"root" | "trunk" | "leaf" | null>(null);
+  let keywords: { [label: string]: string[] } = {
+    root: [],
+    trunk: [],
+    leaf: [],
+  };
+
+  for (let section of Object.keys(keywords)) {
+    for (let article of data[section]) {
+      if (!article.keywords) continue;
+      keywords[section] = keywords[section].concat(article.keywords);
+    }
+    keywords[section] = mostCommon(
+      keywords[section].map((keyword) => {
+        return keyword.toLowerCase();
+      }),
+      5
+    );
+  }
 
   const toggleStar = useCallback((label: string) => {
     setStar((current) => ({ ...current, [label]: !current[label] }));
@@ -83,14 +102,13 @@ const Tree: FC<Props> = ({ data }: Props) => {
             >
               <div className="info">
                 <h2>{(info || { title: "" }).title}</h2>
-                <p>
-                  {(info || { info: "" }).info}
-                  Here you should find seminal articles from the original
-                  articles of your topic of interest.
-                </p>
-                <p>
-                  <strong>Keywords:</strong> keyword, keyword, keyword
-                </p>
+                <p>{(info || { info: "" }).info}</p>
+                {keywords[sectionName].length > 0 && (
+                  <p>
+                    <strong>Keywords:</strong>{" "}
+                    {keywords[sectionName].join(", ")}
+                  </p>
+                )}
               </div>
               <div className="articles">
                 {sortBy(data[sectionName], (article) =>

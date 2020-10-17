@@ -24,6 +24,7 @@ export interface BlobMap {
 export interface Article {
   label: string;
   authors?: string[];
+  keywords?: string[];
   year?: number | null;
   title?: string | null;
   journal?: string | null;

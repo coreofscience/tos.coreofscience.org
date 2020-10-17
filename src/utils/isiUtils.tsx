@@ -30,8 +30,7 @@ const getKeywordsList = (text: string) => {
     .flat();
 };
 
-const mostCommonKeywords = (text: string, max: number = 3) => {
-  const keywordsList = getKeywordsList(text);
+function mostCommon(keywordsList: string[], max: number) {
   let count: { [keyword: string]: number } = {};
   for (let keyword of keywordsList) {
     count[keyword] = (count[keyword] ? count[keyword] : 0) + 1;
@@ -40,6 +39,11 @@ const mostCommonKeywords = (text: string, max: number = 3) => {
     first[1] < second[1] ? 1 : -1
   );
   return sortCount.slice(0, max).map((item) => item[0]);
+}
+
+const mostCommonKeywords = (text: string, max: number = 3) => {
+  const keywordsList = getKeywordsList(text);
+  return mostCommon(keywordsList, max);
 };
 
 const countArticles = (text: string) => {
@@ -60,6 +64,7 @@ export {
   ISI_PATTERN,
   looksLikeIsi,
   mostCommonKeywords,
+  mostCommon,
   countArticles,
   countReferences,
 };
