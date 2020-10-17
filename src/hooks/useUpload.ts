@@ -3,11 +3,8 @@ import { useCallback, useContext } from "react";
 
 import FirebaseContext from "../context/FirebaseContext";
 import FileContext from "../context/FileContext";
-import {
-  countArticles,
-  countReferences,
-  mostCommonKeywords,
-} from "../utils/isiUtils";
+import * as isi from "../utils/isiUtils";
+import * as scopus from "../utils/scopusUtils";
 
 const useUpload = () => {
   const { add, track } = useContext(FileContext);
@@ -18,13 +15,22 @@ const useUpload = () => {
       blob.text().then((text) => {
         if (firebase === null) return;
         const hash = md5(text);
+        const keywords = isi.looksLikeIsi(text)
+          ? isi.mostCommon(isi.keywords(text), 3)
+          : isi.mostCommon(scopus.getKeywords(text), 3);
+        const articles = isi.looksLikeIsi(text)
+          ? isi.countArticles(text)
+          : scopus.countArticles(text);
+        const citations = isi.looksLikeIsi(text)
+          ? isi.countReferences(text)
+          : scopus.countReferences(text);
         const metadata = {
           name,
           blob,
           hash,
-          keywords: mostCommonKeywords(text, 3),
-          articles: countArticles(text),
-          citations: countReferences(text),
+          keywords,
+          articles,
+          citations,
           valid: true,
         };
         add(metadata);

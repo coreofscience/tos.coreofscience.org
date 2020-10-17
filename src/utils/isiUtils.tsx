@@ -13,7 +13,7 @@ const looksLikeIsi = (content: string): boolean => {
   return true;
 };
 
-const getKeywordsList = (text: string) => {
+const keywords = (text: string): string[] => {
   const identifier = "ID ";
   const keywordsLines = text
     .split("\n")
@@ -30,7 +30,7 @@ const getKeywordsList = (text: string) => {
     .flat();
 };
 
-function mostCommon(keywordsList: string[], max: number) {
+function mostCommon(keywordsList: string[], max: number): string[] {
   let count: { [keyword: string]: number } = {};
   for (let keyword of keywordsList) {
     count[keyword] = (count[keyword] ? count[keyword] : 0) + 1;
@@ -42,16 +42,16 @@ function mostCommon(keywordsList: string[], max: number) {
 }
 
 const mostCommonKeywords = (text: string, max: number = 3) => {
-  const keywordsList = getKeywordsList(text);
+  const keywordsList = keywords(text);
   return mostCommon(keywordsList, max);
 };
 
-const countArticles = (text: string) => {
+const countArticles = (text: string): number => {
   const identifier = "PT ";
   return text.split("\n").filter((line) => line.startsWith(identifier)).length;
 };
 
-const countReferences = (text: string) => {
+const countReferences = (text: string): number => {
   const identifier = "NR ";
   return text
     .split("\n")
@@ -63,6 +63,7 @@ const countReferences = (text: string) => {
 export {
   ISI_PATTERN,
   looksLikeIsi,
+  keywords,
   mostCommonKeywords,
   mostCommon,
   countArticles,
