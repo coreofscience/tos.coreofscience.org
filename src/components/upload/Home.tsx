@@ -1,17 +1,14 @@
 import React, { FC, Fragment, useContext } from "react";
 import { useMutation } from "react-query";
-import { useHistory } from "react-router";
 
 import FileContext from "../../context/FileContext";
 import FileDropper from "./FileDropper";
 import UploadIndicator from "./UploadIndicator";
-import FileErrors from "./FileErrors";
-
-import { FileMetadata } from "../../utils/customTypes";
-import useFiles from "../../hooks/useFiles";
-import FirebaseContext from "../../context/FirebaseContext";
 
 import "./Home.css";
+import { FileMetadata } from "../../utils/customTypes";
+import FirebaseContext from "../../context/FirebaseContext";
+import { useHistory } from "react-router";
 
 const numberFormat = new Intl.NumberFormat();
 
@@ -34,7 +31,7 @@ const createTree = async ({
   if (!result.key) {
     throw new Error("Failed to retrieve a new key.");
   }
-  return result.key;
+  return btoa(result.key);
 };
 
 const hasFinished = (
@@ -47,8 +44,7 @@ const hasFinished = (
   );
 
 const Home: FC<{}> = () => {
-  const { progress } = useContext(FileContext);
-  const files = useFiles();
+  const { files, progress } = useContext(FileContext);
   const hashes = files.map((file) => file.hash);
   const finished = hasFinished(hashes, progress);
   const firebase = useContext(FirebaseContext);
@@ -82,7 +78,6 @@ const Home: FC<{}> = () => {
       </div>
       <FileDropper />
       <UploadIndicator />
-      <FileErrors />
       <p>Review your input:</p>
       <div className="information-cant-article">
         <div className="frame-article">
