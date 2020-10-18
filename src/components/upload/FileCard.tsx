@@ -33,7 +33,10 @@ const FileCard: FC<Props> = ({
   size = 0,
   cumSize = 0,
 }: Props) => {
-  const numberFormat = new Intl.NumberFormat();
+  const countFormat = new Intl.NumberFormat(undefined);
+  const weightFormat = new Intl.NumberFormat(undefined, {
+    minimumFractionDigits: 2,
+  });
 
   return (
     <div className={capped ? "fileCard capped" : "fileCard"}>
@@ -52,7 +55,7 @@ const FileCard: FC<Props> = ({
       <div className="fileCard__statGroup">
         <span className="fileCard__stats">
           <strong className="fileCard__stats__count">
-            {numberFormat.format(articles)}
+            {countFormat.format(articles)}
           </strong>
           <small className="fileCard__stats__unit">
             {articles === 1 ? "article" : "articles"}
@@ -60,21 +63,18 @@ const FileCard: FC<Props> = ({
         </span>
         <span className="fileCard__stats">
           <strong className="fileCard__stats__count">
-            {numberFormat.format(citations)}
+            {countFormat.format(citations)}
           </strong>
           <small className="fileCard__stats__unit">
             {citations === 1 ? "citation" : "citations"}
           </small>
         </span>
-        <span className="fileCard__stats">
-          <small className="fileCard__stats__unit">
-            size: {numberFormat.format(round(size, 1))}MB
-          </small>
-          <small className="fileCard__stats__unit">
-            cum. size: {numberFormat.format(round(cumSize, 1))}MB/
-            {numberFormat.format(round(MAX_SIZE, 1))}MB
-          </small>
-        </span>
+      </div>
+      <div className="fileCard__weight">
+        <small title="To keep our costs down, we need to limit the ammount of data we process for each tree.">
+          {weightFormat.format(round(cumSize, 2))} /{" "}
+          {weightFormat.format(round(MAX_SIZE, 2))} [MB]
+        </small>
       </div>
       <div className="fileCard_progressBar">
         <div

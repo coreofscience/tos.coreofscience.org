@@ -15,7 +15,11 @@ import { round } from "../../utils/mathUtils";
 
 import "./Home.css";
 
-const numberFormat = new Intl.NumberFormat();
+const countFormat = new Intl.NumberFormat();
+const weightFormat = new Intl.NumberFormat(undefined, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
 
 const createTree = async ({
   app,
@@ -81,22 +85,21 @@ const Home: FC<{}> = () => {
       <div className="information-cant-article">
         <div className="frame-article">
           <span className="total-articles">
-            {numberFormat.format(articleCap)}/
-            {numberFormat.format(totalArticles)}
+            {countFormat.format(articleCap)}/{countFormat.format(totalArticles)}
           </span>
           <span className="articles">articles</span>
         </div>
         <div className="frame-article">
           <span className="total-articles">
-            {numberFormat.format(citationCap)}/
-            {numberFormat.format(totalCitations)}
+            {countFormat.format(citationCap)}/
+            {countFormat.format(totalCitations)}
           </span>
           <span className="articles">citations</span>
         </div>
         <div className="frame-article">
           <span className="total-articles">
-            {numberFormat.format(round(sizeCap, 1))}/
-            {numberFormat.format(round(MAX_SIZE, 1))}
+            {weightFormat.format(round(sizeCap, 2))}/
+            {weightFormat.format(round(MAX_SIZE, 2))}
           </span>
           <span className="articles">size [MB]</span>
         </div>
