@@ -41,6 +41,23 @@ const FilesProvider: FC<Props> = ({ children }: Props) => {
     });
   }, []);
 
+  const swap = useCallback(
+    (hash: string) => {
+      setFiles((prev) => {
+        const index = prev.findIndex((file) => file.hash === hash);
+        if (index < 0) {
+          return prev;
+        }
+        return [
+          files[index],
+          ...prev.slice(0, index),
+          ...prev.slice(index + 1),
+        ];
+      });
+    },
+    [files]
+  );
+
   const value = useMemo(
     () => ({
       add,
@@ -48,8 +65,9 @@ const FilesProvider: FC<Props> = ({ children }: Props) => {
       remove,
       track,
       progress,
+      swap,
     }),
-    [add, files, remove, track, progress]
+    [add, files, remove, track, progress, swap]
   );
 
   return <FileContext.Provider value={value}>{children}</FileContext.Provider>;

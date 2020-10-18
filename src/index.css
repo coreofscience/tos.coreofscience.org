@@ -370,6 +370,7 @@ template {
   --color-tree-trunk: #904c14;
   --color-bg: #fcfcfc;
   --color-bg-accent: #f0f0f0;
+  --color-red-accent: rgb(226, 132, 148);
   --color-link: #366fc6;
   --color-link-hover: #3a6099;
   --color-label: #5b5b5b;

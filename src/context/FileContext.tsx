@@ -5,6 +5,7 @@ const FileContext = createContext<FileContexType>({
   add: () => {},
   remove: () => {},
   track: () => {},
+  swap: () => {},
   progress: {},
   files: [],
 });
