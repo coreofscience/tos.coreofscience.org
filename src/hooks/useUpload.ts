@@ -1,10 +1,8 @@
-import md5 from "md5";
 import { useCallback, useContext } from "react";
 
 import FirebaseContext from "../context/FirebaseContext";
 import FileContext from "../context/FileContext";
-import * as isi from "../utils/isiUtils";
-import * as scopus from "../utils/scopusUtils";
+import metadata from "../utils/metadata";
 
 const useUpload = () => {
   const { add, track } = useContext(FileContext);
@@ -12,34 +10,15 @@ const useUpload = () => {
 
   const upload = useCallback(
     (name: string, blob: Blob) => {
-      blob.text().then((text) => {
+      metadata(name, blob).then((meta) => {
         if (firebase === null) return;
-        const hash = md5(text);
-        const keywords = isi.looksLikeIsi(text)
-          ? isi.mostCommon(isi.keywords(text), 3)
-          : isi.mostCommon(scopus.getKeywords(text), 3);
-        const articles = isi.looksLikeIsi(text)
-          ? isi.countArticles(text)
-          : scopus.countArticles(text);
-        const citations = isi.looksLikeIsi(text)
-          ? isi.countReferences(text)
-          : scopus.countReferences(text);
-        const metadata = {
-          name,
-          blob,
-          hash,
-          keywords,
-          articles,
-          citations,
-          valid: true,
-        };
-        add(metadata);
-        const ref = firebase.storage().ref(`isi-files/${hash}`);
+        add(meta);
+        const ref = firebase.storage().ref(`isi-files/${meta.hash}`);
 
         ref
           .getDownloadURL()
           .then(() => {
-            track(hash, 100);
+            track(meta.hash, 100);
           })
           .catch(() => {
             const task = ref.put(blob);
@@ -48,11 +27,11 @@ const useUpload = () => {
               (snapshot) => {
                 const percent =
                   (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                track(hash, percent);
+                track(meta.hash, percent);
               },
               (error) => console.log,
               () => {
-                track(hash, 100);
+                track(meta.hash, 100);
               }
             );
           });

@@ -34,5 +34,4 @@ export interface Article {
   issue?: string | null;
   page?: string | null;
   doi?: string | null;
-  simple?: boolean;
 }

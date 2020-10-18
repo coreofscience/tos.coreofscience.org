@@ -17,7 +17,7 @@ const looksLikeScopus = (content: string): boolean => {
   return true;
 };
 
-const getKeywords = (content: string): string[] =>
+const keywords = (content: string): string[] =>
   content
     .split("\n")
     .filter((line) => !!line)
@@ -72,4 +72,4 @@ const countReferences = (content: string): number =>
       { counting: false, count: 0 }
     ).count;
 
-export { looksLikeScopus, getKeywords, countArticles, countReferences };
+export { looksLikeScopus, keywords, countArticles, countReferences };
