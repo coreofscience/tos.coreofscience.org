@@ -34,7 +34,6 @@ const Reference: FC<Props> = ({
   simple = true,
 }: Props) => (
   <div className="reference" id={label}>
-    {!!title && simple && <div className="title">{title}</div>}
     {!!authors && (
       <Fragment>
         <span className="authors">
@@ -50,7 +49,7 @@ const Reference: FC<Props> = ({
         {". "}
       </Fragment>
     )}
-    {!!title && !simple && (
+    {!!title && (
       <Fragment>
         <span className="title">{title}</span>
         {". "}

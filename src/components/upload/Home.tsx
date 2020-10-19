@@ -11,7 +11,7 @@ import useFiles from "../../hooks/useFiles";
 import FirebaseContext from "../../context/FirebaseContext";
 
 import computeQuantities, { MAX_SIZE } from "../../utils/computeQuantities";
-import { round } from "../../utils/mathUtils";
+import { round } from "../../utils/math";
 
 import "./Home.css";
 

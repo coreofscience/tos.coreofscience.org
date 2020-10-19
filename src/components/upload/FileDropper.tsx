@@ -2,7 +2,8 @@ import React, { FC, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import "./FileDropper.css";
 
-import { looksLikeIsi } from "../../utils/isiUtils";
+import { looksLikeIsi } from "../../utils/isi";
+import { looksLikeScopus } from "../../utils/scopus";
 import useUpload from "../../hooks/useUpload";
 import useError from "../../hooks/useError";
 
@@ -27,7 +28,7 @@ const FileDropper: FC<Props> = () => {
           .map((file) => file.text().then((text) => ({ text, file })))
       ).then((data) => {
         data.forEach(({ text, file }) => {
-          if (looksLikeIsi(text)) {
+          if (looksLikeIsi(text) || looksLikeScopus(text)) {
             upload(Object(file).name, file);
           } else {
             error(Object(file).name, file, FileErrorMap.isi);
