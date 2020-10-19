@@ -4,10 +4,10 @@ import sortBy from "lodash.sortby";
 import StarImgage from "../vectors/StarImage";
 
 import Reference from "./Reference";
+import { mostCommon } from "../../utils/arrays";
 import { Article } from "../../utils/customTypes";
 
 import "./Tree.css";
-import { mostCommon } from "../../utils/isiUtils";
 
 interface Props {
   data: { [section: string]: Article[] };

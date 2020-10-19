@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import CancelFile from "../vectors/CancelFile";
 import MoveFirstIcon from "../vectors/MoveFirstIcon";
 
-import { round } from "../../utils/mathUtils";
+import { round } from "../../utils/math";
 import { MAX_SIZE } from "../../utils/computeQuantities";
 
 import "./FileCard.css";

@@ -2,8 +2,8 @@ import React, { FC, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import "./FileDropper.css";
 
-import { looksLikeIsi } from "../../utils/isiUtils";
-import { looksLikeScopus } from "../../utils/scopusUtils";
+import { looksLikeIsi } from "../../utils/isi";
+import { looksLikeScopus } from "../../utils/scopus";
 import useUpload from "../../hooks/useUpload";
 import useError from "../../hooks/useError";
 

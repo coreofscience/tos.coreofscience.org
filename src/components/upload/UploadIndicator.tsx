@@ -1,10 +1,11 @@
 import React, { FC, useContext, useEffect, useState } from "react";
-import "./UploadIndicator.css";
 
 import FileCard from "./FileCard";
 import FileContext from "../../context/FileContext";
 import useFiles from "../../hooks/useFiles";
 import { MAX_SIZE } from "../../utils/computeQuantities";
+
+import "./UploadIndicator.css";
 
 interface Props {}
 
