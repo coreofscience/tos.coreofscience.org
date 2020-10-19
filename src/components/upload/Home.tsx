@@ -111,11 +111,12 @@ const Home: FC<{}> = () => {
         disabled={
           isLoading || !finished || totalArticles === 0 || totalCitations === 0
         }
-        onClick={() =>
+        onClick={() => {
           firebase &&
-          finished &&
-          create({ app: firebase, files: files.map((file) => file.hash) })
-        }
+            finished &&
+            create({ app: firebase, files: files.map((file) => file.hash) });
+          firebase && firebase.analytics().logEvent("tree_created");
+        }}
       >
         {isLoading ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
       </button>

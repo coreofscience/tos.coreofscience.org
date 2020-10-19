@@ -3,6 +3,7 @@ import firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/database";
 import "firebase/firestore";
+import "firebase/analytics";
 
 import FirebaseContext from "../../context/FirebaseContext";
 
@@ -30,6 +31,7 @@ const FirebaseProvider: FC<Props> = ({ children }: Props) => {
     } catch {
       setApp(firebase.initializeApp(CONFIG));
     }
+    firebase.analytics();
   }, []);
 
   if (app === null) return <div>Loading...</div>;
