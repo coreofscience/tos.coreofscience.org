@@ -10,7 +10,7 @@ const MoveFirstIcon = () => (
     <path
       d="M16 10L8 2M10 10l-8 8M16 18l-8-8M10 2l-8 8"
       stroke="#FCFCFC"
-      stroke-width="3"
+      strokeWidth="3"
     />
   </svg>
 );
