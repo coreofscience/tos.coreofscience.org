@@ -1,4 +1,11 @@
-import React, { FC, useCallback, useState, Fragment } from "react";
+import React, {
+  FC,
+  useCallback,
+  useState,
+  Fragment,
+  useContext,
+  useEffect,
+} from "react";
 import sortBy from "lodash.sortby";
 
 import StarImgage from "../vectors/StarImage";
@@ -8,9 +15,11 @@ import { mostCommon } from "../../utils/arrays";
 import { Article } from "../../utils/customTypes";
 
 import "./Tree.css";
+import FirebaseContext from "../../context/FirebaseContext";
 
 interface Props {
   data: { [section: string]: Article[] };
+  treeId: string;
 }
 
 const INFO: {
@@ -40,9 +49,10 @@ const INFO: {
   },
 };
 
-const Tree: FC<Props> = ({ data }: Props) => {
+const Tree: FC<Props> = ({ data, treeId }: Props) => {
   const [star, setStar] = useState<{ [label: string]: boolean }>({});
   const [show, setShow] = useState<"root" | "trunk" | "leaf" | null>(null);
+  const firebase = useContext(FirebaseContext);
   let keywords: { [label: string]: string[] } = {
     root: [],
     trunk: [],
@@ -62,9 +72,23 @@ const Tree: FC<Props> = ({ data }: Props) => {
     );
   }
 
-  const toggleStar = useCallback((label: string) => {
-    setStar((current) => ({ ...current, [label]: !current[label] }));
-  }, []);
+  useEffect(() => {
+    if (!firebase) return;
+    firebase
+      .database()
+      .ref(`stars/${treeId}`)
+      .on("value", (snapshot) => setStar(snapshot.val()));
+  }, [firebase, treeId]);
+
+  const toggleStar = useCallback(
+    (label: string) => {
+      firebase
+        ?.database()
+        .ref(`stars/${treeId}`)
+        .set({ ...star, [btoa(label)]: !star[btoa(label)] });
+    },
+    [firebase, treeId, star]
+  );
 
   const toggleShow = useCallback((label: "root" | "trunk" | "leaf") => {
     setShow((curr) => {
@@ -112,7 +136,7 @@ const Tree: FC<Props> = ({ data }: Props) => {
               </div>
               <div className="articles">
                 {sortBy(data[sectionName], (article) =>
-                  !star[article.label] ? 1 : 0
+                  !star[btoa(article.label)] ? 1 : 0
                 ).map((article) => (
                   <div className="article" key={`article-${article.label}`}>
                     <Reference key={article.label} {...article} />
@@ -121,11 +145,15 @@ const Tree: FC<Props> = ({ data }: Props) => {
                     </button> */}
                     <button
                       className={`btn-star ${
-                        star[article.label] ? "favorite" : ""
+                        star[btoa(article.label)] ? "favorite" : ""
                       }`}
                       onClick={() => toggleStar(article.label)}
                     >
-                      {!!star[article.label] ? <StarImgage /> : <StarImgage />}
+                      {!!star[btoa(article.label)] ? (
+                        <StarImgage />
+                      ) : (
+                        <StarImgage />
+                      )}
                     </button>
                   </div>
                 ))}

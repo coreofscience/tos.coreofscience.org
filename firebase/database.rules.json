@@ -8,6 +8,13 @@
         ".read": true,
         ".write": true
       }
+    },
+    "stars": {
+      "$treeId": {
+        "$other": { ".validate": true },
+        ".read": true,
+        ".write": true
+      }
     }
   }
 }
