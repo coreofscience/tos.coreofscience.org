@@ -5,6 +5,10 @@ service cloud.firestore {
       allow read: if
           request.time < timestamp.date(2021, 11, 10);
     }
+    match /emails/{email} {
+      allow write: if request.resource.data.email.matches(".*@.*");
+      allow read: if false;
+    }
     match /{document=**} {
       allow read, write: if false
     }
