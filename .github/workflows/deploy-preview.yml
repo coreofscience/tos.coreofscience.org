@@ -12,7 +12,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: npm ci && npm run build
+      - run: |
+          npm ci
+          npm run build
+          # Firebase use --alias doesn't work
+          cat << EOF > .firebaserc
+          {
+              "projects": {
+                  "default": "coreofscience-dev"
+              }
+          }
+          EOF
+          npm run firebase -- target:apply hosting tos tos-coreofscience-dev
         env:
           CI: true
           REACT_APP_APIKEY: ${{ secrets.DEV_API_KEY }}

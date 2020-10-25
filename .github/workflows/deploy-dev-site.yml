@@ -27,6 +27,7 @@ jobs:
       - name: Build
         run: |
           npm run build
+          npm run firebase -- target:apply hosting tos tos-coreofscience-dev
         env:
           CI: true
           REACT_APP_APIKEY: ${{ secrets.DEV_API_KEY }}

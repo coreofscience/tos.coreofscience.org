@@ -1,0 +1,52 @@
+name: Build and Deploy
+
+on:
+  create:
+    tags:
+      - v*
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Use Node 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          CI: true
+
+      - name: Build
+        run: |
+          npm run build
+          cat << EOF > .firebaserc
+          {
+              "projects": {
+                  "default": "coreofscience"
+              }
+          }
+          EOF
+          npm run firebase -- target:apply hosting tos tos-coreofscience-prod-7f714
+        env:
+          CI: true
+          REACT_APP_APIKEY: ${{ secrets.PROD_API_KEY }}
+          REACT_APP_AUTHDOMAIN: "coreofscience.firebaseapp.com"
+          REACT_APP_DATABASEURL: "https://coreofscience.firebaseio.com"
+          REACT_APP_PROJECTID: "coreofscience"
+          REACT_APP_STORAGEBUCKET: "coreofscience.appspot.com"
+          REACT_APP_MESSAGINGSENDERID: "217902041600"
+          REACT_APP_APPID: "1:217902041600:web:54618397fad21282b426e5"
+          REACT_APP_MEASUREMENTID: "G-9SHWB33EEK"
+
+      - name: Deploy
+        run: |
+          npm install firebase-tools
+          npm run deploy -- --token=${{ secrets.FIREBASE_TOKEN }} -P coreofscience-dev
