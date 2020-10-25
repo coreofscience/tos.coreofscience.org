@@ -27,6 +27,13 @@ jobs:
       - name: Build
         run: |
           npm run build
+          cat << EOF > .firebaserc
+          {
+              "projects": {
+                  "default": "coreofscience-dev"
+              }
+          }
+          EOF
           npm run firebase -- target:apply hosting tos tos-coreofscience-dev
         env:
           CI: true
