@@ -74,10 +74,11 @@ const Tree: FC<Props> = ({ data, treeId }: Props) => {
 
   useEffect(() => {
     if (!firebase) return;
-    firebase
-      .database()
-      .ref(`stars/${treeId}`)
-      .on("value", (snapshot) => setStar(snapshot.val()));
+    const ref = firebase.database().ref(`stars/${treeId}`);
+    ref.on("value", (snapshot) => setStar(snapshot.val()));
+    return () => {
+      ref.off();
+    };
   }, [firebase, treeId]);
 
   const toggleStar = useCallback(
