@@ -75,7 +75,7 @@ const Tree: FC<Props> = ({ data, treeId }: Props) => {
   useEffect(() => {
     if (!firebase) return;
     const ref = firebase.database().ref(`stars/${treeId}`);
-    ref.on("value", (snapshot) => setStar(snapshot.val()));
+    ref.on("value", (snapshot) => setStar(snapshot.val() || {}));
     return () => {
       ref.off();
     };
