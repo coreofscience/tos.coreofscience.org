@@ -87,7 +87,7 @@ const Result = () => {
     return <Fragment>Life is hard, we're getting your data...</Fragment>;
   }
 
-  return <Tree data={data} />;
+  return <Tree data={data} treeId={treeId} />;
 };
 
 export default Result;
