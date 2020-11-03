@@ -19,25 +19,13 @@ jobs:
         with:
           node-version: 14.x
 
-      - name: Install dependencies
-        run: npm ci
-        env:
-          CI: true
-
       - name: Build
         run: |
+          npm ci
           npm run build
-          cat << EOF > .firebaserc
-          {
-              "projects": {
-                  "default": "coreofscience"
-              }
-          }
-          EOF
-          npm run firebase -- target:apply hosting tos tos-coreofscience-prod-7f714
         env:
           CI: true
-          REACT_APP_APIKEY: ${{ secrets.PROD_API_KEY }}
+          REACT_APP_APIKEY: ${{ secrets.FIREBASE_WEB_API_KEY_PROD }}
           REACT_APP_AUTHDOMAIN: "coreofscience.firebaseapp.com"
           REACT_APP_DATABASEURL: "https://coreofscience.firebaseio.com"
           REACT_APP_PROJECTID: "coreofscience"
@@ -49,4 +37,4 @@ jobs:
       - name: Deploy
         run: |
           npm install firebase-tools
-          npm run deploy -- --token=${{ secrets.FIREBASE_TOKEN }} -P coreofscience
+          npm run deploy -- --token=${{ secrets.FIREBASE_TOKEN }} -P prod

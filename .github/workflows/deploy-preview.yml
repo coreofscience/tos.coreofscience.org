@@ -2,9 +2,6 @@ name: Deploy to Preview Channel
 
 on:
   pull_request:
-    # Optionally configure to run only for specific files. For example:
-    # paths:
-    # - "website/**"
 
 jobs:
   build_and_preview:
@@ -15,18 +12,9 @@ jobs:
       - run: |
           npm ci
           npm run build
-          # Firebase use --alias doesn't work
-          cat << EOF > .firebaserc
-          {
-              "projects": {
-                  "default": "coreofscience-dev"
-              }
-          }
-          EOF
-          npm run firebase -- target:apply hosting tos tos-coreofscience-dev
         env:
           CI: true
-          REACT_APP_APIKEY: ${{ secrets.DEV_API_KEY }}
+          REACT_APP_APIKEY: ${{ secrets.FIREBASE_WEB_API_KEY_DEV }}
           REACT_APP_AUTHDOMAIN: "coreofscience-dev.firebaseapp.com"
           REACT_APP_DATABASEURL: "https://coreofscience-dev.firebaseio.com"
           REACT_APP_PROJECTID: "coreofscience-dev"
@@ -40,6 +28,6 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
           expires: 30d
-          projectId: coreofscience-dev
+          projectId: dev
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels

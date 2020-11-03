@@ -1,10 +1,4 @@
 {
-  "database": {
-    "rules": "./firebase/database.rules.json"
-  },
-  "storage": {
-    "rules": "./firebase/storage.rules"
-  },
   "hosting": {
     "target": "tos",
     "public": "build",
@@ -15,9 +9,5 @@
         "destination": "/index.html"
       }
     ]
-  },
-  "firestore": {
-    "rules": "./firebase/firestore.rules",
-    "indexes": "./firebase/firestore.indexes.json"
   }
 }
