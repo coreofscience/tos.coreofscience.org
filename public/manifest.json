@@ -1,6 +1,9 @@
 {
+  "manifest_version": 2,
+  "version": "1.0",
   "short_name": "ToS",
-  "name": "tos.coreofscience.com",
+  "description": "Tree of Science allows you to explore bibliographic data from Web of Science and Scopus, it digests this bibliographic information and uses graph analysis to inform you of the most important documents you need to read in order to understand a document.",
+  "name": "Tree of Science",
   "icons": [
     {
       "src": "android-icon-36x36.png",
@@ -41,6 +44,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#009d35",
+  "background_color": "#fcfcfc"
 }
