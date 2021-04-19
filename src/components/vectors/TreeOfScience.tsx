@@ -22,8 +22,8 @@ const TREE_OF_SCIENCE = `
 const TreeOfScience = ({ ...props }) => (
   <img
     src={`data:image/svg+xml;base64,${btoa(TREE_OF_SCIENCE)}`}
-    alt="core of science logo"
-    title="core of science logo"
+    alt="tree of science logo"
+    title="tree of science logo"
     {...props}
   />
 );

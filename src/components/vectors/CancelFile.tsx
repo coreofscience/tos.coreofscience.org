@@ -7,7 +7,12 @@ const CancelFile = () => (
     fill="none"
     viewBox="0 0 18 18"
   >
-    <path stroke="#FCFCFC" strokeWidth="3" d="M16 16L2 2m14 0L2 16"></path>
+    <title id="title" lang="en">
+      Cancel
+    </title>
+    <g>
+      <path stroke="#FCFCFC" strokeWidth="3" d="M16 16L2 2m14 0L2 16"></path>
+    </g>
   </svg>
 );
 
