@@ -60,15 +60,14 @@ const Home: FC<{}> = () => {
   const firebase = useContext(FirebaseContext);
   const history = useHistory();
 
-  const {
-    totalArticles,
-    totalCitations,
-    articleCap,
-    citationCap,
-    sizeCap,
-  } = computeQuantities(files);
+  const { totalArticles, totalCitations, articleCap, citationCap, sizeCap } =
+    computeQuantities(files);
 
-  const [create, { isLoading, isError }] = useMutation(createTree, {
+  const {
+    mutate: create,
+    isLoading,
+    isError,
+  } = useMutation(createTree, {
     onSuccess: (treeId: string) => history.push(`/tree/${treeId}`),
   });
 
