@@ -38,7 +38,6 @@ const Result = () => {
       !metadata.result
     )
       return;
-    console.log(metadata.result);
     firebase
       .firestore()
       .doc(metadata.result)
@@ -46,13 +45,8 @@ const Result = () => {
       .then((ref) => {
         ref.exists && setData(ref.data());
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, [firebase, metadata]);
-
-  useEffect(() => {
-    // fetch tree data
-    console.log({ data });
-  }, [data]);
 
   if (metadata === "loading") {
     return <Fragment>Loading...</Fragment>;
