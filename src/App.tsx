@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AppLayout from "./components/layout/AppLayout";
 
@@ -18,21 +18,15 @@ const App: FC<{}> = () => {
     <FirebaseProvider>
       <QueryClientProvider client={queryClient}>
         <FilesProvider>
-          <Router>
+          <BrowserRouter>
             <AppLayout>
-              <Switch>
-                <Route exact path="/">
-                  <Home />
-                </Route>
-                <Route path="/tree/:treeId">
-                  <Result />
-                </Route>
-                <Route path="*">
-                  <NotFound />
-                </Route>
-              </Switch>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/tree/:treeId" element={<Result />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
             </AppLayout>
-          </Router>
+          </BrowserRouter>
         </FilesProvider>
       </QueryClientProvider>
     </FirebaseProvider>

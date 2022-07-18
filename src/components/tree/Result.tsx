@@ -15,7 +15,7 @@ interface Metadata {
 }
 
 const Result = () => {
-  const { treeId }: { treeId: string } = useParams();
+  const { treeId } = useParams<{ treeId: string }>();
   const firebase = useContext(FirebaseContext);
   const [metadata, setMetada] = useState<Metadata | null | "loading">(
     "loading"

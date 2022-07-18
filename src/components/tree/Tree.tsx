@@ -19,7 +19,7 @@ import FirebaseContext from "../../context/FirebaseContext";
 
 interface Props {
   data: { [section: string]: Article[] };
-  treeId: string;
+  treeId?: string;
 }
 
 const INFO: {
