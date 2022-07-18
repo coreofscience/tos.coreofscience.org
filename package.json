@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
+    "@testing-library/react": "^10.4.9",
     "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
+    "@types/jest": "^25.2.3",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.sortby": "^4.7.6",
     "@types/md5": "^2.2.0",
@@ -19,14 +19,13 @@
     "lodash.isequal": "^4.5.0",
     "lodash.sortby": "^4.7.0",
     "md5": "^2.3.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-dropzone": "^11.0.3",
     "react-query": "^2.23.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
-    "typescript": "~3.7.2"
+    "react-scripts": "3.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -52,6 +51,7 @@
     ]
   },
   "devDependencies": {
-    "firebase-tools": "^8.12.1"
+    "firebase-tools": "^8.12.1",
+    "typescript": "3.9"
   }
 }
