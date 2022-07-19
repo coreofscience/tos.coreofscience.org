@@ -1,6 +1,6 @@
 import React, { FC, Fragment, useContext } from "react";
 import { useMutation } from "react-query";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 import FileContext from "../../context/FileContext";
 import FileDropper from "./FileDropper";
@@ -58,18 +58,18 @@ const Home: FC<{}> = () => {
   const hashes = files.map((file) => file.hash);
   const finished = hasFinished(hashes, progress);
   const firebase = useContext(FirebaseContext);
-  const history = useHistory();
+  const navigate = useNavigate();
+
+  const { totalArticles, totalCitations, articleCap, citationCap, sizeCap } =
+    computeQuantities(files);
 
   const {
-    totalArticles,
-    totalCitations,
-    articleCap,
-    citationCap,
-    sizeCap,
-  } = computeQuantities(files);
-
-  const [create, { isLoading, isError }] = useMutation(createTree, {
-    onSuccess: (treeId: string) => history.push(`/tree/${treeId}`),
+    mutate: create,
+    isLoading,
+    isError,
+  } = useMutation(createTree, {
+    onSuccess: (treeId: string) =>
+      navigate({ pathname: `/tree/${treeId}` }, { replace: true }),
   });
 
   return (

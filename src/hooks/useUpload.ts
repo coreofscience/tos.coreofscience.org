@@ -29,7 +29,7 @@ const useUpload = () => {
                   (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 track(meta.hash, percent);
               },
-              (error) => console.log,
+              () => console.error,
               () => {
                 track(meta.hash, 100);
               }
