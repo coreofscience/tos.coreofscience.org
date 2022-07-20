@@ -1,10 +1,8 @@
-import React, { FC } from "react";
-
 import CancelFile from "../vectors/CancelFile";
 import MoveFirstIcon from "../vectors/MoveFirstIcon";
 
-import { round } from "../../utils/math";
 import { MAX_SIZE } from "../../utils/computeQuantities";
+import { round } from "../../utils/math";
 
 import "./FileCard.css";
 
@@ -17,11 +15,10 @@ interface Props {
   move?: () => void;
   progress: number;
   capped?: boolean;
-  size: number;
   cumSize: number;
 }
 
-const FileCard: FC<Props> = ({
+const FileCard = ({
   name,
   keywords = [],
   articles = 0,
@@ -30,7 +27,6 @@ const FileCard: FC<Props> = ({
   remove = () => {},
   move = () => {},
   capped = true,
-  size = 0,
   cumSize = 0,
 }: Props) => {
   const countFormat = new Intl.NumberFormat(undefined);

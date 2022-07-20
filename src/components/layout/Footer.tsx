@@ -1,4 +1,3 @@
-import React from "react";
 import CoreOfScience from "../vectors/CoreOfScience";
 import GitHubIcon from "../vectors/GitHubIcon";
 import FacebookIcon from "../vectors/FacebookIcon";

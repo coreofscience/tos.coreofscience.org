@@ -1,15 +1,13 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
-import FileCard from "./FileCard";
 import FileContext from "../../context/FileContext";
 import useFiles from "../../hooks/useFiles";
 import { MAX_SIZE } from "../../utils/computeQuantities";
+import FileCard from "./FileCard";
 
 import "./UploadIndicator.css";
 
-interface Props {}
-
-const UploadIndicator: FC<Props> = () => {
+const UploadIndicator = () => {
   const { remove, swap } = useContext(FileContext);
   const { progress } = useContext(FileContext);
   const files = useFiles();
@@ -47,7 +45,6 @@ const UploadIndicator: FC<Props> = () => {
             remove={() => remove(file.hash)}
             move={() => swap(file.hash)}
             capped={cappedFiles[file.hash]}
-            size={file.blob.size / 2 ** 20}
             cumSize={cumSize}
             key={file.hash}
           />

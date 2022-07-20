@@ -1,17 +1,15 @@
-import React, { FC, useCallback } from "react";
+import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import "./FileDropper.css";
 
+import useError from "../../hooks/useError";
+import useUpload from "../../hooks/useUpload";
 import { looksLikeIsi } from "../../utils/isi";
 import { looksLikeScopus } from "../../utils/scopus";
-import useUpload from "../../hooks/useUpload";
-import useError from "../../hooks/useError";
 
 import FileErrorMap, { MAX_FILE_SIZE } from "./errors";
 
-interface Props {}
-
-const FileDropper: FC<Props> = () => {
+const FileDropper = () => {
   const upload = useUpload();
   const error = useError();
   const onDrop = useCallback(

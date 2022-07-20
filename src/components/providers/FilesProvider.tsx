@@ -1,12 +1,12 @@
-import React, { FC, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, ReactElement } from "react";
 import FileContext from "../../context/FileContext";
 import { FileMetadata } from "../../utils/customTypes";
 
 interface Props {
-  children?: React.ReactElement;
+  children?: ReactElement;
 }
 
-const FilesProvider: FC<Props> = ({ children }: Props) => {
+const FilesProvider = ({ children }: Props) => {
   const [files, setFiles] = useState<FileMetadata[]>([]);
   const [progress, setProgress] = useState<{ [hash: string]: number }>({});
 

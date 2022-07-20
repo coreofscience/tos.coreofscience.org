@@ -1,4 +1,3 @@
-import React, { FC } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AppLayout from "./components/layout/AppLayout";
@@ -13,7 +12,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
 
-const App: FC<{}> = () => {
+const App = () => {
   return (
     <FirebaseProvider>
       <QueryClientProvider client={queryClient}>

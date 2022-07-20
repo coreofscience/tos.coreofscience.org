@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import { ReactNode } from "react";
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -8,7 +8,7 @@ interface Props {
   children?: ReactNode;
 }
 
-const AppLayout: FC<Props> = ({ children }: Props) => {
+const AppLayout = ({ children }: Props) => {
   return (
     <div className="App">
       <header>

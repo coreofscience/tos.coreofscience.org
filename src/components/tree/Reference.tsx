@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import { Fragment } from "react";
 import "./Reference.css";
 
 interface Props {
@@ -21,7 +21,7 @@ const titleCase = (sentence: string): string =>
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-const Reference: FC<Props> = ({
+const Reference = ({
   label,
   authors,
   year,

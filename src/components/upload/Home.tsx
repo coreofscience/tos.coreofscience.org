@@ -1,14 +1,14 @@
-import React, { FC, Fragment, useContext } from "react";
+import { Fragment, useContext } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
 
 import FileContext from "../../context/FileContext";
 import FileDropper from "./FileDropper";
-import UploadIndicator from "./UploadIndicator";
 import FileErrors from "./FileErrors";
+import UploadIndicator from "./UploadIndicator";
 
-import useFiles from "../../hooks/useFiles";
 import FirebaseContext from "../../context/FirebaseContext";
+import useFiles from "../../hooks/useFiles";
 
 import computeQuantities, { MAX_SIZE } from "../../utils/computeQuantities";
 import { round } from "../../utils/math";
@@ -52,7 +52,7 @@ const hasFinished = (
     true
   );
 
-const Home: FC<{}> = () => {
+const Home = () => {
   const { progress } = useContext(FileContext);
   const files = useFiles();
   const hashes = files.map((file) => file.hash);

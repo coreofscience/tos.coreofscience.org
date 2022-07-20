@@ -1,5 +1,3 @@
-import React from "react";
-
 const GitHubIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 438.549 438.549">
     <title id="title" lang="en">

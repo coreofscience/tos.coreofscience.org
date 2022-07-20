@@ -1,5 +1,3 @@
-import React from "react";
-
 const MoveFirstIcon = () => (
   <svg
     className="move-icon"

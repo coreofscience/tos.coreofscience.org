@@ -1,21 +1,21 @@
-import React, {
+import sortBy from "lodash.sortby";
+import {
   FC,
-  useCallback,
-  useState,
   Fragment,
+  useCallback,
   useContext,
   useEffect,
+  useState,
 } from "react";
-import sortBy from "lodash.sortby";
 
 import StarImgage from "../vectors/StarImage";
 
-import Reference from "./Reference";
 import { mostCommon } from "../../utils/arrays";
 import { Article } from "../../utils/customTypes";
+import Reference from "./Reference";
 
-import "./Tree.css";
 import FirebaseContext from "../../context/FirebaseContext";
+import "./Tree.css";
 
 interface Props {
   data: { [section: string]: Article[] };
