@@ -69,6 +69,24 @@ const Footer = () => (
               simple={false}
             />
           </li>
+          <li>
+            <Reference
+              label=""
+              authors={[
+                "Zuluaga, M.",
+                "Robledo, S.",
+                "Arbelaez-Echeverri, O.",
+                "Osorio-Zuluaga, G.A.",
+                "& Duque-Méndez, N.",
+              ]}
+              year={2022}
+              title="Tree of Science - ToS: A web-based tool for scientific literature recommendation. Search less, research more!"
+              journal="Issues in Science and Technology Librarianship"
+              volume="100"
+              doi="10.29173/istl2696"
+              simple={false}
+            />
+          </li>
         </ul>
       </section>
       <section className="footer__section socialLinks">
