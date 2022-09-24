@@ -57,8 +57,7 @@ const Reference: FC<Props> = ({
     )}
     {!!title && (
       <Fragment>
-        <span className="title">{title}</span>
-        {". "}
+        <span className="title">{title}</span>{" "}
       </Fragment>
     )}
     {(!!journal || !!volume) && (

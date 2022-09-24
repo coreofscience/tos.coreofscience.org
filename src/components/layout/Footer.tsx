@@ -25,7 +25,7 @@ const Footer = () => (
                 "& Duque-Méndez, N.",
               ]}
               year={2022}
-              title="Tree of Science - ToS: A web-based tool for scientific literature recommendation. Search less, research more!-"
+              title="Tree of Science - ToS: A web-based tool for scientific literature recommendation. Search less, research more!"
               journal="Issues in Science and Technology Librarianship"
               volume="100"
               doi="10.29173/istl2696"
@@ -43,7 +43,7 @@ const Footer = () => (
                 "& Olivar-Tost, G.",
               ]}
               year={2020}
-              title="Algoritmo SAP para análisis de citaciones: Una mejora al Árbol de la Ciencia"
+              title="Algoritmo SAP para análisis de citaciones: Una mejora al Árbol de la Ciencia."
               journal="Ingeniería e Investigación"
               volume="40"
               issue="1"
@@ -64,7 +64,7 @@ const Footer = () => (
                 "& Taborda, G.",
               ]}
               year={2016}
-              title="Metabolomics and pesticides: systematic literature review usinggraph theory for analysis of references"
+              title="Metabolomics and pesticides: systematic literature review usinggraph theory for analysis of references."
               journal="Nova"
               volume="14"
               issue="25"
@@ -78,7 +78,7 @@ const Footer = () => (
               label=""
               authors={["Robledo, S.", "Osorio, G.", "& López, C."]}
               year={2014}
-              title="Networking en pequeña empresa: una revisión bibliográfica utilizando la teoria de grafos"
+              title="Networking en pequeña empresa: una revisión bibliográfica utilizando la teoria de grafos."
               journal="Revista vínculos"
               volume="11"
               issue="2"
