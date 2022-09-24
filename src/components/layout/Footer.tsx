@@ -25,7 +25,7 @@ const Footer = () => (
                 "& Duque-Méndez, N.",
               ]}
               year={2022}
-              title="Tree of Science - ToS: A web-based tool for scientific literature recommendation. Search less, research more!"
+              title="Tree of Science - ToS: A web-based tool for scientific literature recommendation. Search less, research more!-"
               journal="Issues in Science and Technology Librarianship"
               volume="100"
               doi="10.29173/istl2696"
@@ -36,15 +36,15 @@ const Footer = () => (
             <Reference
               label=""
               authors={[
-                "Valencia-Hernandez, D. S.",
+                "Valencia-Hernández, D. S.",
                 "Robledo, S.",
                 "Pinilla, R.",
                 "Duque-Méndez, N. D.",
-                "Olivar-Tost, G.",
+                "& Olivar-Tost, G.",
               ]}
               year={2020}
               title="Algoritmo SAP para análisis de citaciones: Una mejora al Árbol de la Ciencia"
-              journal="Ingeniería E Investigación"
+              journal="Ingeniería e Investigación"
               volume="40"
               issue="1"
               page="45-49"
@@ -60,8 +60,8 @@ const Footer = () => (
                 "Robledo, S.",
                 "Osorio-Zuluaga, G. A",
                 "Yathe, L.",
-                "Gonzalez, D.",
-                "Taborda, G.",
+                "González, D.",
+                "& Taborda, G.",
               ]}
               year={2016}
               title="Metabolomics and pesticides: systematic literature review usinggraph theory for analysis of references"
@@ -76,7 +76,7 @@ const Footer = () => (
           <li>
             <Reference
               label=""
-              authors={["Robledo, S.", "Osorio, G.", "Lopez, C."]}
+              authors={["Robledo, S.", "Osorio, G.", "& López, C."]}
               year={2014}
               title="Networking en pequeña empresa: una revisión bibliográfica utilizando la teoria de grafos"
               journal="Revista vínculos"

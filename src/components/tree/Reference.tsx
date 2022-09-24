@@ -38,7 +38,13 @@ const Reference: FC<Props> = ({
       <Fragment>
         <span className="authors">
           {(simple ? authors.slice(0, 1) : authors)
-            .map((author) => `${author.split(".").join("")}.`)
+            .map(
+              (author) =>
+                `${author
+                  .split(".")
+                  .filter((s) => !!s)
+                  .join(". ")}.`
+            )
             .join("; ")}
         </span>{" "}
       </Fragment>
