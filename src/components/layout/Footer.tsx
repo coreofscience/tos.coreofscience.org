@@ -22,7 +22,7 @@ const Footer = () => (
                 "Robledo, S.",
                 "Arbelaez-Echeverri, O.",
                 "Osorio-Zuluaga, G.A.",
-                "& Duque-Méndez, N.",
+                "Duque-Méndez, N.",
               ]}
               year={2022}
               title="Tree of Science - ToS: A web-based tool for scientific literature recommendation. Search less, research more!"
@@ -40,7 +40,7 @@ const Footer = () => (
                 "Robledo, S.",
                 "Pinilla, R.",
                 "Duque-Méndez, N. D.",
-                "& Olivar-Tost, G.",
+                "Olivar-Tost, G.",
               ]}
               year={2020}
               title="Algoritmo SAP para análisis de citaciones: Una mejora al Árbol de la Ciencia."
@@ -61,7 +61,7 @@ const Footer = () => (
                 "Osorio-Zuluaga, G. A",
                 "Yathe, L.",
                 "González, D.",
-                "& Taborda, G.",
+                "Taborda, G.",
               ]}
               year={2016}
               title="Metabolomics and pesticides: systematic literature review usinggraph theory for analysis of references."
@@ -76,7 +76,7 @@ const Footer = () => (
           <li>
             <Reference
               label=""
-              authors={["Robledo, S.", "Osorio, G.", "& López, C."]}
+              authors={["Robledo, S.", "Osorio, G.", "López, C."]}
               year={2014}
               title="Networking en pequeña empresa: una revisión bibliográfica utilizando la teoria de grafos."
               journal="Revista vínculos"
