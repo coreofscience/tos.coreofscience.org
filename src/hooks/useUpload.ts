@@ -1,17 +1,16 @@
 import { useCallback, useContext } from "react";
 
-import FirebaseContext from "../context/FirebaseContext";
 import FileContext from "../context/FileContext";
 import metadata from "../utils/metadata";
+import { useFirebase } from "./useFirebase";
 
 const useUpload = () => {
   const { add, track } = useContext(FileContext);
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
 
   const upload = useCallback(
     (name: string, blob: Blob) => {
       metadata(name, blob).then((meta) => {
-        if (firebase === null) return;
         add(meta);
         const ref = firebase.storage().ref(`isi-files/${meta.hash}`);
 

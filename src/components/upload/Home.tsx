@@ -8,12 +8,12 @@ import UploadIndicator from "./UploadIndicator";
 import FileErrors from "./FileErrors";
 
 import useFiles from "../../hooks/useFiles";
-import FirebaseContext from "../../context/FirebaseContext";
 
 import computeQuantities, { MAX_SIZE } from "../../utils/computeQuantities";
 import { round } from "../../utils/math";
 
 import "./Home.css";
+import { useFirebase } from "../../hooks/useFirebase";
 
 const countFormat = new Intl.NumberFormat();
 const weightFormat = new Intl.NumberFormat(undefined, {
@@ -57,7 +57,7 @@ const Home: FC<{}> = () => {
   const files = useFiles();
   const hashes = files.map((file) => file.hash);
   const finished = hasFinished(hashes, progress);
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
   const navigate = useNavigate();
 
   const { totalArticles, totalCitations, articleCap, citationCap, sizeCap } =
@@ -112,10 +112,9 @@ const Home: FC<{}> = () => {
           isLoading || !finished || totalArticles === 0 || totalCitations === 0
         }
         onClick={() => {
-          firebase &&
-            finished &&
+          finished &&
             create({ app: firebase, files: files.map((file) => file.hash) });
-          firebase && firebase.analytics().logEvent("tree_created");
+          firebase.analytics().logEvent("tree_created");
         }}
       >
         {isLoading ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}

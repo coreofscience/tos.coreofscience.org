@@ -1,11 +1,4 @@
-import React, {
-  FC,
-  useCallback,
-  useState,
-  Fragment,
-  useContext,
-  useEffect,
-} from "react";
+import React, { FC, useCallback, useState, Fragment, useEffect } from "react";
 import sortBy from "lodash.sortby";
 
 import StarImgage from "../vectors/StarImage";
@@ -15,7 +8,7 @@ import { mostCommon } from "../../utils/arrays";
 import { Article } from "../../utils/customTypes";
 
 import "./Tree.css";
-import FirebaseContext from "../../context/FirebaseContext";
+import { useFirebase } from "../../hooks/useFirebase";
 
 interface Props {
   data: { [section: string]: Article[] };
@@ -52,7 +45,7 @@ const INFO: {
 const Tree: FC<Props> = ({ data, treeId }: Props) => {
   const [star, setStar] = useState<{ [label: string]: boolean }>({});
   const [show, setShow] = useState<"root" | "trunk" | "leaf" | null>(null);
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
   let keywords: { [label: string]: string[] } = {
     root: [],
     trunk: [],
@@ -73,7 +66,6 @@ const Tree: FC<Props> = ({ data, treeId }: Props) => {
   }
 
   useEffect(() => {
-    if (!firebase) return;
     const ref = firebase.database().ref(`stars/${treeId}`);
     ref.on("value", (snapshot) => setStar(snapshot.val() || {}));
     return () => {

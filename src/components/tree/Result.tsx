@@ -1,9 +1,9 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 import Tree from "./Tree";
 import { useParams } from "react-router";
-import FirebaseContext from "../../context/FirebaseContext";
 import NotFound from "../NotFound";
+import { useFirebase } from "../../hooks/useFirebase";
 
 interface Metadata {
   createdDate: number;
@@ -16,14 +16,14 @@ interface Metadata {
 
 const Result = () => {
   const { treeId } = useParams<{ treeId: string }>();
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
   const [metadata, setMetada] = useState<Metadata | null | "loading">(
     "loading"
   );
   const [data, setData] = useState<any | null>(null);
 
   useEffect(() => {
-    const treeRef = firebase?.database().ref(`trees/${treeId}`);
+    const treeRef = firebase.database().ref(`trees/${treeId}`);
     treeRef?.on("value", (snapshot) => {
       setMetada(snapshot.val());
     });
@@ -31,13 +31,7 @@ const Result = () => {
   }, [firebase, treeId]);
 
   useEffect(() => {
-    if (
-      firebase === null ||
-      metadata === null ||
-      metadata === "loading" ||
-      !metadata.result
-    )
-      return;
+    if (metadata === null || metadata === "loading" || !metadata.result) return;
     firebase
       .firestore()
       .doc(metadata.result)
