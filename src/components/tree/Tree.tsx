@@ -74,7 +74,11 @@ const Tree: FC<Props> = ({ data, treeId }: Props) => {
     const starsRef = ref(firebase.database, starsPath);
     const unsubscribe = onValue(starsRef, (change) => {
       if (!change.exists()) {
-        // throw new Error(`Unable to get stars data from path: ${starsPath}.`);
+        /**
+         * Stars related to the tree may be not found in the db,
+         * so let's not throw an error, log that instead.
+         */
+        console.log(`Unable to get stars data from path: ${starsPath}.`);
       }
       /**
        * TODO: find a way to set `StarsType` type through the `starsRef` retrieval function.
