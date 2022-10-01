@@ -1,47 +1,21 @@
 import React, { FC, Fragment, useContext } from "react";
+import { logEvent } from "firebase/analytics";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
 
-import FileContext from "../../context/FileContext";
-import FileDropper from "./FileDropper";
-import UploadIndicator from "./UploadIndicator";
-import FileErrors from "./FileErrors";
-
-import useFiles from "../../hooks/useFiles";
-
-import computeQuantities, { MAX_SIZE } from "../../utils/computeQuantities";
-import { round } from "../../utils/math";
-
 import "./Home.css";
-import { useFirebase } from "../../hooks/useFirebase";
+import FileContext from "../../../context/FileContext";
+import FileDropper from "../FileDropper";
+import UploadIndicator from "../UploadIndicator";
+import FileErrors from "../FileErrors";
 
-const countFormat = new Intl.NumberFormat();
-const weightFormat = new Intl.NumberFormat(undefined, {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
+import useFiles from "../../../hooks/useFiles";
+import useFirebase from "../../../hooks/useFirebase";
 
-const createTree = async ({
-  app,
-  files,
-}: {
-  app: firebase.app.App;
-  files: string[];
-}): Promise<string> => {
-  if (!files.length) {
-    throw new Error("Files cannot be empty.");
-  }
+import computeQuantities, { MAX_SIZE } from "../../../utils/computeQuantities";
+import { countFormat, round, weightFormat } from "../../../utils/math";
 
-  const database = app.database();
-  const result = await database.ref("trees").push({
-    files,
-    createdDate: new Date().getTime(),
-  });
-  if (!result.key) {
-    throw new Error("Failed to retrieve a new key.");
-  }
-  return result.key;
-};
+import { createTree } from "./createTree";
 
 const hasFinished = (
   files: string[],
@@ -113,8 +87,8 @@ const Home: FC<{}> = () => {
         }
         onClick={() => {
           finished &&
-            create({ app: firebase, files: files.map((file) => file.hash) });
-          firebase.analytics().logEvent("tree_created");
+            create({ firebase, files: files.map((file) => file.hash) });
+          logEvent(firebase.analytics, "tree_created");
         }}
       >
         {isLoading ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}

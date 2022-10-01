@@ -1,10 +1,14 @@
 import { useContext } from "react";
 import FirebaseContext from "../context/FirebaseContext";
 
-export const useFirebase = () => {
+const useFirebase = () => {
   const firebase = useContext(FirebaseContext);
   if (!firebase) {
-    throw new Error("Unable to setup firebase context");
+    throw new Error(
+      "useFirebase should be used within a FirebaseContext.Provider"
+    );
   }
   return firebase;
 };
+
+export default useFirebase;

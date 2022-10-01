@@ -1,9 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 
-import Tree from "./Tree";
+import { doc, getDoc } from "firebase/firestore";
+import { onValue, ref } from "firebase/database";
 import { useParams } from "react-router";
+import useFirebase from "../../hooks/useFirebase";
+
+import Tree from "./Tree";
 import NotFound from "../NotFound";
-import { useFirebase } from "../../hooks/useFirebase";
 
 interface Metadata {
   createdDate: number;
@@ -23,23 +26,37 @@ const Result = () => {
   const [data, setData] = useState<any | null>(null);
 
   useEffect(() => {
-    const treeRef = firebase.database().ref(`trees/${treeId}`);
-    treeRef?.on("value", (snapshot) => {
-      setMetada(snapshot.val());
+    const threePath = `trees/${treeId}`;
+    const treeRef = ref(firebase.database, threePath);
+
+    const unsubscribe = onValue(treeRef, (change) => {
+      if (!change.exists()) {
+        throw new Error(`Unable to get tree data from path: ${threePath}.`);
+      }
+      /**
+       * TODO: find a way to set `Metadata` type through the `threeRef` retrieval function.
+       */
+      setMetada(change.val() as Metadata);
     });
-    return () => treeRef?.off();
+
+    return () => unsubscribe();
   }, [firebase, treeId]);
 
   useEffect(() => {
     if (metadata === null || metadata === "loading" || !metadata.result) return;
-    firebase
-      .firestore()
-      .doc(metadata.result)
-      .get()
-      .then((ref) => {
-        ref.exists && setData(ref.data());
+    const treeRef = doc(firebase.firestore, metadata.result);
+    getDoc(treeRef)
+      .then((treeDoc) => {
+        if (!treeDoc.exists()) {
+          throw new Error(
+            `Unable to get tree metadata from path: ${metadata.result}.`
+          );
+        }
+        setData(treeDoc.data());
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+      });
   }, [firebase, metadata]);
 
   if (metadata === "loading") {
