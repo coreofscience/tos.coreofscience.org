@@ -20,6 +20,7 @@ const useUpload = () => {
             track(meta.hash, 100);
           })
           .catch((err) => {
+            console.error(err);
             const uploadTask = uploadBytesResumable(fileRef, blob);
             uploadTask.on(
               "state_changed",
