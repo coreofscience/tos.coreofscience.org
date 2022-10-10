@@ -1,7 +1,7 @@
 import { createContext } from "react";
-import { app } from "firebase/app";
+import { FirebaseContextType } from "../types/firebaseContext";
 
-const FirebaseContext = createContext<app.App | null>(null);
+const FirebaseContext = createContext<FirebaseContextType | null>(null);
 FirebaseContext.displayName = "FirebaseContext";
 
 export default FirebaseContext;

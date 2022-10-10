@@ -1,11 +1,15 @@
-import React, { FC, ReactNode, useEffect, useState } from "react";
-import firebase from "firebase/app";
-import "firebase/storage";
-import "firebase/database";
-import "firebase/firestore";
-import "firebase/analytics";
+import React, { FC, useEffect, useState } from "react";
+
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getDatabase } from "firebase/database";
+import { getStorage } from "firebase/storage";
+import { getAnalytics } from "firebase/analytics";
 
 import FirebaseContext from "../../context/FirebaseContext";
+
+import { FirebaseContextType } from "../../types/firebaseContext";
 
 const CONFIG = {
   apiKey: process.env.REACT_APP_APIKEY,
@@ -18,20 +22,18 @@ const CONFIG = {
   measurementId: process.env.REACT_APP_MEASUREMENTID,
 };
 
-interface Props {
-  children?: ReactNode;
-}
-
-const FirebaseProvider: FC<Props> = ({ children }: Props) => {
-  const [app, setApp] = useState<firebase.app.App | null>(null);
+const FirebaseProvider: FC = ({ children }) => {
+  const [app, setApp] = useState<FirebaseContextType | null>(null);
 
   useEffect(() => {
-    try {
-      setApp(firebase.app());
-    } catch {
-      setApp(firebase.initializeApp(CONFIG));
-    }
-    firebase.analytics();
+    const app = initializeApp(CONFIG);
+    const auth = getAuth(app);
+    const firestore = getFirestore(app);
+    const database = getDatabase(app);
+    const storage = getStorage(app);
+    const analytics = getAnalytics(app);
+
+    setApp({ app, auth, firestore, database, storage, analytics });
   }, []);
 
   if (app === null) return <div>Loading...</div>;

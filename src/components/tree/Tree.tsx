@@ -1,12 +1,8 @@
-import React, {
-  FC,
-  useCallback,
-  useState,
-  Fragment,
-  useContext,
-  useEffect,
-} from "react";
+import React, { FC, useCallback, useState, Fragment, useEffect } from "react";
 import sortBy from "lodash.sortby";
+import { onValue, ref, set } from "firebase/database";
+
+import useFirebase from "../../hooks/useFirebase";
 
 import StarImgage from "../vectors/StarImage";
 
@@ -15,7 +11,6 @@ import { mostCommon } from "../../utils/arrays";
 import { Article } from "../../utils/customTypes";
 
 import "./Tree.css";
-import FirebaseContext from "../../context/FirebaseContext";
 
 interface Props {
   data: { [section: string]: Article[] };
@@ -49,15 +44,18 @@ const INFO: {
   },
 };
 
+type StarsType = Record<string, boolean>;
+
 const Tree: FC<Props> = ({ data, treeId }: Props) => {
-  const [star, setStar] = useState<{ [label: string]: boolean }>({});
+  const [star, setStar] = useState<StarsType>({});
   const [show, setShow] = useState<"root" | "trunk" | "leaf" | null>(null);
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
   let keywords: { [label: string]: string[] } = {
     root: [],
     trunk: [],
     leaf: [],
   };
+  const starsPath = `stars/${treeId}`;
 
   for (let section of Object.keys(keywords)) {
     for (let article of data[section]) {
@@ -73,22 +71,29 @@ const Tree: FC<Props> = ({ data, treeId }: Props) => {
   }
 
   useEffect(() => {
-    if (!firebase) return;
-    const ref = firebase.database().ref(`stars/${treeId}`);
-    ref.on("value", (snapshot) => setStar(snapshot.val() || {}));
-    return () => {
-      ref.off();
-    };
-  }, [firebase, treeId]);
+    const starsRef = ref(firebase.database, starsPath);
+    const unsubscribe = onValue(starsRef, (change) => {
+      if (!change.exists()) {
+        /**
+         * Stars related to the tree may be not found in the db,
+         * so let's not throw an error, log that instead.
+         */
+        console.log(`Unable to get stars data from path: ${starsPath}.`);
+      }
+      /**
+       * TODO: find a way to set `StarsType` type through the `starsRef` retrieval function.
+       */
+      setStar((change.val() ?? {}) as StarsType);
+    });
+    return () => unsubscribe();
+  }, [firebase, treeId, starsPath]);
 
   const toggleStar = useCallback(
     (label: string) => {
-      firebase
-        ?.database()
-        .ref(`stars/${treeId}`)
-        .set({ ...star, [btoa(label)]: !star[btoa(label)] });
+      const starsRef = ref(firebase.database, starsPath);
+      set(starsRef, { ...star, [btoa(label)]: !star[btoa(label)] });
     },
-    [firebase, treeId, star]
+    [firebase, star, starsPath]
   );
 
   const toggleShow = useCallback((label: "root" | "trunk" | "leaf") => {
