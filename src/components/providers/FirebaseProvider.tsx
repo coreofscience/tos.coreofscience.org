@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
@@ -22,7 +22,7 @@ const CONFIG = {
   measurementId: process.env.REACT_APP_MEASUREMENTID,
 };
 
-const FirebaseProvider: FC = ({ children }) => {
+const FirebaseProvider: FC<{ children?: ReactNode }> = ({ children }) => {
   const [app, setApp] = useState<FirebaseContextType | null>(null);
 
   useEffect(() => {
