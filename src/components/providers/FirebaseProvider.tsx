@@ -3,7 +3,6 @@ import React, { FC, ReactNode, useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getDatabase } from "firebase/database";
 import { getStorage } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 
@@ -29,11 +28,10 @@ const FirebaseProvider: FC<{ children?: ReactNode }> = ({ children }) => {
     const app = initializeApp(CONFIG);
     const auth = getAuth(app);
     const firestore = getFirestore(app);
-    const database = getDatabase(app);
     const storage = getStorage(app);
     const analytics = getAnalytics(app);
 
-    setApp({ app, auth, firestore, database, storage, analytics });
+    setApp({ app, auth, firestore, storage, analytics });
   }, []);
 
   if (app === null) return <div>Loading...</div>;

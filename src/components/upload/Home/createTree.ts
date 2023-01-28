@@ -1,7 +1,7 @@
-import { ref, push } from "firebase/database";
+import { collection, addDoc } from "firebase/firestore";
 import { FirebaseContextType } from "../../../types/firebaseContext";
 
-type ParamsType = {
+type PropsType = {
   firebase: FirebaseContextType;
   files: string[];
 };
@@ -9,21 +9,21 @@ type ParamsType = {
 export const createTree = async ({
   firebase,
   files,
-}: ParamsType): Promise<string> => {
+}: PropsType): Promise<string> => {
   if (!files.length) {
     throw new Error("Files cannot be empty.");
   }
 
-  const treesCollection = ref(firebase.database, "trees");
+  const treesCollection = collection(firebase.firestore, "trees");
 
-  const result = await push(treesCollection, {
+  const treeDoc = await addDoc(treesCollection, {
     files,
-    createdDate: new Date().getTime(),
+    createdDate: new Date().getTime(), // UTC timestamp.
   });
 
-  if (!result.key) {
-    throw new Error("Failed to retrieve a new key.");
+  if (!treeDoc.id) {
+    throw new Error("Failed creating a new document.");
   }
 
-  return result.key;
+  return treeDoc.id;
 };

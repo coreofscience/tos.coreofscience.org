@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useState, Fragment, useEffect } from "react";
-import sortBy from "lodash.sortby";
-import { onValue, ref, set } from "firebase/database";
+import { orderBy } from "lodash";
+
+import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 
 import useFirebase from "../../hooks/useFirebase";
 
@@ -8,12 +9,12 @@ import StarImgage from "../vectors/StarImage";
 
 import Reference from "./Reference";
 import { mostCommon } from "../../utils/arrays";
-import { Article } from "../../utils/customTypes";
+import { Article, TreeMetadata } from "../../utils/customTypes";
 
 import "./Tree.css";
 
 interface Props {
-  data: { [section: string]: Article[] };
+  treeSections: { [section: string]: Article[] };
   treeId?: string;
 }
 
@@ -44,21 +45,23 @@ const INFO: {
   },
 };
 
-type StarsType = Record<string, boolean>;
-
-const Tree: FC<Props> = ({ data, treeId }: Props) => {
-  const [star, setStar] = useState<StarsType>({});
-  const [show, setShow] = useState<"root" | "trunk" | "leaf" | null>(null);
+const Tree: FC<Props> = ({ treeSections, treeId }: Props) => {
   const firebase = useFirebase();
-  let keywords: { [label: string]: string[] } = {
+
+  const [stars, setStars] = useState<NonNullable<TreeMetadata["stars"]>>({});
+  const [show, setShow] = useState<"root" | "trunk" | "leaf" | null>(null);
+
+  const keywords: { [label: string]: string[] } = {
     root: [],
     trunk: [],
     leaf: [],
   };
-  const starsPath = `stars/${treeId}`;
+
+  const treeDocPath = `trees/${treeId}`;
+  const treeDocRef = doc(firebase.firestore, treeDocPath);
 
   for (let section of Object.keys(keywords)) {
-    for (let article of data[section]) {
+    for (let article of treeSections[section]) {
       if (!article.keywords) continue;
       keywords[section] = keywords[section].concat(article.keywords);
     }
@@ -71,29 +74,34 @@ const Tree: FC<Props> = ({ data, treeId }: Props) => {
   }
 
   useEffect(() => {
-    const starsRef = ref(firebase.database, starsPath);
-    const unsubscribe = onValue(starsRef, (change) => {
-      if (!change.exists()) {
-        /**
-         * Stars related to the tree may be not found in the db,
-         * so let's not throw an error, log that instead.
-         */
-        console.log(`Unable to get stars data from path: ${starsPath}.`);
+    const unsubscribe = onSnapshot(treeDocRef, (doc) => {
+      if (!doc.exists()) {
+        throw new Error(`Unable to get tree data from path: ${treeDocPath}.`);
       }
       /**
-       * TODO: find a way to set `StarsType` type through the `starsRef` retrieval function.
+       * TODO: find a way to set `TreeMetadata["stars"]` type through the `starsRef` retrieval function.
        */
-      setStar((change.val() ?? {}) as StarsType);
+      setStars((doc.data().stars ?? {}) as NonNullable<TreeMetadata["stars"]>);
     });
     return () => unsubscribe();
-  }, [firebase, treeId, starsPath]);
+  }, [firebase, treeDocRef, treeDocPath]);
 
   const toggleStar = useCallback(
-    (label: string) => {
-      const starsRef = ref(firebase.database, starsPath);
-      set(starsRef, { ...star, [btoa(label)]: !star[btoa(label)] });
+    async (labelAsBase64: string) => {
+      const treeDoc = await getDoc(treeDocRef);
+      if (!treeDoc.exists()) {
+        throw new Error(`Unable to get tree data from path: ${treeDocPath}.`);
+      }
+      const treeData = treeDoc.data() as TreeMetadata;
+      setDoc(treeDocRef, {
+        ...treeData,
+        stars: {
+          ...treeData.stars,
+          [labelAsBase64]: !Boolean(treeData.stars?.[labelAsBase64]),
+        },
+      });
     },
-    [firebase, star, starsPath]
+    [treeDocRef, treeDocPath]
   );
 
   const toggleShow = useCallback((label: "root" | "trunk" | "leaf") => {
@@ -118,7 +126,7 @@ const Tree: FC<Props> = ({ data, treeId }: Props) => {
             key={`menu-${sectionName}`}
           >
             <strong>{(info || { title: "" }).title}</strong>
-            <small>{data[sectionName].length} articles</small>
+            <small>{treeSections[sectionName].length} articles</small>
           </button>
         ))}
       </div>
@@ -141,25 +149,22 @@ const Tree: FC<Props> = ({ data, treeId }: Props) => {
                 )}
               </div>
               <div className="articles">
-                {sortBy(data[sectionName], (article) =>
-                  !star[btoa(article.label)] ? 1 : 0
-                ).map((article) => (
+                {orderBy(
+                  treeSections[sectionName].map((article) => {
+                    const labelAsBase64 = btoa(article.label);
+                    const star = stars[labelAsBase64] ?? 0;
+                    return { article, labelAsBase64, star };
+                  }),
+                  "star",
+                  "desc"
+                ).map(({ article, labelAsBase64, star }) => (
                   <div className="article" key={`article-${article.label}`}>
                     <Reference key={article.label} {...article} />
-                    {/* <button className="btn-star">
-                      <CopyImage />
-                    </button> */}
                     <button
-                      className={`btn-star ${
-                        star[btoa(article.label)] ? "favorite" : ""
-                      }`}
-                      onClick={() => toggleStar(article.label)}
+                      className={`btn-star ${star ? "favorite" : ""}`}
+                      onClick={() => toggleStar(labelAsBase64)}
                     >
-                      {!!star[btoa(article.label)] ? (
-                        <StarImgage />
-                      ) : (
-                        <StarImgage />
-                      )}
+                      <StarImgage />
                     </button>
                   </div>
                 ))}

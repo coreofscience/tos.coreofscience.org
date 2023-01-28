@@ -1,18 +1,6 @@
 import React, { FC, Fragment } from "react";
+import { Article } from "../../utils/customTypes";
 import "./Reference.css";
-
-interface Props {
-  label: string;
-  authors?: string[];
-  year?: number | null;
-  title?: string | null;
-  journal?: string | null;
-  volume?: string | null;
-  issue?: string | null;
-  page?: string | null;
-  doi?: string | null;
-  simple?: boolean;
-}
 
 const titleCase = (sentence: string): string =>
   sentence
@@ -33,7 +21,7 @@ const formatAuthors = (simple: boolean, authors: string[]): string => {
   return [first.reverse().join("; "), last].filter((s) => !!s).join(" & ");
 };
 
-const Reference: FC<Props> = ({
+const Reference: FC<Article & { simple?: boolean }> = ({
   label,
   authors,
   year,
@@ -44,7 +32,7 @@ const Reference: FC<Props> = ({
   page,
   doi,
   simple = true,
-}: Props) => {
+}) => {
   return (
     <div className="reference" id={label}>
       {!!authors && (

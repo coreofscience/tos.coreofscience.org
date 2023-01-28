@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import isEqual from "lodash.isequal";
+import { isEqual } from "lodash";
 
 import FileContext from "../context/FileContext";
 import { FileMetadata } from "../utils/customTypes";
