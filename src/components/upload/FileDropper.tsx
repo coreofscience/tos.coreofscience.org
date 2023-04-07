@@ -1,17 +1,14 @@
-import React, { FC, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import "./FileDropper.css";
 
 import { looksLikeIsi } from "../../utils/isi";
-import { looksLikeScopus } from "../../utils/scopus";
 import useUpload from "../../hooks/useUpload";
 import useError from "../../hooks/useError";
 
 import FileErrorMap, { MAX_FILE_SIZE } from "./errors";
 
-interface Props {}
-
-const FileDropper: FC<Props> = () => {
+const FileDropper = () => {
   const upload = useUpload();
   const error = useError();
   const onDrop = useCallback(
@@ -28,10 +25,10 @@ const FileDropper: FC<Props> = () => {
           .map((file) => file.text().then((text) => ({ text, file })))
       ).then((data) => {
         data.forEach(({ text, file }) => {
-          if (looksLikeIsi(text) || looksLikeScopus(text)) {
+          if (looksLikeIsi(text)) {
             upload(Object(file).name, file);
           } else {
-            error(Object(file).name, file, FileErrorMap.isi);
+            error(Object(file).name, file, FileErrorMap.not_supported);
           }
         });
       });
