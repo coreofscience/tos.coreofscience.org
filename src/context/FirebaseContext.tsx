@@ -1,17 +1,11 @@
 import { createContext } from "react";
-import { FirebaseApp, initializeApp } from "firebase/app";
-import { Auth, getAuth } from "firebase/auth";
-import { Firestore, getFirestore } from "firebase/firestore";
-import { FirebaseStorage, getStorage } from "firebase/storage";
-import { Analytics, getAnalytics } from "firebase/analytics";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import { getAnalytics } from "firebase/analytics";
+import {FirebaseContextType} from "../types/firebaseContext";
 
-export type FirebaseContextType = {
-  app: FirebaseApp;
-  auth: Auth;
-  firestore: Firestore;
-  storage: FirebaseStorage;
-  analytics: Analytics;
-};
 
 const app = initializeApp({
   apiKey: import.meta.env.VITE_APIKEY,
