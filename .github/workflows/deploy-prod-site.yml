@@ -36,5 +36,5 @@ jobs:
 
       - name: Deploy
         run: |
-          npm install -g firebase-tools
-          firebase deploy -- --token=${{ secrets.FIREBASE_TOKEN }} -P prod
+          npm install firebase-tools
+          ./node_modules/.bin/firebase deploy -- --token=${{ secrets.FIREBASE_TOKEN }} -P prod
