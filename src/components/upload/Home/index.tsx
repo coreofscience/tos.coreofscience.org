@@ -94,7 +94,7 @@ const Home: FC<{}> = () => {
         {isLoading ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
       </button>
       {isError && (
-        <div className="error">There was an errror creating the thing.</div>
+        <div className="error">There was an error creating the thing.</div>
       )}
     </Fragment>
   );

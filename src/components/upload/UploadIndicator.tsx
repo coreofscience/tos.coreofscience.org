@@ -47,7 +47,6 @@ const UploadIndicator: FC<Props> = () => {
             remove={() => remove(file.hash)}
             move={() => swap(file.hash)}
             capped={cappedFiles[file.hash]}
-            size={file.blob.size / 2 ** 20}
             cumSize={cumSize}
             key={file.hash}
           />

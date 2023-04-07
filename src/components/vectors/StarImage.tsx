@@ -1,6 +1,6 @@
 import React from "react";
 
-const StarImgage = () => (
+const StarImage = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="25"
@@ -16,4 +16,4 @@ const StarImgage = () => (
     </g>
   </svg>
 );
-export default StarImgage;
+export default StarImage;

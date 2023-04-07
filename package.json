@@ -11,6 +11,7 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-router-dom": "^5.1.5",
     "firebase": "^9.10.0",
+    "js-base64": "^3.7.5",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "react": "^18.2.0",

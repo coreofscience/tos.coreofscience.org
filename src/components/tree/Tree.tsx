@@ -5,7 +5,7 @@ import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 
 import useFirebase from "../../hooks/useFirebase";
 
-import StarImgage from "../vectors/StarImage";
+import StarImage from "../vectors/StarImage";
 
 import Reference from "./Reference";
 import { mostCommon } from "../../utils/arrays";
@@ -13,6 +13,7 @@ import { mostCommon } from "../../utils/arrays";
 import "./Tree.css";
 import { Article } from "../../types/article";
 import { TreeMetadata } from "../../types/treeMetadata";
+import { encode } from "js-base64";
 
 interface Props {
   treeSections: { [section: string]: Article[] };
@@ -94,7 +95,7 @@ const Tree: FC<Props> = ({ treeSections, treeId }: Props) => {
         throw new Error(`Unable to get tree data from path: ${treeDocPath}.`);
       }
       const treeData = treeDoc.data() as TreeMetadata;
-      setDoc(treeDocRef, {
+      await setDoc(treeDocRef, {
         ...treeData,
         stars: {
           ...treeData.stars,
@@ -152,7 +153,7 @@ const Tree: FC<Props> = ({ treeSections, treeId }: Props) => {
               <div className="articles">
                 {orderBy(
                   treeSections[sectionName].map((article) => {
-                    const labelAsBase64 = btoa(article.label);
+                    const labelAsBase64 = encode(article.label);
                     const star = stars[labelAsBase64] ?? 0;
                     return { article, labelAsBase64, star };
                   }),
@@ -165,7 +166,7 @@ const Tree: FC<Props> = ({ treeSections, treeId }: Props) => {
                       className={`btn-star ${star ? "favorite" : ""}`}
                       onClick={() => toggleStar(labelAsBase64)}
                     >
-                      <StarImgage />
+                      <StarImage />
                     </button>
                   </div>
                 ))}

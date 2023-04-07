@@ -1,4 +1,4 @@
-import React, { FC, Suspense } from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AppLayout from "./components/layout/AppLayout";
@@ -12,7 +12,7 @@ const NotFound = React.lazy(() => import("./components/NotFound"));
 
 const queryClient = new QueryClient();
 
-const App: FC<{}> = () => {
+const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <FilesProvider>

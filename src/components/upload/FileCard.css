@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   position: relative;
   padding: 45px 1em 50px;
   text-align: center;
@@ -97,7 +97,7 @@
 .fileCard_progressBar .fileCard_progressAdjustment {
   background: var(--color-tree-leaf);
   width: 100%;
-  transform-origin: 0%;
+  transform-origin: 0;
   height: 3px;
   margin: 0;
 }

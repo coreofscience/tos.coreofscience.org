@@ -1,4 +1,5 @@
 import React from "react";
+import { encode } from "js-base64";
 
 const CORE_OF_SCIENCE = `
 <svg viewBox="0 0 68.674 63.934" xmlns="http://www.w3.org/2000/svg">
@@ -11,7 +12,7 @@ const CORE_OF_SCIENCE = `
 
 const CoreOfScience = ({ ...props }) => (
   <img
-    src={`data:image/svg+xml;base64,${btoa(CORE_OF_SCIENCE)}`}
+    src={`data:image/svg+xml;base64,${encode(CORE_OF_SCIENCE)}`}
     alt="core of science logo"
     title="core of science logo"
     {...props}
