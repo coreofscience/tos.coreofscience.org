@@ -9,7 +9,7 @@ const useUpload = () => {
   const { add, track } = useContext(FileContext);
   const firebase = useFirebase();
 
-  const upload = useCallback(
+  return useCallback(
     (name: string, blob: Blob) => {
       metadata(name, blob).then((meta) => {
         add(meta);
@@ -39,8 +39,6 @@ const useUpload = () => {
     },
     [add, track, firebase]
   );
-
-  return upload;
 };
 
 export default useUpload;

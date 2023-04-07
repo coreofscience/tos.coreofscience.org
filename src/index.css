@@ -85,7 +85,7 @@ a {
 abbr[title] {
   border-bottom: none; /* 1 */
   text-decoration: underline; /* 2 */
-  text-decoration: underline dotted; /* 2 */
+  text-decoration: dotted; /* 2 */
 }
 
 /**
@@ -426,7 +426,7 @@ h4 {
 }
 
 .btn.btn-large {
-  display: inline-block default;
+  display: inline-block;
   font-size: 24px;
   font-family: "Oswald", Impact, "Franklin Gothic Bold", sans-serif;
   color: var(--color-bg);

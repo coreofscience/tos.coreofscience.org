@@ -5,7 +5,7 @@ import FileContext from "../context/FileContext";
 const useError = () => {
   const { add } = useContext(FileContext);
 
-  const addError = useCallback(
+  return useCallback(
     (name: string, blob: Blob, reason: string) => {
       // we do not need to read the file if it is an error just to get a hash
       const hash = name;
@@ -20,8 +20,6 @@ const useError = () => {
     },
     [add]
   );
-
-  return addError;
 };
 
 export default useError;

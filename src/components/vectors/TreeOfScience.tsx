@@ -1,4 +1,5 @@
 import React from "react";
+import { encode } from "js-base64";
 
 const TREE_OF_SCIENCE = `
 <svg width="280.639" height="280.637" viewBox="0 0 74.252 74.252" xmlns="http://www.w3.org/2000/svg">
@@ -21,7 +22,7 @@ const TREE_OF_SCIENCE = `
 
 const TreeOfScience = ({ ...props }) => (
   <img
-    src={`data:image/svg+xml;base64,${btoa(TREE_OF_SCIENCE)}`}
+    src={`data:image/svg+xml;base64,${encode(TREE_OF_SCIENCE)}`}
     alt="tree of science logo"
     title="tree of science logo"
     {...props}

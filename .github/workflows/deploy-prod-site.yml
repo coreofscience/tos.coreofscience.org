@@ -25,14 +25,14 @@ jobs:
           npm run build
         env:
           CI: true
-          REACT_APP_APIKEY: ${{ secrets.FIREBASE_WEB_API_KEY_PROD }}
-          REACT_APP_AUTHDOMAIN: "coreofscience.firebaseapp.com"
-          REACT_APP_DATABASEURL: "https://coreofscience.firebaseio.com"
-          REACT_APP_PROJECTID: "coreofscience"
-          REACT_APP_STORAGEBUCKET: "coreofscience.appspot.com"
-          REACT_APP_MESSAGINGSENDERID: "217902041600"
-          REACT_APP_APPID: "1:217902041600:web:54618397fad21282b426e5"
-          REACT_APP_MEASUREMENTID: "G-9SHWB33EEK"
+          VITE_APIKEY: ${{ secrets.FIREBASE_WEB_API_KEY_PROD }}
+          VITE_AUTHDOMAIN: "coreofscience.firebaseapp.com"
+          VITE_DATABASEURL: "https://coreofscience.firebaseio.com"
+          VITE_PROJECTID: "coreofscience"
+          VITE_STORAGEBUCKET: "coreofscience.appspot.com"
+          VITE_MESSAGINGSENDERID: "217902041600"
+          VITE_APPID: "1:217902041600:web:54618397fad21282b426e5"
+          VITE_MEASUREMENTID: "G-9SHWB33EEK"
 
       - name: Deploy
         run: |

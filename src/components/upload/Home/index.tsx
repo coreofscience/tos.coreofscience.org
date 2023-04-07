@@ -50,7 +50,7 @@ const Home: FC<{}> = () => {
     <Fragment>
       <div>
         <p>Get your seed files from web of knowledge.</p>
-        <p>The upload your files for processing.</p>
+        <p>Then, upload your files for processing.</p>
       </div>
       <FileDropper />
       <UploadIndicator />
@@ -94,7 +94,7 @@ const Home: FC<{}> = () => {
         {isLoading ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
       </button>
       {isError && (
-        <div className="error">There was an errror creating the thing.</div>
+        <div className="error">There was an error creating the thing.</div>
       )}
     </Fragment>
   );

@@ -1,35 +1,34 @@
-import React, { FC } from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AppLayout from "./components/layout/AppLayout";
 
-import Home from "./components/upload/Home";
-import NotFound from "./components/NotFound";
-import Result from "./components/tree/Result";
-
-import FirebaseProvider from "./components/providers/FirebaseProvider";
 import FilesProvider from "./components/providers/FilesProvider";
 import { QueryClient, QueryClientProvider } from "react-query";
 
+const Home = React.lazy(() => import("./components/upload/Home"));
+const Result = React.lazy(() => import("./components/tree/Result"));
+const NotFound = React.lazy(() => import("./components/NotFound"));
+
 const queryClient = new QueryClient();
 
-const App: FC<{}> = () => {
+const App = () => {
   return (
-    <FirebaseProvider>
-      <QueryClientProvider client={queryClient}>
-        <FilesProvider>
-          <BrowserRouter>
-            <AppLayout>
+    <QueryClientProvider client={queryClient}>
+      <FilesProvider>
+        <BrowserRouter>
+          <AppLayout>
+            <Suspense fallback={"Loading..."}>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/tree/:treeId" element={<Result />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </AppLayout>
-          </BrowserRouter>
-        </FilesProvider>
-      </QueryClientProvider>
-    </FirebaseProvider>
+            </Suspense>
+          </AppLayout>
+        </BrowserRouter>
+      </FilesProvider>
+    </QueryClientProvider>
   );
 };
 

@@ -23,7 +23,7 @@
 }
 
 .tree-menu button strong {
-  font-family: Oswald;
+  font-family: Oswald, sans-serif;
   color: white;
   text-transform: uppercase;
   font-weight: bold;

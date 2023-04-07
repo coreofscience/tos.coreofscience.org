@@ -1,6 +1,6 @@
 import React, { FC, Fragment } from "react";
-import { Article } from "../../utils/customTypes";
 import "./Reference.css";
+import { Article } from "../../types/article";
 
 const titleCase = (sentence: string): string =>
   sentence

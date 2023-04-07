@@ -1,15 +1,13 @@
-import { collection, addDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { FirebaseContextType } from "../../../types/firebaseContext";
-
-type PropsType = {
-  firebase: FirebaseContextType;
-  files: string[];
-};
 
 export const createTree = async ({
   firebase,
   files,
-}: PropsType): Promise<string> => {
+}: {
+  firebase: FirebaseContextType;
+  files: string[];
+}): Promise<string> => {
   if (!files.length) {
     throw new Error("Files cannot be empty.");
   }
