@@ -21,6 +21,7 @@
   },
   "scripts": {
     "start": "vite",
+    "test": "vitest",
     "build": "tsc && vite build",
     "serve": "vite preview"
   },
@@ -44,6 +45,7 @@
     "typescript": "^4.7.4",
     "vite": "^4.2.1",
     "vite-plugin-svgr": "^2.4.0",
-    "vite-tsconfig-paths": "^4.0.8"
+    "vite-tsconfig-paths": "^4.0.8",
+    "vitest": "^0.29.8"
   }
 }
