@@ -21,8 +21,9 @@
     "react-router-dom": "^6.3.0"
   },
   "scripts": {
-    "start": "vite",
+    "shipit": "git tag v$(date +%y.%m.%d.%H.%M) && git push --tags",
     "test": "vitest",
+    "start": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview"
   },
