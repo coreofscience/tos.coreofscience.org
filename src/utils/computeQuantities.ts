@@ -1,4 +1,4 @@
-import { FileMetadata } from "./customTypes";
+import {FileMetadata} from "../types/fileMetadata";
 
 export const MAX_SIZE = 5; // MB
 

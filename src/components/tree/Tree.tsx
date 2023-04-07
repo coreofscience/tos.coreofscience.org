@@ -9,9 +9,10 @@ import StarImgage from "../vectors/StarImage";
 
 import Reference from "./Reference";
 import { mostCommon } from "../../utils/arrays";
-import { Article, TreeMetadata } from "../../utils/customTypes";
 
 import "./Tree.css";
+import {Article} from "../../types/article";
+import {TreeMetadata} from "../../types/treeMetadata";
 
 interface Props {
   treeSections: { [section: string]: Article[] };

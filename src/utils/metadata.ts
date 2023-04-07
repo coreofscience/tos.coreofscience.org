@@ -1,7 +1,7 @@
-import { FileMetadata } from "./customTypes";
 import { mostCommon } from "./arrays";
 import * as isi from "./isi";
 import md5 from "md5";
+import {FileMetadata} from "../types/fileMetadata";
 
 const metadata = async (name: string, blob: Blob): Promise<FileMetadata> => {
   const content = await blob.text();

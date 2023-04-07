@@ -6,7 +6,8 @@ import useFirebase from "../../hooks/useFirebase";
 
 import Tree from "./Tree";
 import NotFound from "../NotFound";
-import { TreeMetadata } from "../../utils/customTypes";
+
+import {TreeMetadata} from "../../types/treeMetadata";
 
 const Result = () => {
   const { treeId } = useParams<{ treeId?: string }>();
