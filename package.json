@@ -3,16 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^10.4.9",
     "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^25.2.3",
     "@types/lodash": "^4.14.191",
     "@types/md5": "^2.2.0",
-    "@types/node": "^12.0.0",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
-    "@types/react-dropzone": "^5.1.0",
     "@types/react-router-dom": "^5.1.5",
     "firebase": "^9.10.0",
     "lodash": "^4.17.21",
@@ -21,16 +17,12 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.2",
     "react-query": "^3.39.2",
-    "react-router-dom": "^6.3.0",
-    "react-scripts": "^4.0.3"
+    "react-router-dom": "^6.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "firebase": "firebase",
-    "deploy": "firebase deploy"
+    "start": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -48,7 +40,10 @@
     ]
   },
   "devDependencies": {
-    "firebase-tools": "^8.12.1",
-    "typescript": "^4.7.4"
+    "@vitejs/plugin-react": "^3.1.0",
+    "typescript": "^4.7.4",
+    "vite": "^4.2.1",
+    "vite-plugin-svgr": "^2.4.0",
+    "vite-tsconfig-paths": "^4.0.8"
   }
 }
