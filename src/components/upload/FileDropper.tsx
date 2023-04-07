@@ -28,7 +28,7 @@ const FileDropper = () => {
           if (looksLikeIsi(text)) {
             upload(Object(file).name, file);
           } else {
-            error(Object(file).name, file, FileErrorMap.isi);
+            error(Object(file).name, file, FileErrorMap.not_supported);
           }
         });
       });
