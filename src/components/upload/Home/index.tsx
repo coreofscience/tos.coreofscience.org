@@ -50,7 +50,7 @@ const Home: FC<{}> = () => {
     <Fragment>
       <div>
         <p>Get your seed files from web of knowledge.</p>
-        <p>The upload your files for processing.</p>
+        <p>Then, upload your files for processing.</p>
       </div>
       <FileDropper />
       <UploadIndicator />

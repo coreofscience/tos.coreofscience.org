@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useState, Fragment, useEffect } from "react";
-import { orderBy } from "lodash";
+import orderBy from "lodash/orderBy";
 
 import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 
