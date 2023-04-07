@@ -3,7 +3,7 @@ import { isEqual } from "lodash";
 
 import FileContext from "../context/FileContext";
 
-import {FileMetadata} from "../types/fileMetadata";
+import { FileMetadata } from "../types/fileMetadata";
 
 const useFiles = (): FileMetadata[] => {
   const [validFiles, set] = useState<FileMetadata[]>([]);

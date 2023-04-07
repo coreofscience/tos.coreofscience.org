@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useMemo, useState } from "react";
 import FileContext from "../../context/FileContext";
 
-import {FileMetadata} from "../../types/fileMetadata";
+import { FileMetadata } from "../../types/fileMetadata";
 
 interface Props {
   children?: React.ReactElement;

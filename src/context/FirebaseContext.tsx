@@ -4,8 +4,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
-import {FirebaseContextType} from "../types/firebaseContext";
-
+import { FirebaseContextType } from "../types/firebaseContext";
 
 const app = initializeApp({
   apiKey: import.meta.env.VITE_APIKEY,

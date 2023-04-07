@@ -11,8 +11,8 @@ import Reference from "./Reference";
 import { mostCommon } from "../../utils/arrays";
 
 import "./Tree.css";
-import {Article} from "../../types/article";
-import {TreeMetadata} from "../../types/treeMetadata";
+import { Article } from "../../types/article";
+import { TreeMetadata } from "../../types/treeMetadata";
 
 interface Props {
   treeSections: { [section: string]: Article[] };
