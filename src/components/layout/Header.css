@@ -3,12 +3,30 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   padding: 4em 0 1em 0;
+}
+
+.Header .Header_element {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .Header .Header__title {
   margin-left: 0.5em;
   color: var(--color-tree-leaf, green);
+}
+
+.Header .Header__login {
+  color: var(--color-tree-leaf, green);
+}
+
+.Header .Header__sign-up {
+  margin-left: 0.5em;
+  padding: 0.625em 1.25em;
+  color: white;
+  background-color: var(--color-tree-leaf, green);
 }
 
 .Header .Header__branding {
