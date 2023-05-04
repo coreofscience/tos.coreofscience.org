@@ -1,7 +1,7 @@
 name: Build and Deploy Prod Site
 
 on:
-  create:
+  push:
     tags:
       - v*
 
