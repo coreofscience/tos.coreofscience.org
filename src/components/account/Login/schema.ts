@@ -3,7 +3,7 @@ import { errorMessages } from "../common/errorMessages";
 
 export const loginSchema = object()
   .shape({
-    email: string().email(errorMessages.email).required(),
-    password: string().min(8, errorMessages.password).required(),
+    email: string().required().email(errorMessages.email),
+    password: string().required().min(8, errorMessages.password),
   })
   .required();

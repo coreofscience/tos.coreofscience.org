@@ -1,5 +1,5 @@
 import React, { FC, Fragment, useCallback, useState } from "react";
-import { sendSignInLinkToEmail } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -11,44 +11,37 @@ import { SignUpFormFieldsType } from "./types";
 import "../common/styles.css";
 import TreeOfScience from "../../vectors/TreeOfScience";
 import useFirebase from "../../../hooks/useFirebase";
-import { InputErrorMsg } from "../common/InputErrorMsg";
+import { TextInput } from "../common/TextInput";
 
-type AuthLinkStatusType = "idle" | "sending" | "sent" | "error";
+type AuthLinkStatusType = "idle" | "creating" | "success" | "error";
 
 const authLinkStatusMessageMap: {
   [k in AuthLinkStatusType]: string | undefined;
 } = {
   idle: "",
-  sending: "Sending authentication link to your account...",
-  sent: "We've sent an authentication link to your account.",
+  creating: "Creating account.",
+  success: "Successfully signed up, you will be redirected to home in a few...",
   error: "There was an error sending an authentication link, please try again.",
 };
 
 const SignUp: FC = () => {
-  const [signUpLinkStatus, setSignUpLinkStatus] =
-    useState<AuthLinkStatusType>("idle");
+  const [signUpStatus, setSignUpStatus] = useState<AuthLinkStatusType>("idle");
   const firebase = useFirebase();
 
   const form = useForm<SignUpFormFieldsType>({
     defaultValues: defaultSignUpFormFieldsState,
     resolver: yupResolver(signUpSchema),
-    reValidateMode: "onSubmit",
-    mode: "onSubmit",
   });
 
   const onSignUpSubmit = useCallback(
     (data: SignUpFormFieldsType) => {
-      setSignUpLinkStatus("sending");
-      const url = `${
-        window.location.origin
-      }/finish-sign-up?email=${encodeURIComponent(data.email)}`;
-      const settings = { url, handleCodeInApp: true };
-      sendSignInLinkToEmail(firebase.auth, data.email, settings)
+      setSignUpStatus("creating");
+      createUserWithEmailAndPassword(firebase.auth, data.email, data.password)
         .then(() => {
-          setSignUpLinkStatus("sent");
+          setSignUpStatus("success");
         })
         .catch((error) => {
-          setSignUpLinkStatus("error");
+          setSignUpStatus("error");
           throw error;
         });
     },
@@ -58,19 +51,38 @@ const SignUp: FC = () => {
   return (
     <Fragment>
       <div className="container">
-        <form className="content" onSubmit={form.handleSubmit(onSignUpSubmit)}>
+        <form
+          className="form-content"
+          onSubmit={form.handleSubmit(onSignUpSubmit)}
+        >
           <TreeOfScience className="content-logo" />
           <h2>Sign Up</h2>
-          <input {...form.register("email")} type="text" placeholder="E-mail" />
-          <InputErrorMsg message={form.formState.errors.email?.message} />
+          <TextInput
+            {...form.register("name")}
+            type="text"
+            placeholder="Name"
+            errorMessage={form.formState.errors.name?.message}
+          />
+          <TextInput
+            {...form.register("email")}
+            type="text"
+            placeholder="E-mail"
+            errorMessage={form.formState.errors.email?.message}
+          />
+          <TextInput
+            {...form.register("password")}
+            type="password"
+            placeholder="Password"
+            errorMessage={form.formState.errors.password?.message}
+          />
           <br />
           <input
             type="submit"
             className="btn btn-large btn-leaf"
             value="SIGN UP"
           />
-          {authLinkStatusMessageMap[signUpLinkStatus] ? (
-            <p>{authLinkStatusMessageMap[signUpLinkStatus]}</p>
+          {authLinkStatusMessageMap[signUpStatus] ? (
+            <p>{authLinkStatusMessageMap[signUpStatus]}</p>
           ) : null}
         </form>
       </div>

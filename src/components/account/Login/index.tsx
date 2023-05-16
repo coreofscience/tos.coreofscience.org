@@ -9,9 +9,9 @@ import { LoginFormFieldsType } from "./types";
 
 import "../common/styles.css";
 import TreeOfScience from "../../vectors/TreeOfScience";
-import { InputErrorMsg } from "../common/InputErrorMsg";
+import { Message } from "../common/Message";
 
-const Login: FC = () => {
+const LogIn: FC = () => {
   const form = useForm<LoginFormFieldsType>({
     defaultValues: defaultLoginFormFieldsState,
     resolver: yupResolver(loginSchema),
@@ -28,20 +28,26 @@ const Login: FC = () => {
       <div className="container">
         <form className="content" onSubmit={form.handleSubmit(onLoginSubmit)}>
           <TreeOfScience className="content-logo" />
-          <h2>Login</h2>
+          <h2>Log In</h2>
           <input {...form.register("email")} type="text" placeholder="E-mail" />
-          <InputErrorMsg message={form.formState.errors.email?.message} />
+          <Message
+            message={form.formState.errors.email?.message}
+            type="error"
+          />
           <input
             {...form.register("password")}
             type="password"
             placeholder="Password"
           />
-          <InputErrorMsg message={form.formState.errors.password?.message} />
+          <Message
+            message={form.formState.errors.password?.message}
+            type="error"
+          />
           <br />
           <input
             type="submit"
             className="btn btn-large btn-leaf"
-            value="LOGIN"
+            value="LOG IN"
           />
         </form>
       </div>
@@ -49,4 +55,4 @@ const Login: FC = () => {
   );
 };
 
-export default Login;
+export default LogIn;

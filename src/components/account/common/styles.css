@@ -3,7 +3,7 @@
 	justify-content: center;
 }
 
-.content {
+.form-content  {
   padding: 50px 40px;
   display: flex;
   justify-content: center;
@@ -12,10 +12,29 @@
   background-color: var(--color-bg-accent);
 }
 
-.content input[type="text"], input[type="password"] {
+.form-input {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input .form-input-error {
+  text-transform: uppercase;
+  font-size: x-small;
+  font-weight: bold;
+  color: var(--color-red-accent);
+}
+
+.form-input .form-input-info {
+  text-transform: uppercase;
+  font-size: x-small;
+  font-weight: bold;
+  color: var(--color-tree-leaf);
+}
+
+.form-input input[type="text"], input[type="password"] {
   width: 320px;
   padding: 12px;
-  margin-bottom: 20px;
   box-sizing: border-box;
   border: unset;
   font-family: Oswald, Impact, "Franklin Gothic", sans-serif;
