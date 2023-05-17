@@ -2,15 +2,16 @@ import React, { FC, Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { loginSchema } from "./schema";
-
-import { defaultLoginFormFieldsState } from "./constants/defaultState";
-import { LogInFormFieldsType } from "./types";
-
 import "../common/styles.css";
 import TreeOfScience from "../../vectors/TreeOfScience";
+
 import { Message } from "../common/Message";
+
+import { defaultLoginFormFieldsState } from "./constants/defaultState";
+import { loginSchema } from "./schema";
 import { useSignIn } from "./hooks/useLogIn";
+
+import { LogInFormFieldsType } from "./types";
 
 const LogIn: FC = () => {
   const form = useForm<LogInFormFieldsType>({
