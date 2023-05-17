@@ -4,7 +4,7 @@
 }
 
 .form-content  {
-  padding: 50px 40px;
+  padding: 30px 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,14 +18,16 @@
   flex-direction: column;
 }
 
-.form-input .form-input-error {
+.error-message {
+  padding: 10px 0;
   text-transform: uppercase;
   font-size: x-small;
   font-weight: bold;
   color: var(--color-red-accent);
 }
 
-.form-input .form-input-info {
+.info-message {
+  padding: 10px 0;
   text-transform: uppercase;
   font-size: x-small;
   font-weight: bold;

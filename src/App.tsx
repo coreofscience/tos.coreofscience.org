@@ -8,6 +8,7 @@ import SignUp from "./components/account/SignUp";
 
 import FilesProvider from "./components/providers/FilesProvider";
 import { QueryClient, QueryClientProvider } from "react-query";
+import UserProvider from "./components/providers/UserProvider";
 
 const Home = React.lazy(() => import("./components/upload/Home"));
 const Result = React.lazy(() => import("./components/tree/Result"));
@@ -20,17 +21,19 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <FilesProvider>
         <BrowserRouter>
-          <AppLayout>
-            <Suspense fallback={"Loading..."}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/log-in" element={<LogIn />} />
-                <Route path="/sign-up" element={<SignUp />} />
-                <Route path="/tree/:treeId" element={<Result />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </AppLayout>
+          <UserProvider>
+            <AppLayout>
+              <Suspense fallback={"Loading..."}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/log-in" element={<LogIn />} />
+                  <Route path="/sign-up" element={<SignUp />} />
+                  <Route path="/tree/:treeId" element={<Result />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </AppLayout>
+          </UserProvider>
         </BrowserRouter>
       </FilesProvider>
     </QueryClientProvider>

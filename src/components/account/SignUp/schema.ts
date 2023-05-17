@@ -4,7 +4,7 @@ import { errorMessages } from "../common/errorMessages";
 export const signUpSchema = object()
   .shape({
     name: string().required(),
-    email: string().email(errorMessages.email).required(),
-    password: string().min(8, errorMessages.password).required(),
+    email: string().required().email(errorMessages.email),
+    password: string().required().min(8, errorMessages.password),
   })
   .required();

@@ -1,53 +1,65 @@
-import React, { FC, Fragment, useCallback } from "react";
+import React, { FC, Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { loginSchema } from "./schema";
-import { defaultLoginFormFieldsState } from "./constants/defaultState";
 
-import { LoginFormFieldsType } from "./types";
+import { defaultLoginFormFieldsState } from "./constants/defaultState";
+import { LogInFormFieldsType } from "./types";
 
 import "../common/styles.css";
 import TreeOfScience from "../../vectors/TreeOfScience";
 import { Message } from "../common/Message";
+import { useSignIn } from "./hooks/useLogIn";
 
 const LogIn: FC = () => {
-  const form = useForm<LoginFormFieldsType>({
+  const form = useForm<LogInFormFieldsType>({
     defaultValues: defaultLoginFormFieldsState,
     resolver: yupResolver(loginSchema),
-    reValidateMode: "onSubmit",
-    mode: "onSubmit",
   });
 
-  const onLoginSubmit = useCallback((data: LoginFormFieldsType) => {
-    console.log(data);
-  }, []);
+  const [logInState, logInActions] = useSignIn();
 
   return (
     <Fragment>
       <div className="container">
-        <form className="content" onSubmit={form.handleSubmit(onLoginSubmit)}>
+        <form
+          className="form-content"
+          onSubmit={form.handleSubmit(logInActions.logIn)}
+        >
           <TreeOfScience className="content-logo" />
           <h2>Log In</h2>
-          <input {...form.register("email")} type="text" placeholder="E-mail" />
-          <Message
-            message={form.formState.errors.email?.message}
-            type="error"
-          />
-          <input
-            {...form.register("password")}
-            type="password"
-            placeholder="Password"
-          />
-          <Message
-            message={form.formState.errors.password?.message}
-            type="error"
-          />
+          <div className="form-input">
+            <input
+              {...form.register("email")}
+              type="text"
+              placeholder="E-mail"
+            />
+            <Message
+              message={form.formState.errors.email?.message}
+              type="error"
+            />
+          </div>
+          <div className="form-input">
+            <input
+              {...form.register("password")}
+              type="password"
+              placeholder="Password"
+            />
+            <Message
+              message={form.formState.errors.password?.message}
+              type="error"
+            />
+          </div>
           <br />
           <input
             type="submit"
             className="btn btn-large btn-leaf"
             value="LOG IN"
+          />
+          <Message
+            message={logInState.message}
+            type={logInState.status === "failure" ? "error" : "info"}
           />
         </form>
       </div>

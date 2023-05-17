@@ -1,5 +1,4 @@
-import React, { FC, Fragment, useCallback, useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import React, { FC, Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -10,80 +9,65 @@ import { SignUpFormFieldsType } from "./types";
 
 import "../common/styles.css";
 import TreeOfScience from "../../vectors/TreeOfScience";
-import useFirebase from "../../../hooks/useFirebase";
-import { TextInput } from "../common/TextInput";
-
-type AuthLinkStatusType = "idle" | "creating" | "success" | "error";
-
-const authLinkStatusMessageMap: {
-  [k in AuthLinkStatusType]: string | undefined;
-} = {
-  idle: "",
-  creating: "Creating account.",
-  success: "Successfully signed up, you will be redirected to home in a few...",
-  error: "There was an error sending an authentication link, please try again.",
-};
+import { Message } from "../common/Message";
+import { useSignUp } from "./hooks/useSignUp";
 
 const SignUp: FC = () => {
-  const [signUpStatus, setSignUpStatus] = useState<AuthLinkStatusType>("idle");
-  const firebase = useFirebase();
-
   const form = useForm<SignUpFormFieldsType>({
     defaultValues: defaultSignUpFormFieldsState,
     resolver: yupResolver(signUpSchema),
   });
 
-  const onSignUpSubmit = useCallback(
-    (data: SignUpFormFieldsType) => {
-      setSignUpStatus("creating");
-      createUserWithEmailAndPassword(firebase.auth, data.email, data.password)
-        .then(() => {
-          setSignUpStatus("success");
-        })
-        .catch((error) => {
-          setSignUpStatus("error");
-          throw error;
-        });
-    },
-    [firebase.auth]
-  );
+  const [signUpState, signUpActions] = useSignUp();
 
   return (
     <Fragment>
       <div className="container">
         <form
           className="form-content"
-          onSubmit={form.handleSubmit(onSignUpSubmit)}
+          onSubmit={form.handleSubmit(signUpActions.signUp)}
         >
           <TreeOfScience className="content-logo" />
           <h2>Sign Up</h2>
-          <TextInput
-            {...form.register("name")}
-            type="text"
-            placeholder="Name"
-            errorMessage={form.formState.errors.name?.message}
-          />
-          <TextInput
-            {...form.register("email")}
-            type="text"
-            placeholder="E-mail"
-            errorMessage={form.formState.errors.email?.message}
-          />
-          <TextInput
-            {...form.register("password")}
-            type="password"
-            placeholder="Password"
-            errorMessage={form.formState.errors.password?.message}
-          />
+          <div className="form-input">
+            <input {...form.register("name")} type="text" placeholder="Name" />
+            <Message
+              message={form.formState.errors.name?.message}
+              type="error"
+            />
+          </div>
+          <div className="form-input">
+            <input
+              {...form.register("email")}
+              type="text"
+              placeholder="E-mail"
+            />
+            <Message
+              message={form.formState.errors.email?.message}
+              type="error"
+            />
+          </div>
+          <div className="form-input">
+            <input
+              {...form.register("password")}
+              type="password"
+              placeholder="Password"
+            />
+            <Message
+              message={form.formState.errors.password?.message}
+              type="error"
+            />
+          </div>
           <br />
           <input
             type="submit"
             className="btn btn-large btn-leaf"
             value="SIGN UP"
           />
-          {authLinkStatusMessageMap[signUpStatus] ? (
-            <p>{authLinkStatusMessageMap[signUpStatus]}</p>
-          ) : null}
+          <Message
+            message={signUpState.message}
+            type={signUpState.status === "failure" ? "error" : "info"}
+          />
         </form>
       </div>
     </Fragment>

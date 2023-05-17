@@ -18,11 +18,18 @@
   color: var(--color-tree-leaf, green);
 }
 
-.Header .Header__login {
+.Header .Header__log-in {
   color: var(--color-tree-leaf, green);
 }
 
 .Header .Header__sign-up {
+  margin-left: 0.5em;
+  padding: 0.625em 1.25em;
+  color: white;
+  background-color: var(--color-tree-leaf, green);
+}
+
+.Header .Header__log-out {
   margin-left: 0.5em;
   padding: 0.625em 1.25em;
   color: white;
