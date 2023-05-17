@@ -1,6 +1,6 @@
-import { LoginFormFieldsType } from "../types";
+import { LogInFormFieldsType } from "../types";
 
-export const defaultLoginFormFieldsState: LoginFormFieldsType = {
+export const defaultLoginFormFieldsState: LogInFormFieldsType = {
   email: "",
   password: "",
 };
