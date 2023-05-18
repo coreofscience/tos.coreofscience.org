@@ -23,17 +23,20 @@ const Header = () => {
         {user?.uid ? (
           <>
             <p>{user.email}</p>
-            <div onClick={() => signOut(firebase.auth)}>
-              <h3 className="Header__log-out">Log Out</h3>
-            </div>
+            <button
+              onClick={() => signOut(firebase.auth)}
+              className="Header__log-out"
+            >
+              Log Out
+            </button>
           </>
         ) : (
           <>
             <Link to="/log-in">
-              <h3 className="Header__log-in">Log In</h3>
+              <p className="Header__log-in">Log In</p>
             </Link>
             <Link to="/sign-up">
-              <h3 className="Header__sign-up">Sign up</h3>
+              <p className="Header__sign-up">Sign up</p>
             </Link>
           </>
         )}
