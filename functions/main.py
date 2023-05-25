@@ -11,7 +11,8 @@ from typing import Any, Dict, List
 import networkx as nx
 from bibx import Sap, read_any
 from firebase_admin import firestore, initialize_app, storage
-from firebase_functions.firestore_fn import DocumentSnapshot, Event, on_document_created
+from firebase_functions.firestore_fn import (DocumentSnapshot, Event,
+                                             on_document_created)
 from firebase_functions.options import MemoryOption
 
 logging.basicConfig(level=logging.INFO)
@@ -85,6 +86,8 @@ def create_tree_v2(
         return
     logging.info(f"handling new created tree {event} {event.data.to_dict()}")
 
+    start = datetime.now()
+
     client = firestore.client()
     ref = client.document(event.document)
     ref.update({"startedDate": get_int_utcnow()})
@@ -94,23 +97,27 @@ def create_tree_v2(
         contents = get_contents(data, max_size_megabytes=max_size_megabytes)
         tos = tree_from_strings(list(contents.values()))
         result = convert_tos_to_json(tos)
+        end = datetime.now()
         ref.update(
             {
                 "version": "2",
                 "result": result,
                 "error": None,
                 "finishedDate": get_int_utcnow(),
+                "totalTimeMillis": (end - start).total_seconds() * 1000,
             }
         )
         logging.info("Tree process finished")
     except Exception as error:
         logging.exception("Tree process failed")
+        end = datetime.now()
         ref.update(
             {
                 "version": "2",
                 "result": None,
                 "error": str(error),
                 "finishedDate": get_int_utcnow(),
+                "totalTimeMillis": (end - start).total_seconds() * 1000,
             }
         )
 
