@@ -11,8 +11,7 @@ from typing import Any, Dict, List
 import networkx as nx
 from bibx import Sap, read_any
 from firebase_admin import firestore, initialize_app, storage
-from firebase_functions.firestore_fn import (DocumentSnapshot, Event,
-                                             on_document_created)
+from firebase_functions.firestore_fn import DocumentSnapshot, Event, on_document_created
 from firebase_functions.options import MemoryOption
 
 logging.basicConfig(level=logging.INFO)
@@ -128,3 +127,11 @@ def create_tree_v2(
 )
 def process_user_tree(event: Event[DocumentSnapshot | None]) -> None:
     create_tree_v2(event, max_size_megabytes=20)
+
+
+@on_document_created(
+    document="trees/{treeId}",
+    memory=MemoryOption.MB_256,
+)
+def process_anonymous_tree(event: Event[DocumentSnapshot | None]) -> None:
+    create_tree_v2(event, max_size_megabytes=10)
