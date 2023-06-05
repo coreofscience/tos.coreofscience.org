@@ -1,7 +1,8 @@
 {
   "projects": {
     "prod": "coreofscience",
-    "dev": "coreofscience-dev"
+    "dev": "coreofscience-dev",
+    "default": "coreofscience-dev"
   },
   "targets": {
     "coreofscience-dev": {
