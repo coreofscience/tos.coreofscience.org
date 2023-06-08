@@ -41,4 +41,9 @@ jobs:
 
       - name: Deploy
         run: |
+          cd functions
+          python3.11 -m venv venv
+          source ./venv/bin/activate
+          pip install -r requirements.txt
+          cd ..
           npm run deploy -- --token=${{ secrets.FIREBASE_TOKEN }} -P dev
