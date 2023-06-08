@@ -46,4 +46,4 @@ jobs:
           source ./venv/bin/activate
           pip install -r requirements.txt
           cd ..
-          npm run deploy -- --token=${{ secrets.FIREBASE_TOKEN }} -P dev
+          npm run deploy -- --debug --token=${{ secrets.FIREBASE_TOKEN }} -P dev
