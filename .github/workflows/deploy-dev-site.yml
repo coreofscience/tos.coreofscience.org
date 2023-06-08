@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           persist-credentials: false
 
       - name: Use Node 16
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 16.x
 
@@ -41,8 +41,4 @@ jobs:
 
       - name: Deploy
         run: |
-          echo $SERVICE_ACCOUNT > .credentials.json
-          npm run deploy -- -P dev
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: .credentials.json
-          SERVICE_ACCOUNT: ${{ secrets.FIREBASE_DEV_SERVICE_ACCOUNT }}
+          npm run deploy -- --token=${{ secrets.FIREBASE_TOKEN }} -P dev
