@@ -40,6 +40,7 @@ jobs:
           VITE_MEASUREMENTID: "G-N2245DYRQN"
 
       - name: Deploy
+        shell: bash
         run: |
           cd functions
           python3.11 -m venv venv
