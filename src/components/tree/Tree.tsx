@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState, Fragment, useEffect } from "react";
+import { FC, useCallback, useState, Fragment, useEffect, useMemo } from "react";
 import orderBy from "lodash/orderBy";
 
 import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
@@ -17,7 +17,7 @@ import { encode } from "js-base64";
 
 interface Props {
   treeSections: { [section: string]: Article[] };
-  treeId?: string;
+  treePath: string;
 }
 
 const INFO: {
@@ -47,7 +47,7 @@ const INFO: {
   },
 };
 
-const Tree: FC<Props> = ({ treeSections, treeId }: Props) => {
+const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
   const firebase = useFirebase();
 
   const [stars, setStars] = useState<NonNullable<TreeMetadata["stars"]>>({});
@@ -59,8 +59,10 @@ const Tree: FC<Props> = ({ treeSections, treeId }: Props) => {
     leaf: [],
   };
 
-  const treeDocPath = `trees/${treeId}`;
-  const treeDocRef = doc(firebase.firestore, treeDocPath);
+  const treeDocRef = useMemo(
+    () => doc(firebase.firestore, treePath),
+    [firebase, treePath]
+  );
 
   for (let section of Object.keys(keywords)) {
     for (let article of treeSections[section]) {
@@ -78,7 +80,9 @@ const Tree: FC<Props> = ({ treeSections, treeId }: Props) => {
   useEffect(() => {
     const unsubscribe = onSnapshot(treeDocRef, (doc) => {
       if (!doc.exists()) {
-        throw new Error(`Unable to get tree data from path: ${treeDocPath}.`);
+        throw new Error(
+          `Unable to get tree data from path: ${treeDocRef.path}.`
+        );
       }
       /**
        * TODO: find a way to set `TreeMetadata["stars"]` type through the `starsRef` retrieval function.
@@ -86,13 +90,15 @@ const Tree: FC<Props> = ({ treeSections, treeId }: Props) => {
       setStars((doc.data().stars ?? {}) as NonNullable<TreeMetadata["stars"]>);
     });
     return () => unsubscribe();
-  }, [firebase, treeDocRef, treeDocPath]);
+  }, [firebase, treeDocRef]);
 
   const toggleStar = useCallback(
     async (labelAsBase64: string) => {
       const treeDoc = await getDoc(treeDocRef);
       if (!treeDoc.exists()) {
-        throw new Error(`Unable to get tree data from path: ${treeDocPath}.`);
+        throw new Error(
+          `Unable to get tree data from path: ${treeDocRef.path}.`
+        );
       }
       const treeData = treeDoc.data() as TreeMetadata;
       await setDoc(treeDocRef, {
@@ -103,7 +109,7 @@ const Tree: FC<Props> = ({ treeSections, treeId }: Props) => {
         },
       });
     },
-    [treeDocRef, treeDocPath]
+    [treeDocRef]
   );
 
   const toggleShow = useCallback((label: "root" | "trunk" | "leaf") => {
@@ -177,4 +183,5 @@ const Tree: FC<Props> = ({ treeSections, treeId }: Props) => {
     </Fragment>
   );
 };
+
 export default Tree;

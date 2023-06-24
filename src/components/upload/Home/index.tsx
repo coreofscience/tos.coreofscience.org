@@ -12,7 +12,7 @@ import FileErrors from "../FileErrors";
 import useFiles from "../../../hooks/useFiles";
 import useFirebase from "../../../hooks/useFirebase";
 
-import computeQuantities, { MAX_SIZE } from "../../../utils/computeQuantities";
+import computeQuantities from "../../../utils/computeQuantities";
 import { countFormat, round, weightFormat } from "../../../utils/math";
 
 import { createTree } from "./createTree";
@@ -36,8 +36,9 @@ const Home: FC = () => {
   const navigate = useNavigate();
   const user = useUser();
 
+  const maxSize = user === null ? 5 : 10;
   const { totalArticles, totalCitations, articleCap, citationCap, sizeCap } =
-    computeQuantities(files);
+    computeQuantities(files, maxSize);
 
   const {
     mutate: create,
@@ -55,7 +56,7 @@ const Home: FC = () => {
         <p>Then, upload your files for processing.</p>
       </div>
       <FileDropper />
-      <UploadIndicator />
+      <UploadIndicator maxSize={maxSize} />
       <FileErrors />
       <p>Review your input:</p>
       <div className="information-cant-article">
@@ -75,7 +76,7 @@ const Home: FC = () => {
         <div className="frame-article">
           <span className="total-articles">
             {weightFormat.format(round(sizeCap, 2))}/
-            {weightFormat.format(round(MAX_SIZE, 2))}
+            {weightFormat.format(round(maxSize, 2))}
           </span>
           <span className="articles">size [MB]</span>
         </div>

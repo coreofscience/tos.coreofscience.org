@@ -4,7 +4,6 @@ import CancelFile from "../vectors/CancelFile";
 import MoveFirstIcon from "../vectors/MoveFirstIcon";
 
 import { round } from "../../utils/math";
-import { MAX_SIZE } from "../../utils/computeQuantities";
 
 import "./FileCard.css";
 
@@ -18,6 +17,7 @@ interface Props {
   progress: number;
   capped?: boolean;
   cumSize: number;
+  maxSize: number;
 }
 
 const FileCard: FC<Props> = ({
@@ -30,6 +30,7 @@ const FileCard: FC<Props> = ({
   move = () => {},
   capped = true,
   cumSize = 0,
+  maxSize,
 }: Props) => {
   const countFormat = new Intl.NumberFormat(undefined);
   const weightFormat = new Intl.NumberFormat(undefined, {
@@ -71,7 +72,7 @@ const FileCard: FC<Props> = ({
       <div className="fileCard__weight">
         <small title="To keep our costs down, we need to limit the ammount of data we process for each tree.">
           {weightFormat.format(round(cumSize, 2))} /{" "}
-          {weightFormat.format(round(MAX_SIZE, 2))} [MB]
+          {weightFormat.format(round(maxSize, 2))} [MB]
         </small>
       </div>
       <div className="fileCard_progressBar">

@@ -1,13 +1,13 @@
-import { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useMemo } from "react";
 
 import { doc, onSnapshot } from "firebase/firestore";
 import { useParams } from "react-router";
 import useFirebase from "../../hooks/useFirebase";
 
-import Tree from "./Tree";
-import NotFound from "../NotFound";
-
 import { TreeMetadata } from "../../types/treeMetadata";
+
+const Tree = React.lazy(() => import("./Tree"));
+const NotFound = React.lazy(() => import("../NotFound"));
 
 const Result = () => {
   const { userId, treeId } = useParams<{ userId?: string; treeId?: string }>();
@@ -16,23 +16,20 @@ const Result = () => {
     TreeMetadata | null | "loading"
   >("loading");
 
+  const treePath = useMemo(
+    () => (userId ? `users/${userId}/trees/${treeId}` : `trees/${treeId}`),
+    [userId, treeId]
+  );
+
   useEffect(() => {
-    if (!treeId) {
-      throw new Error("A tree id must be provided in the url");
-    }
-
-    const threePath = userId
-      ? `users/${userId}/trees/${treeId}`
-      : `trees/${treeId}`;
-
-    const treeDoc = doc(firebase.firestore, threePath);
+    const treeDoc = doc(firebase.firestore, treePath);
 
     const unsubscribe = onSnapshot(
       treeDoc,
       { includeMetadataChanges: true },
       (doc) => {
         if (!doc.exists()) {
-          throw new Error(`Unable to get tree data from path: ${threePath}.`);
+          throw new Error(`Unable to get tree data from path: ${treePath}.`);
         }
         /**
          * TODO: find a way to set `TreeMetadata` type through the `threeRef` retrieval function.
@@ -42,7 +39,7 @@ const Result = () => {
     );
 
     return () => unsubscribe();
-  }, [firebase, treeId]);
+  }, [firebase, treePath]);
 
   if (treeMetadata === "loading") {
     return <Fragment>Loading...</Fragment>;
@@ -72,7 +69,7 @@ const Result = () => {
     );
   }
 
-  return <Tree treeSections={treeMetadata.result} treeId={treeId} />;
+  return <Tree treeSections={treeMetadata.result} treePath={treePath} />;
 };
 
 export default Result;
