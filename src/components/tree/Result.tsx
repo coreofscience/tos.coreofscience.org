@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import { doc, onSnapshot } from "firebase/firestore";
 import { useParams } from "react-router";
@@ -10,7 +10,7 @@ import NotFound from "../NotFound";
 import { TreeMetadata } from "../../types/treeMetadata";
 
 const Result = () => {
-  const { treeId } = useParams<{ treeId?: string }>();
+  const { userId, treeId } = useParams<{ userId?: string; treeId?: string }>();
   const firebase = useFirebase();
   const [treeMetadata, setTreeMetadata] = useState<
     TreeMetadata | null | "loading"
@@ -21,7 +21,10 @@ const Result = () => {
       throw new Error("A tree id must be provided in the url");
     }
 
-    const threePath = `trees/${treeId}`;
+    const threePath = userId
+      ? `users/${userId}/trees/${treeId}`
+      : `trees/${treeId}`;
+
     const treeDoc = doc(firebase.firestore, threePath);
 
     const unsubscribe = onSnapshot(

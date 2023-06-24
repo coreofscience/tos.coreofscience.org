@@ -28,6 +28,11 @@ const App = () => {
                   <Route path="/log-in" element={<LogIn />} />
                   <Route path="/sign-up" element={<SignUp />} />
                   <Route path="/tree/:treeId" element={<Result />} />
+                  <Route path="/trees/:treeId" element={<Result />} />
+                  <Route
+                    path="/users/:userId/trees/:treeId"
+                    element={<Result />}
+                  />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

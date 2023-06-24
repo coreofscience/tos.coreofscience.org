@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useContext } from "react";
+import { FC, Fragment, useContext } from "react";
 import { logEvent } from "firebase/analytics";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
@@ -16,6 +16,7 @@ import computeQuantities, { MAX_SIZE } from "../../../utils/computeQuantities";
 import { countFormat, round, weightFormat } from "../../../utils/math";
 
 import { createTree } from "./createTree";
+import useUser from "../../../hooks/useUser";
 
 const hasFinished = (
   files: string[],
@@ -26,13 +27,14 @@ const hasFinished = (
     true
   );
 
-const Home: FC<{}> = () => {
+const Home: FC = () => {
   const { progress } = useContext(FileContext);
   const files = useFiles();
   const hashes = files.map((file) => file.hash);
   const finished = hasFinished(hashes, progress);
   const firebase = useFirebase();
   const navigate = useNavigate();
+  const user = useUser();
 
   const { totalArticles, totalCitations, articleCap, citationCap, sizeCap } =
     computeQuantities(files);
@@ -42,8 +44,8 @@ const Home: FC<{}> = () => {
     isLoading,
     isError,
   } = useMutation(createTree, {
-    onSuccess: (treeId: string) =>
-      navigate({ pathname: `/tree/${treeId}` }, { replace: true }),
+    onSuccess: (treePath: string) =>
+      navigate({ pathname: treePath }, { replace: true }),
   });
 
   return (
@@ -87,7 +89,7 @@ const Home: FC<{}> = () => {
         }
         onClick={() => {
           finished &&
-            create({ firebase, files: files.map((file) => file.hash) });
+            create({ firebase, files: files.map((file) => file.hash), user });
           logEvent(firebase.analytics, "tree_created");
         }}
       >
