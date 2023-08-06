@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import { FC, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import "./FileDropper.css";
 
@@ -7,24 +7,26 @@ import { looksLikeScopus } from "../../utils/scopus";
 import useUpload from "../../hooks/useUpload";
 import useError from "../../hooks/useError";
 
-import FileErrorMap, { MAX_FILE_SIZE } from "./errors";
+import FileErrorMap from "./errors";
 
-interface Props {}
+interface Props {
+  maxSize: number;
+}
 
-const FileDropper: FC<Props> = () => {
+const FileDropper: FC<Props> = ({ maxSize }) => {
   const upload = useUpload();
   const error = useError();
   const onDrop = useCallback(
     (acceptedFiles: Blob[]) => {
       acceptedFiles
-        .filter((file) => file.size / 2 ** 20 > MAX_FILE_SIZE)
+        .filter((file) => file.size / 2 ** 20 > maxSize)
         .forEach((file) => {
-          error(Object(file).name, file, FileErrorMap.max_size);
+          error(Object(file).name, file, FileErrorMap.max_size(maxSize));
         });
 
       Promise.all(
         acceptedFiles
-          .filter((file) => file.size / 2 ** 20 <= MAX_FILE_SIZE)
+          .filter((file) => file.size / 2 ** 20 <= maxSize)
           .map((file) => file.text().then((text) => ({ text, file })))
       ).then((data) => {
         data.forEach(({ text, file }) => {
@@ -36,7 +38,7 @@ const FileDropper: FC<Props> = () => {
         });
       });
     },
-    [upload, error]
+    [upload, error, maxSize]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

@@ -55,7 +55,7 @@ const Home: FC = () => {
         <p>Get your seed files from web of knowledge.</p>
         <p>Then, upload your files for processing.</p>
       </div>
-      <FileDropper />
+      <FileDropper maxSize={maxSize} />
       <UploadIndicator maxSize={maxSize} />
       <FileErrors />
       <p>Review your input:</p>
