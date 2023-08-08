@@ -19,6 +19,11 @@ jobs:
         with:
           node-version: 16.x
 
+      - name: Use latest python version
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
       - name: Build
         run: |
           npm ci
