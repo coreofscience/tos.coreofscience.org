@@ -1,9 +1,8 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
-import CancelFile from "../vectors/CancelFile";
-import MoveFirstIcon from "../vectors/MoveFirstIcon";
-
-import { round } from "../../utils/math";
+import CancelFile from "../../vectors/CancelFile";
+import MoveFirstIcon from "../../vectors/MoveFirstIcon";
+import { round } from "../../../utils/math";
 
 import "./FileCard.css";
 
@@ -26,8 +25,8 @@ const FileCard: FC<Props> = ({
   articles = 0,
   citations = 0,
   progress = 0,
-  remove = () => {},
-  move = () => {},
+  remove = () => { },
+  move = () => { },
   capped = true,
   cumSize = 0,
   maxSize,

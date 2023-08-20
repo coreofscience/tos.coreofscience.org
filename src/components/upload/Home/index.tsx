@@ -1,13 +1,10 @@
-import { FC, Fragment, useContext } from "react";
+import React, { FC, Fragment, useContext } from "react";
 import { logEvent } from "firebase/analytics";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
 
 import "./Home.css";
 import FileContext from "../../../context/FileContext";
-import FileDropper from "../FileDropper";
-import UploadIndicator from "../UploadIndicator";
-import FileErrors from "../FileErrors";
 
 import useFiles from "../../../hooks/useFiles";
 import useFirebase from "../../../hooks/useFirebase";
@@ -17,6 +14,10 @@ import { countFormat, round, weightFormat } from "../../../utils/math";
 
 import { createTree } from "./createTree";
 import useUser from "../../../hooks/useUser";
+
+const FileDropper = React.lazy(() => import("../FileDropper"));
+const UploadIndicator = React.lazy(() => import("../UploadIndicator"));
+const FileErrors = React.lazy(() => import("../FileErrors"));
 
 const hasFinished = (
   files: string[],
@@ -97,8 +98,9 @@ const Home: FC = () => {
         {isLoading ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
       </button>
       {isError && (
-        <div className="error">There was an error creating the thing.</div>
+        <div className="error">There was an error creating the your tree.</div>
       )}
+      <div>History</div>
     </Fragment>
   );
 };

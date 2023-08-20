@@ -1,13 +1,13 @@
 import { FC, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+
+import { looksLikeIsi } from "../../../utils/isi";
+import { looksLikeScopus } from "../../../utils/scopus";
+import useUpload from "../../../hooks/useUpload";
+import useError from "../../../hooks/useError";
+import FileErrorMap from "../errors";
+
 import "./FileDropper.css";
-
-import { looksLikeIsi } from "../../utils/isi";
-import { looksLikeScopus } from "../../utils/scopus";
-import useUpload from "../../hooks/useUpload";
-import useError from "../../hooks/useError";
-
-import FileErrorMap from "./errors";
 
 interface Props {
   maxSize: number;
