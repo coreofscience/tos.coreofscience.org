@@ -18,6 +18,7 @@ import useUser from "../../../hooks/useUser";
 const FileDropper = React.lazy(() => import("../FileDropper"));
 const UploadIndicator = React.lazy(() => import("../UploadIndicator"));
 const FileErrors = React.lazy(() => import("../FileErrors"));
+const TreeHistory = React.lazy(() => import("../TreeHistory"));
 
 const hasFinished = (
   files: string[],
@@ -100,7 +101,7 @@ const Home: FC = () => {
       {isError && (
         <div className="error">There was an error creating the your tree.</div>
       )}
-      <div>History</div>
+      <TreeHistory />
     </Fragment>
   );
 };
