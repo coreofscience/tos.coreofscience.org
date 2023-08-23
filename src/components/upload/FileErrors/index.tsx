@@ -1,16 +1,19 @@
-import React, { FC, useContext } from "react";
+import { FC, useContext } from "react";
 
-import CancelFile from "../vectors/CancelFile";
-import FileContext from "../../context/FileContext";
-import useInvalidFiles from "../../hooks/useInvalidFiles";
+import CancelFile from "../../vectors/CancelFile";
+import FileContext from "../../../context/FileContext";
+import useInvalidFiles from "../../../hooks/useInvalidFiles";
 
 import "./FileErrors.css";
 
-interface Props {}
-
-const FileErrors: FC<Props> = () => {
+const FileErrors: FC = () => {
   const { remove } = useContext(FileContext);
   const files = useInvalidFiles();
+
+  if (files.length === 0) {
+    return null;
+  }
+
   return (
     <div className="fileErrors">
       {files.map((file) => {
