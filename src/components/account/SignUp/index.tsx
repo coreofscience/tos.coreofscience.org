@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import { FC, Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -39,8 +39,8 @@ const SignUp: FC = () => {
           <div className="form-input">
             <input
               {...form.register("email")}
-              type="text"
-              placeholder="E-mail"
+              type="email"
+              placeholder="email@example.com"
             />
             <Message
               message={form.formState.errors.email?.message}
@@ -51,7 +51,7 @@ const SignUp: FC = () => {
             <input
               {...form.register("password")}
               type="password"
-              placeholder="Password"
+              placeholder="password"
             />
             <Message
               message={form.formState.errors.password?.message}
