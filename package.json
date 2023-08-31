@@ -27,7 +27,7 @@
     "shipit": "git tag v$(date +%y.%m.%d.%H.%M) && git push --tags",
     "test": "vitest",
     "start": "vite",
-    "start:emulators": "firebase emulators:start",
+    "start:emulators": "mkdir -p ~/.cache/tos/ && firebase emulators:start --import ~/.cache/tos/emulators --export-on-exit",
     "start:ui": "VITE_USE_EMULATORS=true vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
