@@ -14,6 +14,7 @@ import "./Tree.css";
 import { Article } from "../../types/article";
 import { TreeMetadata } from "../../types/treeMetadata";
 import { encode } from "js-base64";
+import { TreeVis } from "./TreeVis";
 
 interface Props {
   treeSections: { [section: string]: Article[] };
@@ -138,6 +139,8 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
           </button>
         ))}
       </div>
+
+      <TreeVis treeSections={treeSections} />
 
       {Object.entries(INFO).map(
         ([sectionName, info]) =>
