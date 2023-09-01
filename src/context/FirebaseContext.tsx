@@ -1,9 +1,9 @@
 import { createContext } from "react";
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
-import { getAnalytics } from "firebase/analytics";
+import { connectAuthEmulator, getAuth } from "firebase/auth";
+import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
+import { connectStorageEmulator, getStorage } from "firebase/storage";
+import { getAnalytics, logEvent } from "firebase/analytics";
 import { FirebaseContextType } from "../types/firebaseContext";
 
 const app = initializeApp({
@@ -20,6 +20,13 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 const storage = getStorage(app);
 const analytics = getAnalytics(app);
+
+if (import.meta.env.VITE_USE_EMULATORS) {
+  connectAuthEmulator(auth, "http://localhost:9099");
+  connectFirestoreEmulator(firestore, "localhost", 8080);
+  connectStorageEmulator(storage, "localhost", 9199);
+  logEvent(analytics, "use_emulators");
+}
 
 const FirebaseContext = createContext<FirebaseContextType>({
   app,

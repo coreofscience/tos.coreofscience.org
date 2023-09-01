@@ -7,6 +7,7 @@ interface ImportMetaEnv {
   readonly VITE_MESSAGINGSENDERID: string;
   readonly VITE_APPID: string;
   readonly VITE_MEASUREMENTID: string;
+  readonly VITE_USE_EMULATORS: string;
 }
 
 interface ImportMeta {

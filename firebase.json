@@ -2,11 +2,7 @@
   "hosting": {
     "target": "tos",
     "public": "dist",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
@@ -18,12 +14,7 @@
     {
       "source": "functions",
       "codebase": "default",
-      "ignore": [
-        "venv",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log"
-      ]
+      "ignore": ["venv", ".git", "firebase-debug.log", "firebase-debug.*.log"]
     }
   ],
   "emulators": {
@@ -39,7 +30,10 @@
     "ui": {
       "enabled": true
     },
-    "singleProjectMode": true
+    "singleProjectMode": true,
+    "auth": {
+      "port": 9099
+    }
   },
   "storage": {
     "rules": "storage.rules"
