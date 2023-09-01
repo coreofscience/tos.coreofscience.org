@@ -31,7 +31,8 @@
     "start:ui": "VITE_USE_EMULATORS=true vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "deploy": "firebase deploy"
+    "deploy": "firebase deploy",
+    "firebase": "firebase"
   },
   "eslintConfig": {
     "extends": "react-app"

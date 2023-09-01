@@ -21,3 +21,9 @@ To work with the local emulators,
 - On a separate terminal window run `npm run start:ui`
 
 Now the UI should be connected to the local emulators for easier debugging.
+
+There might be an error if you don't have a firebase project selected, if so use:
+
+```
+npm run firebase -- use default
+```
