@@ -1,9 +1,9 @@
 .container {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
-.form-content  {
+.form-content {
   padding: 30px 40px;
   display: flex;
   justify-content: center;
@@ -34,7 +34,9 @@
   color: var(--color-tree-leaf);
 }
 
-.form-input input[type="text"], input[type="password"] {
+.form-input input[type="text"],
+.form-input input[type="email"],
+.form-input input[type="password"] {
   width: 320px;
   padding: 12px;
   box-sizing: border-box;
