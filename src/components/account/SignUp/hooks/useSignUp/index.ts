@@ -1,5 +1,10 @@
 import { useCallback, useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  UserCredential,
+  sendEmailVerification,
+  User
+} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 import useFirebase from "../../../../../hooks/useFirebase";
@@ -23,13 +28,25 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
         message: "Creating account...",
       });
       createUserWithEmailAndPassword(firebase.auth, data.email, data.password)
-        .then(() => {
+        .then((userCredential: UserCredential) => {
           setState({
             status: "success",
             message:
               "Successfully signed up, you will be redirected to home in a few...",
           });
-          setTimeout(() => navigate("/"), 500);
+          setTimeout(() => {
+            navigate("/")
+            const user: User = userCredential.user
+            if (user) sendEmailVerification(user)
+              .then(() => {
+                // TODO: display a message of type info indicating
+                //  that the verification mail was sent successfully.
+              })
+              .catch((error) => {
+                // TODO: display a warning message indicating that a problem
+                //  has occurred while sending the verification mail.
+              })
+          }, 500);
         })
         .catch((error) => {
           setState({
