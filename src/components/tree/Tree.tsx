@@ -11,19 +11,17 @@ import Reference from "./Reference";
 import { mostCommon } from "../../utils/arrays";
 
 import "./Tree.css";
-import { Article } from "../../types/article";
 import { TreeMetadata } from "../../types/treeMetadata";
 import { encode } from "js-base64";
 import { TreeVis } from "./TreeVis";
+import { Section, TreeResult } from "../../types/result";
 
 interface Props {
-  treeSections: { [section: string]: Article[] };
+  treeSections: TreeResult;
   treePath: string;
 }
 
-const INFO: {
-  [key: string]: { title: string; info: string };
-} = {
+const INFO = {
   root: {
     title: "Root",
     info: `
@@ -50,33 +48,12 @@ const INFO: {
 
 const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
   const firebase = useFirebase();
-
   const [stars, setStars] = useState<NonNullable<TreeMetadata["stars"]>>({});
   const [show, setShow] = useState<"root" | "trunk" | "leaf" | null>(null);
-
-  const keywords: { [label: string]: string[] } = {
-    root: [],
-    trunk: [],
-    leaf: [],
-  };
-
   const treeDocRef = useMemo(
     () => doc(firebase.firestore, treePath),
     [firebase, treePath]
   );
-
-  for (let section of Object.keys(keywords)) {
-    for (let article of treeSections[section]) {
-      if (!article.keywords) continue;
-      keywords[section] = keywords[section].concat(article.keywords);
-    }
-    keywords[section] = mostCommon(
-      keywords[section].map((keyword) => {
-        return keyword.toLowerCase();
-      }),
-      5
-    );
-  }
 
   useEffect(() => {
     const unsubscribe = onSnapshot(treeDocRef, (doc) => {
@@ -92,6 +69,33 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
     });
     return () => unsubscribe();
   }, [firebase, treeDocRef]);
+
+  const keywords = useMemo(() => {
+    const keywords: {
+      root: string[];
+      trunk: string[];
+      leaf: string[];
+    } = {
+      root: [],
+      trunk: [],
+      leaf: [],
+    };
+    for (const section of Object.keys(keywords)) {
+      for (const article of treeSections[section as Section]) {
+        if (!article.keywords) continue;
+        keywords[section as Section] = keywords[section as Section].concat(
+          article.keywords
+        );
+      }
+      keywords[section as Section] = mostCommon(
+        keywords[section as Section].map((keyword) => {
+          return keyword.toLowerCase();
+        }),
+        5
+      );
+    }
+    return keywords;
+  }, [treeSections]);
 
   const toggleStar = useCallback(
     async (labelAsBase64: string) => {
@@ -113,7 +117,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
     [treeDocRef]
   );
 
-  const toggleShow = useCallback((label: "root" | "trunk" | "leaf") => {
+  const toggleShow = useCallback((label: Section) => {
     setShow((curr) => {
       if (curr === label) {
         return null;
@@ -135,12 +139,14 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
             key={`menu-${sectionName}`}
           >
             <strong>{(info || { title: "" }).title}</strong>
-            <small>{treeSections[sectionName].length} articles</small>
+            <small>
+              {treeSections[sectionName as Section].length} articles
+            </small>
           </button>
         ))}
       </div>
 
-      <TreeVis treeSections={treeSections} />
+      <TreeVis treeResult={treeSections} />
 
       {Object.entries(INFO).map(
         ([sectionName, info]) =>
@@ -152,16 +158,16 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
               <div className="info">
                 <h2>{(info || { title: "" }).title}</h2>
                 <p>{(info || { info: "" }).info}</p>
-                {keywords[sectionName].length > 0 && (
+                {keywords[sectionName as Section].length > 0 && (
                   <p>
                     <strong>Keywords:</strong>{" "}
-                    {keywords[sectionName].join(", ")}
+                    {keywords[sectionName as Section].join(", ")}
                   </p>
                 )}
               </div>
               <div className="articles">
                 {orderBy(
-                  treeSections[sectionName].map((article) => {
+                  treeSections[sectionName as Section].map((article) => {
                     const labelAsBase64 = encode(article.label);
                     const star = stars[labelAsBase64] ?? 0;
                     return { article, labelAsBase64, star };
