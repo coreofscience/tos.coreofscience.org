@@ -44,7 +44,7 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
                 showToast({
                   title: "Verification email sent",
                   description: "A verification email has been sent to the email address you registered with.",
-                  duration: 6000,
+                  duration: 4000,
                   status: "info",
                 })
               })
@@ -52,7 +52,7 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
                 showToast({
                   title: "Error sending verification email",
                   description: "An error occurred while sending the verification email to the email address you registered with.",
-                  duration: 6000,
+                  duration: 4000,
                   status: "warning",
                 })
               })

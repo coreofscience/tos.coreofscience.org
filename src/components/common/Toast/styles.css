@@ -4,7 +4,6 @@
   bottom: 1rem;
   transform: translate(-50%, -15%);
   max-width: 450px;
-  border-radius: 8px;
   padding: 18px;
   z-index: 1;
   display: flex;
@@ -14,7 +13,7 @@
   animation: toast-slide-up 0.4s;
   will-change: transform;
   text-align: center;
-  color: #222222
+  color: var(--color-bg)
 }
 
 .toast__title {
@@ -27,11 +26,11 @@
 }
 
 .toast.info {
-  background-color: #90CDF4;
+  background-color: var(--color-tree-leaf);
 }
 
 .toast.warning {
-  background-color: #ECC94B;
+  background-color: var(--color-tree-root);
 }
 
 .toast.error {
