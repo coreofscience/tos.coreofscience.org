@@ -13,6 +13,8 @@ import { SignUpFormFieldsType } from "../../types";
 import { SignUpActionsType } from "./types";
 import { AsyncActionStateType } from "../../../../../types/asyncActionStateType";
 
+import showToast from "../../../../common/Toast/showToast";
+
 export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
   const firebase = useFirebase();
   const navigate = useNavigate();
@@ -39,12 +41,20 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
             const user: User = userCredential.user
             if (user) sendEmailVerification(user)
               .then(() => {
-                // TODO: display a message of type info indicating
-                //  that the verification mail was sent successfully.
+                showToast({
+                  title: "Verification email sent",
+                  description: "A verification email has been sent to the email address you registered with.",
+                  duration: 6000,
+                  status: "info",
+                })
               })
-              .catch((error) => {
-                // TODO: display a warning message indicating that a problem
-                //  has occurred while sending the verification mail.
+              .catch(() => {
+                showToast({
+                  title: "Error sending verification email",
+                  description: "An error occurred while sending the verification email to the email address you registered with.",
+                  duration: 6000,
+                  status: "warning",
+                })
               })
           }, 500);
         })
