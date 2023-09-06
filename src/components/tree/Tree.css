@@ -2,13 +2,13 @@
   margin-bottom: 2em;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(3, 6em);
+  grid-template-rows: repeat(6, 6em);
   grid-gap: 1rem;
 }
 
 @media (min-width: 440px) {
   .tree-menu {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(6, 1fr);
     grid-template-rows: 6em;
   }
 }
@@ -47,6 +47,21 @@
 
 .tree-segment.trunk h2 {
   color: var(--color-tree-trunk);
+  text-transform: uppercase;
+}
+
+.tree-segment.branch_type_1 h2 {
+  color: var(--color-tree-branch-type-1);
+  text-transform: uppercase;
+}
+
+.tree-segment.branch_type_2 h2 {
+  color: var(--color-tree-branch-type-2);
+  text-transform: uppercase;
+}
+
+.tree-segment.branch_type_3 h2 {
+  color: var(--color-tree-branch-type-3);
   text-transform: uppercase;
 }
 
@@ -96,7 +111,19 @@
   fill: var(--color-tree-root);
 }
 
-.tree-segment.tree-segment.trunk .article svg.star-svg-icon {
+.tree-segment.branch_type_1 .article svg.star-svg-icon {
+  fill: var(--color-tree-branch-type-1);
+}
+
+.tree-segment.branch_type_2 .article svg.star-svg-icon {
+  fill: var(--color-tree-branch-type-2);
+}
+
+.tree-segment.branch_type_3 .article svg.star-svg-icon {
+  fill: var(--color-tree-branch-type-3);
+}
+
+.tree-segment.trunk .article svg.star-svg-icon {
   fill: var(--color-tree-trunk);
 }
 

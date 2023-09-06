@@ -21,7 +21,7 @@ interface Props {
 }
 
 const INFO: {
-  [key: string]: { title: string; info: string };
+  [key: string]: { title: string; info: string, branches?: { [key: string]: { id: number, title: string }}};
 } = {
   root: {
     title: "Root",
@@ -35,8 +35,31 @@ const INFO: {
     info: `
       Here you should find articles where your topic of interest got a
       structure, these should be the first authors to discover the
-      applicability of your topic of interest
+      applicability of your topic of interest.
     `,
+  },
+  branch: {
+    title: "Branch",
+    info: `
+      Branches represent specific subareas within a knowledge domain, encapsulating
+      articles centered around distinct themes derived from cluster analysis.
+      Moreover, the Branches also signify the trending topics within that
+      particular area.
+    `,
+    branches: {
+      branch_type_1: {
+        id: 1,
+        title: "Branch Type 1",
+      },
+      branch_type_2: {
+        id: 2,
+        title: "Branch Type 2",
+      },
+      branch_type_3: {
+        id: 3,
+        title: "Branch Type 3",
+      },
+    },
   },
   leaf: {
     title: "Leaves",
@@ -51,11 +74,16 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
   const firebase = useFirebase();
 
   const [stars, setStars] = useState<NonNullable<TreeMetadata["stars"]>>({});
-  const [show, setShow] = useState<"root" | "trunk" | "leaf" | null>(null);
+  const [show, setShow] = useState<"root" | "trunk" | "branch_type_1" | "branch_type_2" | "branch_type_3" | "leaf" | null>(null);
 
-  const keywords: { [label: string]: string[] } = {
+  const keywords: { [label: string]: string[] | {[type: string]: string[]} } = {
     root: [],
     trunk: [],
+    branch: {
+      branch_type_1: [],
+      branch_type_2: [],
+      branch_type_3: [],
+    },
     leaf: [],
   };
 
@@ -64,18 +92,54 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
     [firebase, treePath]
   );
 
-  for (let section of Object.keys(keywords)) {
-    for (let article of treeSections[section]) {
-      if (!article.keywords) continue;
-      keywords[section] = keywords[section].concat(article.keywords);
+  (() => {
+    for (let section of Object.keys(keywords)) {
+      if (section !== "branch") {
+        for (let article of treeSections[section]) {
+          if (!article.keywords) continue;
+          keywords[section] = keywords[section].concat(article.keywords);
+        }
+        keywords[section] = mostCommon(
+          keywords[section].map((keyword) => {
+            return keyword.toLowerCase();
+          }),
+          5
+        );
+      } else {
+        const articles = treeSections.branch
+        for (let article of articles) {
+          if (!article.keywords) continue
+          if (article.branch === 1) {
+            keywords.branch.branch_type_1 = keywords.branch.branch_type_1.concat(article.keywords)
+          }
+          if (article.branch === 2) {
+            keywords.branch.branch_type_2 = keywords.branch.branch_type_2.concat(article.keywords)
+          }
+          if (article.branch === 3) {
+            keywords.branch.branch_type_3 = keywords.branch.branch_type_3.concat(article.keywords)
+          }
+        }
+        keywords.branch.branch_type_1 = mostCommon(
+          keywords.branch.branch_type_1.map((keyword) => {
+            return keyword.toLowerCase();
+          }),
+          5
+        );
+        keywords.branch.branch_type_2 = mostCommon(
+          keywords.branch.branch_type_2.map((keyword) => {
+            return keyword.toLowerCase();
+          }),
+          5
+        );
+        keywords.branch.branch_type_3 = mostCommon(
+          keywords.branch.branch_type_3.map((keyword) => {
+            return keyword.toLowerCase();
+          }),
+          5
+        );
+      }
     }
-    keywords[section] = mostCommon(
-      keywords[section].map((keyword) => {
-        return keyword.toLowerCase();
-      }),
-      5
-    );
-  }
+  })()
 
   useEffect(() => {
     const unsubscribe = onSnapshot(treeDocRef, (doc) => {
@@ -112,7 +176,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
     [treeDocRef]
   );
 
-  const toggleShow = useCallback((label: "root" | "trunk" | "leaf") => {
+  const toggleShow = useCallback((label: "root" | "trunk" | "branch_type_1" | "branch_type_2" | "branch_type_3" | "leaf") => {
     setShow((curr) => {
       if (curr === label) {
         return null;
@@ -125,23 +189,38 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
     <Fragment>
       <div className="tree-menu">
         {Object.entries(INFO).map(([sectionName, info]) => (
-          <button
-            className={`btn btn-${sectionName} ${sectionName} ${
-              !show || show === sectionName ? "active" : "inactive"
-            }`}
-            title="Show only trunk"
-            onClick={() => toggleShow(sectionName as "root" | "trunk" | "leaf")}
-            key={`menu-${sectionName}`}
-          >
-            <strong>{(info || { title: "" }).title}</strong>
-            <small>{treeSections[sectionName].length} articles</small>
-          </button>
-        ))}
+          sectionName !== "branch" ? (
+            <button
+              className={`btn btn-${sectionName} ${sectionName} ${
+                !show || show === sectionName ? "active" : "inactive"
+              }`}
+              title={`Show only ${sectionName}`}
+              onClick={() => toggleShow(sectionName as "root" | "trunk" | "branch_type_1" | "branch_type_2" | "branch_type_3" | "leaf")}
+              key={`menu-${sectionName}`}
+            >
+              <strong>{(info || { title: "" }).title}</strong>
+              <small>{treeSections[sectionName].length} articles</small>
+            </button>
+            ) : (
+              info.branches && Object.entries(info.branches).map(([type, branchInfo]) => (
+                <button
+                  key={`branch-${type}`}
+                  className={`btn btn-${type} ${type} ${
+                    !show || show === type ? "active" : "inactive"
+                  }`}
+                  title={`Show only branch type ${type}`}
+                  onClick={() => toggleShow(type as "branch_type_1" | "branch_type_2" | "branch_type_3")}
+                >
+                  <strong>{(branchInfo || { title: "" }).title}</strong>
+                  <small>{treeSections[sectionName].reduce((total, article: Article) => (article.branch === branchInfo.id ? total+1 : total), 0)} articles</small>
+                </button>
+              ))
+            )))}
       </div>
 
       {Object.entries(INFO).map(
         ([sectionName, info]) =>
-          (!show || show === sectionName) && (
+          (sectionName !== "branch" && (!show || show === sectionName)) ? (
             <div
               className={`tree-segment ${sectionName}`}
               key={`tree-segment-${sectionName}`}
@@ -178,6 +257,46 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
                 ))}
               </div>
             </div>
+          ) : (
+            info.branches && Object.entries(info.branches).map(([type, branchInfo]) =>
+              (!show || show === type) && (
+              <div
+                className={`tree-segment ${type}`}
+                key={`tree-segment-${type}`}
+              >
+                <div className="info">
+                  <h2>{(branchInfo || { title: "" }).title}</h2>
+                  <p>{(info || { info: "" }).info}</p>
+                  {keywords.branch[type].length > 0 && (
+                    <p>
+                      <strong>Keywords:</strong>{" "}
+                      {keywords.branch[type].join(", ")}
+                    </p>
+                  )}
+                </div>
+                <div className="articles">
+                  {orderBy(
+                    treeSections.branch.filter((article) => article.branch === branchInfo.id).map((article) => {
+                      const labelAsBase64 = encode(article.label);
+                      const star = stars[labelAsBase64] ?? 0;
+                      return { article, labelAsBase64, star };
+                    }),
+                    "star",
+                    "desc"
+                  ).map(({ article, labelAsBase64, star }) => (
+                    <div className="article" key={`article-${article.label}`}>
+                      <Reference key={article.label} {...article} />
+                      <button
+                        className={`btn-star ${star ? "favorite" : ""}`}
+                        onClick={() => toggleStar(labelAsBase64)}
+                      >
+                        <StarImage />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))
           )
       )}
     </Fragment>

@@ -366,8 +366,11 @@ template {
 
 :root {
   --color-tree-leaf: #009d35;
-  --color-tree-root: #f0972f;
+  --color-tree-branch-type-1: #965c20;
+  --color-tree-branch-type-2: #c97b20;
+  --color-tree-branch-type-3: #68492b;
   --color-tree-trunk: #904c14;
+  --color-tree-root: #f0972f;
   --color-bg: #fcfcfc;
   --color-bg-accent: #f0f0f0;
   --color-red-accent: rgb(226, 132, 148);
@@ -447,6 +450,18 @@ h4 {
 
 .btn.btn-leaf {
   background-color: var(--color-tree-leaf);
+}
+
+.btn.btn-branch_type_1 {
+  background-color: var(--color-tree-branch-type-1);
+}
+
+.btn.btn-branch_type_2 {
+  background-color: var(--color-tree-branch-type-2);
+}
+
+.btn.btn-branch_type_3 {
+  background-color: var(--color-tree-branch-type-3);
 }
 
 .btn.btn-trunk {
