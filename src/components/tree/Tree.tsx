@@ -310,7 +310,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
             </div>
           ) : (
             branchesEntries.map(([type, branchInfo]) =>
-              (!show || show === type) && (
+              (sectionName === "branch" && (!show || show === type)) && (
               <div
                 className={`tree-segment ${type}`}
                 key={`tree-segment-${type}`}
