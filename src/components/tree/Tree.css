@@ -1,14 +1,15 @@
 .tree-menu {
-  margin-bottom: 2em;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(6, 6em);
+  grid-template-rows: repeat(auto-fit, minmax(min(100%, 6rem), 1fr));
+  grid-auto-rows: 6rem;
   grid-gap: 1rem;
+  margin-bottom: 4em;
 }
 
-@media (min-width: 440px) {
+@media (min-width: 540px) {
   .tree-menu {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 6rem), 1fr));
     grid-template-rows: 6em;
   }
 }

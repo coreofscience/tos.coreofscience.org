@@ -133,7 +133,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
     }
     setKeywords(keywords)
     setInfoEntries(Object.entries(info) as [Section, RootInfo | TrunkInfo | LeafInfo | BranchInfo][])
-    if (info.branch) {
+    if (info.branch && treeSections.branch) {
       setBranchesEntries(Object.entries(info.branch.branches) as [string, { id: number; title: string; }][])
     }
   }, []);
