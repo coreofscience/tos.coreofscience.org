@@ -11,6 +11,7 @@
   .tree-menu {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 6rem), 1fr));
     grid-template-rows: 6em;
+    margin-bottom: 2em;
   }
 }
 
