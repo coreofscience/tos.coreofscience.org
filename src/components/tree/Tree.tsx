@@ -15,14 +15,46 @@ import { Article } from "../../types/article";
 import { TreeMetadata } from "../../types/treeMetadata";
 import { encode } from "js-base64";
 
+type RootKeyword = Array<string>
+type TrunkKeyword = Array<string>
+type LeafKeyword = Array<string>
+type Keywords = {
+  root: RootKeyword,
+  trunk: TrunkKeyword,
+  leaf: LeafKeyword,
+  branch?: {[type: string]: Array<string>}
+}
+type RootInfo = {
+  title: string,
+  info: string,
+}
+type TrunkInfo = {
+  title: string,
+  info: string,
+}
+type LeafInfo = {
+  title: string,
+  info: string,
+}
+type BranchInfo = {
+  title: string,
+  info: string,
+  branches: {[type: string]: {id: number; title: string}}
+}
+
+type Section = "root" | "trunk" | "branch" | "leaf"
 interface Props {
   treeSections: { [section: string]: Article[] };
   treePath: string;
 }
+type Info = {
+  leaf: LeafInfo,
+  root: RootInfo,
+  trunk: TrunkInfo,
+  branch?: BranchInfo,
+}
 
-const INFO: {
-  [key: string]: { title: string; info: string, branches?: { [key: string]: { id: number, title: string }}};
-} = {
+const info: Info = {
   root: {
     title: "Root",
     info: `
@@ -75,29 +107,44 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
 
   const [stars, setStars] = useState<NonNullable<TreeMetadata["stars"]>>({});
   const [show, setShow] = useState<"root" | "trunk" | "branch_type_1" | "branch_type_2" | "branch_type_3" | "leaf" | null>(null);
-
-  const keywords: { [label: string]: string[] | {[type: string]: string[]} } = {
+  const [keywords, setKeywords] = useState<Keywords>({
     root: [],
     trunk: [],
-    branch: {
-      branch_type_1: [],
-      branch_type_2: [],
-      branch_type_3: [],
-    },
     leaf: [],
-  };
+  })
+  const [infoEntries, setInfoEntries] = useState<[Section, RootInfo | TrunkInfo | LeafInfo | BranchInfo][]>([])
+  const [branchesEntries, setBranchesEntries] = useState<[string, { id: number; title: string; }][]>([])
 
   const treeDocRef = useMemo(
     () => doc(firebase.firestore, treePath),
     [firebase, treePath]
   );
 
-  (() => {
-    for (let section of Object.keys(keywords)) {
+  useEffect(() => {
+    const sections: Section[] = Object.keys(treeSections) as Section[]
+    for (let section of sections) {
+      if (section === "branch") {
+        keywords.branch = {
+          branch_type_1: [],
+          branch_type_2: [],
+          branch_type_3: [],
+        }
+      }
+    }
+    setKeywords(keywords)
+    setInfoEntries(Object.entries(info) as [Section, RootInfo | TrunkInfo | LeafInfo | BranchInfo][])
+    if (info.branch) {
+      setBranchesEntries(Object.entries(info.branch.branches) as [string, { id: number; title: string; }][])
+    }
+  }, []);
+
+  useEffect(() => {
+    const sections: Section[] = Object.keys(keywords) as Section[]
+    for (let section of sections) {
       if (section !== "branch") {
         for (let article of treeSections[section]) {
           if (!article.keywords) continue;
-          keywords[section] = keywords[section].concat(article.keywords);
+          keywords[section] = keywords[section].concat(article.keywords)
         }
         keywords[section] = mostCommon(
           keywords[section].map((keyword) => {
@@ -109,37 +156,41 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
         const articles = treeSections.branch
         for (let article of articles) {
           if (!article.keywords) continue
-          if (article.branch === 1) {
-            keywords.branch.branch_type_1 = keywords.branch.branch_type_1.concat(article.keywords)
-          }
-          if (article.branch === 2) {
-            keywords.branch.branch_type_2 = keywords.branch.branch_type_2.concat(article.keywords)
-          }
-          if (article.branch === 3) {
-            keywords.branch.branch_type_3 = keywords.branch.branch_type_3.concat(article.keywords)
+          if (keywords.branch) {
+            if (article.branch === 1) {
+              keywords.branch.branch_type_1 = keywords.branch?.branch_type_1.concat(article.keywords)
+            }
+            if (article.branch === 2) {
+              keywords.branch.branch_type_2 = keywords.branch?.branch_type_2.concat(article.keywords)
+            }
+            if (article.branch === 3) {
+              keywords.branch.branch_type_3 = keywords.branch?.branch_type_3.concat(article.keywords)
+            }
           }
         }
-        keywords.branch.branch_type_1 = mostCommon(
-          keywords.branch.branch_type_1.map((keyword) => {
-            return keyword.toLowerCase();
-          }),
-          5
-        );
-        keywords.branch.branch_type_2 = mostCommon(
-          keywords.branch.branch_type_2.map((keyword) => {
-            return keyword.toLowerCase();
-          }),
-          5
-        );
-        keywords.branch.branch_type_3 = mostCommon(
-          keywords.branch.branch_type_3.map((keyword) => {
-            return keyword.toLowerCase();
-          }),
-          5
-        );
+        if (keywords.branch) {
+          keywords.branch.branch_type_1 = mostCommon(
+            keywords.branch.branch_type_1.map((keyword) => {
+              return keyword.toLowerCase();
+            }),
+            5
+          );
+          keywords.branch.branch_type_2 = mostCommon(
+            keywords.branch.branch_type_2.map((keyword) => {
+              return keyword.toLowerCase();
+            }),
+            5
+          );
+          keywords.branch.branch_type_3 = mostCommon(
+            keywords.branch.branch_type_3.map((keyword) => {
+              return keyword.toLowerCase();
+            }),
+            5
+          );
+        }
       }
     }
-  })()
+  }, [show]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(treeDocRef, (doc) => {
@@ -188,7 +239,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
   return (
     <Fragment>
       <div className="tree-menu">
-        {Object.entries(INFO).map(([sectionName, info]) => (
+        {infoEntries.map(([sectionName , info]) => (
           sectionName !== "branch" ? (
             <button
               className={`btn btn-${sectionName} ${sectionName} ${
@@ -202,7 +253,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
               <small>{treeSections[sectionName].length} articles</small>
             </button>
             ) : (
-              info.branches && Object.entries(info.branches).map(([type, branchInfo]) => (
+              branchesEntries.map(([type, branchInfo]) => (
                 <button
                   key={`branch-${type}`}
                   className={`btn btn-${type} ${type} ${
@@ -218,7 +269,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
             )))}
       </div>
 
-      {Object.entries(INFO).map(
+      {infoEntries.map(
         ([sectionName, info]) =>
           (sectionName !== "branch" && (!show || show === sectionName)) ? (
             <div
@@ -258,7 +309,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
               </div>
             </div>
           ) : (
-            info.branches && Object.entries(info.branches).map(([type, branchInfo]) =>
+            branchesEntries.map(([type, branchInfo]) =>
               (!show || show === type) && (
               <div
                 className={`tree-segment ${type}`}
@@ -267,10 +318,10 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
                 <div className="info">
                   <h2>{(branchInfo || { title: "" }).title}</h2>
                   <p>{(info || { info: "" }).info}</p>
-                  {keywords.branch[type].length > 0 && (
+                  {keywords.branch && keywords.branch[type].length > 0 && (
                     <p>
                       <strong>Keywords:</strong>{" "}
-                      {keywords.branch[type].join(", ")}
+                      {keywords.branch && keywords.branch[type].join(", ")}
                     </p>
                   )}
                 </div>
