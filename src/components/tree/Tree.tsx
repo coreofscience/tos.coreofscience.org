@@ -326,7 +326,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
                   )}
                 </div>
                 <div className="articles">
-                  {orderBy(
+                  {treeSections.branch && orderBy(
                     treeSections.branch.filter((article) => article.branch === branchInfo.id).map((article) => {
                       const labelAsBase64 = encode(article.label);
                       const star = stars[labelAsBase64] ?? 0;
