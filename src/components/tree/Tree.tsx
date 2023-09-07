@@ -263,7 +263,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
                   onClick={() => toggleShow(type as "branch_type_1" | "branch_type_2" | "branch_type_3")}
                 >
                   <strong>{(branchInfo || { title: "" }).title}</strong>
-                  <small>{treeSections[sectionName].reduce((total, article: Article) => (article.branch === branchInfo.id ? total+1 : total), 0)} articles</small>
+                  <small>{treeSections[sectionName] ? treeSections[sectionName].reduce((total, article: Article) => (article.branch === branchInfo.id ? total+1 : total), 0) : 0} articles</small>
                 </button>
               ))
             )))}
