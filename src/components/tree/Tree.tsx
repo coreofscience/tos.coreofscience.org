@@ -1,106 +1,30 @@
 import { FC, useCallback, useState, Fragment, useEffect, useMemo } from "react";
 import orderBy from "lodash/orderBy";
+import { encode } from "js-base64";
 
 import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 
 import useFirebase from "../../hooks/useFirebase";
 
 import StarImage from "../vectors/StarImage";
+import CopyImage from "../vectors/CopyImage";
 
 import Reference from "./Reference";
 import { mostCommon } from "../../utils/arrays";
 
-import "./Tree.css";
-import { Article } from "../../types/article";
 import { TreeMetadata } from "../../types/treeMetadata";
-import { encode } from "js-base64";
+import {
+  Props,
+  Section,
+  RootInfo,
+  TrunkInfo,
+  LeafInfo,
+  BranchInfo,
+  Keywords,
+} from "../../types/treeType";
+import { info } from "./constants/info";
 
-type RootKeyword = Array<string>;
-type TrunkKeyword = Array<string>;
-type LeafKeyword = Array<string>;
-type Keywords = {
-  root: RootKeyword;
-  trunk: TrunkKeyword;
-  leaf: LeafKeyword;
-  branch?: { [type: string]: Array<string> };
-};
-type RootInfo = {
-  title: string;
-  info: string;
-};
-type TrunkInfo = {
-  title: string;
-  info: string;
-};
-type LeafInfo = {
-  title: string;
-  info: string;
-};
-type BranchInfo = {
-  title: string;
-  info: string;
-  branches: { [type: string]: { id: number; title: string } };
-};
-
-type Section = "root" | "trunk" | "branch" | "leaf";
-interface Props {
-  treeSections: { [section: string]: Article[] };
-  treePath: string;
-}
-type Info = {
-  leaf: LeafInfo;
-  root: RootInfo;
-  trunk: TrunkInfo;
-  branch?: BranchInfo;
-};
-
-const info: Info = {
-  root: {
-    title: "Root",
-    info: `
-      Here you should find seminal articles from the original articles of
-      your topic of interest.
-    `,
-  },
-  trunk: {
-    title: "Trunk",
-    info: `
-      Here you should find articles where your topic of interest got a
-      structure, these should be the first authors to discover the
-      applicability of your topic of interest.
-    `,
-  },
-  branch: {
-    title: "Branch",
-    info: `
-      Branches represent specific subareas within a knowledge domain, encapsulating
-      articles centered around distinct themes derived from cluster analysis.
-      Moreover, the Branches also signify the trending topics within that
-      particular area.
-    `,
-    branches: {
-      branch_type_1: {
-        id: 1,
-        title: "Branch 1",
-      },
-      branch_type_2: {
-        id: 2,
-        title: "Branch 2",
-      },
-      branch_type_3: {
-        id: 3,
-        title: "Branch 3",
-      },
-    },
-  },
-  leaf: {
-    title: "Leaves",
-    info: `
-      Here you should find recent articles and reviews that should
-      condense very well your topics.
-    `,
-  },
-};
+import "./Tree.css";
 
 const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
   const firebase = useFirebase();
@@ -232,6 +156,18 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
     return () => unsubscribe();
   }, [firebase, treeDocRef]);
 
+  const copy = useCallback((label: string) => {
+    const article: HTMLElement | null = document.getElementById(label);
+    if (article && article.textContent) {
+      const text: string = article.textContent;
+      navigator.clipboard.writeText(text)
+        .then()
+        .catch(() => {
+          console.error(`An error occurred when pasting the text from ${label}`)
+        });
+    }
+  }, []);
+
   const toggleStar = useCallback(
     async (labelAsBase64: string) => {
       const treeDoc = await getDoc(treeDocRef);
@@ -299,6 +235,8 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
               <small>{treeSections[sectionName].length} articles</small>
             </button>
           ) : (
+            branchesEntries &&
+            branchesEntries.length > 0 &&
             <div className="btn-branches">
               {branchesEntries.map(([type, branchInfo]) => (
                 <button
@@ -352,6 +290,12 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
                 <div className="article" key={`article-${article.label}`}>
                   <Reference key={article.label} {...article} />
                   <button
+                    className="btn-copy"
+                    onClick={() => copy(article.label)}
+                  >
+                    <CopyImage />
+                  </button>
+                  <button
                     className={`btn-star ${star ? "favorite" : ""}`}
                     onClick={() => toggleStar(labelAsBase64)}
                   >
@@ -398,6 +342,12 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
                           key={`article-${article.label}`}
                         >
                           <Reference key={article.label} {...article} />
+                          <button
+                            className="btn-copy"
+                            onClick={() => copy(article.label)}
+                          >
+                            <CopyImage />
+                          </button>
                           <button
                             className={`btn-star ${star ? "favorite" : ""}`}
                             onClick={() => toggleStar(labelAsBase64)}

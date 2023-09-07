@@ -97,16 +97,23 @@
   width: 22px;
   height: 22px;
 }
-.tree-segment .btn-star svg.star-svg-icon {
+.tree-segment .btn-star svg.star-svg-icon,
+.tree-segment .btn-copy svg.copy-image-icon {
   opacity: 0.25;
   width: 25px;
 }
+
 .tree-segment .btn-star.favorite svg.star-svg-icon {
   opacity: 1;
 }
 
 .tree-segment .btn-star:hover svg.star-svg-icon,
 .tree-segment .btn-star:active svg.star-svg-icon {
+  opacity: 0.75;
+}
+
+.tree-segment .btn-copy:hover svg.copy-image-icon,
+.tree-segment .btn-copy:active svg.copy-image-icon {
   opacity: 0.75;
 }
 
@@ -140,7 +147,9 @@
 }
 
 .btn-star,
-.btn-star:active {
+.btn-star:active,
+.btn-copy,
+.btn-copy:active {
   margin-left: 0.5em;
   border: none;
   background: transparent;
