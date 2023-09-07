@@ -42,6 +42,16 @@
   opacity: 0.5;
 }
 
+.tree-menu .btn-branches {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tree-menu .btn-branches .btn-branch {
+  flex-grow: 1;
+}
+
 .tree-segment.root h2 {
   color: var(--color-tree-root);
   text-transform: uppercase;
