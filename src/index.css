@@ -366,8 +366,9 @@ template {
 
 :root {
   --color-tree-leaf: #009d35;
-  --color-tree-root: #f0972f;
+  --color-tree-branch: #b76d22;
   --color-tree-trunk: #904c14;
+  --color-tree-root: #f0972f;
   --color-bg: #fcfcfc;
   --color-bg-accent: #f0f0f0;
   --color-red-accent: rgb(226, 132, 148);
@@ -447,6 +448,10 @@ h4 {
 
 .btn.btn-leaf {
   background-color: var(--color-tree-leaf);
+}
+
+.btn.btn-branch {
+  background-color: var(--color-tree-branch);
 }
 
 .btn.btn-trunk {
