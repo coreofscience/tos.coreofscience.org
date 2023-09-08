@@ -40,7 +40,7 @@ const articlesToData = (articles: ArticleWithMetrics[], section: Section) => {
   const radii = articles.map((article) => article[section]);
   const maxRadius = Math.max(...radii);
   const minRadius = Math.min(...radii);
-  const data = articles.map((article) => ({
+  return articles.map((article) => ({
     className: section,
     r: ((article[section] - minRadius) / (maxRadius - minRadius)) * 10 + 10,
     cx: Math.random() * 100,
@@ -49,12 +49,14 @@ const articlesToData = (articles: ArticleWithMetrics[], section: Section) => {
     fill: sectionToColor(section),
     article: article,
   }));
-  return data;
 };
 
 const treeSectionToData = (treeSections: TreeResult) => {
   const data = [];
-  for (const section in treeSections) {
+  for (let section in treeSections) {
+    if (section === "branch") {
+      continue;
+    }
     data.push(
       ...articlesToData(treeSections[section as Section], section as Section)
     );
@@ -93,7 +95,7 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
                 .attr("r", (v) => v.r)
                 .attr("cx", (v) => v.x)
                 .attr("cy", (v) => v.x)
-                .attr("fill", (v) => v.fill)
+                .attr("fill", (v) => !v.fill ? null : v.fill)
                 .attr("title", (v) => v.article.label)
                 .on("click", (event, node) => {
                   console.log(event, node);
@@ -104,7 +106,7 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
                 .attr("r", (v) => v.r)
                 .attr("cx", (v) => v.x)
                 .attr("cy", (v) => v.y)
-                .attr("fill", (v) => v.fill)
+                .attr("fill", (v) => !v.fill ? null : v.fill)
                 .attr("title", (v) => v.article.label),
             (exit) => exit.remove()
           );

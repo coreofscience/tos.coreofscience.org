@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
-import { FileContexType } from "../types/fileContexType";
+import { FileContextType } from "../types/fileContextType";
 
-const FileContext = createContext<FileContexType>({
+const FileContext = createContext<FileContextType>({
   add: () => {},
   remove: () => {},
   track: () => {},

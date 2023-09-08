@@ -34,7 +34,7 @@ def convert_tos_to_json(tree: nx.DiGraph) -> Dict[str, List[Dict]]:
     Converts a ToS graph in the default format to be processed by the frontend.
     """
     output = {}
-    sections = ["root", "trunk", "leaf"]
+    sections = ["root", "trunk", "branch", "leaf"]
     for section in sections:
         data = sorted(
             [
