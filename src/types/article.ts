@@ -1,6 +1,7 @@
 export interface Article {
   label: string;
   authors?: string[];
+  branch?: 1 | 2 | 3;
   keywords?: string[];
   year?: number | null;
   title?: string | null;
