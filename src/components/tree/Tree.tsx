@@ -241,7 +241,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
               {branchesEntries.map(([type, branchInfo]) => (
                 <button
                   key={`branch-${type}`}
-                  className={`btn btn-branch btn-${type} ${type} ${
+                  className={`btn btn-branch branch ${
                     !show || show === type ? "active" : "inactive"
                   }`}
                   title={`Show only branch type ${type}`}
@@ -311,7 +311,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
               sectionName === "branch" &&
               (!show || show === type) && (
                 <div
-                  className={`tree-segment ${type}`}
+                  className="tree-segment branch"
                   key={`tree-segment-${type}`}
                 >
                   <div className="info">

@@ -62,18 +62,8 @@
   text-transform: uppercase;
 }
 
-.tree-segment.branch_type_1 h2 {
-  color: var(--color-tree-branch-type-1);
-  text-transform: uppercase;
-}
-
-.tree-segment.branch_type_2 h2 {
-  color: var(--color-tree-branch-type-2);
-  text-transform: uppercase;
-}
-
-.tree-segment.branch_type_3 h2 {
-  color: var(--color-tree-branch-type-3);
+.tree-segment.branch h2 {
+  color: var(--color-tree-branch);
   text-transform: uppercase;
 }
 
@@ -130,16 +120,8 @@
   fill: var(--color-tree-root);
 }
 
-.tree-segment.branch_type_1 .article svg.star-svg-icon {
-  fill: var(--color-tree-branch-type-1);
-}
-
-.tree-segment.branch_type_2 .article svg.star-svg-icon {
-  fill: var(--color-tree-branch-type-2);
-}
-
-.tree-segment.branch_type_3 .article svg.star-svg-icon {
-  fill: var(--color-tree-branch-type-3);
+.tree-segment.branch .article svg.star-svg-icon {
+  fill: var(--color-tree-branch);
 }
 
 .tree-segment.trunk .article svg.star-svg-icon {
