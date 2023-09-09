@@ -157,10 +157,13 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
     const article: HTMLElement | null = document.getElementById(label);
     if (article && article.textContent) {
       const text: string = article.textContent;
-      navigator.clipboard.writeText(text)
+      navigator.clipboard
+        .writeText(text)
         .then()
         .catch(() => {
-          console.error(`An error occurred when pasting the text from ${label}`)
+          console.error(
+            `An error occurred when pasting the text from ${label}`
+          );
         });
     }
   }, []);
@@ -233,29 +236,31 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
             </button>
           ) : (
             branchesEntries &&
-            branchesEntries.length > 0 &&
-            <div className="btn-branches">
-              {branchesEntries.map(([type, branchInfo]) => (
-                <button
-                  key={`branch-${type}`}
-                  className={`btn btn-branch branch ${
-                    !show || show === type ? "active" : "inactive"
-                  }`}
-                  title={`Show only branch type ${type}`}
-                  onClick={() =>
-                    toggleShow(
-                      type as
-                        | "branch_type_1"
-                        | "branch_type_2"
-                        | "branch_type_3"
-                    )
-                  }
-                >
-                  <strong>{(branchInfo || { title: "" }).title}</strong>
-                </button>
-              ))}
-            </div>
-          ))}
+            branchesEntries.length > 0 && (
+              <div className="btn-branches" key="section-branches">
+                {branchesEntries.map(([type, branchInfo]) => (
+                  <button
+                    key={`branch-${type}`}
+                    className={`btn btn-branch branch ${
+                      !show || show === type ? "active" : "inactive"
+                    }`}
+                    title={`Show only branch type ${type}`}
+                    onClick={() =>
+                      toggleShow(
+                        type as
+                          | "branch_type_1"
+                          | "branch_type_2"
+                          | "branch_type_3"
+                      )
+                    }
+                  >
+                    <strong>{(branchInfo || { title: "" }).title}</strong>
+                  </button>
+                ))}
+              </div>
+            )
+          )
+        )}
       </div>
 
       <TreeVis treeResult={treeSections} />

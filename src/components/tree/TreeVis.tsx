@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useRef } from "react";
-
+import { useMeasure } from "react-use";
 import {
   select,
   forceSimulation,
@@ -8,6 +8,7 @@ import {
   forceX,
   forceY,
 } from "d3";
+
 import { ArticleWithMetrics, Section, TreeResult } from "../../types/result";
 
 interface Props {
@@ -25,40 +26,54 @@ const sectionToColor = (section: Section) => {
   }
 };
 
-const sectionToCenter = (section: Section) => {
+const sectionToCenter = (section: Section, height: number) => {
   switch (section) {
     case "root":
-      return 500;
+      return (5 * height) / 6;
     case "trunk":
-      return 300;
+      return (3.5 * height) / 6;
     case "leaf":
-      return 150;
+      return (1.5 * height) / 6;
   }
 };
 
-const articlesToData = (articles: ArticleWithMetrics[], section: Section) => {
+const articlesToData = (
+  articles: ArticleWithMetrics[],
+  section: Section,
+  width: number,
+  height: number
+) => {
   const radii = articles.map((article) => article[section]);
   const maxRadius = Math.max(...radii);
   const minRadius = Math.min(...radii);
   return articles.map((article) => ({
     className: section,
-    r: ((article[section] - minRadius) / (maxRadius - minRadius)) * 10 + 10,
-    cx: Math.random() * 100,
-    cy: Math.random() * 100,
-    centerY: sectionToCenter(section),
+    r: ((article[section] - minRadius) / (maxRadius - minRadius)) * 15 + 8,
+    cx: width / 2,
+    cy: Math.random() * height,
+    centerY: sectionToCenter(section, height),
     fill: sectionToColor(section),
     article: article,
   }));
 };
 
-const treeSectionToData = (treeSections: TreeResult) => {
+const treeSectionToData = (
+  treeSections: TreeResult,
+  width: number,
+  height: number
+) => {
   const data = [];
   for (let section in treeSections) {
     if (section === "branch") {
       continue;
     }
     data.push(
-      ...articlesToData(treeSections[section as Section], section as Section)
+      ...articlesToData(
+        treeSections[section as Section],
+        section as Section,
+        width,
+        height
+      )
     );
   }
   return data;
@@ -66,7 +81,12 @@ const treeSectionToData = (treeSections: TreeResult) => {
 
 export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
   const svgRef = useRef(null);
-  const data = useMemo(() => treeSectionToData(treeSections), [treeSections]);
+  const [ref, { width, height }] = useMeasure<HTMLDivElement>();
+
+  const data = useMemo(
+    () => treeSectionToData(treeSections, width, height),
+    [treeSections, width, height]
+  );
 
   useEffect(() => {
     if (svgRef.current === null) return;
@@ -78,7 +98,7 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
         "y",
         forceY().y((d) => (d as any).centerY)
       )
-      .force("x", forceX().x(400))
+      .force("x", forceX().x(width / 2))
       .force(
         "collide",
         forceCollide().radius((d) => (d as any).radius + 5)
@@ -95,7 +115,7 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
                 .attr("r", (v) => v.r)
                 .attr("cx", (v) => v.x)
                 .attr("cy", (v) => v.x)
-                .attr("fill", (v) => !v.fill ? null : v.fill)
+                .attr("fill", (v) => (!v.fill ? null : v.fill))
                 .attr("title", (v) => v.article.label)
                 .on("click", (event, node) => {
                   console.log(event, node);
@@ -106,7 +126,7 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
                 .attr("r", (v) => v.r)
                 .attr("cx", (v) => v.x)
                 .attr("cy", (v) => v.y)
-                .attr("fill", (v) => !v.fill ? null : v.fill)
+                .attr("fill", (v) => (!v.fill ? null : v.fill))
                 .attr("title", (v) => v.article.label),
             (exit) => exit.remove()
           );
@@ -114,7 +134,11 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
     return () => {
       simulation.stop();
     };
-  }, [data]);
+  }, [data, width]);
 
-  return <svg style={{ minHeight: 600 }} ref={svgRef} />;
+  return (
+    <div ref={ref}>
+      <svg style={{ minHeight: 600 }} ref={svgRef} />
+    </div>
+  );
 };
