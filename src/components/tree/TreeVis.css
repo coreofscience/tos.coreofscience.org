@@ -1,0 +1,15 @@
+.TreeVis svg {
+  min-height: 600px;
+}
+
+.TreeVis circle.leaf {
+  fill: var(--color-tree-leaf);
+}
+
+.TreeVis circle.root {
+  fill: var(--color-tree-root);
+}
+
+.TreeVis circle.trunk {
+  fill: var(--color-tree-trunk);
+}

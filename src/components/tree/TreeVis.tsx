@@ -11,20 +11,11 @@ import {
 
 import { ArticleWithMetrics, Section, TreeResult } from "../../types/result";
 
+import "./TreeVis.css";
+
 interface Props {
   treeResult: TreeResult;
 }
-
-const sectionToColor = (section: Section) => {
-  switch (section) {
-    case "root":
-      return "brown";
-    case "trunk":
-      return "yellow";
-    case "leaf":
-      return "green";
-  }
-};
 
 const sectionToCenter = (section: Section, height: number) => {
   switch (section) {
@@ -52,7 +43,6 @@ const articlesToData = (
     cx: width / 2,
     cy: Math.random() * height,
     centerY: sectionToCenter(section, height),
-    fill: sectionToColor(section),
     article: article,
   }));
 };
@@ -115,7 +105,6 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
                 .attr("r", (v) => v.r)
                 .attr("cx", (v) => v.x)
                 .attr("cy", (v) => v.x)
-                .attr("fill", (v) => (!v.fill ? null : v.fill))
                 .attr("title", (v) => v.article.label)
                 .on("click", (event, node) => {
                   console.log(event, node);
@@ -126,7 +115,6 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
                 .attr("r", (v) => v.r)
                 .attr("cx", (v) => v.x)
                 .attr("cy", (v) => v.y)
-                .attr("fill", (v) => (!v.fill ? null : v.fill))
                 .attr("title", (v) => v.article.label),
             (exit) => exit.remove()
           );
@@ -137,8 +125,8 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
   }, [data, width]);
 
   return (
-    <div ref={ref}>
-      <svg style={{ minHeight: 600 }} ref={svgRef} />
+    <div className="TreeVis" ref={ref}>
+      <svg ref={svgRef} />
     </div>
   );
 };
