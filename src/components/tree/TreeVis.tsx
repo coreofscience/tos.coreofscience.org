@@ -17,17 +17,6 @@ interface Props {
   treeResult: TreeResult;
 }
 
-const sectionToCenter = (section: Section, height: number) => {
-  switch (section) {
-    case "root":
-      return (5 * height) / 6;
-    case "trunk":
-      return (3.5 * height) / 6;
-    case "leaf":
-      return (1.5 * height) / 6;
-  }
-};
-
 const articlesToData = (
   articles: ArticleWithMetrics[],
   section: Section,
@@ -37,12 +26,21 @@ const articlesToData = (
   const radii = articles.map((article) => article[section]);
   const maxRadius = Math.max(...radii);
   const minRadius = Math.min(...radii);
+  const center = {
+    root: (5 * height) / 6,
+    trunk: (3.5 * height) / 6,
+    branch: (2.5 * height) / 6,
+    leaf: (1.5 * height) / 6,
+  };
   return articles.map((article) => ({
     className: section,
-    r: ((article[section] - minRadius) / (maxRadius - minRadius)) * 15 + 8,
+    r:
+      section === "leaf"
+        ? ((article[section] - minRadius) / (maxRadius - minRadius)) * 20 + 12
+        : ((article[section] - minRadius) / (maxRadius - minRadius)) * 15 + 8,
     cx: width / 2,
     cy: Math.random() * height,
-    centerY: sectionToCenter(section, height),
+    centerY: center[section],
     article: article,
   }));
 };
@@ -91,7 +89,7 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
       .force("x", forceX().x(width / 2))
       .force(
         "collide",
-        forceCollide().radius((d) => (d as any).radius + 5)
+        forceCollide().radius((d) => (d as any).radius + 2)
       )
       .on("tick", () => {
         svg
