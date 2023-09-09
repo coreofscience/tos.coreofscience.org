@@ -69,7 +69,13 @@ const Result = () => {
     );
   }
 
-  return <Tree treeSections={treeMetadata.result} treePath={treePath} />;
+  return (
+    <Tree
+      treeSections={treeMetadata.result}
+      treePath={treePath}
+      stars={treeMetadata.stars || {}}
+    />
+  );
 };
 
 export default Result;

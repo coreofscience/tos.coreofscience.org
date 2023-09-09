@@ -16,7 +16,5 @@ export default (props: ShowToastProperties) => {
   }
 
   const root = createRoot(container);
-  root.render(
-    <Toast {...props} root={root} />
-  );
-}
+  root.render(<Toast {...props} root={root} />);
+};

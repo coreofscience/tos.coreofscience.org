@@ -2,6 +2,10 @@
   min-height: 600px;
 }
 
+.TreeVis circle.star {
+  stroke: red;
+}
+
 .TreeVis circle.leaf {
   fill: var(--color-tree-leaf);
 }

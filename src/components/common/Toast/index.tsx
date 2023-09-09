@@ -14,13 +14,13 @@ const Toast: FC<ToastProperties> = (props) => {
 
   const onReset = () => {
     clearTimeout(timer);
-  }
+  };
 
   const onStart = () => {
     timer = setTimeout(() => {
-      hideToast(props.root)
+      hideToast(props.root);
     }, props.duration);
-  }
+  };
 
   useEffect(() => {
     onStart();
@@ -35,13 +35,9 @@ const Toast: FC<ToastProperties> = (props) => {
       onMouseLeave={onStart}
       className={`toast ${props.status}`}
     >
-      <p className="toast__title">
-        {props.title}
-      </p>
-      { props.description ? (
-        <p className="toast__description">
-          {props.description}
-        </p>
+      <p className="toast__title">{props.title}</p>
+      {props.description ? (
+        <p className="toast__description">{props.description}</p>
       ) : (
         ""
       )}
@@ -50,7 +46,7 @@ const Toast: FC<ToastProperties> = (props) => {
 };
 
 Toast.defaultProps = {
-  duration: toastTimeMs
+  duration: toastTimeMs,
 };
 
 export default Toast;

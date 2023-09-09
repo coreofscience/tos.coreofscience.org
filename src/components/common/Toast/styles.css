@@ -13,11 +13,11 @@
   animation: toast-slide-up 0.4s;
   will-change: transform;
   text-align: center;
-  color: var(--color-bg)
+  color: var(--color-bg);
 }
 
 .toast__title {
-  font-weight: bold;;
+  font-weight: bold;
   margin: 5px auto;
 }
 
@@ -34,9 +34,8 @@
 }
 
 .toast.error {
-  background-color: #F56565;
+  background-color: #f56565;
 }
-
 
 @keyframes toast-slide-up {
   from {

@@ -102,11 +102,8 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
                 .attr("class", (v) => v.className)
                 .attr("r", (v) => v.r)
                 .attr("cx", (v) => v.x)
-                .attr("cy", (v) => v.x)
-                .attr("title", (v) => v.article.label)
-                .on("click", (event, node) => {
-                  console.log(event, node);
-                }),
+                .attr("cy", (v) => v.y)
+                .attr("title", (v) => v.article.label),
             (update) =>
               update
                 .attr("class", (v) => v.className)

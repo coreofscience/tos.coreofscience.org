@@ -1,5 +1,3 @@
-import { TreeResult } from "./result";
-
 export type RootKeyword = Array<string>;
 export type TrunkKeyword = Array<string>;
 export type LeafKeyword = Array<string>;
@@ -27,10 +25,6 @@ export type BranchInfo = {
   branches: { [type: string]: { id: number; title: string } };
 };
 export type Section = "root" | "trunk" | "branch" | "leaf";
-export interface Props {
-  treeSections: TreeResult;
-  treePath: string;
-}
 export type Info = {
   leaf: LeafInfo;
   root: RootInfo;
