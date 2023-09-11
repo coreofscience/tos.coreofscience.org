@@ -3,7 +3,7 @@ import {
   createUserWithEmailAndPassword,
   UserCredential,
   sendEmailVerification,
-  User
+  User,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -37,25 +37,28 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
               "Successfully signed up, you will be redirected to home in a few...",
           });
           setTimeout(() => {
-            navigate("/")
-            const user: User = userCredential.user
-            if (user) sendEmailVerification(user)
-              .then(() => {
-                showToast({
-                  title: "Verification email sent",
-                  description: "A verification email has been sent to the email address you registered with.",
-                  duration: 4000,
-                  status: "info",
+            navigate("/");
+            const user: User = userCredential.user;
+            if (user)
+              sendEmailVerification(user)
+                .then(() => {
+                  showToast({
+                    title: "Verification email sent",
+                    description:
+                      "A verification email has been sent to the email address you registered with.",
+                    duration: 4000,
+                    status: "info",
+                  });
                 })
-              })
-              .catch(() => {
-                showToast({
-                  title: "Error sending verification email",
-                  description: "An error occurred while sending the verification email to the email address you registered with.",
-                  duration: 4000,
-                  status: "warning",
-                })
-              })
+                .catch(() => {
+                  showToast({
+                    title: "Error sending verification email",
+                    description:
+                      "An error occurred while sending the verification email to the email address you registered with.",
+                    duration: 4000,
+                    status: "warning",
+                  });
+                });
           }, 500);
         })
         .catch((error) => {

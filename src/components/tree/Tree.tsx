@@ -2,7 +2,7 @@ import { FC, useCallback, useState, Fragment, useEffect, useMemo } from "react";
 import orderBy from "lodash/orderBy";
 import { encode } from "js-base64";
 
-import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 import useFirebase from "../../hooks/useFirebase";
 
@@ -12,9 +12,9 @@ import CopyImage from "../vectors/CopyImage";
 import Reference from "./Reference";
 import { mostCommon } from "../../utils/arrays";
 
-import { TreeMetadata } from "../../types/treeMetadata";
+import { TreeVis } from "./TreeVis";
+
 import {
-  Props,
   Section,
   RootInfo,
   TrunkInfo,
@@ -22,14 +22,19 @@ import {
   BranchInfo,
   Keywords,
 } from "../../types/treeType";
+import { TreeResult } from "../../types/result";
 import { info } from "./constants/info";
 
 import "./Tree.css";
 
-const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
-  const firebase = useFirebase();
+export interface Props {
+  stars: Record<string, boolean>;
+  treeSections: TreeResult;
+  treePath: string;
+}
 
-  const [stars, setStars] = useState<NonNullable<TreeMetadata["stars"]>>({});
+const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
+  const firebase = useFirebase();
   const [show, setShow] = useState<
     | "root"
     | "trunk"
@@ -39,42 +44,25 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
     | "leaf"
     | null
   >(null);
-  const [keywords, setKeywords] = useState<Keywords>({
-    root: [],
-    trunk: [],
-    leaf: [],
-  });
   const [infoEntries, setInfoEntries] = useState<
     [Section, RootInfo | TrunkInfo | LeafInfo | BranchInfo][]
   >([]);
   const [branchesEntries, setBranchesEntries] = useState<
     [string, { id: number; title: string }][]
   >([]);
-
   const treeDocRef = useMemo(
     () => doc(firebase.firestore, treePath),
     [firebase, treePath]
   );
 
   useEffect(() => {
-    const sections: Section[] = Object.keys(treeSections) as Section[];
-    for (let section of sections) {
-      if (section === "branch") {
-        keywords.branch = {
-          branch_type_1: [],
-          branch_type_2: [],
-          branch_type_3: [],
-        };
-      }
-    }
-    setKeywords(keywords);
     setInfoEntries(
       Object.entries(info) as [
         Section,
         RootInfo | TrunkInfo | LeafInfo | BranchInfo
       ][]
     );
-    if (info.branch && treeSections.branch) {
+    if (info.branch && treeSections.branch?.length > 0) {
       setBranchesEntries(
         Object.entries(info.branch.branches) as [
           string,
@@ -84,7 +72,17 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
     }
   }, []);
 
-  useEffect(() => {
+  const keywords: Keywords = useMemo(() => {
+    const keywords: Keywords = {
+      root: [],
+      trunk: [],
+      leaf: [],
+      branch: {
+        branch_type_1: [],
+        branch_type_2: [],
+        branch_type_3: [],
+      },
+    };
     const sections: Section[] = Object.keys(keywords) as Section[];
     for (let section of sections) {
       if (section !== "branch") {
@@ -100,20 +98,22 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
         );
       } else {
         const articles = treeSections.branch;
-        for (let article of articles) {
-          if (!article.keywords) continue;
-          if (keywords.branch) {
-            if (article.branch === 1) {
-              keywords.branch.branch_type_1 =
-                keywords.branch?.branch_type_1.concat(article.keywords);
-            }
-            if (article.branch === 2) {
-              keywords.branch.branch_type_2 =
-                keywords.branch?.branch_type_2.concat(article.keywords);
-            }
-            if (article.branch === 3) {
-              keywords.branch.branch_type_3 =
-                keywords.branch?.branch_type_3.concat(article.keywords);
+        if (articles?.length > 0) {
+          for (let article of articles) {
+            if (!article.keywords) continue;
+            if (keywords.branch) {
+              if (article.branch === 1) {
+                keywords.branch.branch_type_1 =
+                  keywords.branch?.branch_type_1.concat(article.keywords);
+              }
+              if (article.branch === 2) {
+                keywords.branch.branch_type_2 =
+                  keywords.branch?.branch_type_2.concat(article.keywords);
+              }
+              if (article.branch === 3) {
+                keywords.branch.branch_type_3 =
+                  keywords.branch?.branch_type_3.concat(article.keywords);
+              }
             }
           }
         }
@@ -139,53 +139,38 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
         }
       }
     }
-  }, [show]);
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(treeDocRef, (doc) => {
-      if (!doc.exists()) {
-        throw new Error(
-          `Unable to get tree data from path: ${treeDocRef.path}.`
-        );
-      }
-      /**
-       * TODO: find a way to set `TreeMetadata["stars"]` type through the `starsRef` retrieval function.
-       */
-      setStars((doc.data().stars ?? {}) as NonNullable<TreeMetadata["stars"]>);
-    });
-    return () => unsubscribe();
-  }, [firebase, treeDocRef]);
+    return keywords;
+  }, [treeSections]);
 
   const copy = useCallback((label: string) => {
     const article: HTMLElement | null = document.getElementById(label);
     if (article && article.textContent) {
       const text: string = article.textContent;
-      navigator.clipboard.writeText(text)
+      navigator.clipboard
+        .writeText(text)
         .then()
         .catch(() => {
-          console.error(`An error occurred when pasting the text from ${label}`)
+          console.error(
+            `An error occurred when pasting the text from ${label}`
+          );
         });
     }
   }, []);
 
   const toggleStar = useCallback(
     async (labelAsBase64: string) => {
-      const treeDoc = await getDoc(treeDocRef);
-      if (!treeDoc.exists()) {
-        throw new Error(
-          `Unable to get tree data from path: ${treeDocRef.path}.`
-        );
-      }
-      const treeData = treeDoc.data() as TreeMetadata;
-      await setDoc(treeDocRef, {
-        ...treeData,
-        stars: {
-          ...treeData.stars,
-          [labelAsBase64]: !Boolean(treeData.stars?.[labelAsBase64]),
+      await setDoc(
+        treeDocRef,
+        {
+          stars: {
+            ...stars,
+            [labelAsBase64]: !Boolean(stars[labelAsBase64]),
+          },
         },
-      });
+        { merge: true }
+      );
     },
-    [treeDocRef]
+    [treeDocRef, stars]
   );
 
   const toggleShow = useCallback(
@@ -236,31 +221,34 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
             </button>
           ) : (
             branchesEntries &&
-            branchesEntries.length > 0 &&
-            <div className="btn-branches">
-              {branchesEntries.map(([type, branchInfo]) => (
-                <button
-                  key={`branch-${type}`}
-                  className={`btn btn-branch branch ${
-                    !show || show === type ? "active" : "inactive"
-                  }`}
-                  title={`Show only branch type ${type}`}
-                  onClick={() =>
-                    toggleShow(
-                      type as
-                        | "branch_type_1"
-                        | "branch_type_2"
-                        | "branch_type_3"
-                    )
-                  }
-                >
-                  <strong>{(branchInfo || { title: "" }).title}</strong>
-                </button>
-              ))}
-            </div>
+            branchesEntries.length > 0 && (
+              <div className="btn-branches" key="section-branches">
+                {branchesEntries.map(([type, branchInfo]) => (
+                  <button
+                    key={`branch-${type}`}
+                    className={`btn btn-branch branch ${
+                      !show || show === type ? "active" : "inactive"
+                    }`}
+                    title={`Show only branch type ${type}`}
+                    onClick={() =>
+                      toggleShow(
+                        type as
+                          | "branch_type_1"
+                          | "branch_type_2"
+                          | "branch_type_3"
+                      )
+                    }
+                  >
+                    <strong>{(branchInfo || { title: "" }).title}</strong>
+                  </button>
+                ))}
+              </div>
+            )
           )
         )}
       </div>
+
+      <TreeVis treeResult={treeSections} />
 
       {infoEntries.map(([sectionName, info]) =>
         sectionName !== "branch" && (!show || show === sectionName) ? (
@@ -325,7 +313,7 @@ const Tree: FC<Props> = ({ treeSections, treePath }: Props) => {
                     )}
                   </div>
                   <div className="articles">
-                    {treeSections.branch &&
+                    {treeSections.branch?.length > 0 &&
                       orderBy(
                         treeSections.branch
                           .filter((article) => article.branch === branchInfo.id)
