@@ -11,7 +11,9 @@ export interface TreeResult {
   root: ArticleWithMetrics[];
   trunk: ArticleWithMetrics[];
   leaf: ArticleWithMetrics[];
-  branch: ArticleWithMetrics[];
+  branch_1: ArticleWithMetrics[];
+  branch_2: ArticleWithMetrics[];
+  branch_3: ArticleWithMetrics[];
 }
 
 export type Section = keyof TreeResult;

@@ -1,5 +1,5 @@
 .TreeVis svg {
-  min-height: 600px;
+  min-height: 650px;
 }
 
 .TreeVis circle.star {
@@ -8,6 +8,13 @@
 
 .TreeVis circle.leaf {
   fill: var(--color-tree-leaf);
+}
+
+.TreeVis circle.branch_1,
+.TreeVis circle.branch_2,
+.TreeVis circle.branch_3
+{
+  fill: var(--color-tree-branch);
 }
 
 .TreeVis circle.root {
