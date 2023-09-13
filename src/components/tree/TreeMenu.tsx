@@ -43,46 +43,49 @@ const TreeMenu: FC<Props> = ({info, treeSections, show, toggleShow}) => {
           <small>{treeSections.trunk.length} articles</small>
         </button>
 
-        <div className="btn-branches" key="section-branches">
-          <button
-            key="menu-branch_1"
-            className={`btn btn-branch branch ${
-              !show || show === "branch_1" ? "active" : "inactive"
-            }`}
-            title="Show only branch 1"
-            onClick={() =>
-              toggleShow("branch_1" as Section)
-            }
-          >
-            <strong>{(info.branch_1 || { title: "" }).title}</strong>
-          </button>
+        {treeSections.branch_1 && (
+          <div className="btn-branches" key="section-branches">
+            <button
+              key="menu-branch_1"
+              className={`btn btn-branch branch ${
+                !show || show === "branch_1" ? "active" : "inactive"
+              }`}
+              title="Show only branch 1"
+              onClick={() =>
+                toggleShow("branch_1" as Section)
+              }
+            >
+              <strong>{(info.branch_1 || { title: "" }).title}</strong>
+            </button>
 
-          <button
-            key="menu-branch_2"
-            className={`btn btn-branch branch ${
-              !show || show === "branch_2" ? "active" : "inactive"
-            }`}
-            title="Show only branch 2"
-            onClick={() =>
-              toggleShow("branch_2" as Section)
-            }
-          >
-            <strong>{(info.branch_2 || { title: "" }).title}</strong>
-          </button>
+            <button
+              key="menu-branch_2"
+              className={`btn btn-branch branch ${
+                !show || show === "branch_2" ? "active" : "inactive"
+              }`}
+              title="Show only branch 2"
+              onClick={() =>
+                toggleShow("branch_2" as Section)
+              }
+            >
+              <strong>{(info.branch_2 || { title: "" }).title}</strong>
+            </button>
 
-          <button
-            key="menu-branch_3"
-            className={`btn btn-branch branch ${
-              !show || show === "branch_3" ? "active" : "inactive"
-            }`}
-            title="Show only branch 3"
-            onClick={() =>
-              toggleShow("branch_3" as Section)
-            }
-          >
-            <strong>{(info.branch_3 || { title: "" }).title}</strong>
-          </button>
-        </div>
+            <button
+              key="menu-branch_3"
+              className={`btn btn-branch branch ${
+                !show || show === "branch_3" ? "active" : "inactive"
+              }`}
+              title="Show only branch 3"
+              onClick={() =>
+                toggleShow("branch_3" as Section)
+              }
+            >
+              <strong>{(info.branch_3 || { title: "" }).title}</strong>
+            </button>
+          </div>
+        )}
+
         <button
           className={`btn btn-leaf leaf ${
             !show || show === "leaf" ? "active" : "inactive"

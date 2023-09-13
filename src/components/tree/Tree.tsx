@@ -65,16 +65,18 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
     };
     const sections: Section[] = Object.keys(keywords) as Section[];
     for (let section of sections) {
-      for (let article of treeSections[section]) {
-        if (!article.keywords) continue;
-        keywords[section] = keywords[section].concat(article.keywords);
+      if (treeSections[section] && treeSections[section]?.length) {
+        for (let article of treeSections[section]) {
+          if (!article.keywords) continue;
+          keywords[section] = keywords[section].concat(article.keywords);
+        }
+        keywords[section] = mostCommon(
+          keywords[section].map((keyword) => {
+            return keyword.toLowerCase();
+          }),
+          5
+        );
       }
-      keywords[section] = mostCommon(
-        keywords[section].map((keyword) => {
-          return keyword.toLowerCase();
-        }),
-        5
-      );
     }
     return keywords;
   }, [treeSections]);
@@ -146,7 +148,7 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
               </div>
               <div className="articles">
                 {orderBy(
-                  treeSections[sectionName].map((article) => {
+                  treeSections[sectionName]?.map((article) => {
                     const labelAsBase64 = encode(article.label);
                     const star = stars[labelAsBase64] ?? 0;
                     return { article, labelAsBase64, star };
