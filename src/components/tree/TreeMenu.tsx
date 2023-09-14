@@ -1,15 +1,9 @@
 import {FC} from "react";
-import {Info, Section} from "../../types/treeType";
-import {TreeResult} from "../../types/result";
+import {Section} from "../../types/treeType";
+import {Props} from "../../types/treeMenuTypes";
 
-import "./TreeMenu.css"
+import "./TreeMenu.css";
 
-type Props = {
-  info: Info;
-  treeSections: TreeResult;
-  show: Section | null;
-  toggleShow: (section: Section) => void;
-}
 
 const TreeMenu: FC<Props> = ({info, treeSections, show, toggleShow}) => {
   return (
