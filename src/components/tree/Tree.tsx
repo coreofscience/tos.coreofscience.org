@@ -65,7 +65,8 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
     };
     const sections: Section[] = Object.keys(keywords) as Section[];
     for (let section of sections) {
-      if (treeSections[section] && treeSections[section]?.length) {
+      if (treeSections[section]?.length) {
+        // @ts-ignore
         for (let article of treeSections[section]) {
           if (!article.keywords) continue;
           keywords[section] = keywords[section].concat(article.keywords);
