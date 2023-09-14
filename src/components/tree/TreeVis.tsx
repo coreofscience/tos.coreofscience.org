@@ -33,9 +33,9 @@ const articlesToData = (
   const minRadius = Math.min(...radii);
   const centerY = {
     leaf: (1.5 * height) / 6,
-    branch_1: (2.5 * height) / 6,
+    branch_1: (2.8 * height) / 6,
     branch_2: (2.5 * height) / 6,
-    branch_3: (2.5 * height) / 6,
+    branch_3: (2.8 * height) / 6,
     trunk: (4 * height) / 6,
     root: (5 * height) / 6,
   };
