@@ -16,5 +16,4 @@ export interface TreeResult {
   branch_3: ArticleWithMetrics[];
 }
 
-export type ResultSection = keyof TreeResult;
-export type ArticleSection = "root" | "trunk" | "branch" | "leaf";
+export type Section = keyof TreeResult;
