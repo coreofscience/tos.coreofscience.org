@@ -53,22 +53,24 @@ const articlesToData = (
     root: width / 2,
   };
   return articles.map((article) => {
-    let r: number;
-    if (section === "branch_1" || section === "branch_2" || section === "branch_3") {
-      r = 8;
-    } else {
-      r = section === "leaf"
-        ? ((article[section] - minRadius) / (maxRadius - minRadius)) * 15 + 12
-        : ((article[section] - minRadius) / (maxRadius - minRadius)) * 10 + 8;
-    }
-    return {
-      className: section,
-      r,
-      cx: width / 2,
-      cy: Math.random() * height,
-      centerY: centerY[section],
-      centerX: centerX[section],
-      article: article,
+    if (article.branch) {
+      let r: number;
+      if (section === "branch_1" || section === "branch_2" || section === "branch_3") {
+        r = 8;
+      } else {
+        r = section === "leaf"
+          ? ((article[section] - minRadius) / (maxRadius - minRadius)) * 15 + 12
+          : ((article[section] - minRadius) / (maxRadius - minRadius)) * 10 + 8;
+      }
+      return {
+        className: section,
+        r,
+        cx: width / 2,
+        cy: Math.random() * height,
+        centerY: centerY[section],
+        centerX: centerX[section],
+        article: article,
+      }
     }
   });
 };
