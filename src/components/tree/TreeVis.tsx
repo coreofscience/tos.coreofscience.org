@@ -45,9 +45,9 @@ const articlesToData = (
   };
   const centerX = {
     leaf: width / 2,
-    branch_1: (0.7 * width) / 2,
+    branch_1: (0.8 * width) / 2,
     branch_2: (width) / 2,
-    branch_3: (1.3 * width) / 2,
+    branch_3: (1.2 * width) / 2,
     trunk: width / 2,
     root: width / 2,
   };
