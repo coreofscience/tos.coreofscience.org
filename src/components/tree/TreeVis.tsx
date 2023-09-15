@@ -106,7 +106,7 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
   useEffect(() => {
     if (svgRef.current === null) return;
     const svg = select(svgRef.current);
-    const nodes = data.map((d) => ({ x: d.cx, y: d.cy, radius: d.r, ...d }));
+    const nodes = data.map((d) => ({ x: d?.cx, y: d?.cy, radius: d?.r, ...d }));
     const simulation = forceSimulation(nodes)
       .force("charge", forceManyBody().strength(5))
       .force(
@@ -129,18 +129,18 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
             (enter) =>
               enter
                 .append("circle")
-                .attr("class", (v) => v.className)
-                .attr("r", (v) => v.r)
-                .attr("cx", (v) => v.x)
-                .attr("cy", (v) => v.y)
-                .attr("title", (v) => v.article.label),
+                .attr("class", (v) => v.className ?? "")
+                .attr("r", (v) => v.r ?? 0)
+                .attr("cx", (v) => v.x ?? 0)
+                .attr("cy", (v) => v.y ?? 0)
+                .attr("title", (v) => v.article?.label ?? ""),
             (update) =>
               update
-                .attr("class", (v) => v.className)
-                .attr("r", (v) => v.r)
-                .attr("cx", (v) => v.x)
-                .attr("cy", (v) => v.y)
-                .attr("title", (v) => v.article.label),
+                .attr("class", (v) => v.className ?? "")
+                .attr("r", (v) => v.r ?? 0)
+                .attr("cx", (v) => v.x ?? 0)
+                .attr("cy", (v) => v.y ?? 0)
+                .attr("title", (v) => v.article?.label ?? ""),
             (exit) => exit.remove()
           );
       });
