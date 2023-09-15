@@ -79,6 +79,7 @@ const treeSectionToData = (
 ) => {
   const data = [];
   for (const section in treeSections) {
+    if (section === "branch") continue
     data.push(
       ...articlesToData(
         treeSections[section as Section] ?? [],
