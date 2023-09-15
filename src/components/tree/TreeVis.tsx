@@ -24,7 +24,7 @@ interface Props {
 
 const articlesToData = (
   articles: ArticleWithMetrics[],
-  section: ArticleSection,
+  section: ResultSection,
   width: number,
   height: number
 ) => {
@@ -83,7 +83,7 @@ const treeSectionToData = (
     data.push(
       ...articlesToData(
         treeSections[section as ResultSection],
-        section as ArticleSection,
+        section as ResultSection,
         width,
         height
       )
