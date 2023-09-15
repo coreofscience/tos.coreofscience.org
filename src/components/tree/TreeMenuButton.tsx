@@ -11,7 +11,7 @@ type Props = {
   treeSections: TreeResult;
 }
 
-const Button: FC<Props> = ({section, show, toggleShow, treeSections}: Props) => {
+const TreeMenuButton: FC<Props> = ({section, show, toggleShow, treeSections}: Props) => {
   return (
     <button
       className={`btn btn-${section} ${section} ${
@@ -31,4 +31,4 @@ const Button: FC<Props> = ({section, show, toggleShow, treeSections}: Props) => 
   )
 }
 
-export default Button;
+export default TreeMenuButton;

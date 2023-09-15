@@ -1,24 +1,33 @@
 import { FC } from "react";
-import { Props } from "../../types/treeMenuTypes";
+
+import TreeMenuButton from "./TreeMenuButton";
+
+import { Info, Section } from "../../types/treeType";
+import { TreeResult } from "../../types/result";
 
 import "./TreeMenu.css";
-import Button from "./Button";
 
+type Props  = {
+  info: Info;
+  treeSections: TreeResult;
+  show: Section | null;
+  toggleShow: (section: Section) => void;
+}
 
-const TreeMenu: FC<Props> = ({info, treeSections, show, toggleShow}) => {
+const TreeMenu: FC<Props> = ({treeSections, show, toggleShow}) => {
   return (
     <>
       <div className="tree-menu">
-        <Button section={"root"} show={show} toggleShow={toggleShow} treeSections={treeSections} />
-        <Button section={"trunk"} show={show} toggleShow={toggleShow} treeSections={treeSections} />
+        <TreeMenuButton section={"root"} show={show} toggleShow={toggleShow} treeSections={treeSections} />
+        <TreeMenuButton section={"trunk"} show={show} toggleShow={toggleShow} treeSections={treeSections} />
         {treeSections.branch_1 && (
           <div className="btn-branches" key="section-branches">
-            <Button section={"branch_1"} show={show} toggleShow={toggleShow} treeSections={treeSections} />
-            <Button section={"branch_2"} show={show} toggleShow={toggleShow} treeSections={treeSections} />
-            <Button section={"branch_3"} show={show} toggleShow={toggleShow} treeSections={treeSections} />
+            <TreeMenuButton section={"branch_1"} show={show} toggleShow={toggleShow} treeSections={treeSections} />
+            <TreeMenuButton section={"branch_2"} show={show} toggleShow={toggleShow} treeSections={treeSections} />
+            <TreeMenuButton section={"branch_3"} show={show} toggleShow={toggleShow} treeSections={treeSections} />
           </div>
         )}
-        <Button section={"leaf"} show={show} toggleShow={toggleShow} treeSections={treeSections} />
+        <TreeMenuButton section={"leaf"} show={show} toggleShow={toggleShow} treeSections={treeSections} />
       </div>
     </>
   )
