@@ -31,7 +31,7 @@ export type Info = {
   leaf: LeafInfo;
   root: RootInfo;
   trunk: TrunkInfo;
-  branch_1: BranchInfo;
-  branch_2: BranchInfo;
-  branch_3: BranchInfo;
+  branch_1?: BranchInfo;
+  branch_2?: BranchInfo;
+  branch_3?: BranchInfo;
 };

@@ -24,7 +24,9 @@ const Button: FC<Props> = ({section, show, toggleShow, treeSections}: Props) => 
       key={`menu-${section}`}
     >
       <strong>{info[section]?.title ?? ""}</strong>
-      <small>{treeSections[section]?.length} articles</small>
+      {section !== "branch_1" && section !== "branch_2" && section !== "branch_3" && (
+        <small>{treeSections[section]?.length} articles</small>
+      )}
     </button>
   )
 }

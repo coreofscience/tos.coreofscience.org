@@ -46,10 +46,16 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
   );
 
   useEffect(() => {
+    const infoClone = structuredClone(info);
+    if (!treeSections.branch_1) {
+      delete infoClone.branch_1
+      delete infoClone.branch_2
+      delete infoClone.branch_3
+    }
     setInfoEntries(
-      Object.entries(info) as [
+      Object.entries(infoClone) as [
         Section,
-        RootInfo | TrunkInfo | LeafInfo | BranchInfo
+          RootInfo | TrunkInfo | LeafInfo | BranchInfo
       ][]
     );
   }, []);
@@ -65,18 +71,16 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
     };
     const sections: Section[] = Object.keys(keywords) as Section[];
     for (let section of sections) {
-      if (treeSections[section]?.length) {
-        for (const article of treeSections[section] ?? []) {
-          if (!article.keywords) continue;
-          keywords[section] = keywords[section].concat(article.keywords);
-        }
-        keywords[section] = mostCommon(
-          keywords[section].map((keyword) => {
-            return keyword.toLowerCase();
-          }),
-          5
-        );
+      for (const article of treeSections[section] ?? []) {
+        if (!article.keywords) continue;
+        keywords[section] = keywords[section].concat(article.keywords);
       }
+      keywords[section] = mostCommon(
+        keywords[section].map((keyword) => {
+          return keyword.toLowerCase();
+        }),
+        5
+      );
     }
     return keywords;
   }, [treeSections]);
@@ -126,7 +130,7 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
 
   return (
     <Fragment>
-      <TreeMenu show={show} toggleShow={toggleShow} treeSections={treeSections} info={info}/>
+      <TreeMenu show={show} toggleShow={toggleShow} treeSections={treeSections} info={info} />
 
       <TreeVis treeResult={treeSections} />
 
@@ -138,8 +142,8 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
               key={`tree-segment-${sectionName}`}
             >
               <div className="info">
-                <h2>{(info || { title: "" }).title}</h2>
-                <p>{(info || { info: "" }).info}</p>
+                <h2>{info?.title ?? ""}</h2>
+                <p>{info?.info ?? ""}</p>
                 {keywords[sectionName].length > 0 && (
                   <p>
                     <strong>Keywords:</strong> {keywords[sectionName].join(", ")}

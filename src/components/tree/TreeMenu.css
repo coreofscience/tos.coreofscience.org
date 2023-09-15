@@ -48,6 +48,8 @@
   gap: 2px;
 }
 
-.tree-menu .btn-branches .btn-branch {
+.btn-branch_1,
+.btn-branch_2,
+.btn-branch_3 {
   flex-grow: 1;
 }

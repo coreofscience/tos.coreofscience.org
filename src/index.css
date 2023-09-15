@@ -450,7 +450,9 @@ h4 {
   background-color: var(--color-tree-leaf);
 }
 
-.btn.btn-branch {
+.btn.btn-branch_1,
+.btn.btn-branch_2,
+.btn.btn-branch_3 {
   background-color: var(--color-tree-branch);
 }
 
