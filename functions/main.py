@@ -55,7 +55,7 @@ def convert_tos_to_json(tree: nx.DiGraph) -> Dict[str, List[Dict]]:
         output[section] = data
 
     if "branch" in output:
-        for i in range(1, 4):
+        for i in [1, 2, 3]:
             output[f"branch_{i}"] = [data for data in output["branch"] if data.get("branch") == i]
         del output["branch"]
 
