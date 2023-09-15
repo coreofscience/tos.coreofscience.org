@@ -11,7 +11,7 @@ import {
 
 import {
   ArticleWithMetrics,
-  ResultSection,
+  Section,
   TreeResult,
 } from "../../types/result";
 
@@ -23,7 +23,7 @@ interface Props {
 
 const articlesToData = (
   articles: ArticleWithMetrics[],
-  section: ResultSection,
+  section: Section,
   width: number,
   height: number
 ) => {
@@ -81,8 +81,8 @@ const treeSectionToData = (
   for (const section in treeSections) {
     data.push(
       ...articlesToData(
-        treeSections[section as ResultSection],
-        section as ResultSection,
+        treeSections[section as Section] ?? [],
+        section as Section,
         width,
         height
       )
@@ -126,18 +126,18 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
             (enter) =>
               enter
                 .append("circle")
-                .attr("class", (v) => v.className ?? "")
-                .attr("r", (v) => v.r ?? 0)
-                .attr("cx", (v) => v.x ?? 0)
-                .attr("cy", (v) => v.y ?? 0)
-                .attr("title", (v) => v.article?.label ?? ""),
+                .attr("class", (v) => v.className)
+                .attr("r", (v) => v.r)
+                .attr("cx", (v) => v.x)
+                .attr("cy", (v) => v.y)
+                .attr("title", (v) => v.article.label),
             (update) =>
               update
-                .attr("class", (v) => v.className ?? "")
-                .attr("r", (v) => v.r ?? 0)
-                .attr("cx", (v) => v.x ?? 0)
-                .attr("cy", (v) => v.y ?? 0)
-                .attr("title", (v) => v.article?.label ?? ""),
+                .attr("class", (v) => v.className)
+                .attr("r", (v) => v.r)
+                .attr("cx", (v) => v.x)
+                .attr("cy", (v) => v.y)
+                .attr("title", (v) => v.article.label),
             (exit) => exit.remove()
           );
       });
