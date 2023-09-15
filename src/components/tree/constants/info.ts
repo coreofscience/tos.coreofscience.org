@@ -15,28 +15,32 @@ export const info: Info = {
       applicability of your topic of interest.
     `,
   },
-  branch: {
-    title: "Branch",
+  branch_1: {
+    title: "Branch 1",
     info: `
       Branches represent specific subareas within a knowledge domain, encapsulating
       articles centered around distinct themes derived from cluster analysis.
       Moreover, the Branches also signify the trending topics within that
       particular area.
     `,
-    branches: {
-      branch_type_1: {
-        id: 1,
-        title: "Branch 1",
-      },
-      branch_type_2: {
-        id: 2,
-        title: "Branch 2",
-      },
-      branch_type_3: {
-        id: 3,
-        title: "Branch 3",
-      },
-    },
+  },
+  branch_2: {
+    title: "Branch 2",
+    info: `
+      Branches represent specific subareas within a knowledge domain, encapsulating
+      articles centered around distinct themes derived from cluster analysis.
+      Moreover, the Branches also signify the trending topics within that
+      particular area.
+    `,
+  },
+  branch_3: {
+    title: "Branch 3",
+    info: `
+      Branches represent specific subareas within a knowledge domain, encapsulating
+      articles centered around distinct themes derived from cluster analysis.
+      Moreover, the Branches also signify the trending topics within that
+      particular area.
+    `,
   },
   leaf: {
     title: "Leaves",

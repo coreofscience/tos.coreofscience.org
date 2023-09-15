@@ -1,57 +1,3 @@
-.tree-menu {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(auto-fit, minmax(min(100%, 6rem), 1fr));
-  grid-auto-rows: 6rem;
-  grid-gap: 1rem;
-  margin-bottom: 4em;
-}
-
-@media (min-width: 540px) {
-  .tree-menu {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 6rem), 1fr));
-    grid-template-rows: 6em;
-    margin-bottom: 2em;
-  }
-}
-
-.tree-menu button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 0;
-}
-
-.tree-menu button strong {
-  font-family: Oswald, sans-serif;
-  color: white;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 24px;
-}
-
-.tree-menu button small {
-  color: var(--color-bg-accent);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.tree-menu button.inactive {
-  opacity: 0.5;
-}
-
-.tree-menu .btn-branches {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.tree-menu .btn-branches .btn-branch {
-  flex-grow: 1;
-}
-
 .tree-segment.root h2 {
   color: var(--color-tree-root);
   text-transform: uppercase;
@@ -62,7 +8,10 @@
   text-transform: uppercase;
 }
 
-.tree-segment.branch h2 {
+.tree-segment.branch_1 h2,
+.tree-segment.branch_2 h2,
+.tree-segment.branch_3 h2
+{
   color: var(--color-tree-branch);
   text-transform: uppercase;
 }
@@ -120,7 +69,10 @@
   fill: var(--color-tree-root);
 }
 
-.tree-segment.branch .article svg.star-svg-icon {
+.tree-segment.branch_1 .article svg.star-svg-icon,
+.tree-segment.branch_2 .article svg.star-svg-icon,
+.tree-segment.branch_3 .article svg.star-svg-icon
+{
   fill: var(--color-tree-branch);
 }
 

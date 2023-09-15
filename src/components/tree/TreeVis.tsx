@@ -9,7 +9,12 @@ import {
   forceY,
 } from "d3";
 
-import { ArticleWithMetrics, Section, TreeResult } from "../../types/result";
+import {
+  ArticleWithMetrics,
+  ResultSection,
+  ArticleSection,
+  TreeResult,
+} from "../../types/result";
 
 import "./TreeVis.css";
 
@@ -19,7 +24,7 @@ interface Props {
 
 const articlesToData = (
   articles: ArticleWithMetrics[],
-  section: Section,
+  section: ArticleSection,
   width: number,
   height: number
 ) => {
@@ -77,8 +82,8 @@ const treeSectionToData = (
   for (const section in treeSections) {
     data.push(
       ...articlesToData(
-        treeSections[section as Section],
-        section as Section,
+        treeSections[section as ResultSection],
+        section as ArticleSection,
         width,
         height
       )
