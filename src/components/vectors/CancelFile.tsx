@@ -1,6 +1,6 @@
 const CancelFile = () => (
   <svg
-    className="x-svg-icon"
+    className="w-4 h-4"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 18 18"

@@ -4,7 +4,6 @@ import CancelFile from "../../vectors/CancelFile";
 import MoveFirstIcon from "../../vectors/MoveFirstIcon";
 import { round } from "../../../utils/math";
 
-
 interface Props {
   name: string;
   keywords?: string[];
@@ -36,46 +35,66 @@ const FileCard: FC<Props> = ({
   });
 
   return (
-    <div className={capped ? "fileCard capped" : "fileCard"}>
+    <div
+      className={
+        capped
+          ? "flex flex-col gap-2 items-center justify-center shadow-md relative p-8 text-center bg-slate-100"
+          : "flex flex-col gap-2 items-center justify-center shadow-md relative p-8 text-center"
+      }
+    >
       {capped && (
-        <button onClick={move} className="fileCard__moveButton">
+        <button
+          onClick={move}
+          className="bg-root text-slate-50 h-8 w-8 flex justify-center items-center absolute top-0 left-0 hover:bg-leaf active:bg-leaf transition-colors ease-in"
+        >
           <MoveFirstIcon />
         </button>
       )}
-      <button onClick={remove} className="fileCard__closeButton">
+      <button
+        onClick={remove}
+        className="bg-root text-slate-50 h-8 w-8 flex justify-center items-center absolute top-0 right-0 hover:bg-red-500 active:bg-red-500 transition-colors ease-in"
+      >
         <CancelFile />
       </button>
-      <strong className="fileCard__name" title={name}>
+      <strong
+        className="overflow-ellipsis overflow-hidden whitespace-nowrap max-w-[75%]"
+        title={name}
+      >
         {name}
       </strong>
-      <small className="fileCard__keywords">{keywords.join(", ")}</small>
-      <div className="fileCard__statGroup">
-        <span className="fileCard__stats">
-          <strong className="fileCard__stats__count">
+      <small className="flex-grow flex flex-col items-center justify-center text-sm text-slate-500">
+        {keywords.join(", ")}
+      </small>
+      <div>
+        <span className="flex flex-col items-center">
+          <strong className="text-2xl font-semibold">
             {countFormat.format(articles)}
           </strong>
-          <small className="fileCard__stats__unit">
+          <small className="text-sm text-slate-500">
             {articles === 1 ? "article" : "articles"}
           </small>
         </span>
-        <span className="fileCard__stats">
-          <strong className="fileCard__stats__count">
+        <span className="flex flex-col items-center">
+          <strong className="text-2xl font-semibold">
             {countFormat.format(citations)}
           </strong>
-          <small className="fileCard__stats__unit">
+          <small className="text-sm text-slate-500">
             {citations === 1 ? "citation" : "citations"}
           </small>
         </span>
       </div>
-      <div className="fileCard__weight">
-        <small title="To keep our costs down, we need to limit the ammount of data we process for each tree.">
+      <div className="absolute bottom-2 right-2">
+        <small
+          className={capped ? "text-[60%] text-red-500" : "text-[60%]"}
+          title="To keep our costs down, we need to limit the ammount of data we process for each tree."
+        >
           {weightFormat.format(round(cumSize, 2))} /{" "}
           {weightFormat.format(round(maxSize, 2))} [MB]
         </small>
       </div>
-      <div className="fileCard_progressBar">
+      <div className="absolute bottom-0 h-[3px] w-full bg-slate-100">
         <div
-          className="fileCard_progressAdjustment"
+          className="bg-leaf w-full h-[3px] origin-left"
           style={{ transform: `scaleX(${progress / 100})` }}
         />
       </div>

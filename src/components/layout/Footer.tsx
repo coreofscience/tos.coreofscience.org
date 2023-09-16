@@ -141,6 +141,7 @@ const Footer = () => (
           <li>
             <a
               href="https://github.com/coreofscience/sap.coreofscience.com"
+              className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -150,6 +151,7 @@ const Footer = () => (
           <li>
             <a
               href="https://github.com/coreofscience/gcloud-tos"
+              className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -159,6 +161,7 @@ const Footer = () => (
           <li>
             <a
               href="https://github.com/coreofscience/python-wostools"
+              className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -168,6 +171,7 @@ const Footer = () => (
           <li>
             <a
               href="https://github.com/coreofscience/python-sap"
+              className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
               target="_blank"
               rel="noopener noreferrer"
             >

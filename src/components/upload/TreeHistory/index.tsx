@@ -63,15 +63,20 @@ const TreeHistory: FC = () => {
   }
 
   return (
-    <div className="treeHistory">
-      <div className="treeHistory__header">
-        <h2 className="treeHistory__title">Tree History</h2>
+    <div>
+      <div>
+        <h2 className="text-2xl font-tall font-bold uppercase">Tree History</h2>
       </div>
-      <div className="treeHistory__body">
+      <div>
         <ul>
           {trees.map(({ treeId, summary }) => (
-            <li key={treeId}>
-              <Link to={`/users/${user.uid}/trees/${treeId}`}>{summary}</Link>
+            <li className="list-disc" key={treeId}>
+              <Link
+                className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+                to={`/users/${user.uid}/trees/${treeId}`}
+              >
+                {summary}
+              </Link>
             </li>
           ))}
         </ul>

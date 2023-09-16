@@ -3,7 +3,6 @@ import React, { FC, Suspense, useContext, useEffect, useState } from "react";
 import FileContext from "../../../context/FileContext";
 import useFiles from "../../../hooks/useFiles";
 
-
 const FileCard = React.lazy(() => import("../FileCard"));
 
 interface Props {
@@ -39,7 +38,7 @@ const UploadIndicator: FC<Props> = ({ maxSize }) => {
   }
 
   return (
-    <div className="uploadIndicator">
+    <div className="grid gap-2 grid-cols-articles">
       <Suspense fallback="loading...">
         {files.map((file) => {
           cumSize += file.blob.size / 2 ** 20;

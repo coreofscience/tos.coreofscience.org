@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useContext } from "react";
+import React, { FC, useContext } from "react";
 import { logEvent } from "firebase/analytics";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
@@ -51,7 +51,7 @@ const Home: FC = () => {
   });
 
   return (
-    <Fragment>
+    <div className="flex flex-col gap-4">
       <div>
         <p>Get your seed files from web of knowledge.</p>
         <p>Then, upload your files for processing.</p>
@@ -60,48 +60,53 @@ const Home: FC = () => {
       <UploadIndicator maxSize={maxSize} />
       <FileErrors />
       <p>Review your input:</p>
-      <div className="information-cant-article">
-        <div className="frame-article">
-          <span className="total-articles">
+      <div className="grid grid-cols-articles gap-2 items-center">
+        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col">
+          <span className="font-semibold text-xl">
             {countFormat.format(articleCap)}/{countFormat.format(totalArticles)}
           </span>
-          <span className="articles">articles</span>
+          <span className="text-slate-500 text-sm">articles</span>
         </div>
-        <div className="frame-article">
-          <span className="total-articles">
+        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col">
+          <span className="font-semibold text-xl">
             {countFormat.format(citationCap)}/
             {countFormat.format(totalCitations)}
           </span>
-          <span className="articles">citations</span>
+          <span className="text-slate-500 text-sm">citations</span>
         </div>
-        <div className="frame-article">
-          <span className="total-articles">
+        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col">
+          <span className="font-semibold text-xl">
             {weightFormat.format(round(sizeCap, 2))}/
             {weightFormat.format(round(maxSize, 2))}
           </span>
-          <span className="articles">size [MB]</span>
+          <span className="text-slate-500 text-sm">size [MB]</span>
         </div>
       </div>
       <br></br>
       <div>Time to create your Tree of Science.</div>
-      <button
-        className="btn btn-large btn-leaf button-continue"
-        disabled={
-          isLoading || !finished || totalArticles === 0 || totalCitations === 0
-        }
-        onClick={() => {
-          finished &&
-            create({ firebase, files: files.map((file) => file.hash), user });
-          logEvent(firebase.analytics, "tree_created");
-        }}
-      >
-        {isLoading ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
-      </button>
+      <div>
+        <button
+          className="inline-block font-tall text-4xl text-slate-50 bg-leaf px-12 py-6 uppercase disabled:bg-slate-400"
+          disabled={
+            isLoading ||
+            !finished ||
+            totalArticles === 0 ||
+            totalCitations === 0
+          }
+          onClick={() => {
+            finished &&
+              create({ firebase, files: files.map((file) => file.hash), user });
+            logEvent(firebase.analytics, "tree_created");
+          }}
+        >
+          {isLoading ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
+        </button>
+      </div>
       {isError && (
         <div className="error">There was an error creating the your tree.</div>
       )}
       <TreeHistory />
-    </Fragment>
+    </div>
   );
 };
 

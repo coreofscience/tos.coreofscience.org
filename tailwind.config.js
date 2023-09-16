@@ -16,6 +16,9 @@ module.exports = {
         center: true,
         padding: "1rem",
       },
+      gridTemplateColumns: {
+        articles: "repeat(auto-fill, minmax(225px, 1fr))",
+      },
     },
   },
   plugins: [],
