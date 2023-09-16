@@ -7,7 +7,7 @@ const looksLikeScopus = (content: string): boolean => {
       continue;
     }
     const match = line.match(RIS_PATTERN);
-    if (!match && currentKey !== "N1") {
+    if (!match && !(currentKey === "N1" || currentKey === "AB")) {
       return false;
     }
     if (match && match.groups && match.groups.key) {
