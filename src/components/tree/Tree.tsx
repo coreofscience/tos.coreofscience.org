@@ -48,14 +48,14 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
   useEffect(() => {
     const infoClone = structuredClone(info);
     if (!treeSections.branch_1) {
-      delete infoClone.branch_1
-      delete infoClone.branch_2
-      delete infoClone.branch_3
+      delete infoClone.branch_1;
+      delete infoClone.branch_2;
+      delete infoClone.branch_3;
     }
     setInfoEntries(
       Object.entries(infoClone) as [
         Section,
-          RootInfo | TrunkInfo | LeafInfo | BranchInfo
+        RootInfo | TrunkInfo | LeafInfo | BranchInfo
       ][]
     );
   }, []);
@@ -89,14 +89,7 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
     const article: HTMLElement | null = document.getElementById(label);
     if (article && article.textContent) {
       const text: string = article.textContent;
-      navigator.clipboard
-        .writeText(text)
-        .then()
-        .catch(() => {
-          console.error(
-            `An error occurred when pasting the text from ${label}`
-          );
-        });
+      navigator.clipboard.writeText(text);
     }
   }, []);
 
@@ -116,21 +109,23 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
     [treeDocRef, stars]
   );
 
-  const toggleShow = useCallback(
-    (label: Section) => {
-      setShow((curr) => {
-        if (curr === label) {
-          return null;
-        }
-        return label;
-      });
-    },
-    []
-  );
+  const toggleShow = useCallback((label: Section) => {
+    setShow((curr) => {
+      if (curr === label) {
+        return null;
+      }
+      return label;
+    });
+  }, []);
 
   return (
     <Fragment>
-      <TreeMenu show={show} toggleShow={toggleShow} treeSections={treeSections} info={info} />
+      <TreeMenu
+        show={show}
+        toggleShow={toggleShow}
+        treeSections={treeSections}
+        info={info}
+      />
 
       <TreeVis treeResult={treeSections} />
 
@@ -146,7 +141,8 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
                 <p>{info?.info ?? ""}</p>
                 {keywords[sectionName].length > 0 && (
                   <p>
-                    <strong>Keywords:</strong> {keywords[sectionName].join(", ")}
+                    <strong>Keywords:</strong>{" "}
+                    {keywords[sectionName].join(", ")}
                   </p>
                 )}
               </div>

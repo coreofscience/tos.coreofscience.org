@@ -10,8 +10,7 @@
 
 .tree-segment.branch_1 h2,
 .tree-segment.branch_2 h2,
-.tree-segment.branch_3 h2
-{
+.tree-segment.branch_3 h2 {
   color: var(--color-tree-branch);
   text-transform: uppercase;
 }
@@ -71,8 +70,7 @@
 
 .tree-segment.branch_1 .article svg.star-svg-icon,
 .tree-segment.branch_2 .article svg.star-svg-icon,
-.tree-segment.branch_3 .article svg.star-svg-icon
-{
+.tree-segment.branch_3 .article svg.star-svg-icon {
   fill: var(--color-tree-branch);
 }
 

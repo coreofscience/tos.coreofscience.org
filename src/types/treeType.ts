@@ -26,7 +26,13 @@ export type BranchInfo = {
   title: string;
   info: string;
 };
-export type Section = "root" | "trunk" | "branch_1" | "branch_2" | "branch_3" | "leaf";
+export type Section =
+  | "root"
+  | "trunk"
+  | "branch_1"
+  | "branch_2"
+  | "branch_3"
+  | "leaf";
 export type Info = {
   leaf: LeafInfo;
   root: RootInfo;

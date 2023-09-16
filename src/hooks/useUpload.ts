@@ -15,12 +15,10 @@ const useUpload = () => {
         add(meta);
         const fileRef = ref(firebase.storage, `isi-files/${meta.hash}`);
         getDownloadURL(fileRef)
-          .then((downloadURL) => {
-            console.info(`File is already saved with url: ${downloadURL}`);
+          .then(() => {
             track(meta.hash, 100);
           })
-          .catch((err) => {
-            console.error(err);
+          .catch(() => {
             const uploadTask = uploadBytesResumable(fileRef, blob);
             uploadTask.on(
               "state_changed",
@@ -29,7 +27,7 @@ const useUpload = () => {
                   (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 track(meta.hash, percent);
               },
-              () => console.error,
+              () => {},
               () => {
                 track(meta.hash, 100);
               }

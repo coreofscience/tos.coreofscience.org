@@ -29,7 +29,6 @@ export const useSignIn = (): [AsyncActionStateType, LogInActionsType] => {
         navigate("/");
       })
       .catch((error) => {
-        console.log(JSON.stringify(error));
         setState({
           status: "failure",
           message:

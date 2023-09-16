@@ -9,11 +9,7 @@ import {
   forceY,
 } from "d3";
 
-import {
-  ArticleWithMetrics,
-  Section,
-  TreeResult,
-} from "../../types/result";
+import { ArticleWithMetrics, Section, TreeResult } from "../../types/result";
 
 import "./TreeVis.css";
 
@@ -28,10 +24,14 @@ const articlesToData = (
   height: number
 ) => {
   const radii = articles.map((article) => {
-    if (section === "branch_1" || section === "branch_2" || section === "branch_3") {
-      return article.branch
+    if (
+      section === "branch_1" ||
+      section === "branch_2" ||
+      section === "branch_3"
+    ) {
+      return article.branch;
     }
-    return article[section]
+    return article[section];
   });
   const maxRadius = Math.max(...radii);
   const minRadius = Math.min(...radii);
@@ -46,19 +46,24 @@ const articlesToData = (
   const centerX = {
     leaf: width / 2,
     branch_1: (0.8 * width) / 2,
-    branch_2: (width) / 2,
+    branch_2: width / 2,
     branch_3: (1.2 * width) / 2,
     trunk: width / 2,
     root: width / 2,
   };
   return articles.map((article) => {
     let r: number;
-    if (section === "branch_1" || section === "branch_2" || section === "branch_3") {
+    if (
+      section === "branch_1" ||
+      section === "branch_2" ||
+      section === "branch_3"
+    ) {
       r = 8;
     } else {
-      r = section === "leaf"
-        ? ((article[section] - minRadius) / (maxRadius - minRadius)) * 15 + 12
-        : ((article[section] - minRadius) / (maxRadius - minRadius)) * 10 + 8;
+      r =
+        section === "leaf"
+          ? ((article[section] - minRadius) / (maxRadius - minRadius)) * 15 + 12
+          : ((article[section] - minRadius) / (maxRadius - minRadius)) * 10 + 8;
     }
     return {
       className: section,
@@ -68,7 +73,7 @@ const articlesToData = (
       centerY: centerY[section],
       centerX: centerX[section],
       article: article,
-    }
+    };
   });
 };
 
@@ -79,7 +84,7 @@ const treeSectionToData = (
 ) => {
   const data = [];
   for (const section in treeSections) {
-    if (section === "branch") continue
+    if (section === "branch") continue;
     data.push(
       ...articlesToData(
         treeSections[section as Section] ?? [],

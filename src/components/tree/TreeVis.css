@@ -12,8 +12,7 @@
 
 .TreeVis circle.branch_1,
 .TreeVis circle.branch_2,
-.TreeVis circle.branch_3
-{
+.TreeVis circle.branch_3 {
   fill: var(--color-tree-branch);
 }
 
