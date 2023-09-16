@@ -7,7 +7,6 @@ import useUpload from "../../../hooks/useUpload";
 import useError from "../../../hooks/useError";
 import FileErrorMap from "../errors";
 
-import "./FileDropper.css";
 
 interface Props {
   maxSize: number;

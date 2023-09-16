@@ -5,7 +5,6 @@ import TreeMenuButton from "./TreeMenuButton";
 import { Info, Section } from "../../types/treeType";
 import { TreeResult } from "../../types/result";
 
-import "./TreeMenu.css";
 
 type Props = {
   info: Info;

@@ -13,7 +13,6 @@ import useFirebase from "../../../hooks/useFirebase";
 import useUser from "../../../hooks/useUser";
 import { TreeMetadata } from "../../../types/treeMetadata";
 import { mostCommon } from "../../../utils/arrays";
-import "./TreeHistory.css";
 
 const summarize = (tree: TreeMetadata): string => {
   if (!tree.result) {

@@ -26,7 +26,6 @@ import {
 import { TreeResult } from "../../types/result";
 import { info } from "./constants/info";
 
-import "./Tree.css";
 
 export interface Props {
   stars: Record<string, boolean>;

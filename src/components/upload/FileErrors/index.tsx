@@ -4,7 +4,6 @@ import CancelFile from "../../vectors/CancelFile";
 import FileContext from "../../../context/FileContext";
 import useInvalidFiles from "../../../hooks/useInvalidFiles";
 
-import "./FileErrors.css";
 
 const FileErrors: FC = () => {
   const { remove } = useContext(FileContext);

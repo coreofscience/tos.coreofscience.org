@@ -11,7 +11,6 @@ import {
 
 import { ArticleWithMetrics, Section, TreeResult } from "../../types/result";
 
-import "./TreeVis.css";
 
 interface Props {
   treeResult: TreeResult;

@@ -3,7 +3,6 @@ import React, { FC, Suspense, useContext, useEffect, useState } from "react";
 import FileContext from "../../../context/FileContext";
 import useFiles from "../../../hooks/useFiles";
 
-import "./UploadIndicator.css";
 
 const FileCard = React.lazy(() => import("../FileCard"));
 

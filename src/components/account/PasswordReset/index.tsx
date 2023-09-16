@@ -2,9 +2,6 @@ import { FC, Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import "../common/styles.css";
-import TreeOfScience from "../../vectors/TreeOfScience";
-
 import { Message } from "../common/Message";
 
 import { defaultLoginFormFieldsState } from "./constants/defaultState";
@@ -23,36 +20,29 @@ const PasswordReset: FC = () => {
 
   return (
     <Fragment>
-      <div className="container">
-        <form
-          className="form-content"
-          onSubmit={form.handleSubmit(passwordResetActions.sendEmail)}
-        >
-          <TreeOfScience className="content-logo" />
-          <h2>Reset passrword</h2>
-          <div className="form-input">
-            <input
-              {...form.register("email")}
-              type="email"
-              placeholder="email@example.com"
-            />
-            <Message
-              message={form.formState.errors.email?.message}
-              type="error"
-            />
-          </div>
-          <br />
+      <form
+        className="form-content"
+        onSubmit={form.handleSubmit(passwordResetActions.sendEmail)}
+      >
+        <h2>Reset passrword</h2>
+        <div className="form-input">
           <input
-            type="submit"
-            className="btn btn-large btn-leaf"
-            value="SEND"
+            {...form.register("email")}
+            type="email"
+            placeholder="email@example.com"
           />
           <Message
-            message={passwordResetState.message}
-            type={passwordResetState.status === "failure" ? "error" : "info"}
+            message={form.formState.errors.email?.message}
+            type="error"
           />
-        </form>
-      </div>
+        </div>
+        <br />
+        <input type="submit" className="btn btn-large btn-leaf" value="SEND" />
+        <Message
+          message={passwordResetState.message}
+          type={passwordResetState.status === "failure" ? "error" : "info"}
+        />
+      </form>
     </Fragment>
   );
 };

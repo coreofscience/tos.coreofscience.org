@@ -1,4 +1,3 @@
-import React from "react";
 import CoreOfScience from "../vectors/CoreOfScience";
 import GitHubIcon from "../vectors/GitHubIcon";
 import FacebookIcon from "../vectors/FacebookIcon";
@@ -6,14 +5,14 @@ import YoutubeIcon from "../vectors/YoutubeIcon";
 import TwitterIcon from "../vectors/TwitterIcon";
 import Reference from "../tree/Reference";
 
-import "./Footer.css";
-
 const Footer = () => (
-  <div className="footer">
-    <div className="footer__mainLinks">
-      <section className="footer__section citationLinks">
-        <h4 className="footer__sectionHeader">Citing Tree of Science</h4>
-        <ul className="footer__sectionLinks citations">
+  <div className="flex flex-col gap-4 py-8 md:py-16 md:gap-8">
+    <div className="grid gap-4 grid-cols-[1fr] md:gap-12 md:fancy-areas">
+      <section className="flex flex-col gap-2 md:area-cite">
+        <h4 className="text-xl font-tall uppercase text-root">
+          Citing Tree of Science
+        </h4>
+        <ul className="flex flex-col gap-2">
           <li>
             <Reference
               label=""
@@ -89,9 +88,9 @@ const Footer = () => (
           </li>
         </ul>
       </section>
-      <section className="footer__section socialLinks">
-        <h4 className="footer__sectionHeader">Social media</h4>
-        <ul className="footer__sectionLinks social">
+      <section className="flex flex-col gap-2 md:area-social">
+        <h4 className="text-xl font-tall uppercase text-root">Social media</h4>
+        <ul className="flex flex-row gap-2">
           <li>
             <a
               href="https://github.com/coreofscience/"
@@ -134,9 +133,11 @@ const Footer = () => (
           </li>
         </ul>
       </section>
-      <section className="footer__section repoLinks">
-        <h4 className="footer__sectionHeader">This project on GitHub</h4>
-        <ul className="footer__sectionLinks">
+      <section className="flex flex-col gap-2 md:area-git">
+        <h4 className="text-xl font-tall uppercase text-root">
+          This project on GitHub
+        </h4>
+        <ul>
           <li>
             <a
               href="https://github.com/coreofscience/sap.coreofscience.com"
@@ -176,13 +177,13 @@ const Footer = () => (
         </ul>
       </section>
     </div>
-    <div className="footer__copy">
+    <div className="flex flex-row items-center gap-2">
       <a
         target="_blank"
         rel="noopener noreferrer"
         href="https://coreofscience.com"
       >
-        <CoreOfScience />
+        <CoreOfScience className="w-10 h-10" />
       </a>
       <span>
         A{" "}

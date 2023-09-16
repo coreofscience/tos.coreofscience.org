@@ -1,10 +1,8 @@
-import React from "react";
 import { signOut } from "firebase/auth";
 import { Link, useLocation } from "react-router-dom";
 import useUser from "../../hooks/useUser";
 
 import TreeOfScience from "../vectors/TreeOfScience";
-import "./Header.css";
 import useFirebase from "../../hooks/useFirebase";
 
 const Header = () => {
@@ -13,18 +11,22 @@ const Header = () => {
   const location = useLocation();
 
   return (
-    <div className="Header">
-      <Link className="Header_element" to="/">
-        <TreeOfScience className="Header__branding" />
-        <h2 className="Header__title">Tree of Science</h2>
+    <div className="text-leaf flex flex-row items-center justify-between">
+      <Link className="flex flex-row items-center gap-2" to="/">
+        <TreeOfScience className="w-20 h-20" />
+        <h2 className="font-tall uppercase text-4xl font-bold hidden sm:inline">
+          Tree of Science
+        </h2>
       </Link>
-      <div className="Header_element">
+      <div className="flex flex-row items-center gap-2">
         {user?.uid ? (
           <>
-            <span>{user.email}</span>
+            <span className="overflow-ellipsis hidden sm:inline">
+              {user.email}
+            </span>
             <button
               onClick={() => signOut(firebase.auth)}
-              className="Header__log-out"
+              className="px-4 py-2 text-tall uppercase font-bold text-slate-50 bg-leaf"
             >
               Log Out
             </button>
@@ -32,11 +34,17 @@ const Header = () => {
         ) : (
           <>
             {location.pathname !== "/log-in" && (
-              <Link className="Header__log-in" to="/log-in">
+              <Link
+                className="px-4 py-2 text-tall uppercase font-bold"
+                to="/log-in"
+              >
                 Log In
               </Link>
             )}
-            <Link className="Header__sign-up" to="/sign-up">
+            <Link
+              className="px-4 py-2 text-tall uppercase font-bold text-slate-50 bg-leaf"
+              to="/sign-up"
+            >
               Sign up
             </Link>
           </>

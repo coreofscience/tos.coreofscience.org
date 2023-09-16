@@ -6,7 +6,6 @@ import { ToastProperties } from "../../../types/toastType";
 
 import { toastTimeMs } from "./constants";
 
-import "./styles.css";
 
 const Toast: FC<ToastProperties> = (props) => {
   const toast = useRef<HTMLOutputElement>(null);

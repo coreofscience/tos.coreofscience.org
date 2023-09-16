@@ -4,7 +4,6 @@ import CancelFile from "../../vectors/CancelFile";
 import MoveFirstIcon from "../../vectors/MoveFirstIcon";
 import { round } from "../../../utils/math";
 
-import "./FileCard.css";
 
 interface Props {
   name: string;

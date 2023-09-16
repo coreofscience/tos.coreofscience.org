@@ -3,7 +3,6 @@ import { logEvent } from "firebase/analytics";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
 
-import "./Home.css";
 import FileContext from "../../../context/FileContext";
 
 import useFiles from "../../../hooks/useFiles";

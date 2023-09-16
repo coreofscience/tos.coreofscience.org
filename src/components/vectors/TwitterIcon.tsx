@@ -1,7 +1,9 @@
-import React from "react";
-
 const TwitterIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 97.75 97.75">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 97.75 97.75"
+    className="w-10 h-10"
+  >
     <title id="title" lang="en">
       Twitter
     </title>
