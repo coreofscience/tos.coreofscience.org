@@ -1,13 +1,19 @@
-import React, { useEffect, useRef, FC } from "react";
+import { useEffect, useRef, FC } from "react";
+import { Root } from "react-dom/client";
 
 import hideToast from "./hideToast";
 
-import { ToastProperties } from "../../../types/toastType";
-
 import { toastTimeMs } from "./constants";
 
+export interface Props {
+  title: string;
+  duration: number;
+  status: "info" | "warning" | "error";
+  description?: string;
+  root: Root;
+}
 
-const Toast: FC<ToastProperties> = (props) => {
+const Toast: FC<Props> = (props) => {
   const toast = useRef<HTMLOutputElement>(null);
   let timer: NodeJS.Timeout = setTimeout(() => {}, -1);
 
@@ -32,14 +38,17 @@ const Toast: FC<ToastProperties> = (props) => {
       aria-labelledby="toast-label"
       onMouseEnter={onReset}
       onMouseLeave={onStart}
-      className={`toast ${props.status}`}
+      className={
+        "fixed left-[50%] bottom-4 translate-x-[-50%] translate-y-[-15%] max-w-md p-4 flex flex-col gap-2 content-start items-center text-center text-slate-50 animate-slide-up z-10 will-change-transform " +
+        (props.status === "info"
+          ? "bg-leaf"
+          : props.status === "error"
+          ? "bg-red-500"
+          : /* warning */ "bg-root")
+      }
     >
-      <p className="toast__title">{props.title}</p>
-      {props.description ? (
-        <p className="toast__description">{props.description}</p>
-      ) : (
-        ""
-      )}
+      <p className="font-bold">{props.title}</p>
+      {props.description ? <p>{props.description}</p> : ""}
     </output>
   );
 };

@@ -1,12 +1,17 @@
 import { createRoot } from "react-dom/client";
 
-import { ShowToastProperties } from "../../../types/toastType";
-
 import Toast from "../Toast";
 
 import { toastContainerId } from "./constants";
 
-export default (props: ShowToastProperties) => {
+export interface Props {
+  title: string;
+  duration: number;
+  status: "info" | "warning" | "error";
+  description?: string;
+}
+
+export default (props: Props) => {
   let container = document.getElementById(toastContainerId) as Element;
 
   if (!container) {

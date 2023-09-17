@@ -19,6 +19,15 @@ module.exports = {
       gridTemplateColumns: {
         articles: "repeat(auto-fill, minmax(225px, 1fr))",
       },
+      animation: {
+        "slide-up": "slide-up 0.5s ease-out",
+      },
+      keyframes: {
+        "slide-up": {
+          "0%": { transform: "translate(-50%, 100%)" },
+          "100%": { transform: "translate(-50%, -15%)" },
+        },
+      },
     },
   },
   plugins: [],
