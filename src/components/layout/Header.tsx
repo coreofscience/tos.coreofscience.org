@@ -26,7 +26,7 @@ const Header = () => {
             </span>
             <button
               onClick={() => signOut(firebase.auth)}
-              className="px-4 py-2 text-tall uppercase font-bold text-slate-50 bg-leaf"
+              className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf"
             >
               Log Out
             </button>
@@ -35,14 +35,14 @@ const Header = () => {
           <>
             {location.pathname !== "/log-in" && (
               <Link
-                className="px-4 py-2 text-tall uppercase font-bold"
+                className="px-4 py-2 font-tall uppercase font-bold"
                 to="/log-in"
               >
                 Log In
               </Link>
             )}
             <Link
-              className="px-4 py-2 text-tall uppercase font-bold text-slate-50 bg-leaf"
+              className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf"
               to="/sign-up"
             >
               Sign up
