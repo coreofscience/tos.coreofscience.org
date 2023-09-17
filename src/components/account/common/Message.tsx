@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
 export const Message: FC<{
   message: string | undefined;
@@ -6,9 +6,9 @@ export const Message: FC<{
 }> = ({ message, type }) => {
   if (!message) return null;
 
-  if (type === "error") return <span className="error-message">{message}</span>;
+  if (type === "error") return <span className="text-red-500">{message}</span>;
 
-  if (type === "info") return <span className="info-message">{message}</span>;
+  if (type === "info") return <span className="text-leaf">{message}</span>;
 
   return null;
 };

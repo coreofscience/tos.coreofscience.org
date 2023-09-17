@@ -21,14 +21,17 @@ const PasswordReset: FC = () => {
   return (
     <Fragment>
       <form
-        className="form-content"
+        className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(passwordResetActions.sendEmail)}
       >
-        <h2>Reset passrword</h2>
-        <div className="form-input">
+        <h2 className="text-2xl md:text-4xl font-tall uppercase">
+          Reset passrword
+        </h2>
+        <div className="flex flex-col gap-2">
           <input
             {...form.register("email")}
             type="email"
+            className="p-2 border border-stone-500"
             placeholder="email@example.com"
           />
           <Message
@@ -37,7 +40,13 @@ const PasswordReset: FC = () => {
           />
         </div>
         <br />
-        <input type="submit" className="btn btn-large btn-leaf" value="SEND" />
+        <div>
+          <input
+            type="submit"
+            className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf"
+            value="SEND"
+          />
+        </div>
         <Message
           message={passwordResetState.message}
           type={passwordResetState.status === "failure" ? "error" : "info"}
