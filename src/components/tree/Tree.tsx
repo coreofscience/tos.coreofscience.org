@@ -26,7 +26,6 @@ import {
 import { TreeResult } from "../../types/result";
 import { info } from "./constants/info";
 
-
 export interface Props {
   stars: Record<string, boolean>;
   treeSections: TreeResult;
@@ -118,7 +117,7 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
   }, []);
 
   return (
-    <Fragment>
+    <div className="flex flex-col gap-4">
       <TreeMenu
         show={show}
         toggleShow={toggleShow}
@@ -175,7 +174,7 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
             </div>
           )
       )}
-    </Fragment>
+    </div>
   );
 };
 
