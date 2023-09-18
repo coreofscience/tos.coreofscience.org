@@ -18,7 +18,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         articles: "repeat(auto-fill, minmax(225px, 1fr))",
-        buttons: "repeat(auto-fit, minmax(min(100%, 6rem), 1fr))",
+        buttons: "repeat(auto-fit, minmax(200px, 1fr))",
       },
       animation: {
         "slide-up": "slide-up 0.5s ease-out",

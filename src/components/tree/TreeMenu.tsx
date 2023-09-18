@@ -15,23 +15,23 @@ type Props = {
 const TreeMenu: FC<Props> = ({ treeSections, show, toggleShow }) => {
   return (
     <>
-      <div className="grid grid-rows-[6em] md:grid-rows-1 grid-cols-buttons gap-4">
+      <div className="grid grid-cols-buttons gap-4">
         <TreeMenuButton
           section={"root"}
-          className="bg-root"
+          className="bg-root min-h-[7rem]"
           show={show}
           toggleShow={toggleShow}
           treeSections={treeSections}
         />
         <TreeMenuButton
           section={"trunk"}
-          className="bg-trunk"
+          className="bg-trunk min-h-[7rem]"
           show={show}
           toggleShow={toggleShow}
           treeSections={treeSections}
         />
         {treeSections.branch_1 && (
-          <div className="flex flex-col gap-[2px]">
+          <div className="flex flex-col gap-[2px] min-h-[7rem]">
             <TreeMenuButton
               section={"branch_1"}
               className="bg-branch"
@@ -57,7 +57,7 @@ const TreeMenu: FC<Props> = ({ treeSections, show, toggleShow }) => {
         )}
         <TreeMenuButton
           section={"leaf"}
-          className="bg-leaf"
+          className="bg-leaf min-h-[7rem]"
           show={show}
           toggleShow={toggleShow}
           treeSections={treeSections}

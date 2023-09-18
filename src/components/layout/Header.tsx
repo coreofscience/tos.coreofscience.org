@@ -14,7 +14,7 @@ const Header = () => {
     <div className="text-leaf flex flex-row items-center justify-between">
       <Link className="flex flex-row items-center gap-2" to="/">
         <TreeOfScience className="w-20 h-20" />
-        <h2 className="font-tall uppercase text-4xl font-bold hidden sm:inline">
+        <h2 className="font-tall uppercase text-2xl font-bold hidden sm:inline md:text-4xl">
           Tree of Science
         </h2>
       </Link>
