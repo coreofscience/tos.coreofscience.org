@@ -22,7 +22,7 @@ const TreeMenuButton: FC<Props> = ({
   return (
     <button
       className={
-        "flex flex-col gap-1 items-center justify-center bg-leaf flex-grow" +
+        "flex flex-col gap-1 items-center justify-center flex-grow" +
         " " +
         (show && show !== section ? "opacity-50" : "") +
         " " +
