@@ -33,7 +33,7 @@ const Reference: FC<Article & { simple?: boolean }> = ({
   simple = true,
 }) => {
   return (
-    <div id={label}>
+    <div id={label} className="flex-grow">
       {!!authors && (
         <Fragment>
           <span>{formatAuthors(simple, authors)}</span>{" "}

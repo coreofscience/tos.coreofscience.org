@@ -131,11 +131,25 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
         ([sectionName, info]) =>
           (!show || show === sectionName) && (
             <div
-              className={`tree-segment ${sectionName}`}
+              className="flex flex-col gap-4"
               key={`tree-segment-${sectionName}`}
             >
-              <div className="info">
-                <h2>{info?.title ?? ""}</h2>
+              <div className="flex flex-col gap-2">
+                <h2
+                  className={
+                    "uppercase font-tall font-semibold text-2xl " +
+                    {
+                      root: "text-root",
+                      trunk: "text-trunk",
+                      branch_1: "text-branch",
+                      branch_2: "text-branch",
+                      branch_3: "text-branch",
+                      leaf: "text-leaf",
+                    }[sectionName]
+                  }
+                >
+                  {info?.title ?? ""}
+                </h2>
                 <p>{info?.info ?? ""}</p>
                 {keywords[sectionName].length > 0 && (
                   <p>
@@ -144,7 +158,7 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
                   </p>
                 )}
               </div>
-              <div className="articles">
+              <div>
                 {orderBy(
                   treeSections[sectionName]?.map((article) => {
                     const labelAsBase64 = encode(article.label);
@@ -154,16 +168,23 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
                   "star",
                   "desc"
                 ).map(({ article, labelAsBase64, star }) => (
-                  <div className="article" key={`article-${article.label}`}>
+                  <div
+                    className="flex flex-row items-center [&:nth-child(2n+1)]:bg-slate-100 p-2 gap-2"
+                    key={`article-${article.label}`}
+                  >
                     <Reference key={article.label} {...article} />
                     <button
-                      className="btn-copy"
+                      className="text-slate-300 active:text-slate-400 hover:text-slate-400"
                       onClick={() => copy(article.label)}
                     >
                       <CopyImage />
                     </button>
                     <button
-                      className={`btn-star ${star ? "favorite" : ""}`}
+                      className={
+                        star
+                          ? "text-yellow-500"
+                          : "text-slate-300 active:text-slate-400 hover:text-slate-400"
+                      }
                       onClick={() => toggleStar(labelAsBase64)}
                     >
                       <StarImage />

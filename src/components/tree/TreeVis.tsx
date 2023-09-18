@@ -11,7 +11,6 @@ import {
 
 import { ArticleWithMetrics, Section, TreeResult } from "../../types/result";
 
-
 interface Props {
   treeResult: TreeResult;
 }
@@ -44,9 +43,9 @@ const articlesToData = (
   };
   const centerX = {
     leaf: width / 2,
-    branch_1: (0.8 * width) / 2,
+    branch_1: (0.9 * width) / 2,
     branch_2: width / 2,
-    branch_3: (1.2 * width) / 2,
+    branch_3: (1.1 * width) / 2,
     trunk: width / 2,
     root: width / 2,
   };
@@ -65,7 +64,14 @@ const articlesToData = (
           : ((article[section] - minRadius) / (maxRadius - minRadius)) * 10 + 8;
     }
     return {
-      className: section,
+      className: {
+        root: "fill-root",
+        trunk: "fill-trunk",
+        branch_1: "fill-branch",
+        branch_2: "fill-branch",
+        branch_3: "fill-branch",
+        leaf: "fill-leaf",
+      }[section],
       r,
       cx: width / 2,
       cy: Math.random() * height,
@@ -152,8 +158,8 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
   }, [data, width]);
 
   return (
-    <div className="TreeVis" ref={ref}>
-      <svg ref={svgRef} />
+    <div ref={ref}>
+      <svg className="w-full h-full min-h-[620px]" ref={svgRef} />
     </div>
   );
 };
