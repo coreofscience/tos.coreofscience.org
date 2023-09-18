@@ -22,7 +22,7 @@ const LogIn: FC = () => {
   return (
     <Fragment>
       <form
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-4 max-w-md m-auto"
         onSubmit={form.handleSubmit(logInActions.logIn)}
       >
         <h2 className="text-2xl md:text-4xl font-tall uppercase">Log In</h2>

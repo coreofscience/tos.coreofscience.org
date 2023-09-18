@@ -21,7 +21,7 @@ const SignUp: FC = () => {
   return (
     <Fragment>
       <form
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-4 max-w-md m-auto"
         onSubmit={form.handleSubmit(signUpActions.signUp)}
       >
         <h2 className="text-2xl md:text-4xl font-tall uppercase">Sign Up</h2>
