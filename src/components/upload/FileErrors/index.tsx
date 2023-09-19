@@ -4,8 +4,6 @@ import CancelFile from "../../vectors/CancelFile";
 import FileContext from "../../../context/FileContext";
 import useInvalidFiles from "../../../hooks/useInvalidFiles";
 
-import "./FileErrors.css";
-
 const FileErrors: FC = () => {
   const { remove } = useContext(FileContext);
   const files = useInvalidFiles();
@@ -15,16 +13,16 @@ const FileErrors: FC = () => {
   }
 
   return (
-    <div className="fileErrors">
+    <div className="flex flex-col items-start gap-2">
       {files.map((file) => {
         return (
-          <div className="errorCard" key={file.hash}>
+          <div className="flex flex-row gap-2 items-center" key={file.hash}>
             <span>
               <strong>{file.name}</strong> {file.error}.
             </span>
             <button
               onClick={() => remove(file.hash)}
-              className="close-button"
+              className="flex justify-center items-center flex-shrink-0 bg-red-500 w-6 h-6"
               title="dismiss"
             >
               <CancelFile />

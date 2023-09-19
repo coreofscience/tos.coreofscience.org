@@ -1,5 +1,4 @@
-import React, { FC, Fragment } from "react";
-import "./Reference.css";
+import { FC, Fragment } from "react";
 import { Article } from "../../types/article";
 
 const titleCase = (sentence: string): string =>
@@ -34,39 +33,39 @@ const Reference: FC<Article & { simple?: boolean }> = ({
   simple = true,
 }) => {
   return (
-    <div className="reference" id={label}>
+    <div id={label} className="flex-grow">
       {!!authors && (
         <Fragment>
-          <span className="authors">{formatAuthors(simple, authors)}</span>{" "}
+          <span>{formatAuthors(simple, authors)}</span>{" "}
         </Fragment>
       )}
       {!!year && (
         <Fragment>
-          <span className="year">({year})</span>
+          <span>({year})</span>
           {". "}
         </Fragment>
       )}
       {!!title && (
         <Fragment>
-          <span className="title">{title}</span>{" "}
+          <span className="font-bold">{title}</span>{" "}
         </Fragment>
       )}
       {(!!journal || !!volume) && (
         <Fragment>
           <em>
-            {!!journal && <span className="journal">{titleCase(journal)}</span>}
+            {!!journal && <span>{titleCase(journal)}</span>}
             {!!journal && !!volume && (
               <Fragment>
                 {", "}
-                <span className="volume">{volume}</span>
+                <span>{volume}</span>
               </Fragment>
             )}
           </em>
-          {!!issue && <span className="issue">({issue})</span>}
+          {!!issue && <span>({issue})</span>}
           {!!page && (
             <Fragment>
               {", "}
-              <span className="page">{page}</span>
+              <span>{page}</span>
             </Fragment>
           )}
 
@@ -75,7 +74,7 @@ const Reference: FC<Article & { simple?: boolean }> = ({
       )}
       {!!doi && (
         <a
-          className="doi"
+          className="text-sky-600 hover:text-sky-800"
           href={`https://dx.doi.org/${doi}`}
           target="_blank"
           rel="noopener noreferrer"

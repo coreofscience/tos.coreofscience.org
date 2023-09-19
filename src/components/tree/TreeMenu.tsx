@@ -5,8 +5,6 @@ import TreeMenuButton from "./TreeMenuButton";
 import { Info, Section } from "../../types/treeType";
 import { TreeResult } from "../../types/result";
 
-import "./TreeMenu.css";
-
 type Props = {
   info: Info;
   treeSections: TreeResult;
@@ -17,35 +15,40 @@ type Props = {
 const TreeMenu: FC<Props> = ({ treeSections, show, toggleShow }) => {
   return (
     <>
-      <div className="tree-menu">
+      <div className="grid grid-cols-buttons gap-4">
         <TreeMenuButton
           section={"root"}
+          className="bg-root min-h-[7rem]"
           show={show}
           toggleShow={toggleShow}
           treeSections={treeSections}
         />
         <TreeMenuButton
           section={"trunk"}
+          className="bg-trunk min-h-[7rem]"
           show={show}
           toggleShow={toggleShow}
           treeSections={treeSections}
         />
         {treeSections.branch_1 && (
-          <div className="btn-branches" key="section-branches">
+          <div className="flex flex-col gap-[2px] min-h-[7rem]">
             <TreeMenuButton
               section={"branch_1"}
+              className="bg-branch"
               show={show}
               toggleShow={toggleShow}
               treeSections={treeSections}
             />
             <TreeMenuButton
               section={"branch_2"}
+              className="bg-branch"
               show={show}
               toggleShow={toggleShow}
               treeSections={treeSections}
             />
             <TreeMenuButton
               section={"branch_3"}
+              className="bg-branch"
               show={show}
               toggleShow={toggleShow}
               treeSections={treeSections}
@@ -54,6 +57,7 @@ const TreeMenu: FC<Props> = ({ treeSections, show, toggleShow }) => {
         )}
         <TreeMenuButton
           section={"leaf"}
+          className="bg-leaf min-h-[7rem]"
           show={show}
           toggleShow={toggleShow}
           treeSections={treeSections}

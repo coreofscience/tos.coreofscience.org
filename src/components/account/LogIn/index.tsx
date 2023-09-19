@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import "../common/styles.css";
-import TreeOfScience from "../../vectors/TreeOfScience";
-
 import { Message } from "../common/Message";
 
 import { defaultLoginFormFieldsState } from "./constants/defaultState";
@@ -24,49 +21,53 @@ const LogIn: FC = () => {
 
   return (
     <Fragment>
-      <div className="container">
-        <form
-          className="form-content"
-          onSubmit={form.handleSubmit(logInActions.logIn)}
-        >
-          <TreeOfScience className="content-logo" />
-          <h2>Log In</h2>
-          <div className="form-input">
-            <input
-              {...form.register("email")}
-              type="email"
-              placeholder="email@example.com"
-            />
-            <Message
-              message={form.formState.errors.email?.message}
-              type="error"
-            />
-          </div>
-          <div className="form-input">
-            <input
-              {...form.register("password")}
-              type="password"
-              placeholder="password"
-            />
-            <Message
-              message={form.formState.errors.password?.message}
-              type="error"
-            />
-          </div>
-          <br />
+      <form
+        className="flex flex-col gap-4 max-w-md m-auto"
+        onSubmit={form.handleSubmit(logInActions.logIn)}
+      >
+        <h2 className="text-2xl md:text-4xl font-tall uppercase">Log In</h2>
+        <div className="flex flex-col gap-2">
           <input
-            type="submit"
-            className="btn btn-large btn-leaf"
-            value="LOG IN"
+            {...form.register("email")}
+            type="email"
+            className="p-2 border border-stone-500"
+            placeholder="email@example.com"
           />
           <Message
-            message={logInState.message}
-            type={logInState.status === "failure" ? "error" : "info"}
+            message={form.formState.errors.email?.message}
+            type="error"
           />
-          <br />
-          <Link to="/reset-password">Forgot your password?</Link>
-        </form>
-      </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <input
+            {...form.register("password")}
+            type="password"
+            className="p-2 border border-stone-500"
+            placeholder="password"
+          />
+          <Message
+            message={form.formState.errors.password?.message}
+            type="error"
+          />
+        </div>
+        <div>
+          <input
+            type="submit"
+            className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf"
+            value="LOG IN"
+          />
+        </div>
+        <Message
+          message={logInState.message}
+          type={logInState.status === "failure" ? "error" : "info"}
+        />
+        <Link
+          to="/reset-password"
+          className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+        >
+          Forgot your password?
+        </Link>
+      </form>
     </Fragment>
   );
 };

@@ -1,4 +1,3 @@
-import React from "react";
 import { encode } from "js-base64";
 
 const CORE_OF_SCIENCE = `

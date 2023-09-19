@@ -7,8 +7,6 @@ import useUpload from "../../../hooks/useUpload";
 import useError from "../../../hooks/useError";
 import FileErrorMap from "../errors";
 
-import "./FileDropper.css";
-
 interface Props {
   maxSize: number;
 }
@@ -45,12 +43,19 @@ const FileDropper: FC<Props> = ({ maxSize }) => {
     onDrop,
   });
   return (
-    <div className="fileDropper" {...getRootProps()}>
+    <div
+      className="flex flex-col itemc-center bg-slate-100 text-stone-500 cursor-pointer p-4 h-32"
+      {...getRootProps()}
+    >
       <input style={{ display: "none" }} {...getInputProps()} />
       {isDragActive ? (
-        <p className="fileDropper__dragActive">Drop the files here ...</p>
+        <p className="flex h-full w-full m-auto items-center justify-center text-center fancy-bg-dashed-b">
+          Drop the files here...
+        </p>
       ) : (
-        <p>Drop &amp; your seed files here, or choose your files</p>
+        <p className="flex h-full w-full m-auto items-center justify-center text-center fancy-bg-dahsed-a">
+          Drag &amp; Drop your seed files here, or choose your files.
+        </p>
       )}
     </div>
   );

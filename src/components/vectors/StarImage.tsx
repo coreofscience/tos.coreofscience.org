@@ -1,12 +1,10 @@
-import React from "react";
-
 const StarImage = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="25"
     height="23"
     viewBox="0 0 25 23"
-    className="star-svg-icon"
+    className="fill-current"
   >
     <title id="title" lang="en">
       Star
