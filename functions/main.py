@@ -139,9 +139,9 @@ def process_user_tree(event: Event[DocumentSnapshot | None]) -> None:
 
 @on_document_created(
     document="users/{userId}/trees/{treeId}",
-    memory=MemoryOption.MB_512,
+    memory=MemoryOption.GB_1,
 )
-def process_user_tree(event: Event[DocumentSnapshot | None]) -> None:
+def process_user_pro_tree(event: Event[DocumentSnapshot | None]) -> None:
     create_tree_v2(event, max_size_megabytes=20)
 
 
