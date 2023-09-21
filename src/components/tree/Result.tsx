@@ -35,9 +35,7 @@ const Result = () => {
   );
 
   useEffect(() => {
-    console.log("treePath:", treePath)
     const treeDoc = doc(firebase.firestore, treePath);
-    console.log("treeDoc:", treeDoc)
     const unsubscribe = onSnapshot(
       treeDoc,
       { includeMetadataChanges: true },
