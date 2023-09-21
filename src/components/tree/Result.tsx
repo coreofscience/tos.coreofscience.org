@@ -2,28 +2,42 @@ import React, { Fragment, useEffect, useState, useMemo } from "react";
 
 import { doc, onSnapshot } from "firebase/firestore";
 import { useParams } from "react-router";
+
 import useFirebase from "../../hooks/useFirebase";
+import useUser from "../../hooks/useUser";
 
 import { TreeMetadata } from "../../types/treeMetadata";
+import {UserContextType} from "../../types/userContextType";
 
 const Tree = React.lazy(() => import("./Tree"));
 const NotFound = React.lazy(() => import("../NotFound"));
 
 const Result = () => {
+  const user: UserContextType | null = useUser();
   const { userId, treeId } = useParams<{ userId?: string; treeId?: string }>();
   const firebase = useFirebase();
   const [treeMetadata, setTreeMetadata] = useState<
     TreeMetadata | null | "loading"
   >("loading");
 
-  const treePath = useMemo(
-    () => (userId ? `users/${userId}/trees/${treeId}` : `trees/${treeId}`),
+  const treePath: string = useMemo(
+    (): string => {
+      const treePaths: {[plan: string]: (treeId: string, uid: string) => string} = {
+        pro: (treeId: string, uid: string): string => `users/${uid}/proTrees/${treeId}`,
+        free: (treeId: string, uid: string): string => `users/${uid}/trees/${treeId}`,
+      }
+      if (user && userId && treeId) {
+        return treePaths[user.plan](treeId, userId)
+      }
+      return `trees/${treeId}`
+    },
     [userId, treeId]
   );
 
   useEffect(() => {
+    console.log("treePath:", treePath)
     const treeDoc = doc(firebase.firestore, treePath);
-
+    console.log("treeDoc:", treeDoc)
     const unsubscribe = onSnapshot(
       treeDoc,
       { includeMetadataChanges: true },
