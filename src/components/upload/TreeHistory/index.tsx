@@ -6,7 +6,7 @@ import {
   query,
 } from "firebase/firestore";
 import { flatten } from "lodash";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import useFirebase from "../../../hooks/useFirebase";
@@ -33,9 +33,16 @@ const summarize = (tree: TreeMetadata): string => {
   ).join(", ");
 };
 
+type TreeSummary = {
+  treeId: string;
+  summary: string;
+  isPro: boolean;
+};
+
 const TreeHistory: FC = () => {
   const firebase = useFirebase();
-  const [trees, setTrees] = useState<{ treeId: string; summary: string }[]>([]);
+  const [trees, setTrees] = useState<TreeSummary[]>([]);
+  const [proTrees, setProTrees] = useState<TreeSummary[]>([]);
   const user = useUser();
 
   useEffect(() => {
@@ -52,13 +59,37 @@ const TreeHistory: FC = () => {
         snapshot.docs.map((doc) => ({
           treeId: doc.id,
           summary: summarize(doc.data() as TreeMetadata),
+          isPro: false,
         }))
       );
     });
     return unsubscribe;
   }, [firebase, user]);
 
-  if (trees.length === 0 || !user) {
+  useEffect(() => {
+    if (!user || user.plan !== "pro") {
+      return;
+    }
+    const proTreesQuery = query(
+      collection(firebase.firestore, `users/${user.uid}/proTrees`),
+      orderBy("finishedDate", "desc"),
+      limit(3)
+    );
+    const unsubscribe = onSnapshot(proTreesQuery, (snapshot) => {
+      setProTrees(
+        snapshot.docs.map((doc) => ({
+          treeId: doc.id,
+          summary: summarize(doc.data() as TreeMetadata),
+          isPro: true,
+        }))
+      );
+    });
+    return unsubscribe;
+  }, [firebase, user]);
+
+  const allTrees = useMemo(() => [...proTrees, ...trees], [trees, proTrees]);
+
+  if (allTrees.length === 0 || !user) {
     return null;
   }
 
@@ -69,13 +100,18 @@ const TreeHistory: FC = () => {
       </div>
       <div>
         <ul>
-          {trees.map(({ treeId, summary }) => (
+          {allTrees.map(({ treeId, summary, isPro }) => (
             <li className="list-disc" key={treeId}>
               <Link
-                className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+                className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in flex flex-row items-center"
                 to={`/users/${user.uid}/trees/${treeId}`}
               >
                 {summary}
+                {isPro && (
+                  <span className="text-xs ml-2 px-3 py-1 bg-leaf text-slate-50 font-semibold flex-shrink-0">
+                    PRO
+                  </span>
+                )}
               </Link>
             </li>
           ))}
