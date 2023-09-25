@@ -44,7 +44,7 @@ def convert_tos_to_json(tree: nx.DiGraph) -> Dict[str, List[Dict]]:
                         key: val
                         for key, val in data.items()
                         if not key.startswith("_") and key != "extra"
-                    }
+                    },
                 }
                 for node, data in tree.nodes.items()
                 if tree.nodes[node][section] > 0
@@ -56,7 +56,9 @@ def convert_tos_to_json(tree: nx.DiGraph) -> Dict[str, List[Dict]]:
 
     if "branch" in output:
         for i in [1, 2, 3]:
-            output[f"branch_{i}"] = [data for data in output["branch"] if data.get("branch") == i]
+            output[f"branch_{i}"] = [
+                data for data in output["branch"] if data.get("branch") == i
+            ]
         del output["branch"]
 
     return output
@@ -134,7 +136,7 @@ def create_tree_v2(
     memory=MemoryOption.GB_1,
 )
 def process_user_pro_tree(event: Event[DocumentSnapshot | None]) -> None:
-    create_tree_v2(event, max_size_megabytes=100)
+    create_tree_v2(event, max_size_megabytes=200)
 
 
 @on_document_created(

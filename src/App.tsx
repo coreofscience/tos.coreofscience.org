@@ -39,6 +39,10 @@ const App = () => {
                     path="/users/:userId/trees/:treeId"
                     element={<Result />}
                   />
+                  <Route
+                    path="/users/:userId/proTrees/:treeId"
+                    element={<Result />}
+                  />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </AppLayout>

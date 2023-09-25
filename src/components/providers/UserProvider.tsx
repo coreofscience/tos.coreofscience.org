@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, User, IdTokenResult } from "firebase/auth";
 import UserContext from "../../context/UserContext";
 import useFirebase from "../../hooks/useFirebase";
 
@@ -14,18 +14,31 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
   const [user, setUser] = useState<UserContextType | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(firebase.auth, (user) => {
+    const unsubscribe = onAuthStateChanged(firebase.auth, (user: User | null) => {
       if (!user || !user.uid || !user.email) {
         // "close session" by removing the user from the context.
         setUser(null);
         return;
       }
 
-      setUser({
-        uid: user.uid,
-        name: user?.displayName ?? "",
-        email: user.email,
-      });
+      user.getIdTokenResult()
+        .then((idTokenResult: IdTokenResult) => {
+          setUser({
+            uid: user.uid,
+            name: user.displayName ?? "",
+            email: user.email ?? "",
+            plan: idTokenResult.claims?.plan ?? "free",
+          });
+        })
+        .catch((err) => {
+          console.error("Error:", err);
+          setUser({
+            uid: user.uid,
+            name: user.displayName ?? "",
+            email: user.email ?? "",
+            plan: "free",
+          });
+        });
     });
     return () => unsubscribe();
   }, []);

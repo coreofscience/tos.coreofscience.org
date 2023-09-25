@@ -14,6 +14,8 @@ import { countFormat, round, weightFormat } from "../../../utils/math";
 import { createTree } from "./createTree";
 import useUser from "../../../hooks/useUser";
 
+import { UserContextType } from "../../../types/userContextType";
+
 const FileDropper = React.lazy(() => import("../FileDropper"));
 const UploadIndicator = React.lazy(() => import("../UploadIndicator"));
 const FileErrors = React.lazy(() => import("../FileErrors"));
@@ -37,7 +39,19 @@ const Home: FC = () => {
   const navigate = useNavigate();
   const user = useUser();
 
-  const maxSize = user === null ? 5 : 10;
+  const getMaxSize = (user: UserContextType | null) => {
+    const maxSizeByUser: {[plan: string]: number} = {
+      pro: 100,
+      free: 10,
+      unregistered: 5,
+    }
+    if (user) {
+      return maxSizeByUser[user.plan];
+    }
+    return maxSizeByUser.unregistered;
+  }
+
+  const maxSize: number = getMaxSize(user);
   const { totalArticles, totalCitations, articleCap, citationCap, sizeCap } =
     computeQuantities(files, maxSize);
 
