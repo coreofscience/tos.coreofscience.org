@@ -15,6 +15,7 @@ import { createTree } from "./createTree";
 import useUser from "../../../hooks/useUser";
 
 import { UserContextType } from "../../../types/userContextType";
+import { Link } from "react-router-dom";
 
 const FileDropper = React.lazy(() => import("../FileDropper"));
 const UploadIndicator = React.lazy(() => import("../UploadIndicator"));
@@ -96,6 +97,12 @@ const Home: FC = () => {
           <span className="text-slate-500 text-sm">size [MB]</span>
         </div>
       </div>
+      <p>
+        For extra processing capacity check out our&nbsp;
+        <Link className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in" to="/pricing">
+         plans and pricing.
+        </Link>
+      </p>
       <br></br>
       <div>Time to create your Tree of Science.</div>
       <div>

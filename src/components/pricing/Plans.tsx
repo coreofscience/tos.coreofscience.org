@@ -12,9 +12,9 @@ const Plans: FC = () => {
 
   return (
     <Fragment>
-      <div className="mx-auto max-w-7xl md:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl py-20 md:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl font-tall uppercase">Pricing</h2>
+          <h2 className="text-4xl font-bold tracking-tight text-gray-900 font-tall uppercase">Pricing</h2>
           <p className="mt-2 text-2xl leading-8">
             Choose one that's right for you.
           </p>
@@ -25,8 +25,7 @@ const Plans: FC = () => {
               <h1 className="font-tall font-bold text-4xl uppercase">Basic</h1>
               <p className="mt-1">No need to register or pay, start creating your trees right now.</p>
               <p className="mt-6 flex items-baseline gap-x-2">
-                <span className="text-3xl font-bold font-tall tracking-tight">$0</span>
-                <span className="text-xs font-semibold leading-6 tracking-wide">USD</span>
+                <span className="text-2xl font-bold font-tall tracking-tight">Free</span>
               </p>
               <div>
                 <ul
@@ -69,7 +68,7 @@ const Plans: FC = () => {
               </div>
             </div>
             <a
-              href="#"
+              href="mailto:technology@coreofscience.org"
               className="my-6 mx-10 block text-slate-50 bg-leaf px-4 py-2 text-center text-sm font-bold font-tall uppercase"
             >
               Contact us
@@ -80,8 +79,7 @@ const Plans: FC = () => {
               <h1 className="font-tall font-bold text-4xl uppercase">Free</h1>
               <p className="mt-1">You only need to register and start creating your trees, you don't need to pay anything.</p>
               <p className="mt-6 flex items-baseline gap-x-2">
-                <span className="text-3xl font-bold font-tall tracking-tight uppercase">$0</span>
-                <span className="text-xs font-semibold leading-6 tracking-wide">USD</span>
+                <span className="text-2xl font-bold font-tall tracking-tight">Free</span>
               </p>
               <div>
                 <ul
