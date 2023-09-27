@@ -8,6 +8,7 @@ const Result = React.lazy(() => import("./components/tree/Result"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
 const LogIn = React.lazy(() => import("./components/account/LogIn"));
 const SignUp = React.lazy(() => import("./components/account/SignUp"));
+const Plans = React.lazy(() => import("./components/pricing/Plans"));
 const PasswordReset = React.lazy(
   () => import("./components/account/PasswordReset")
 );
@@ -33,6 +34,7 @@ const App = () => {
                   <Route path="/log-in" element={<LogIn />} />
                   <Route path="/sign-up" element={<SignUp />} />
                   <Route path="/reset-password" element={<PasswordReset />} />
+                  <Route path="/pricing" element={<Plans />} />
                   <Route path="/tree/:treeId" element={<Result />} />
                   <Route path="/trees/:treeId" element={<Result />} />
                   <Route
