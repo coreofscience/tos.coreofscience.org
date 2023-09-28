@@ -17,13 +17,13 @@ export const createTree = async ({
   const getCollectionPath = (user: UserContextType | null): string => {
     const paths: {[plan: string]: (uid: string) => string} = {
       pro: (uid: string): string => `users/${uid}/proTrees`,
-      free: (uid: string): string => `users/${uid}/trees`,
-      unregistered: (): string => "trees",
+      basic: (uid: string): string => `users/${uid}/trees`,
+      free: (): string => "trees",
     }
     if (user) {
       return paths[user.plan](user.uid);
     }
-    return paths.unregistered("");
+    return paths.free("");
   }
 
   const collectionPath = getCollectionPath(user);

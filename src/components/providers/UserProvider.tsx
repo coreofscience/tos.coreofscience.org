@@ -27,7 +27,7 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
             uid: user.uid,
             name: user.displayName ?? "",
             email: user.email ?? "",
-            plan: idTokenResult.claims?.plan ?? "free",
+            plan: idTokenResult.claims?.plan ?? "basic",
           });
         })
         .catch((err) => {
@@ -36,7 +36,7 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
             uid: user.uid,
             name: user.displayName ?? "",
             email: user.email ?? "",
-            plan: "free",
+            plan: "basic",
           });
         });
     });

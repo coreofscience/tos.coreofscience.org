@@ -43,13 +43,13 @@ const Home: FC = () => {
   const getMaxSize = (user: UserContextType | null) => {
     const maxSizeByUser: {[plan: string]: number} = {
       pro: 100,
-      free: 10,
-      unregistered: 5,
+      basic: 10,
+      free: 5,
     }
     if (user) {
       return maxSizeByUser[user.plan];
     }
-    return maxSizeByUser.unregistered;
+    return maxSizeByUser.free;
   }
 
   const maxSize: number = getMaxSize(user);
