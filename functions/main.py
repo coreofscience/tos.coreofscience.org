@@ -160,6 +160,10 @@ def process_anonymous_tree(event: Event[DocumentSnapshot | None]) -> None:
 def add_custom_claim_for_the_plan(event: ScheduledEvent) -> None:
     logging.info("Running add_custom_claim_for_the_plan")
     for plan in firestore.client().collection("plans").stream():
+        try:
+            auth.get_user(plan.id)
+        except auth.UserNotFoundError:
+            continue
         if not("endDate" in plan.to_dict()) or plan.to_dict().get("endDate").timestamp() < get_int_utcnow():
             auth.set_custom_user_claims(plan.id, {"plan": "free"})
         else:
