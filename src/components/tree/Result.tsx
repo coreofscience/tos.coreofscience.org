@@ -24,11 +24,12 @@ const Result = () => {
     (): string => {
       const treePaths: {[plan: string]: (treeId: string, uid: string) => string} = {
         pro: (treeId: string, uid: string): string => `users/${uid}/proTrees/${treeId}`,
-        free: (treeId: string, uid: string): string => `users/${uid}/trees/${treeId}`,
+        basic: (treeId: string, uid: string): string => `users/${uid}/trees/${treeId}`,
       }
       if (user && userId && treeId) {
         return treePaths[user.plan](treeId, userId)
       }
+      // free
       return `trees/${treeId}`
     },
     [userId, treeId]
