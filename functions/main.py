@@ -10,9 +10,10 @@ from typing import Any, Dict, List
 
 import networkx as nx
 from bibx import Sap, read_any
-from firebase_admin import firestore, initialize_app, storage
+from firebase_admin import firestore, initialize_app, storage, auth
 from firebase_functions.firestore_fn import DocumentSnapshot, Event, on_document_created
 from firebase_functions.options import MemoryOption
+from firebase_functions.scheduler_fn import on_schedule, ScheduledEvent
 
 logging.basicConfig(level=logging.INFO)
 
@@ -153,3 +154,13 @@ def process_user_tree(event: Event[DocumentSnapshot | None]) -> None:
 )
 def process_anonymous_tree(event: Event[DocumentSnapshot | None]) -> None:
     create_tree_v2(event, max_size_megabytes=10)
+
+
+@on_schedule(schedule="every 1 hours")
+def add_custom_claim_for_the_plan(event: ScheduledEvent) -> None:
+    logging.info("Running add_custom_claim_for_the_plan")
+    for plan in firestore.client().collection("plans").stream():
+        if not("endDate" in plan.to_dict()) or plan.to_dict().get("endDate").timestamp() < get_int_utcnow():
+            auth.set_custom_user_claims(plan.id, {"plan": "free"})
+        else:
+            auth.set_custom_user_claims(plan.id, {"plan": "pro"})
