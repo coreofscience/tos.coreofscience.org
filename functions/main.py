@@ -165,6 +165,6 @@ def add_custom_claim_for_the_plan(event: ScheduledEvent) -> None:
         except auth.UserNotFoundError:
             continue
         if not("endDate" in plan.to_dict()) or int(plan.to_dict().get("endDate").timestamp()) < get_int_utcnow():
-            auth.set_custom_user_claims(plan.id, {"plan": "free"})
+            auth.set_custom_user_claims(plan.id, {"plan": "basic"})
         else:
             auth.set_custom_user_claims(plan.id, {"plan": "pro"})
