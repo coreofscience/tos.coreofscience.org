@@ -8,7 +8,6 @@ type Props = {
 const TableOfContent: FC<Props> = ({headings}) => {
  return (
   <div className="prose prose-stone">
-   <h2 className="uppercase font-tall">Table Of Contents</h2>
    <ul>
     {headings.map((heading, index) => {
      const id = heading.id;
@@ -22,7 +21,7 @@ const TableOfContent: FC<Props> = ({headings}) => {
       <li key={id}>
        <a
         href={`#${id}`}
-        className={"underline-offset-2 hover:opacity-70" + paddingClass}
+        className={"text-sky-600 hover:text-sky-800 underline-offset-2" + paddingClass}
        >
         {heading.text}
        </a>
