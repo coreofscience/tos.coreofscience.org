@@ -4,7 +4,7 @@ import { HeadingData } from "../../common/TableOfContent/constants";
 
 const Sap: FC = () => {
  return (
-  <article className="prose prose-stone m-auto text-justify max-w-3xl">
+  <article className="prose prose-stone m-auto max-w-3xl">
    <h1 className="font-tall uppercase">ToS Definitions</h1>
    <TableOfContent headings={HeadingData} />
    <section id="info-on-roots">
