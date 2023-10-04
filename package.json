@@ -53,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.10",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.15",
     "firebase-tools": "^12.4.7",

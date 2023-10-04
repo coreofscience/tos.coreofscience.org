@@ -6,6 +6,7 @@ export const info: Info = {
       Here you should find seminal articles from the original articles of
       your topic of interest.
     `,
+    doc: "If you’re not sure how to interpret these results check out our ",
   },
   trunk: {
     title: "Trunk",
@@ -14,6 +15,7 @@ export const info: Info = {
       structure, these should be the first authors to discover the
       applicability of your topic of interest.
     `,
+    doc: "If you’re not sure how to interpret these results check out our ",
   },
   branch_1: {
     title: "Branch 1",
@@ -23,6 +25,7 @@ export const info: Info = {
       Moreover, the Branches also signify the trending topics within that
       particular area.
     `,
+    doc: "If you’re not sure how to interpret these results check out our ",
   },
   branch_2: {
     title: "Branch 2",
@@ -32,6 +35,7 @@ export const info: Info = {
       Moreover, the Branches also signify the trending topics within that
       particular area.
     `,
+    doc: "If you’re not sure how to interpret these results check out our ",
   },
   branch_3: {
     title: "Branch 3",
@@ -41,6 +45,7 @@ export const info: Info = {
       Moreover, the Branches also signify the trending topics within that
       particular area.
     `,
+    doc: "If you’re not sure how to interpret these results check out our ",
   },
   leaf: {
     title: "Leaves",
@@ -48,5 +53,6 @@ export const info: Info = {
       Here you should find recent articles and reviews that should
       condense very well your topics.
     `,
+    doc: "If you’re not sure how to interpret these results check out our ",
   },
 };

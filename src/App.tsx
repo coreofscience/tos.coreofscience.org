@@ -18,6 +18,7 @@ const FilesProvider = React.lazy(
 const UserProvider = React.lazy(
   () => import("./components/providers/UserProvider")
 );
+const Sap = React.lazy(() => import("./components/pages/docs/Sap"))
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => {
                     path="/users/:userId/proTrees/:treeId"
                     element={<Result />}
                   />
+                  <Route path="/docs/sap" element={<Sap />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </AppLayout>
