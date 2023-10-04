@@ -151,10 +151,9 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
                 >
                   {info?.title ?? ""}
                 </h2>
-                <p>{info?.info ?? ""}</p>
-                {info?.doc ? (
+                {info?.info ? (
                  <p>
-                   {info.doc} <Link className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in" to="/docs/sap">docs.</Link>
+                   {`${info.info} ${info.doc}`} <Link className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in" to="/docs/sap">docs.</Link>
                  </p>
                   ) : ""}
                 {keywords[sectionName].length > 0 && (
