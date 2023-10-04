@@ -7,7 +7,7 @@ type Props = {
 
 const TableOfContent: FC<Props> = ({headings}) => {
  return (
-  <article className="prose prose-stone">
+  <div className="prose prose-stone">
    <h2 className="uppercase font-tall">Table Of Contents</h2>
    <ul>
     {headings.map((heading, index) => {
@@ -30,7 +30,7 @@ const TableOfContent: FC<Props> = ({headings}) => {
      );
     })}
    </ul>
-  </article>
+  </div>
  );
 };
 
