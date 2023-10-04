@@ -1,6 +1,7 @@
-import { FC, useCallback, useState, Fragment, useEffect, useMemo } from "react";
+import { FC, useCallback, useState, useEffect, useMemo } from "react";
 import orderBy from "lodash/orderBy";
 import { encode } from "js-base64";
+import { Link } from "react-router-dom";
 
 import { doc, setDoc } from "firebase/firestore";
 
@@ -151,6 +152,11 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
                   {info?.title ?? ""}
                 </h2>
                 <p>{info?.info ?? ""}</p>
+                {info?.doc ? (
+                 <p>
+                   {info.doc} <Link className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in" to="/docs/sap">docs.</Link>
+                 </p>
+                  ) : ""}
                 {keywords[sectionName].length > 0 && (
                   <p>
                     <strong>Keywords:</strong>{" "}

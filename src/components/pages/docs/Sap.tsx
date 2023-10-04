@@ -1,8 +1,13 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import TableOfContent from "../../common/TableOfContent";
 import { HeadingData } from "../../common/TableOfContent/constants";
 
 const Sap: FC = () => {
+
+ useEffect(() => {
+  window.scrollTo(0, 0)
+ }, []);
+
  return (
   <article className="prose prose-stone m-auto max-w-3xl">
    <h1 className="font-tall uppercase">ToS Definitions</h1>

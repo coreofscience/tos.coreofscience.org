@@ -9,18 +9,22 @@ export type Keywords = {
 export type RootInfo = {
   title: string;
   info: string;
+  doc: string;
 };
 export type TrunkInfo = {
   title: string;
   info: string;
+  doc: string;
 };
 export type LeafInfo = {
   title: string;
   info: string;
+  doc: string;
 };
 export type BranchInfo = {
   title: string;
   info: string;
+  doc: string;
 };
 export type Section =
   | "root"
