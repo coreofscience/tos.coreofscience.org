@@ -1,10 +1,4 @@
-import {
-  collection,
-  limit,
-  onSnapshot,
-  orderBy,
-  query,
-} from "firebase/firestore";
+import { collection, limit, onSnapshot, orderBy, query } from "firebase/firestore";
 import { flatten } from "lodash";
 import { FC, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
@@ -54,16 +48,15 @@ const TreeHistory: FC = () => {
       orderBy("finishedDate", "desc"),
       limit(3)
     );
-    const unsubscribe = onSnapshot(treesQuery, (snapshot) => {
+    return onSnapshot(treesQuery, (snapshot) => {
       setTrees(
-        snapshot.docs.map((doc) => ({
-          treeId: doc.id,
-          summary: summarize(doc.data() as TreeMetadata),
-          isPro: false,
-        }))
+       snapshot.docs.map((doc) => ({
+         treeId: doc.id,
+         summary: summarize(doc.data() as TreeMetadata),
+         isPro: false,
+       }))
       );
     });
-    return unsubscribe;
   }, [firebase, user]);
 
   useEffect(() => {
@@ -75,16 +68,15 @@ const TreeHistory: FC = () => {
       orderBy("finishedDate", "desc"),
       limit(3)
     );
-    const unsubscribe = onSnapshot(proTreesQuery, (snapshot) => {
+    return onSnapshot(proTreesQuery, (snapshot) => {
       setProTrees(
-        snapshot.docs.map((doc) => ({
-          treeId: doc.id,
-          summary: summarize(doc.data() as TreeMetadata),
-          isPro: true,
-        }))
+       snapshot.docs.map((doc) => ({
+         treeId: doc.id,
+         summary: summarize(doc.data() as TreeMetadata),
+         isPro: true,
+       }))
       );
     });
-    return unsubscribe;
   }, [firebase, user]);
 
   const allTrees = useMemo(() => [...proTrees, ...trees], [trees, proTrees]);
@@ -101,18 +93,25 @@ const TreeHistory: FC = () => {
       <div>
         <ul>
           {allTrees.map(({ treeId, summary, isPro }) => (
-            <li className="list-disc" key={treeId}>
-              <Link
+            <li className="list-disc pb-1" key={treeId}>
+              {isPro ? (
+               <Link
+                className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in flex flex-row items-center"
+                to={`/users/${user.uid}/proTrees/${treeId}`}
+               >
+                 {summary}
+                 <span className="text-xs ml-2 px-3 py-0.5 bg-leaf text-slate-50 font-semibold flex-shrink-0">
+                   PRO
+                 </span>
+               </Link>
+              ) : (
+               <Link
                 className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in flex flex-row items-center"
                 to={`/users/${user.uid}/trees/${treeId}`}
-              >
-                {summary}
-                {isPro && (
-                  <span className="text-xs ml-2 px-3 py-1 bg-leaf text-slate-50 font-semibold flex-shrink-0">
-                    PRO
-                  </span>
-                )}
-              </Link>
+               >
+                 {summary}
+               </Link>
+              )}
             </li>
           ))}
         </ul>
