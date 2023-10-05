@@ -177,11 +177,12 @@ def update_user_plan(event: Event[DocumentSnapshot | None]) -> None:
     try:
         auth.get_user(user_id)
     except auth.UserNotFoundError:
-        return None
+        return
     if event.data is None or event.data.after is None or (data := event.data.after.to_dict()) is None:
         auth.set_custom_user_claims(user_id, {"plan": "basic"})
-    elif not("endDate" in data) or int(data.get("endDate").timestamp()) < get_int_utcnow():
-        auth.set_custom_user_claims(user_id, {"plan": "basic"})
-    else:
+        return
+    if "endDate" in data and int(data.get("endDate").timestamp()) > get_int_utcnow():
         auth.set_custom_user_claims(user_id, {"plan": "pro"})
+        return
+    auth.set_custom_user_claims(user_id, {"plan": "basic"})
 
