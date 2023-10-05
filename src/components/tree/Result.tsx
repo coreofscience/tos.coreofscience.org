@@ -1,7 +1,7 @@
-import React, { Fragment, useEffect, useState, useMemo } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 import { doc, onSnapshot } from "firebase/firestore";
-import { useParams } from "react-router";
+import { useLocation } from "react-router";
 
 import useFirebase from "../../hooks/useFirebase";
 
@@ -11,18 +11,12 @@ const Tree = React.lazy(() => import("./Tree"));
 const NotFound = React.lazy(() => import("../NotFound"));
 
 const Result = () => {
-  const { userId, treeId } = useParams<{ userId?: string; treeId?: string }>();
   const firebase = useFirebase();
   const [treeMetadata, setTreeMetadata] = useState<
     TreeMetadata | null | "loading"
   >("loading");
 
-  const treePath: string = useMemo(
-    (): string => {
-      return window.location.pathname
-    },
-    [userId, treeId]
-  );
+  const { pathname: treePath } = useLocation();
 
   useEffect(() => {
     const treeDoc = doc(firebase.firestore, treePath);
@@ -37,7 +31,7 @@ const Result = () => {
          * TODO: find a way to set `TreeMetadata` type through the `threeRef` retrieval function.
          */
         setTreeMetadata(doc.data() as TreeMetadata);
-      }
+      },
     );
 
     return () => unsubscribe();
