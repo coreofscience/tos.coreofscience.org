@@ -11,7 +11,7 @@ from typing import Any, Dict, List
 import networkx as nx
 from bibx import Sap, read_any
 from firebase_admin import firestore, initialize_app, storage, auth
-from firebase_functions.firestore_fn import DocumentSnapshot, Event, on_document_created
+from firebase_functions.firestore_fn import DocumentSnapshot, Event, on_document_created, on_document_written
 from firebase_functions.options import MemoryOption
 from firebase_functions.scheduler_fn import on_schedule, ScheduledEvent
 
@@ -168,3 +168,21 @@ def add_custom_claim_for_the_plan(event: ScheduledEvent) -> None:
             auth.set_custom_user_claims(plan.id, {"plan": "basic"})
         else:
             auth.set_custom_user_claims(plan.id, {"plan": "pro"})
+
+
+@on_document_written(document="plans/{planId}")
+def update_user_plan(event: Event[DocumentSnapshot | None]) -> None:
+    logging.info("Running update_user_plan")
+    user_id = event.params["planId"]
+    try:
+        auth.get_user(user_id)
+    except auth.UserNotFoundError:
+        return
+    if event.data is None or event.data.after is None or (data := event.data.after.to_dict()) is None:
+        auth.set_custom_user_claims(user_id, {"plan": "basic"})
+        return
+    if "endDate" in data and int(data.get("endDate").timestamp()) > get_int_utcnow():
+        auth.set_custom_user_claims(user_id, {"plan": "pro"})
+        return
+    auth.set_custom_user_claims(user_id, {"plan": "basic"})
+
