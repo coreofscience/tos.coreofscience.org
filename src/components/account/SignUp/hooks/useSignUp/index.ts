@@ -6,6 +6,7 @@ import {
   User,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
 
 import useFirebase from "../../../../../hooks/useFirebase";
 
@@ -36,6 +37,11 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
             message:
               "Successfully signed up, you will be redirected to home in a few...",
           });
+
+         setDoc(doc(firebase.firestore, `/users/${userCredential.user.uid}`), {
+          acceptsEmail: data.acceptsEmail,
+         })
+
           setTimeout(() => {
             navigate("/");
             const user: User = userCredential.user;

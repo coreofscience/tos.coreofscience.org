@@ -16,6 +16,7 @@ import useUser from "../../../hooks/useUser";
 
 import { UserContextType } from "../../../types/userContextType";
 import { Link } from "react-router-dom";
+import AcceptsEmail from "../AcceptsEmail";
 
 const FileDropper = React.lazy(() => import("../FileDropper"));
 const UploadIndicator = React.lazy(() => import("../UploadIndicator"));
@@ -67,6 +68,9 @@ const Home: FC = () => {
 
   return (
     <div className="flex flex-col gap-4">
+     {user && (
+      <AcceptsEmail user={user} />
+     )}
       <div>
         <p>Get your seed files from web of knowledge.</p>
         <p>Then, upload your files for processing.</p>

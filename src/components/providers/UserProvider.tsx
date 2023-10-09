@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { onAuthStateChanged, User, IdTokenResult } from "firebase/auth";
 import UserContext from "../../context/UserContext";
 import useFirebase from "../../hooks/useFirebase";
+import { getDoc, doc } from "firebase/firestore";
 
 import { UserContextType } from "../../types/userContextType";
 
@@ -23,12 +24,25 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
 
       user.getIdTokenResult()
         .then((idTokenResult: IdTokenResult) => {
-          setUser({
-            uid: user.uid,
-            name: user.displayName ?? "",
-            email: user.email ?? "",
-            plan: idTokenResult.claims?.plan ?? "basic",
-          });
+          getDoc(doc(firebase.firestore, `users/${user.uid}`))
+           .then((res) => {
+             setUser({
+               uid: user.uid,
+               name: user.displayName ?? "",
+               email: user.email ?? "",
+               plan: idTokenResult.claims?.plan ?? "basic",
+               acceptsEmail: res.get("acceptsEmail"),
+             });
+           })
+           .catch((err) => {
+             console.error("Error:", err);
+             setUser({
+               uid: user.uid,
+               name: user.displayName ?? "",
+               email: user.email ?? "",
+               plan: idTokenResult.claims?.plan ?? "basic",
+             });
+           });
         })
         .catch((err) => {
           console.error("Error:", err);

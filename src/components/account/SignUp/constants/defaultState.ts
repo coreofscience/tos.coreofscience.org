@@ -4,4 +4,5 @@ export const defaultSignUpFormFieldsState: SignUpFormFieldsType = {
   name: "",
   email: "",
   password: "",
+  acceptsEmail: false,
 };
