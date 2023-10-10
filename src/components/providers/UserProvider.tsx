@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { onAuthStateChanged, User, IdTokenResult } from "firebase/auth";
 import UserContext from "../../context/UserContext";
 import useFirebase from "../../hooks/useFirebase";
-import { getDoc, doc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 
 import { UserContextType } from "../../types/userContextType";
 
@@ -12,52 +12,70 @@ interface Props {
 
 const UserProvider: FC<Props> = ({ children }: Props) => {
   const firebase = useFirebase();
+  const [acceptsEmail, setAcceptsEmail] = useState<boolean | undefined>(
+    undefined,
+  );
   const [user, setUser] = useState<UserContextType | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(firebase.auth, (user: User | null) => {
-      if (!user || !user.uid || !user.email) {
-        // "close session" by removing the user from the context.
-        setUser(null);
-        return;
-      }
+    const unsubscribe = onAuthStateChanged(
+      firebase.auth,
+      (user: User | null) => {
+        if (!user || !user.uid || !user.email) {
+          // "close session" by removing the user from the context.
+          setUser(null);
+          return;
+        }
 
-      user.getIdTokenResult()
-        .then((idTokenResult: IdTokenResult) => {
-          getDoc(doc(firebase.firestore, `users/${user.uid}`))
-           .then((res) => {
-             setUser({
-               uid: user.uid,
-               name: user.displayName ?? "",
-               email: user.email ?? "",
-               plan: idTokenResult.claims?.plan ?? "basic",
-               acceptsEmail: res.get("acceptsEmail"),
-             });
-           })
-           .catch((err) => {
-             console.error("Error:", err);
-             setUser({
-               uid: user.uid,
-               name: user.displayName ?? "",
-               email: user.email ?? "",
-               plan: idTokenResult.claims?.plan ?? "basic",
-             });
-           });
-        })
-        .catch((err) => {
-          console.error("Error:", err);
-          setUser({
-            uid: user.uid,
-            name: user.displayName ?? "",
-            email: user.email ?? "",
-            plan: "basic",
+        user
+          .getIdTokenResult()
+          .then((idTokenResult: IdTokenResult) => {
+            setUser({
+              uid: user.uid,
+              name: user.displayName ?? "",
+              email: user.email ?? "",
+              plan: idTokenResult.claims?.plan ?? "basic",
+              acceptsEmail: false,
+            });
+          })
+          .catch((err) => {
+            console.error("Error:", err);
+            setUser({
+              uid: user.uid,
+              name: user.displayName ?? "",
+              email: user.email ?? "",
+              plan: "basic",
+              acceptsEmail: false,
+            });
           });
-        });
-    });
+      },
+    );
     return () => unsubscribe();
   }, []);
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  useEffect(() => {
+    console.log("user", user);
+    if (!user || !user.uid) {
+      return;
+    }
+    const unsucribe = onSnapshot(
+      doc(firebase.firestore, `users/${user.uid}`),
+      (doc) => {
+        console.log("doc", doc.get("acceptsEmail"));
+        setAcceptsEmail(doc.get("acceptsEmail"));
+      },
+    );
+    return unsucribe;
+  }, [user, firebase.firestore]);
+
+  const userValue = useMemo<UserContextType>(
+    () => ({ ...user, acceptsEmail }) as UserContextType,
+    [user, acceptsEmail],
+  );
+
+  return (
+    <UserContext.Provider value={userValue}>{children}</UserContext.Provider>
+  );
 };
 
 export default UserProvider;

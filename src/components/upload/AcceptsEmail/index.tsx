@@ -10,7 +10,6 @@ type Props = {
 
 const AcceptsEmail = ({ user }: Props) => {
  const firebase = useFirebase();
- const [dismissed, setDismissed] = useState(false);
 
  const handleAccept = () => {
   setDoc(
@@ -20,7 +19,6 @@ const AcceptsEmail = ({ user }: Props) => {
    },
    { merge: true },
   );
-  setDismissed(true);
  };
 
  const handleDismiss = () => {
@@ -31,10 +29,9 @@ const AcceptsEmail = ({ user }: Props) => {
    },
    { merge: true },
   );
-  setDismissed(true);
  };
 
- return user.acceptsEmail === undefined && !dismissed ? (
+ return user.acceptsEmail === undefined ? (
   <div className="flex flex-col gap-2 p-4 text-slate-50 bg-leaf">
    <p>
     I like to receive the Tree of Science newsletter to stay in touch and to
