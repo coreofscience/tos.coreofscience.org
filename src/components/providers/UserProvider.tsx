@@ -54,14 +54,12 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
   }, []);
 
   useEffect(() => {
-    console.log("user", user);
     if (!user || !user.uid) {
       return;
     }
     const unsucribe = onSnapshot(
       doc(firebase.firestore, `users/${user.uid}`),
       (doc) => {
-        console.log("doc", doc.get("acceptsEmail"));
         setAcceptsEmail(doc.get("acceptsEmail"));
       },
     );
