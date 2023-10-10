@@ -25,11 +25,11 @@ const TreeHistory = React.lazy(() => import("../TreeHistory"));
 
 const hasFinished = (
   files: string[],
-  progress: { [hash: string]: number }
+  progress: { [hash: string]: number },
 ): boolean =>
   files.reduce(
     (curr: boolean, hash: string) => curr && progress[hash] === 100,
-    true
+    true,
   );
 
 const Home: FC = () => {
@@ -42,16 +42,16 @@ const Home: FC = () => {
   const user = useUser();
 
   const getMaxSize = (user: UserContextType | null) => {
-    const maxSizeByUser: {[plan: string]: number} = {
+    const maxSizeByUser: { [plan: string]: number } = {
       pro: 100,
       basic: 10,
       free: 5,
-    }
+    };
     if (user) {
       return maxSizeByUser[user.plan];
     }
     return maxSizeByUser.free;
-  }
+  };
 
   const maxSize: number = getMaxSize(user);
   const { totalArticles, totalCitations, articleCap, citationCap, sizeCap } =
@@ -68,9 +68,7 @@ const Home: FC = () => {
 
   return (
     <div className="flex flex-col gap-4">
-     {user && (
-      <AcceptsEmail user={user} />
-     )}
+      {user && <AcceptsEmail user={user} />}
       <div>
         <p>Get your seed files from web of knowledge.</p>
         <p>Then, upload your files for processing.</p>
@@ -103,8 +101,11 @@ const Home: FC = () => {
       </div>
       <p>
         For extra processing capacity check out our&nbsp;
-        <Link className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in" to="/pricing">
-         plans and pricing.
+        <Link
+          className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+          to="/pricing"
+        >
+          plans and pricing.
         </Link>
       </p>
       <br></br>

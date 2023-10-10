@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { setDoc, doc } from "firebase/firestore";
 
 import useFirebase from "../../../hooks/useFirebase";
@@ -10,39 +10,54 @@ type Props = {
 
 const AcceptsEmail = ({ user }: Props) => {
  const firebase = useFirebase();
+ const [dismissed, setDismissed] = useState(false);
 
  const handleAccept = () => {
-  setDoc(doc(firebase.firestore, `/users/${user.uid}`), {
-   acceptsEmail: true,
-  })
-   .then(() => {
-    const container = document.getElementById("container-of-the-accepts-email");
-    container?.classList.add("hidden");
-   });
- }
+  setDoc(
+   doc(firebase.firestore, `/users/${user.uid}`),
+   {
+    acceptsEmail: true,
+   },
+   { merge: true },
+  );
+  setDismissed(true);
+ };
 
  const handleDismiss = () => {
-  setDoc(doc(firebase.firestore, `/users/${user.uid}`), {
-   acceptsEmail: false,
-  })
-   .then(() => {
-    const container = document.getElementById("container-of-the-accepts-email");
-    container?.classList.add("hidden");
-   });
- }
+  setDoc(
+   doc(firebase.firestore, `/users/${user.uid}`),
+   {
+    acceptsEmail: false,
+   },
+   { merge: true },
+  );
+  setDismissed(true);
+ };
 
- return (
-  user.acceptsEmail == null ? (
-   <div className="max-w-2xl" id="container-of-the-accepts-email" >
-    <div className="px-4 py-2 font-tall text-slate-50 bg-leaf">
-     <p className="mb-2">I like to receive the Tree of Science newsletter to stay in touch and
-      to learn about latest trends on literature searches and new
-      product features first.</p>
-     <button onClick={handleAccept} className="mr-1 px-3 py-1 font-tall uppercase font-bold text-slate-50 bg-leaf">Accept</button>
-     <button onClick={handleDismiss} className="px-3 py-1 font-tall uppercase font-bold text-slate-50 bg-trunk">Dismiss</button>
-    </div>
+ return user.acceptsEmail === undefined && !dismissed ? (
+  <div className="flex flex-col gap-2 p-4 text-slate-50 bg-leaf">
+   <p>
+    I like to receive the Tree of Science newsletter to stay in touch and to
+    learn about latest trends on literature searches and new product
+    features first.
+   </p>
+   <div className="flex flex-row gap-2">
+    <button
+     onClick={handleDismiss}
+     className="px-4 py-2 font-tall uppercase font-bold text-slate-50 ring-1 ring-slate-50"
+    >
+     Dismiss
+    </button>
+    <button
+     onClick={handleAccept}
+     className="px-4 py-2 font-tall uppercase font-bold bg-slate-50 text-leaf"
+    >
+     Accept
+    </button>
    </div>
-  ) : <></>
+  </div>
+ ) : (
+  <></>
  );
 };
 
