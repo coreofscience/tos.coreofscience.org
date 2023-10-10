@@ -58,15 +58,15 @@ const SignUp: FC = () => {
             type="error"
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label className="text-gray-700">
-            <input
-             {...form.register("acceptsEmail")}
-             type="checkbox"
-             className="mr-2 w-4 h-4"
-            />
-            I like to receive the Tree of Science newsletter to stay in touch and
-            to learn about latest trends on literature searches and new
+        <div className="flex flex-row items-baseline">
+          <input
+            {...form.register("acceptsEmail")}
+            type="checkbox"
+            className="mr-2 w-4 h-4"
+          />
+          <label className="text-gray-700" htmlFor="acceptsEmail">
+            I like to receive the Tree of Science newsletter to stay in touch
+            and to learn about latest trends on literature searches and new
             product features first.
           </label>
         </div>

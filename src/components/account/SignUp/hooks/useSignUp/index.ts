@@ -38,9 +38,13 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
               "Successfully signed up, you will be redirected to home in a few...",
           });
 
-         setDoc(doc(firebase.firestore, `/users/${userCredential.user.uid}`), {
-          acceptsEmail: data.acceptsEmail,
-         })
+          setDoc(
+            doc(firebase.firestore, `/users/${userCredential.user.uid}`),
+            {
+              acceptsEmail: data.acceptsEmail,
+            },
+            { merge: true },
+          );
 
           setTimeout(() => {
             navigate("/");
@@ -77,7 +81,7 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
           });
         });
     },
-    [firebase.auth, navigate]
+    [firebase.auth, navigate],
   );
 
   return [state, { signUp }];
