@@ -13,7 +13,7 @@ interface Props {
 const UserProvider: FC<Props> = ({ children }: Props) => {
   const firebase = useFirebase();
   const [acceptsEmail, setAcceptsEmail] = useState<boolean | undefined>(
-    undefined,
+    false,
   );
   const [user, setUser] = useState<UserContextType | null>(null);
 
@@ -66,8 +66,11 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
     return unsucribe;
   }, [user, firebase.firestore]);
 
-  const userValue = useMemo<UserContextType>(
-    () => ({ ...user, acceptsEmail }) as UserContextType,
+  const userValue = useMemo<UserContextType | null>(
+    () => {
+      if (user) return { ...user, acceptsEmail } as UserContextType
+      return null
+    },
     [user, acceptsEmail],
   );
 
