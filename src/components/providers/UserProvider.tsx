@@ -35,6 +35,7 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
               name: user.displayName ?? "",
               email: user.email ?? "",
               plan: idTokenResult.claims?.plan ?? "basic",
+              emailVerified: user.emailVerified,
               acceptsEmail: false,
             });
           })
@@ -45,6 +46,7 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
               name: user.displayName ?? "",
               email: user.email ?? "",
               plan: "basic",
+              emailVerified: user.emailVerified,
               acceptsEmail: false,
             });
           });
@@ -57,13 +59,12 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
     if (!user || !user.uid) {
       return;
     }
-    const unsucribe = onSnapshot(
+    return onSnapshot(
       doc(firebase.firestore, `users/${user.uid}`),
       (doc) => {
-        setAcceptsEmail(doc.get("acceptsEmail"));
+       setAcceptsEmail(doc.get("acceptsEmail"));
       },
-    );
-    return unsucribe;
+     );
   }, [user, firebase.firestore]);
 
   const userValue = useMemo<UserContextType | null>(

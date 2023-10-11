@@ -2,6 +2,7 @@ import React, { FC, useContext } from "react";
 import { logEvent } from "firebase/analytics";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 import FileContext from "../../../context/FileContext";
 
@@ -15,7 +16,7 @@ import { createTree } from "./createTree";
 import useUser from "../../../hooks/useUser";
 
 import { UserContextType } from "../../../types/userContextType";
-import { Link } from "react-router-dom";
+import EmailVerification from "../EmailVerification";
 import AcceptsEmail from "../AcceptsEmail";
 
 const FileDropper = React.lazy(() => import("../FileDropper"));
@@ -68,6 +69,7 @@ const Home: FC = () => {
 
   return (
     <div className="flex flex-col gap-4">
+      {user && !user.emailVerified && <EmailVerification />}
       {user && <AcceptsEmail user={user} />}
       <div>
         <p>Get your seed files from web of knowledge.</p>
