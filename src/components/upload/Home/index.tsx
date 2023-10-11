@@ -2,6 +2,7 @@ import React, { FC, useContext } from "react";
 import { logEvent } from "firebase/analytics";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 import FileContext from "../../../context/FileContext";
 
@@ -15,8 +16,8 @@ import { createTree } from "./createTree";
 import useUser from "../../../hooks/useUser";
 
 import { UserContextType } from "../../../types/userContextType";
-import { Link } from "react-router-dom";
 import EmailVerification from "../EmailVerification";
+import AcceptsEmail from "../AcceptsEmail";
 
 const FileDropper = React.lazy(() => import("../FileDropper"));
 const UploadIndicator = React.lazy(() => import("../UploadIndicator"));
@@ -25,11 +26,11 @@ const TreeHistory = React.lazy(() => import("../TreeHistory"));
 
 const hasFinished = (
   files: string[],
-  progress: { [hash: string]: number }
+  progress: { [hash: string]: number },
 ): boolean =>
   files.reduce(
     (curr: boolean, hash: string) => curr && progress[hash] === 100,
-    true
+    true,
   );
 
 const Home: FC = () => {
@@ -42,16 +43,16 @@ const Home: FC = () => {
   const user = useUser();
 
   const getMaxSize = (user: UserContextType | null) => {
-    const maxSizeByUser: {[plan: string]: number} = {
+    const maxSizeByUser: { [plan: string]: number } = {
       pro: 100,
       basic: 10,
       free: 5,
-    }
+    };
     if (user) {
       return maxSizeByUser[user.plan];
     }
     return maxSizeByUser.free;
-  }
+  };
 
   const maxSize: number = getMaxSize(user);
   const { totalArticles, totalCitations, articleCap, citationCap, sizeCap } =
@@ -68,9 +69,8 @@ const Home: FC = () => {
 
   return (
     <div className="flex flex-col gap-4">
-     {user && !user.emailVerified && (
-      <EmailVerification />
-     )}
+      {user && !user.emailVerified && <EmailVerification />}
+      {user && <AcceptsEmail user={user} />}
       <div>
         <p>Get your seed files from web of knowledge.</p>
         <p>Then, upload your files for processing.</p>
@@ -103,8 +103,11 @@ const Home: FC = () => {
       </div>
       <p>
         For extra processing capacity check out our&nbsp;
-        <Link className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in" to="/pricing">
-         plans and pricing.
+        <Link
+          className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+          to="/pricing"
+        >
+          plans and pricing.
         </Link>
       </p>
       <br></br>

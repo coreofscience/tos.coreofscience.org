@@ -4,4 +4,5 @@ export type UserContextType = {
  email: string;
  emailVerified: boolean;
  plan: string;
+ acceptsEmail?: boolean;
 };
