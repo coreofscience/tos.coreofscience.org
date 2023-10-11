@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
-import { IdTokenResult, onAuthStateChanged, User } from "firebase/auth";
+import { onAuthStateChanged, User, IdTokenResult } from "firebase/auth";
 import UserContext from "../../context/UserContext";
 import useFirebase from "../../hooks/useFirebase";
 import { doc, onSnapshot } from "firebase/firestore";
