@@ -27,6 +27,7 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
             uid: user.uid,
             name: user.displayName ?? "",
             email: user.email ?? "",
+            emailVerified: user.emailVerified,
             plan: idTokenResult.claims?.plan ?? "basic",
           });
         })
@@ -36,6 +37,7 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
             uid: user.uid,
             name: user.displayName ?? "",
             email: user.email ?? "",
+            emailVerified: user.emailVerified,
             plan: "basic",
           });
         });

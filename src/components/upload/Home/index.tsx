@@ -1,4 +1,4 @@
-import React, { FC, useContext, useMemo } from "react";
+import React, { FC, useContext } from "react";
 import { logEvent } from "firebase/analytics";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router";
@@ -66,11 +66,9 @@ const Home: FC = () => {
       navigate({ pathname: treePath }, { replace: true }),
   });
 
-  const isEmailVerified: boolean | undefined = useMemo(() => firebase.auth.currentUser?.emailVerified, [user])
-
   return (
     <div className="flex flex-col gap-4">
-     {user && !isEmailVerified && (
+     {user && !user.emailVerified && (
       <EmailVerification />
      )}
       <div>

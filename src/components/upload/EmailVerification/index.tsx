@@ -1,24 +1,26 @@
-import React from "react"
+import React, { FC } from "react";
+import { sendEmailVerification } from "firebase/auth";
+import useFirebase from "../../../hooks/useFirebase";
 
-const EmailVerification = () => {
+const EmailVerification: FC = () => {
+ const firebase = useFirebase();
 
  const handle = () => {
-  console.log("Resend email");
+  const currentUser = firebase.auth.currentUser
+  if (currentUser) sendEmailVerification(currentUser)
  }
 
  return (
   <div className="flex flex-col gap-2 p-4 text-slate-50 bg-leaf">
    <p>
-    Please verify your email.
-   </p>
-   <div className="flex flex-row gap-2">
-    <button
+    Please verify your email.&nbsp;
+    <a
      onClick={handle}
-     className="px-4 py-2 font-tall uppercase font-bold bg-slate-50 text-leaf"
+     className="underline text-slate-50 hover:text-slate-200 cursor-pointer"
     >
      Resend email
-    </button>
-   </div>
+    </a>
+   </p>
   </div>
  );
 };
