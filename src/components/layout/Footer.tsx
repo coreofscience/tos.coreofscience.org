@@ -160,22 +160,12 @@ const Footer = () => (
           </li>
           <li>
             <a
-              href="https://github.com/coreofscience/python-wostools"
+              href="https://github.com/coreofscience/python-bibx"
               className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
               target="_blank"
               rel="noopener noreferrer"
             >
-              parser
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/coreofscience/python-sap"
-              className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              graph algorithms
+              algorithms
             </a>
           </li>
         </ul>

@@ -45,7 +45,7 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
           );
 
           setTimeout(() => {
-            navigate("/");
+            navigate("/tos");
             const user: User = userCredential.user;
             if (user) sendEmailVerification(user)
           }, 500);

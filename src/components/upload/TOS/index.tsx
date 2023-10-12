@@ -33,7 +33,7 @@ const hasFinished = (
     true,
   );
 
-const Home: FC = () => {
+const TOS: FC = () => {
   const { progress } = useContext(FileContext);
   const files = useFiles();
   const hashes = files.map((file) => file.hash);
@@ -63,8 +63,7 @@ const Home: FC = () => {
     isLoading,
     isError,
   } = useMutation(createTree, {
-    onSuccess: (treePath: string) =>
-      navigate({ pathname: treePath }, { replace: true }),
+    onSuccess: (treePath: string) => navigate(`/${treePath}`, { replace: true })
   });
 
   return (
@@ -138,4 +137,4 @@ const Home: FC = () => {
   );
 };
 
-export default Home;
+export default TOS;

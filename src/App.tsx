@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const AppLayout = React.lazy(() => import("./components/layout/AppLayout"));
-const Home = React.lazy(() => import("./components/upload/Home"));
+const TOS = React.lazy(() => import("./components/upload/TOS"));
 const Result = React.lazy(() => import("./components/tree/Result"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
 const LogIn = React.lazy(() => import("./components/account/LogIn"));
@@ -31,7 +31,8 @@ const App = () => {
             <UserProvider>
               <AppLayout>
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/" element={<Navigate to="/tos" replace />} />
+                  <Route path="/tos" element={<TOS />} />
                   <Route path="/log-in" element={<LogIn />} />
                   <Route path="/sign-up" element={<SignUp />} />
                   <Route path="/reset-password" element={<PasswordReset />} />
