@@ -26,7 +26,7 @@ export const useSignIn = (): [AsyncActionStateType, LogInActionsType] => {
     signInWithEmailAndPassword(firebase.auth, data.email, data.password)
       .then(() => {
         setState({ status: "success", message: "Successfully logged in" });
-        navigate("/");
+        navigate("/tos");
       })
       .catch((error) => {
         setState({

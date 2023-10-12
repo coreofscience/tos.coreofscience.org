@@ -33,7 +33,7 @@ const hasFinished = (
     true,
   );
 
-const Home: FC = () => {
+const TOS: FC = () => {
   const { progress } = useContext(FileContext);
   const files = useFiles();
   const hashes = files.map((file) => file.hash);
@@ -138,4 +138,4 @@ const Home: FC = () => {
   );
 };
 
-export default Home;
+export default TOS;

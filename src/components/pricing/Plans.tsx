@@ -47,7 +47,7 @@ const Plans: FC = () => {
               </div>
             </div>
             <Link
-              to="/"
+              to="/tos"
               className="my-6 mx-10 block text-slate-50 bg-root px-4 py-2 text-center text-sm font-bold font-tall uppercase"
             >
               Start now
@@ -112,7 +112,7 @@ const Plans: FC = () => {
             </div>
             {user?.uid ? (
               <Link
-                to="/"
+                to="/tos"
                 className="my-6 mx-10 block text-slate-50 bg-trunk px-4 py-2 text-center text-sm font-bold font-tall uppercase"
               >
                 Start now
