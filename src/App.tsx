@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const AppLayout = React.lazy(() => import("./components/layout/AppLayout"));
@@ -19,6 +19,7 @@ const UserProvider = React.lazy(
   () => import("./components/providers/UserProvider")
 );
 const Sap = React.lazy(() => import("./components/pages/docs/Sap"))
+const Home = React.lazy(() => import("./components/pages/Home"))
 
 const queryClient = new QueryClient();
 
@@ -31,7 +32,7 @@ const App = () => {
             <UserProvider>
               <AppLayout>
                 <Routes>
-                  <Route path="/" element={<Navigate to="/tos" replace />} />
+                  <Route path="/" element={<Home />} />
                   <Route path="/tos" element={<TOS />} />
                   <Route path="/log-in" element={<LogIn />} />
                   <Route path="/sign-up" element={<SignUp />} />

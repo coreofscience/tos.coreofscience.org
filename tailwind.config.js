@@ -12,6 +12,9 @@ module.exports = {
         branch: "#b76d22",
         root: "#f0972f",
       },
+      fill: {
+        leaf: "#009d35",
+      },
       container: {
         center: true,
         padding: "1rem",
