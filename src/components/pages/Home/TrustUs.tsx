@@ -2,7 +2,7 @@ import { FC } from "react";
 
 const TrustUs: FC = () => {
  return (
-  <div className="mt-20 lg:mt-28 text-center">
+  <div className="mt-12 lg:mt-20 text-center">
    <p>
     Trusted by these six companies so far
    </p>

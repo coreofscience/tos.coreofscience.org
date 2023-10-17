@@ -7,7 +7,7 @@ const HamburgerMenu = () => {
   <>
    <div className="flex gap-1 md:gap-4 lg:hidden">
     <button onClick={() => setOpen(!open)} className="relative">
-     <div className="relative z-10 flex items-center justify-center w-[50px] h-[50px] transform">
+     <div className="relative z-20 flex items-center justify-center w-[50px] h-[50px] transform">
       <div className="flex flex-col justify-around w-[20px] h-[20px] transform overflow-hidden">
        <div className={`bg-leaf h-[2.5px] w-7 transform ${open && "translate-x-10"}`}></div>
        <div className={`bg-leaf h-[2.5px] w-7 transform ${open && "translate-x-10"}`}></div>
@@ -24,7 +24,7 @@ const HamburgerMenu = () => {
    {open && (
     <div>
      <div
-      className="fixed inset-0 bg-slate-300/50 opacity-100"
+      className="fixed z-10 inset-0 bg-slate-300/50 opacity-100"
       id="headlessui-popover-overlay-:r9i:"
       aria-hidden="true"
       data-headlessui-state="open"
