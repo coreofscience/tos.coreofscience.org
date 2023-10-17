@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 
 const GetStarted: FC = () => {
  return (
@@ -10,12 +11,12 @@ const GetStarted: FC = () => {
     <p className="text-lg">
      It’s time to take control of your books. Buy our software so you can feel like you’re doing something productive.
     </p>
-    <a
+    <Link
     className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf"
-    href="/tos"
+    to="/tos"
     >
      Start now
-    </a>
+    </Link>
    </div>
   </section>
  );
