@@ -14,11 +14,11 @@ const TestimonialCard: FC<Props> = ({ review, name, occupation, img }: Props) =>
    <figure className="relative bg-white p-6 shadow-xl shadow-slate-900/10">
     <QuoteIcon />
     <blockquote className="relative">
-     <p className="text-lg tracking-tight text-slate-900">{review}</p>
+     <p className="text-lg">{review}</p>
     </blockquote>
     <figcaption className="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
      <div>
-      <div className="font-display text-base text-slate-900">{name}</div>
+      <div>{name}</div>
       <div className="mt-1 text-sm text-slate-500">{occupation}</div>
      </div>
      <div className="overflow-hidden bg-slate-50">

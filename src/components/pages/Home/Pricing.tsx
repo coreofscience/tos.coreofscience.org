@@ -12,14 +12,14 @@ const Pricing: FC = () => {
   <section id="pricing" aria-label="Pricing">
    <div className="flex flex-col mx-auto gap-10">
     <div className="md:text-center">
-     <h2 className="font-display text-3xl font-tall tracking-tight sm:text-4xl">
+     <h2 className="text-3xl font-tall sm:text-4xl">
       <span className="relative whitespace-nowrap">
        <UnderlineIconForPricing />
        <span className="relative">Simple pricing,</span>
       </span> for everyone.
      </h2>
      <p
-      className="mt-4 text-lg text-slate-700">
+      className="mt-4 text-lg">
       It doesn’t matter what size your business is, our software won’t work well for you.</p>
     </div>
     <div

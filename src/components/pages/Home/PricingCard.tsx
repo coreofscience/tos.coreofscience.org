@@ -15,9 +15,9 @@ const PricingCard: FC<Props> = ({name, description, price, features}: Props) => 
 
  return (
   <section className={`shadow-xl shadow-slate-900/10 flex flex-col px-6 sm:px-8 py-8 ${name.toLowerCase() === 'pro' ? "order-first bg-leaf lg:order-none" : ""}`}>
-   <h3 className={`mt-5 font-display text-lg uppercase font-tall ${name.toLowerCase() === "pro" ? "text-slate-100" : "text-slate-900"}`}>{name}</h3>
-   <p className={`mt-2 text-base ${name.toLowerCase() === "pro" ? "text-slate-100" : "text-slate-900"}`}>{description}</p>
-   <p className={`font-tall order-first font-display text-5xl font-light tracking-tight ${name.toLowerCase() === "pro" ? "text-slate-100": "text-slate-900"}`}>
+   <h3 className={`mt-5 text-lg uppercase font-tall ${name.toLowerCase() === "pro" ? "text-slate-100" : "text-slate-900"}`}>{name}</h3>
+   <p className={`mt-2 ${name.toLowerCase() === "pro" ? "text-slate-100" : "text-slate-900"}`}>{description}</p>
+   <p className={`font-tall order-first text-5xl font-light ${name.toLowerCase() === "pro" ? "text-slate-100": "text-slate-900"}`}>
     {typeof price === "number" ? (
      `$${price}`
     ): price}
