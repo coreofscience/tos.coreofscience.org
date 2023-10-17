@@ -4,6 +4,7 @@ import Hero from "./Hero";
 import Pricing from "./Pricing";
 import TrustUs from "./TrustUs";
 import FAQ from "./FAQ";
+import GetStarted from "./GetStarted";
 
 const Home: FC = () => {
 
@@ -11,6 +12,7 @@ const Home: FC = () => {
   <div className="flex flex-col gap-40">
    <Hero />
    <TrustUs />
+   <GetStarted />
    <Testimonials />
    <Pricing />
    <FAQ />

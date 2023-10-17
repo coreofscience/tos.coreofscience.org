@@ -2,7 +2,7 @@ import { FC } from "react";
 
 const TrustUs: FC = () => {
  return (
-  <div className="mt-12 lg:mt-20 text-center">
+  <section className="mt-12 lg:mt-20 text-center">
    <p>
     Trusted by these six companies so far
    </p>
@@ -97,7 +97,7 @@ const TrustUs: FC = () => {
      </ul>
     </li>
    </ul>
-  </div>
+  </section>
  );
 };
 

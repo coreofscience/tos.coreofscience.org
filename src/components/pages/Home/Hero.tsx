@@ -4,7 +4,7 @@ import PlayIcon from "../../vectors/PlayIcon";
 
 const Hero: FC = () => {
  return (
-  <div className="flex gap-8 flex-col">
+  <section className="flex gap-8 flex-col">
    <div className="flex gap-8 justify-center items-center">
     <div className="flex flex-col gap-4 max-w-4xl items-center justify-center">
      <h1 className="font-tall text-center max-w-4xl text-5xl sm:text-7xl">Accounting <span className="relative whitespace-nowrap text-leaf"><UnderlinedIcon /><span className="relative">made simple</span></span> for small businesses.</h1>
@@ -27,7 +27,7 @@ const Hero: FC = () => {
      <span className="ml-3">Watch videos</span>
     </a>
    </div>
-  </div>
+  </section>
  );
 };
 
