@@ -16,7 +16,7 @@ const Pricing: FC = () => {
       <span className="relative whitespace-nowrap">
        <UnderlineIconForPricing />
        <span className="relative">Simple pricing,</span>
-      </span> for everyone.
+      </span> for everyone
      </h2>
      <p
       className="mt-4 text-lg">
@@ -24,9 +24,9 @@ const Pricing: FC = () => {
     </div>
     <div
      className="grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
-     <PricingCard name="Free" description="Good for anyone who is self-employed and just getting started." price="Free" features={includedFeaturesForFree} />
-     <PricingCard name="Pro" description="Perfect for small / medium sized businesses." price="Contact us" features={includedFeaturesForPro} />
-     <PricingCard name="Basic" description="For even the biggest enterprise companies." price="Free" features={includedFeaturesForBasic} />
+     <PricingCard name="Free" description="No need to register or pay, start creating your trees right now." price="" features={includedFeaturesForFree} />
+     <PricingCard name="Pro" description="Contact us and we will understand your needs and give you the best offer that suits your needs." price="" features={includedFeaturesForPro} />
+     <PricingCard name="Basic" description="You only need to register and start creating your trees." price="$10/month" features={includedFeaturesForBasic} />
     </div>
    </div>
   </section>

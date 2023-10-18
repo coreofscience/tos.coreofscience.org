@@ -15,13 +15,21 @@ const PricingCard: FC<Props> = ({name, description, price, features}: Props) => 
 
  return (
   <section className={`shadow-xl shadow-slate-900/10 flex flex-col px-6 sm:px-8 py-8 ${name.toLowerCase() === 'pro' ? "order-first bg-leaf lg:order-none" : ""}`}>
-   <h3 className={`mt-5 text-lg uppercase font-tall ${name.toLowerCase() === "pro" ? "text-slate-100" : "text-slate-900"}`}>{name}</h3>
+   {name.toLowerCase() !== "basic" ? (
+    <h3 className={`text-4xl uppercase font-tall ${name.toLowerCase() === "pro" ? "text-slate-100" : "text-slate-900"}`}>
+     {name}
+    </h3>
+   ) : (
+    <h3 className="mt-5 text-lg uppercase font-tall text-slate-900">
+     {name}
+    </h3>
+   )}
    <p className={`mt-2 ${name.toLowerCase() === "pro" ? "text-slate-100" : "text-slate-900"}`}>{description}</p>
-   <p className={`font-tall order-first text-5xl font-light ${name.toLowerCase() === "pro" ? "text-slate-100": "text-slate-900"}`}>
-    {typeof price === "number" ? (
-     `$${price}`
-    ): price}
-   </p>
+   { name.toLowerCase() === "basic" && (
+    <p className="font-tall order-first text-4xl font-light text-slate-900">
+     {price}
+    </p>
+   )}
    <ul role="list" className={`order-last mt-10 flex flex-col gap-y-3 text-sm ${name.toLowerCase() === "pro" ? "text-slate-100" : "text-slate-900"}`}>
     {features.map((feature) => (
      <li className="flex" key={feature}>
@@ -42,7 +50,7 @@ const PricingCard: FC<Props> = ({name, description, price, features}: Props) => 
      {name.toLowerCase() === "pro" ? (
       "Contact us"
      ) : (
-      "Start now"
+      "Grow Your Tree"
      )}
     </Link>
   </section>

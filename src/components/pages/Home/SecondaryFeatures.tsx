@@ -25,7 +25,7 @@ const SecondaryFeatures: FC = () => {
   >
    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div className="mx-auto max-w-2xl md:text-center">
-     <h2 className="text-3xl tracking-tight font-tall sm:text-4xl">Simplify everyday business tasks.</h2>
+     <h2 className="text-3xl tracking-tight font-tall sm:text-4xl">Simplify everyday business tasks</h2>
      <p className="mt-4 text-lg">Because you’d probably be a little confused if we suggested you complicate your everyday business tasks instead.</p>
     </div>
 

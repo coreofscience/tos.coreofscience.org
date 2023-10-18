@@ -6,14 +6,14 @@ const Testimonials: FC = () => {
  return (
   <section id="testimonials" className="flex flex-col gap-10 mx-auto max-w-7xl">
    <div className="mx-auto max-w-2xl md:text-center">
-    <h2 className="text-3xl font-tall sm:text-4xl">Loved by businesses worldwide.</h2>
+    <h2 className="text-3xl font-tall sm:text-4xl">Loved by researchers worldwide</h2>
     <p className="mt-4 text-lg">Our software is so simple that people can’t help but fall in love with it. Simplicity is easy when you just skip tons of mission-critical features.</p>
    </div>
    <ul role="list" className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:max-w-none lg:grid-cols-3">
     <li>
      <ul role="list" className="flex flex-col gap-y-6 sm:gap-y-8">
       <TestimonialCard
-       review="TaxPal is so easy to use I can’t help but wonder if it’s really doing the things the government expects me to do."
+       review="TOS is the fastest and easiest way to analyze literature. It's incredibly user friendly and has robust built-in training. I pulled relevant publications in minutes!"
        name="Sheryl Berge"
        occupation="CEO at Lynch LLC"
        img="/avatar-1.webp"
