@@ -25,11 +25,11 @@ const SecondaryFeatures: FC = () => {
   >
    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div className="mx-auto max-w-2xl md:text-center">
-     <h2 className="text-3xl tracking-tight font-tall sm:text-4xl">Simplify everyday business tasks</h2>
+     <h2 className="text-3xl font-tall sm:text-4xl">Simplify everyday business tasks</h2>
      <p className="mt-4 text-lg">Because you’d probably be a little confused if we suggested you complicate your everyday business tasks instead.</p>
     </div>
 
-    {/*Bloque que se oculta en lg. Este es el bloque para dispositivos pequeños*/}
+    {/*Block that hides in lg. This is the block for small devices*/}
     <div className="-mx-4 mt-20 flex flex-col gap-y-10 overflow-hidden px-4 sm:-mx-6 sm:px-6 lg:hidden">
      <div>
       <div className="mx-auto max-w-2xl">
@@ -135,7 +135,7 @@ const SecondaryFeatures: FC = () => {
      </div>
     </div>
 
-    {/*Bloque que se muestra en lg. Este es el bloque para dispositivos grandes*/}
+    {/*Block shown in lg. This is the block for large devices*/}
     <div className="hidden lg:mt-20 lg:block">
      <div className="grid grid-cols-3 gap-x-8" role="tablist" aria-orientation="horizontal">
       <div className={`relative ${show !== Section.Reporting ? "opacity-75 hover:opacity-100" : ""}`}>
@@ -254,7 +254,7 @@ const SecondaryFeatures: FC = () => {
       </div>
      </div>
 
-     {/*Carrusel de imagenes*/}
+     {/*Carousel of images*/}
      <div className="relative mt-20 overflow-hidden bg-slate-100 px-14 py-16 xl:px-16">
       <div className="-mx-5 flex">
        <div

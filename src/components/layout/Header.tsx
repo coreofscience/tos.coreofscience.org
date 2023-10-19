@@ -24,10 +24,13 @@ const Header = () => {
       <>
        <div className="hidden gap-1 md:gap-4 lg:gap-8 lg:flex">
         <ul>
-         <li><a className="text-sky-600 hover:text-sky-800" href="#testimonials">testimonials</a></li>
+         <li><a className="text-sky-600 hover:text-sky-800" href="#features">Features</a></li>
         </ul>
         <ul>
-         <li><a className="text-sky-600 hover:text-sky-800" href="#pricing">pricing</a></li>
+         <li><a className="text-sky-600 hover:text-sky-800" href="#testimonials">Testimonials</a></li>
+        </ul>
+        <ul>
+         <li><a className="text-sky-600 hover:text-sky-800" href="#pricing">Pricing</a></li>
         </ul>
        </div>
       </>

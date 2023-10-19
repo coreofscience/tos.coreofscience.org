@@ -37,6 +37,14 @@ const HamburgerMenu = () => {
       <a
        className="block w-full p-2"
        data-headlessui-state="open"
+       href="#features"
+       onClick={() => setOpen(!open)}
+      >
+       Features
+      </a>
+      <a
+       className="block w-full p-2"
+       data-headlessui-state="open"
        href="#testimonials"
        onClick={() => setOpen(!open)}
       >
