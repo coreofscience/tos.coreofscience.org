@@ -63,7 +63,8 @@ const TOS: FC = () => {
     isLoading,
     isError,
   } = useMutation(createTree, {
-    onSuccess: (treePath: string) => navigate(`/${treePath}`, { replace: true })
+    onSuccess: (treePath: string) =>
+      navigate(`/${treePath}`, { replace: true }),
   });
 
   return (
