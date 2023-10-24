@@ -3,9 +3,7 @@ import { FC } from "react";
 const TrustUs: FC = () => {
  return (
   <section className="mt-12 lg:mt-20 text-center">
-   <p>
-    Trusted by these six companies so far
-   </p>
+   <p>Trusted by these six companies so far</p>
    <ul
     role="list"
     className="mt-8 flex items-center justify-center gap-x-8 sm:flex-col sm:gap-x-0 sm:gap-y-10 xl:flex-row xl:gap-x-12 xl:gap-y-0"
