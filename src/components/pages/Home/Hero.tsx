@@ -12,16 +12,16 @@ const Hero: FC = () => {
      <p className="text-center mx-auto mt-6 max-w-2xl text-lg">Within minutes Tree of Science identifies and maps relevant academic literature for every research subject.</p>
     </div>
    </div>
-   <div className="flex justify-center gap-3">
+   <div className="flex flex-col sm:flex-row justify-center gap-3">
     <Link
      to="/tos"
-     className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf"
+     className="px-4 py-2 font-tall text-center uppercase font-bold text-slate-50 bg-leaf"
     >
      Grow your tree now
     </Link>
     <Link
      to="/tos"
-     className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-trunk"
+     className="px-4 py-2 font-tall text-center uppercase font-bold text-slate-50 bg-trunk"
     >
      Plant your seed files
     </Link>
@@ -31,7 +31,7 @@ const Hero: FC = () => {
      className="inline-flex items-center justify-center px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-root"
     >
      <PlayIcon />
-     <span className="ml-3">Watch videos</span>
+     <span className="ml-3 w-max">Watch videos</span>
     </a>
    </div>
   </section>

@@ -93,7 +93,7 @@ const PrimaryFeatures: FC = () => {
        >
         <h3>
          <button
-         className="font-display text-lg ui-not-focus-visible:outline-none"
+         className="text-lg ui-not-focus-visible:outline-none"
          role="tab"
          type="button"
          tabIndex={show === Section.Reporting ? 0 : -1}
@@ -110,7 +110,7 @@ const PrimaryFeatures: FC = () => {
       <div
        role="tabpanel"
        tabIndex={show === Section.Payroll ? 0 : -1}
-       className={show === Section.Payroll ? "block" : "hidden"}
+       style={show !== Section.Payroll ? {display: "none"} : {}}
        hidden={show !== Section.Payroll}
       >
        <div className="relative sm:px-6 lg:hidden">
@@ -126,7 +126,8 @@ const PrimaryFeatures: FC = () => {
          height="1464"
          decoding="async"
          data-nimg="1"
-         className="w-full text-transparent"
+         className="w-full"
+         style={{color: "transparent"}}
          sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
          src="/payroll.webp"
         />
@@ -136,7 +137,7 @@ const PrimaryFeatures: FC = () => {
        role="tabpanel"
        tabIndex={show === Section.ClaimExpenses ? 0 : -1}
        hidden={show !== Section.ClaimExpenses}
-       className={show === Section.ClaimExpenses ? "block" : "hidden"}
+       style={show !== Section.ClaimExpenses ? {display: "none"} : {}}
       >
        <div className="relative sm:px-6 lg:hidden">
         <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0"></div>
@@ -151,7 +152,8 @@ const PrimaryFeatures: FC = () => {
          height="1464"
          decoding="async"
          data-nimg="1"
-         className="w-full text-transparent"
+         className="w-full"
+         style={{color: "transparent"}}
          sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
          src="/expenses.webp"
         />
@@ -160,7 +162,7 @@ const PrimaryFeatures: FC = () => {
       <div
        role="tabpanel"
        tabIndex={show === Section.VATHanding ? 0 : -1}
-       className={show === Section.VATHanding ? "block" : "hidden"}
+       style={show !== Section.VATHanding ? {display: "none"} : {}}
        hidden={show !== Section.VATHanding}
       >
        <div className="relative sm:px-6 lg:hidden">
@@ -176,7 +178,8 @@ const PrimaryFeatures: FC = () => {
          height="1464"
          decoding="async"
          data-nimg="1"
-         className="w-full text-transparent"
+         className="w-full"
+         style={{color: "transparent"}}
          sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
          src="/vat-returns.webp"
         />
@@ -185,12 +188,12 @@ const PrimaryFeatures: FC = () => {
       <div
        role="tabpanel"
        tabIndex={show === Section.Reporting ? 0 : -1}
-       className={show === Section.Reporting ? "block" : "hidden"}
+       style={show !== Section.Reporting ? {display: "none"} : {}}
        hidden={show !== Section.Reporting}
       >
        <div className="relative sm:px-6 lg:hidden">
         <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0"></div>
-        <p className="relative mx-auto max-w-2xl text-base text-white sm:text-center">Easily export your data into an Excel spreadsheet where you can do whatever the hell you want with it.</p>
+        <p className="relative mx-auto max-w-2xl text-base sm:text-center">Easily export your data into an Excel spreadsheet where you can do whatever the hell you want with it.</p>
        </div>
        <div
         className="mt-10 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]"
@@ -201,7 +204,8 @@ const PrimaryFeatures: FC = () => {
          height="1464"
          decoding="async"
          data-nimg="1"
-         className="w-full text-transparent"
+         className="w-full"
+         style={{color: "transparent"}}
          sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
          src="/reporting.webp"
         />

@@ -23,7 +23,7 @@ const SecondaryFeatures: FC = () => {
    id="secondary-features"
    aria-label="Features for simplifying everyday business tasks"
   >
-   <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+   <div className="mx-auto w-[80vw] max-w-7xl sm:px-6 lg:px-8">
     <div className="mx-auto max-w-2xl md:text-center">
      <h2 className="text-3xl font-tall sm:text-4xl">Simplify everyday business tasks</h2>
      <p className="mt-4 text-lg">Because you’d probably be a little confused if we suggested you complicate your everyday business tasks instead.</p>
@@ -306,7 +306,7 @@ const SecondaryFeatures: FC = () => {
         </div>
        </div>
        <div
-        className={`px-5 transition duration-500 ease-in-out ui-not-focus-visible:outline-none opacity-60 ${show !== Section.Contacts ? "opacity-60" : ""}`}
+        className={`px-5 transition duration-500 ease-in-out ui-not-focus-visible:outline-none ${show !== Section.Contacts ? "opacity-60" : ""}`}
         style={show === Section.Contacts ? {transform: "translateX(-200%)"} : show === Section.Inventory ? {transform: "translateX(-100%)"} : {transform: "translateX(0%)"}}
         aria-hidden={show !== Section.Contacts}
         id="headlessui-tabs-panel-:Rrbella:"
