@@ -11,11 +11,11 @@ import useFirebase from "../../../hooks/useFirebase";
 
 import computeQuantities from "../../../utils/computeQuantities";
 import { countFormat, round, weightFormat } from "../../../utils/math";
+import getMaxSize from "../../../utils/getMaxSize";
 
 import { createTree } from "./createTree";
 import useUser from "../../../hooks/useUser";
 
-import { UserContextType } from "../../../types/userContextType";
 import EmailVerification from "../EmailVerification";
 import AcceptsEmail from "../AcceptsEmail";
 
@@ -41,18 +41,6 @@ const TOS: FC = () => {
   const firebase = useFirebase();
   const navigate = useNavigate();
   const user = useUser();
-
-  const getMaxSize = (user: UserContextType | null) => {
-    const maxSizeByUser: { [plan: string]: number } = {
-      pro: 100,
-      basic: 10,
-      free: 5,
-    };
-    if (user) {
-      return maxSizeByUser[user.plan];
-    }
-    return maxSizeByUser.free;
-  };
 
   const maxSize: number = getMaxSize(user);
   const { totalArticles, totalCitations, articleCap, citationCap, sizeCap } =

@@ -1,5 +1,6 @@
 import { FC, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { looksLikeIsi } from "../../../utils/isi";
 import { looksLikeScopus } from "../../../utils/scopus";
@@ -14,6 +15,9 @@ interface Props {
 const FileDropper: FC<Props> = ({ maxSize }) => {
   const upload = useUpload();
   const error = useError();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const onDrop = useCallback(
     (acceptedFiles: Blob[]) => {
       acceptedFiles
@@ -32,6 +36,9 @@ const FileDropper: FC<Props> = ({ maxSize }) => {
             upload(Object(file).name, file);
           } else {
             error(Object(file).name, file, FileErrorMap.not_supported);
+          }
+          if (location.pathname === "/") {
+            navigate("/tos")
           }
         });
       });
