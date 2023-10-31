@@ -2,7 +2,7 @@ import { FC } from "react";
 
 const TrustUs: FC = () => {
  return (
-  <section className="mt-12 lg:mt-20 text-center">
+  <section className="text-center">
    <p>Trusted by these universities</p>
    <ul
     role="list"
