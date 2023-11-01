@@ -1,11 +1,11 @@
 import { FC } from "react";
+
 import PricingCard from "./PricingCard";
 import {
  includedFeaturesForFree,
  includedFeaturesForBasic,
  includedFeaturesForPro,
 } from "./constanst";
-import UnderlineIconForPricing from "../../vectors/UnderlineIconForPricing";
 
 const Pricing: FC = () => {
  return (
@@ -14,7 +14,6 @@ const Pricing: FC = () => {
     <div className="md:text-center">
      <h2 className="text-3xl font-tall sm:text-4xl">
       <span className="relative whitespace-nowrap">
-       <UnderlineIconForPricing />
        <span className="relative">Simple pricing,</span>
       </span>{" "}
       for everyone
@@ -23,13 +22,7 @@ const Pricing: FC = () => {
       No matter what your needs are, our software will work well for you.
      </p>
     </div>
-    <div className="grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
-     <PricingCard
-      name="Free"
-      description="No need to register or pay, start creating your trees right now."
-      price="$0/month"
-      features={includedFeaturesForFree}
-     />
+    <div className="grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-3xl lg:place-self-center lg:gap-x-8 lg:grid-cols-2 xl:mx-0 xl:gap-x-8">
      <PricingCard
       name="Pro"
       description="Contact us and we will understand your needs and give you the best offer that suits your needs."

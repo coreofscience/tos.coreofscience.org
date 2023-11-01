@@ -5,7 +5,6 @@ const FileDropper = React.lazy(() => import("../../upload/FileDropper"));
 import Testimonials from "./Testimonials";
 import Hero from "./Hero";
 import Pricing from "./Pricing";
-import FAQ from "./FAQ";
 import GetStarted from "./GetStarted";
 import HowItWorks from "./HowItWorks";
 
@@ -29,7 +28,6 @@ const Home: FC = () => {
    <GetStarted />
    <Testimonials />
    <Pricing />
-   <FAQ />
   </div>
  );
 };

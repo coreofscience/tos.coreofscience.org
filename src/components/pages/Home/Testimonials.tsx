@@ -17,6 +17,7 @@ const Testimonials: FC = () => {
        name="Jose Miguel Lopez Zuluaga"
        occupation="Industrial Engineer"
        img="/assets/testimonials/jose-miguel-lopez.png"
+       country="Colombia"
       />
      </ul>
     </li>
@@ -27,6 +28,7 @@ const Testimonials: FC = () => {
        name="Ronny Omar Molina Morán"
        occupation="PhD in Administration and Management of Organizations"
        img="/assets/testimonials/ronny-omar-molina.png"
+       country="Colombia"
       />
      </ul>
     </li>
@@ -37,6 +39,7 @@ const Testimonials: FC = () => {
        name="Jhon Antuny Pabón León"
        occupation="PhD in Management"
        img="/assets/testimonials/jhon-antuny.png"
+       country="Colombia"
       />
      </ul>
     </li>

@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom"
+
 import CoreOfScience from "../vectors/CoreOfScience";
 import GitHubIcon from "../vectors/GitHubIcon";
 import FacebookIcon from "../vectors/FacebookIcon";
 import YoutubeIcon from "../vectors/YoutubeIcon";
 import TwitterIcon from "../vectors/TwitterIcon";
 import Reference from "../tree/Reference";
+import NavBar from "./NavBar";
 
 const Footer = () => (
   <div className="flex flex-col gap-4 py-8 md:py-16 md:gap-8">
@@ -190,6 +193,18 @@ const Footer = () => (
         </a>{" "}
         project. &copy; 2020 Core of Science.
       </span>
+    </div>
+    <div className="flex justify-center">
+      <div className="hidden gap-1 md:gap-4 lg:gap-8 lg:flex">
+        <NavBar />
+        <ul>
+          <li>
+            <Link className="text-leaf hover:text-leaf-900" to="/docs/faq">
+              FAQ
+            </Link>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 );

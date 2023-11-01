@@ -5,6 +5,7 @@ import useUser from "../../hooks/useUser";
 import TreeOfScience from "../vectors/TreeOfScience";
 import useFirebase from "../../hooks/useFirebase";
 import HamburgerMenu from "./HamburgerMenu";
+import NavBar from "./NavBar";
 
 const Header = () => {
   const firebase = useFirebase();
@@ -21,19 +22,9 @@ const Header = () => {
       </h2>
      </Link>
      {location.pathname === "/" && (
-      <>
-       <div className="hidden gap-1 md:gap-4 lg:gap-8 lg:flex">
-        <ul>
-         <li><a className="text-leaf hover:text-leaf-900" href="#how-it-works">How it works</a></li>
-        </ul>
-        <ul>
-         <li><a className="text-leaf hover:text-leaf-900" href="#testimonials">Testimonials</a></li>
-        </ul>
-        <ul>
-         <li><a className="text-leaf hover:text-leaf-900" href="#pricing">Pricing</a></li>
-        </ul>
-       </div>
-      </>
+      <div className="hidden gap-1 md:gap-4 lg:gap-8 lg:flex">
+       <NavBar />
+      </div>
      )}
     </div>
     <div className="flex flex-row items-center gap-2">

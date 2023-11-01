@@ -6,9 +6,10 @@ type Props = {
  name: string;
  occupation: string;
  img: string;
+ country: string
 };
 
-const TestimonialCard: FC<Props> = ({ review, name, occupation, img }: Props) => {
+const TestimonialCard: FC<Props> = ({ review, name, occupation, img, country }: Props) => {
  return (
   <li>
    <figure className="relative bg-white p-6 shadow-xl shadow-slate-900/10">
@@ -20,6 +21,7 @@ const TestimonialCard: FC<Props> = ({ review, name, occupation, img }: Props) =>
      <div>
       <div>{name}</div>
       <div className="mt-1 text-sm text-slate-500">{occupation}</div>
+      <div className="mt-1 text-sm text-slate-500">{country}</div>
      </div>
      <div className="overflow-hidden bg-slate-50">
       <img
