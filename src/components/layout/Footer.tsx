@@ -9,7 +9,7 @@ import Reference from "../tree/Reference";
 import NavBar from "./NavBar";
 
 const Footer = () => {
-  const location = useLocation()
+  const location = useLocation();
 
   return (
     <div className="flex flex-col gap-4 py-16 md:gap-8">
@@ -95,7 +95,9 @@ const Footer = () => {
           </ul>
         </section>
         <section className="flex flex-col gap-2 md:area-social">
-          <h4 className="text-xl font-tall uppercase text-root">Social media</h4>
+          <h4 className="text-xl font-tall uppercase text-root">
+            Social media
+          </h4>
           <ul className="flex flex-row gap-2">
             <li>
               <a
@@ -198,18 +200,25 @@ const Footer = () => {
         </span>
       </div>
       <div className="flex sm:justify-center">
-        <div className="flex flex-col sm:gap-4 sm:flex-row lg:gap-8">
-          {location.pathname === "/" && (
-           <NavBar origin="footer" />
-          )}
-          <ul>
-            <li>
-              <Link className="text-sky-600 hover:text-sky-800 active:text-sky-800" to="/docs/faq">
-                FAQ
-              </Link>
-            </li>
-          </ul>
-        </div>
+        <ul className="flex flex-col sm:gap-4 sm:flex-row lg:gap-8">
+          {location.pathname === "/" && <NavBar origin="footer" />}
+          <li>
+            <Link
+              className="text-sky-600 hover:text-sky-800 active:text-sky-800"
+              to="/docs/sap"
+            >
+              About Tree of Science
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="text-sky-600 hover:text-sky-800 active:text-sky-800"
+              to="/docs/faq"
+            >
+              FAQ
+            </Link>
+          </li>
+        </ul>
       </div>
     </div>
   );
