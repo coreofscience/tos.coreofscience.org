@@ -26,11 +26,12 @@ const HowItWorks: FC = () => {
    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
     <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
      <h2 className="font-tall text-3xl sm:text-4xl md:text-5xl">
-      Everything you need to run your literature search
+      How Tree of Science Works
      </h2>
      <p className="mt-6 text-lg">
-      Well everything you need if you don't want to do your literature
-      search manually.
+      Within minutes Tree of Science identifies core theories, essential
+      works, and latest contributions for a state-of- the-art literature
+      summary.
      </p>
     </div>
     <div className="mt-16 grid grid-cols-1 items-center gap-y-2 pt-10 sm:gap-y-6 md:mt-20 lg:grid-cols-12 lg:pt-0">

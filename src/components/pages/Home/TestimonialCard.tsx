@@ -6,10 +6,16 @@ type Props = {
  name: string;
  occupation: string;
  img: string;
- country: string
+ country: string;
 };
 
-const TestimonialCard: FC<Props> = ({ review, name, occupation, img, country }: Props) => {
+const TestimonialCard: FC<Props> = ({
+ review,
+ name,
+ occupation,
+ img,
+ country,
+}: Props) => {
  return (
   <li>
    <figure className="relative bg-white p-6 shadow-xl shadow-slate-900/10">

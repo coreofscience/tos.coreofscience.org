@@ -29,7 +29,7 @@ const FileDropper: FC<Props> = ({ maxSize }) => {
       Promise.all(
         acceptedFiles
           .filter((file) => file.size / 2 ** 20 <= maxSize)
-          .map((file) => file.text().then((text) => ({ text, file })))
+          .map((file) => file.text().then((text) => ({ text, file }))),
       ).then((data) => {
         data.forEach(({ text, file }) => {
           if (looksLikeIsi(text) || looksLikeScopus(text)) {
@@ -38,12 +38,12 @@ const FileDropper: FC<Props> = ({ maxSize }) => {
             error(Object(file).name, file, FileErrorMap.not_supported);
           }
           if (location.pathname === "/") {
-            navigate("/tos")
+            navigate("/tos");
           }
         });
       });
     },
-    [upload, error, maxSize]
+    [upload, error, maxSize],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

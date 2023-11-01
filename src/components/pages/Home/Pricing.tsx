@@ -1,11 +1,7 @@
 import { FC } from "react";
 
 import PricingCard from "./PricingCard";
-import {
- includedFeaturesForFree,
- includedFeaturesForBasic,
- includedFeaturesForPro,
-} from "./constanst";
+import { includedFeaturesForBasic, includedFeaturesForPro } from "./constanst";
 
 const Pricing: FC = () => {
  return (

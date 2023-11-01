@@ -1,15 +1,26 @@
 import { FC } from "react";
-import QuoteIcon from "../../vectors/QuoteIcon";
 import TestimonialCard from "./TestimonialCard";
 
 const Testimonials: FC = () => {
  return (
-  <section id="testimonials" className="flex flex-col gap-10 mx-auto max-w-7xl">
+  <section
+   id="testimonials"
+   className="flex flex-col gap-10 mx-auto max-w-7xl"
+  >
    <div className="mx-auto max-w-2xl md:text-center">
-    <h2 className="text-3xl font-tall sm:text-4xl">Loved by researchers worldwide</h2>
-    <p className="mt-4 text-lg">Our software is so simple that people can’t help but fall in love with it. Simplicity is easy when you just skip tons of mission-critical features.</p>
+    <h2 className="text-3xl font-tall sm:text-4xl">
+     Loved by researchers worldwide
+    </h2>
+    <p className="mt-4 text-lg">
+     Our software is so simple that people can’t help but fall in love with
+     it. Simplicity is easy when you just skip tons of mission-critical
+     features.
+    </p>
    </div>
-   <ul role="list" className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:max-w-none lg:grid-cols-3">
+   <ul
+    role="list"
+    className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:max-w-none lg:grid-cols-3"
+   >
     <li>
      <ul role="list" className="flex flex-col gap-y-6 sm:gap-y-8">
       <TestimonialCard
@@ -45,7 +56,7 @@ const Testimonials: FC = () => {
     </li>
    </ul>
   </section>
- )
-}
+ );
+};
 
-export default Testimonials
+export default Testimonials;
