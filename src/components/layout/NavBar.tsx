@@ -1,7 +1,11 @@
 import { FC } from "react";
 import { useLocation } from "react-router-dom";
 
-const NavBar: FC = () => {
+type Props = {
+ origin: "footer" | "header"
+}
+
+const NavBar: FC<Props> = ({origin}) => {
  const location = useLocation()
 
  return (
@@ -9,7 +13,7 @@ const NavBar: FC = () => {
    <ul>
     <li>
      <a
-      className="text-leaf hover:text-leaf-900"
+      className={`${origin.toLowerCase() === "footer" ? "text-sky-600 hover:text-sky-800 active:text-sky-800" : "text-leaf hover:text-leaf-900 active:text-leaf-900"}`}
       href={location.pathname !== "/" ? "#how-it-works" : "/#how-it-works"}
      >
       How it works
@@ -19,7 +23,7 @@ const NavBar: FC = () => {
    <ul>
     <li>
      <a
-      className="text-leaf hover:text-leaf-900"
+      className={`${origin.toLowerCase() === "footer" ? "text-sky-600 hover:text-sky-800 active:text-sky-800" : "text-leaf hover:text-leaf-900 active:text-leaf-900"}`}
       href={location.pathname !== "/" ? "#testimonials" : "/#testimonials"}
      >
       Testimonials
@@ -29,7 +33,7 @@ const NavBar: FC = () => {
    <ul>
     <li>
      <a
-      className="text-leaf hover:text-leaf-900"
+      className={`${origin.toLowerCase() === "footer" ? "text-sky-600 hover:text-sky-800 active:text-sky-800" : "text-leaf hover:text-leaf-900 active:text-leaf-900"}`}
       href={location.pathname !== "/" ? "#pricing" : "/#pricing"}
      >
       Pricing

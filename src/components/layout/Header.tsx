@@ -22,8 +22,8 @@ const Header = () => {
       </h2>
      </Link>
      {location.pathname === "/" && (
-      <div className="hidden gap-1 md:gap-4 lg:gap-8 lg:flex">
-       <NavBar />
+      <div className="hidden gap-1 md:gap-4 lg:gap-8 xl:flex">
+       <NavBar origin="header" />
       </div>
      )}
     </div>

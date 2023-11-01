@@ -9,7 +9,7 @@ import Reference from "../tree/Reference";
 import NavBar from "./NavBar";
 
 const Footer = () => (
-  <div className="flex flex-col gap-4 py-8 md:py-16 md:gap-8">
+  <div className="flex flex-col gap-4 py-16 md:gap-8">
     <div className="grid gap-4 grid-cols-[1fr] md:gap-12 md:fancy-areas">
       <section className="flex flex-col gap-2 md:area-cite">
         <h4 className="text-xl font-tall uppercase text-root">
@@ -194,12 +194,12 @@ const Footer = () => (
         project. &copy; 2020 Core of Science.
       </span>
     </div>
-    <div className="flex justify-center">
-      <div className="hidden gap-1 md:gap-4 lg:gap-8 lg:flex">
-        <NavBar />
+    <div className="flex sm:justify-center">
+      <div className="flex flex-col sm:gap-4 sm:flex-row lg:gap-8">
+        <NavBar origin="footer" />
         <ul>
           <li>
-            <Link className="text-leaf hover:text-leaf-900" to="/docs/faq">
+            <Link className="text-sky-600 hover:text-sky-800 active:text-sky-800" to="/docs/faq">
               FAQ
             </Link>
           </li>
