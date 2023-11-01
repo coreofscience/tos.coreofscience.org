@@ -1,5 +1,4 @@
 import { FC } from "react";
-import UnderlinedIcon from "../../vectors/UnderlinedIcon";
 import { Link } from "react-router-dom";
 
 const Hero: FC = () => {
@@ -10,7 +9,6 @@ const Hero: FC = () => {
           <h1 className="font-tall text-center max-w-4xl text-5xl sm:text-7xl">
             Accelerate your{" "}
             <span className="relative whitespace-nowrap text-leaf">
-              <UnderlinedIcon />
               <span className="relative">literature</span>
             </span>{" "}
             search
