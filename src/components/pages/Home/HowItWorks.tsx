@@ -5,7 +5,7 @@ enum Section {
  BuildTree = "BUILD_TREE",
 }
 
-const PrimaryFeatures: FC = () => {
+const HowItWorks: FC = () => {
  const [show, setShow] = useState<Section>(Section.PlantSeeds);
 
  const toggleShow = useCallback((label: Section) => {
@@ -19,7 +19,7 @@ const PrimaryFeatures: FC = () => {
 
  return (
   <section
-   id="features"
+   id="how-it-works"
    aria-label="Features for running your books"
    className="relative overflow-hidden"
   >
@@ -149,4 +149,4 @@ const PrimaryFeatures: FC = () => {
  );
 };
 
-export default PrimaryFeatures;
+export default HowItWorks;
