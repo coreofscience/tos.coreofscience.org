@@ -1,5 +1,8 @@
 import { FC } from "react";
 
+//  We wait with that feature until we have top universities
+//  like Stanford, Berkeley, Yale, etc.
+
 const TrustUs: FC = () => {
  return (
   <section className="text-center">

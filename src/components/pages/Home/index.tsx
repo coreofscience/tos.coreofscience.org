@@ -5,10 +5,9 @@ const FileDropper = React.lazy(() => import("../../upload/FileDropper"));
 import Testimonials from "./Testimonials";
 import Hero from "./Hero";
 import Pricing from "./Pricing";
-import TrustUs from "./TrustUs";
 import FAQ from "./FAQ";
 import GetStarted from "./GetStarted";
-import PrimaryFeatures from "./PrimaryFeatures";
+import HowItWorks from "./HowItWorks";
 
 import useUser from "../../../hooks/useUser";
 
@@ -26,8 +25,7 @@ const Home: FC = () => {
     <p className="text-center">Start now by planting your seed file and in a matter of seconds you will have your tree with the relevant bibliography.</p>
     <FileDropper maxSize={maxSize} />
    </div>
-   <TrustUs />
-   <PrimaryFeatures />
+   <HowItWorks />
    <GetStarted />
    <Testimonials />
    <Pricing />
