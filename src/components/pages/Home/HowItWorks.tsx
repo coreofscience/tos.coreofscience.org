@@ -3,6 +3,8 @@ import { FC, useCallback, useState } from "react";
 enum Section {
  PlantSeeds = "PLANT_SEEDS",
  BuildTree = "BUILD_TREE",
+ IdentifyRelevantTheories = "IDENTIFY_RELEVANT_THEORIES",
+ ExtractYourLiteratureList = "EXTRACT_YOUR_LITERATURE_LIST",
 }
 
 const HowItWorks: FC = () => {
@@ -86,6 +88,52 @@ const HowItWorks: FC = () => {
          analyze your data on the fly.
         </p>
        </div>
+
+       <div
+        className={`group relative px-4 py-1 lg:p-6 ${show === Section.IdentifyRelevantTheories
+         ? "bg-slate-200/80"
+         : "hover:bg-slate-400/10 lg:hover:bg-slate-400/10"
+        }`}
+        onClick={() => toggleShow(Section.IdentifyRelevantTheories)}
+       >
+        <h3>
+         <button
+          className="text-lg ui-not-focus-visible:outline-none"
+          role="tab"
+          type="button"
+          tabIndex={show === Section.IdentifyRelevantTheories ? 0 : -1}
+         >
+          <span className="absolute inset-0"></span>
+          Identify relevant theories
+         </button>
+        </h3>
+        <p className="mt-2 hidden text-sm lg:block text-slate-800 group-hover:text-slate-900">
+         Identify relevant theories that the field is based on (roots), essential works (trunk) and newer publications (leaves).
+        </p>
+       </div>
+
+       <div
+        className={`group relative px-4 py-1 lg:p-6 ${show === Section.ExtractYourLiteratureList
+         ? "bg-slate-200/80"
+         : "hover:bg-slate-400/10 lg:hover:bg-slate-400/10"
+        }`}
+        onClick={() => toggleShow(Section.ExtractYourLiteratureList)}
+       >
+        <h3>
+         <button
+          className="text-lg ui-not-focus-visible:outline-none"
+          role="tab"
+          type="button"
+          tabIndex={show === Section.ExtractYourLiteratureList ? 0 : -1}
+         >
+          <span className="absolute inset-0"></span>
+          Extract your literature list
+         </button>
+        </h3>
+        <p className="mt-2 hidden text-sm lg:block text-slate-800 group-hover:text-slate-900">
+         Extract your literature list and start writing.
+        </p>
+       </div>
       </div>
      </div>
      <div className="lg:col-span-7">
@@ -112,7 +160,7 @@ const HowItWorks: FC = () => {
          className="w-full"
          style={{ color: "transparent" }}
          sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
-         src="/assets/features/plant-seeds.png"
+         src="/assets/howItWorks/plant-seeds.png"
         />
        </div>
       </div>
@@ -139,7 +187,7 @@ const HowItWorks: FC = () => {
          className="w-full"
          style={{ color: "transparent" }}
          sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
-         src="/assets/features/build-tree.png"
+         src="/assets/howItWorks/build-tree.png"
         />
        </div>
       </div>
