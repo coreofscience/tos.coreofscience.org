@@ -33,7 +33,7 @@ const Header = () => {
           </ul>
         )}
       </div>
-      <div className="flex flex-row items-center gap-2">
+      <div className="flex flex-row items-center text-xs md:text-md md:text-lg gap-1 xs:gap-2">
         {user?.uid ? (
           <>
             <span className="overflow-ellipsis hidden sm:inline">

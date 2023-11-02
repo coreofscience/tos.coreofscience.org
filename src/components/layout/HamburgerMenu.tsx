@@ -7,7 +7,7 @@ const HamburgerMenu = () => {
     <>
       <div className="flex gap-1 md:gap-4 xl:hidden">
         <button onClick={() => setOpen(!open)} className="relative">
-          <div className="relative z-20 flex items-center justify-center w-[50px] h-[50px] transform">
+          <div className="relative z-20 flex items-center justify-center w-[30px] h-[30px] transform">
             <div className="flex flex-col justify-around w-[20px] h-[20px] transform overflow-hidden">
               <div
                 className={`bg-leaf h-[2.5px] w-7 transform ${

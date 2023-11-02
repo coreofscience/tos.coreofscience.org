@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Hero: FC = () => {
   return (
-    <section className="flex gap-8 flex-col">
+    <section className="flex gap-8 flex-col px-5">
       <div className="flex gap-8 justify-center items-center">
         <div className="flex flex-col gap-4 max-w-4xl items-center justify-center">
           <h1 className="font-tall text-center max-w-4xl text-5xl sm:text-7xl">

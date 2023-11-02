@@ -5,7 +5,7 @@ const Testimonials: FC = () => {
  return (
   <section
    id="testimonials"
-   className="flex flex-col gap-10 mx-auto max-w-7xl"
+   className="flex flex-col px-5 xs:px-0 gap-10 mx-auto max-w-7xl"
   >
    <div className="mx-auto max-w-2xl md:text-center">
     <h2 className="text-3xl font-tall sm:text-4xl">
@@ -19,7 +19,7 @@ const Testimonials: FC = () => {
    </div>
    <ul
     role="list"
-    className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:max-w-none lg:grid-cols-3"
+    className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:max-w-none xl:grid-cols-3"
    >
     <li>
      <ul role="list" className="flex flex-col gap-y-6 sm:gap-y-8">

@@ -20,7 +20,7 @@ const Home: FC = () => {
  return (
   <div className="flex flex-col gap-40">
    <Hero />
-   <div className="flex flex-col gap-8">
+   <div className="flex flex-col gap-8 px-5">
     <p className="text-center">
      Start now by planting your seed file and in a matter of seconds you
      will have your tree with the relevant bibliography.

@@ -6,7 +6,7 @@ import { includedFeaturesForBasic, includedFeaturesForPro } from "./constanst";
 const Pricing: FC = () => {
   return (
     <section id="pricing" aria-label="Pricing">
-      <div className="flex flex-col mx-auto gap-10">
+      <div className="flex flex-col mx-auto gap-10 px-5 xs:px-0">
         <div className="md:text-center">
           <h2 className="text-3xl font-tall sm:text-4xl">
             <span className="relative whitespace-nowrap">
