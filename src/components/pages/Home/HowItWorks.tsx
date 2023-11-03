@@ -22,7 +22,7 @@ const HowItWorks: FC = () => {
  return (
   <section
    id="how-it-works"
-   aria-label="Features for running your books"
+   aria-label="How Tree of Science works"
    className="relative overflow-hidden pt-20 pb-10"
   >
    <img
@@ -214,7 +214,17 @@ const HowItWorks: FC = () => {
         </p>
        </div>
        <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
-        {/* The image is missing */}
+        <img
+         alt=""
+         width="2174"
+         height="1464"
+         decoding="async"
+         data-nimg="1"
+         className="w-full"
+         style={{ color: "transparent" }}
+         sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
+         src="/assets/howItWorks/identify-relevant-theories.png"
+         />
        </div>
       </div>
 
@@ -231,7 +241,17 @@ const HowItWorks: FC = () => {
         </p>
        </div>
        <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
-       {/* The image is missing */}
+        <img
+         alt=""
+         width="2174"
+         height="1464"
+         decoding="async"
+         data-nimg="1"
+         className="w-full"
+         style={{ color: "transparent" }}
+         sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
+         src="/assets/howItWorks/extract-your-literature.png"
+        />
        </div>
       </div>
      </div>
