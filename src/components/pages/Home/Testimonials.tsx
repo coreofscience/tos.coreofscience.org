@@ -5,7 +5,7 @@ const Testimonials: FC = () => {
  return (
   <section
    id="testimonials"
-   className="flex flex-col px-5 xs:px-0 gap-10 mx-auto max-w-7xl"
+   className="flex flex-col container xs:px-0 gap-10 mx-auto max-w-7xl"
   >
    <div className="mx-auto max-w-2xl md:text-center">
     <h2 className="text-3xl font-tall sm:text-4xl">
