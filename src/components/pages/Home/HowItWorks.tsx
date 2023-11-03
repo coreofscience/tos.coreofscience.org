@@ -23,17 +23,8 @@ const HowItWorks: FC = () => {
   <section
    id="how-it-works"
    aria-label="How Tree of Science works"
-   className="relative overflow-hidden pt-20 pb-10"
+   className="overflow-hidden pt-20 pb-10 bg-leaf"
   >
-   <img
-    alt="Solid color image"
-    loading="lazy"
-    width="2245"
-    height="1636"
-    decoding="async"
-    className="absolute left-1/2 top-1/2 max-w-none translate-x-[-44%] translate-y-[-42%]"
-    src="/assets/howItWorks/solid-color-image.png"
-   />
    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
     <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
      <h2 className="font-tall text-slate-50 text-3xl sm:text-4xl md:text-5xl">
