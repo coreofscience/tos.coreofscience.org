@@ -26,13 +26,6 @@ const Hero: FC = () => {
         >
           Grow your tree now
         </Link>
-        <a
-          href="https://www.youtube.com/@CoreofScience/videos"
-          target="_blank"
-          className="inline-flex items-center justify-center px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-root"
-        >
-          Watch videos
-        </a>
       </div>
     </section>
   );

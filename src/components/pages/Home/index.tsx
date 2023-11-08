@@ -18,13 +18,10 @@ const Home: FC = () => {
  const maxSize: number = useMemo(() => getMaxSize(user), [user]);
 
  return (
-  <div className="flex flex-col gap-40">
+  <div className="flex flex-col gap-24">
    <Hero />
    <div className="flex flex-col gap-8 container">
-    <p className="text-center">
-     Start now by planting your seed file and in a matter of seconds you
-     will have your tree with the relevant bibliography.
-    </p>
+    <p className="text-center text-3xl font-tall sm:text-4xl whitespace-nowrap">Plant Your Seeds</p>
     <FileDropper maxSize={maxSize} />
    </div>
    <HowItWorks />

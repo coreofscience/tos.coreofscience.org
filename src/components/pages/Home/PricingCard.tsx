@@ -5,14 +5,12 @@ import useUser from "../../../hooks/useUser";
 
 type Props = {
  name: string;
- description: string;
  price: number | string;
  features: string[];
 };
 
 const PricingCard: FC<Props> = ({
  name,
- description,
  price,
  features,
 }: Props) => {
@@ -34,12 +32,6 @@ const PricingCard: FC<Props> = ({
      }`}
    >
     {price}
-   </p>
-   <p
-    className={`mt-2 ${name.toLowerCase() === "pro" ? "text-slate-100" : "text-slate-900"
-     }`}
-   >
-    {description}
    </p>
    <ul
     role="list"

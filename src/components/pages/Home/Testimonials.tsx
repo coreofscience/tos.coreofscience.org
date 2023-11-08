@@ -9,13 +9,8 @@ const Testimonials: FC = () => {
   >
    <div className="mx-auto max-w-2xl md:text-center">
     <h2 className="text-3xl font-tall sm:text-4xl">
-     Loved by researchers worldwide
+     Loved by researchers
     </h2>
-    <p className="mt-4 text-lg">
-     Our software is so simple that people can’t help but fall in love with
-     it. Simplicity is easy when you just skip tons of mission-critical
-     features.
-    </p>
    </div>
    <ul
     role="list"
@@ -39,7 +34,7 @@ const Testimonials: FC = () => {
        name="Ronny Omar Molina Morán"
        occupation="PhD in Administration and Management of Organizations"
        img="/assets/testimonials/ronny-omar-molina.png"
-       country="Colombia"
+       country="Ecuador"
       />
      </ul>
     </li>

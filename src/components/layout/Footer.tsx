@@ -207,7 +207,7 @@ const Footer = () => {
               className="text-sky-600 hover:text-sky-800 active:text-sky-800"
               to="/docs/sap"
             >
-              About Tree of Science
+              Your tree explained
             </Link>
           </li>
           <li>
