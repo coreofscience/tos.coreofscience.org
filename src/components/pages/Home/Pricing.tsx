@@ -20,7 +20,7 @@ const Pricing: FC = () => {
       className="container flex flex-col mx-auto gap-10 xs:px-0"
     >
       <div className="md:text-center">
-        <h2 className="text-3xl font-tall sm:text-4xl whitespace-nowrap">
+        <h2 className="text-3xl font-tall sm:text-4xl text-center">
           Simple pricing for everyone
         </h2>
       </div>
