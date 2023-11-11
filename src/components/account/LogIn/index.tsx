@@ -30,7 +30,7 @@ const LogIn: FC = () => {
           <input
             {...form.register("email")}
             type="email"
-            className="p-2 border border-stone-500"
+            className="p-2 border border-stone-500 rounded-sm"
             placeholder="email@example.com"
           />
           <Message
@@ -42,7 +42,7 @@ const LogIn: FC = () => {
           <input
             {...form.register("password")}
             type="password"
-            className="p-2 border border-stone-500"
+            className="p-2 border border-stone-500 rounded-sm"
             placeholder="password"
           />
           <Message
@@ -53,7 +53,7 @@ const LogIn: FC = () => {
         <div>
           <input
             type="submit"
-            className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf"
+            className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf rounded-sm"
             value="LOG IN"
           />
         </div>

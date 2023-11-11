@@ -23,8 +23,8 @@ const FileCard: FC<Props> = ({
   articles = 0,
   citations = 0,
   progress = 0,
-  remove = () => {},
-  move = () => {},
+  remove = () => { },
+  move = () => { },
   capped = true,
   cumSize = 0,
   maxSize,
@@ -38,8 +38,8 @@ const FileCard: FC<Props> = ({
     <div
       className={
         capped
-          ? "flex flex-col gap-2 items-center justify-center shadow-md relative p-8 text-center bg-slate-100"
-          : "flex flex-col gap-2 items-center justify-center shadow-md relative p-8 text-center"
+          ? "flex flex-col gap-2 items-center justify-center shadow-md relative p-8 text-center rounded-sm overflow-hidden bg-slate-100"
+          : "flex flex-col gap-2 items-center justify-center shadow-md relative p-8 text-center rounded-sm overflow-hidden"
       }
     >
       {capped && (

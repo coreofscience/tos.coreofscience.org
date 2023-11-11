@@ -5,11 +5,11 @@ type Props = {
  headings: Heading[];
 };
 
-const TableOfContent: FC<Props> = ({headings}) => {
+const TableOfContent: FC<Props> = ({ headings }) => {
  return (
   <div className="prose prose-stone">
    <ul>
-    {headings.map((heading, index) => {
+    {headings.map((heading) => {
      const id = heading.id;
      const indentation = {
       3: " pl-2",
@@ -21,7 +21,10 @@ const TableOfContent: FC<Props> = ({headings}) => {
       <li key={id}>
        <a
         href={`#${id}`}
-        className={"text-sky-600 hover:text-sky-800 underline-offset-2" + paddingClass}
+        className={
+         "text-sky-600 hover:text-sky-800 underline-offset-2" +
+         paddingClass
+        }
        >
         {heading.text}
        </a>

@@ -19,6 +19,7 @@
   html {
     font-size: 18px;
     font-family: "Open Sans", ui-sans-serif, system-ui, helvetica, sans-serif;
+    scroll-behavior: smooth;
   }
 
   a {

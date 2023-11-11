@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 import { doc, onSnapshot } from "firebase/firestore";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 
 import useFirebase from "../../hooks/useFirebase";
 

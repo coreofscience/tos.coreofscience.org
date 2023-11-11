@@ -32,7 +32,7 @@ const AcceptsEmail = ({ user }: Props) => {
  };
 
  return user.acceptsEmail === undefined ? (
-  <div className="flex flex-col gap-2 p-4 text-slate-50 bg-leaf">
+  <div className="flex flex-col gap-2 p-4 text-slate-50 bg-leaf rounded-sm">
    <p>
     I like to receive the Tree of Science newsletter to stay in touch and to
     learn about latest trends on literature searches and new product
@@ -41,13 +41,13 @@ const AcceptsEmail = ({ user }: Props) => {
    <div className="flex flex-row gap-2">
     <button
      onClick={handleDismiss}
-     className="px-4 py-2 font-tall uppercase font-bold text-slate-50 ring-1 ring-slate-50"
+     className="px-4 py-2 font-tall uppercase font-bold text-slate-50 ring-1 ring-slate-50 rounded-sm"
     >
      Dismiss
     </button>
     <button
      onClick={handleAccept}
-     className="px-4 py-2 font-tall uppercase font-bold bg-slate-50 text-leaf"
+     className="px-4 py-2 font-tall uppercase font-bold bg-slate-50 text-leaf rounded-sm"
     >
      Accept
     </button>

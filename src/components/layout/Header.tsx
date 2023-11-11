@@ -4,6 +4,8 @@ import useUser from "../../hooks/useUser";
 
 import TreeOfScience from "../vectors/TreeOfScience";
 import useFirebase from "../../hooks/useFirebase";
+import HamburgerMenu from "./HamburgerMenu";
+import NavBar from "./NavBar";
 
 const Header = () => {
   const firebase = useFirebase();
@@ -12,13 +14,26 @@ const Header = () => {
 
   return (
     <div className="text-leaf flex flex-row items-center justify-between">
-      <Link className="flex flex-row items-center gap-2" to="/">
-        <TreeOfScience className="w-20 h-20" />
-        <h2 className="font-tall uppercase text-2xl font-bold hidden sm:inline md:text-4xl">
-          Tree of Science
-        </h2>
-      </Link>
-      <div className="flex flex-row items-center gap-2">
+      <div className="text-leaf flex flex-row items-center gap-1 md:gap-4 lg:gap-8">
+        <Link className="flex flex-row items-center gap-2" to="/">
+          <TreeOfScience className="w-20 h-20" />
+          {location.pathname === "/" ? (
+            <h1 className="font-tall uppercase text-2xl font-bold hidden sm:inline md:text-4xl">
+              Tree of Science
+            </h1>
+          ) : (
+            <span className="font-tall uppercase text-2xl font-bold hidden sm:inline md:text-4xl">
+              Tree of Science
+            </span>
+          )}
+        </Link>
+        {location.pathname === "/" && (
+          <ul className="hidden gap-1 md:gap-4 lg:gap-8 xl:flex">
+            <NavBar origin="header" />
+          </ul>
+        )}
+      </div>
+      <div className="flex flex-row items-center text-xs md:text-md md:text-lg gap-1 xs:gap-2">
         {user?.uid ? (
           <>
             <span className="overflow-ellipsis hidden sm:inline">
@@ -26,7 +41,7 @@ const Header = () => {
             </span>
             <button
               onClick={() => signOut(firebase.auth)}
-              className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf"
+              className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf rounded-sm"
             >
               Log Out
             </button>
@@ -35,20 +50,21 @@ const Header = () => {
           <>
             {location.pathname !== "/log-in" && (
               <Link
-                className="px-4 py-2 font-tall uppercase font-bold"
+                className="px-4 py-2 font-tall uppercase font-bold rounded-sm"
                 to="/log-in"
               >
                 Log In
               </Link>
             )}
             <Link
-              className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf"
+              className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf rounded-sm"
               to="/sign-up"
             >
               Sign up
             </Link>
           </>
         )}
+        {location.pathname === "/" && <HamburgerMenu />}
       </div>
     </div>
   );

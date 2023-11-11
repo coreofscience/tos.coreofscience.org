@@ -8,9 +8,13 @@ module.exports = {
       },
       colors: {
         leaf: "#009d35",
+        "leaf-900": "#00B83D",
         trunk: "#904c14",
         branch: "#b76d22",
         root: "#f0972f",
+      },
+      fill: {
+        leaf: "#009d35",
       },
       container: {
         center: true,
