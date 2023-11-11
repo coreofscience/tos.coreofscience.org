@@ -43,7 +43,7 @@ const HowItWorks: FC = () => {
        role="tablist"
       >
        <div
-        className={`group relative px-4 py-1 lg:p-6 ${show === Section.PlantSeeds
+        className={`group relative px-4 py-1 lg:p-6 rounded-l-sm ${show === Section.PlantSeeds
           ? "bg-green-200/10"
           : "hover:bg-green-400/10 lg:hover:bg-green-400/10"
          }`}
@@ -66,9 +66,9 @@ const HowItWorks: FC = () => {
         </p>
        </div>
        <div
-        className={`group relative px-4 py-1 lg:p-6 ${show === Section.BuildTree
-         ? "bg-green-200/10"
-         : "hover:bg-green-400/10 lg:hover:bg-green-400/10"
+        className={`group relative px-4 py-1 lg:p-6 rounded-l-sm ${show === Section.BuildTree
+          ? "bg-green-200/10"
+          : "hover:bg-green-400/10 lg:hover:bg-green-400/10"
          }`}
         onClick={() => toggleShow(Section.BuildTree)}
        >
@@ -90,10 +90,10 @@ const HowItWorks: FC = () => {
        </div>
 
        <div
-        className={`group relative px-4 py-1 lg:p-6 ${show === Section.IdentifyRelevantTheories
-         ? "bg-green-200/10"
-         : "hover:bg-green-400/10 lg:hover:bg-green-400/10"
-        }`}
+        className={`group relative px-4 py-1 lg:p-6 rounded-l-sm ${show === Section.IdentifyRelevantTheories
+          ? "bg-green-200/10"
+          : "hover:bg-green-400/10 lg:hover:bg-green-400/10"
+         }`}
         onClick={() => toggleShow(Section.IdentifyRelevantTheories)}
        >
         <h3>
@@ -101,22 +101,25 @@ const HowItWorks: FC = () => {
           className="text-lg text-slate-50 ui-not-focus-visible:outline-none"
           role="tab"
           type="button"
-          tabIndex={show === Section.IdentifyRelevantTheories ? 0 : -1}
+          tabIndex={
+           show === Section.IdentifyRelevantTheories ? 0 : -1
+          }
          >
           <span className="absolute inset-0"></span>
           Identify relevant theories
          </button>
         </h3>
         <p className="mt-2 hidden text-slate-50 text-sm lg:block">
-         Identify relevant theories that the field is based on (roots), essential works (trunk) and newer publications (leaves).
+         Identify relevant theories that the field is based on (roots),
+         essential works (trunk) and newer publications (leaves).
         </p>
        </div>
 
        <div
-        className={`group relative px-4 py-1 lg:p-6 ${show === Section.ExtractYourLiteratureList
-         ? "bg-green-200/10"
-         : "hover:bg-green-400/10 lg:hover:bg-green-400/10"
-        }`}
+        className={`group relative px-4 py-1 lg:p-6 rounded-l-sm ${show === Section.ExtractYourLiteratureList
+          ? "bg-green-200/10"
+          : "hover:bg-green-400/10 lg:hover:bg-green-400/10"
+         }`}
         onClick={() => toggleShow(Section.ExtractYourLiteratureList)}
        >
         <h3>
@@ -124,7 +127,9 @@ const HowItWorks: FC = () => {
           className="text-lg text-slate-50 ui-not-focus-visible:outline-none"
           role="tab"
           type="button"
-          tabIndex={show === Section.ExtractYourLiteratureList ? 0 : -1}
+          tabIndex={
+           show === Section.ExtractYourLiteratureList ? 0 : -1
+          }
          >
           <span className="absolute inset-0"></span>
           Extract your literature list
@@ -150,7 +155,7 @@ const HowItWorks: FC = () => {
          data into the Tree of Science application.
         </p>
        </div>
-       <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+       <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem] rounded-sm">
         <img
          alt=""
          width="2174"
@@ -177,7 +182,7 @@ const HowItWorks: FC = () => {
          analyze your data on the fly.
         </p>
        </div>
-       <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+       <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem] rounded-sm">
         <img
          alt=""
          width="2174"
@@ -196,15 +201,20 @@ const HowItWorks: FC = () => {
        role="tabpanel"
        tabIndex={show === Section.IdentifyRelevantTheories ? 0 : -1}
        hidden={show !== Section.IdentifyRelevantTheories}
-       style={show !== Section.IdentifyRelevantTheories ? { display: "none" } : {}}
+       style={
+        show !== Section.IdentifyRelevantTheories
+         ? { display: "none" }
+         : {}
+       }
       >
        <div className="relative sm:px-6 lg:hidden">
         <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0"></div>
         <p className="relative text-slate-50 mx-auto max-w-2xl text-base sm:text-center">
-         Identify relevant theories that the field is based on (roots), essential works (trunk) and newer publications (leaves).
+         Identify relevant theories that the field is based on (roots),
+         essential works (trunk) and newer publications (leaves).
         </p>
        </div>
-       <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+       <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem] rounded-sm">
         <img
          alt=""
          width="2174"
@@ -215,7 +225,7 @@ const HowItWorks: FC = () => {
          style={{ color: "transparent" }}
          sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
          src="/assets/howItWorks/identify-relevant-theories.png"
-         />
+        />
        </div>
       </div>
 
@@ -223,7 +233,11 @@ const HowItWorks: FC = () => {
        role="tabpanel"
        tabIndex={show === Section.ExtractYourLiteratureList ? 0 : -1}
        hidden={show !== Section.ExtractYourLiteratureList}
-       style={show !== Section.ExtractYourLiteratureList ? { display: "none" } : {}}
+       style={
+        show !== Section.ExtractYourLiteratureList
+         ? { display: "none" }
+         : {}
+       }
       >
        <div className="relative sm:px-6 lg:hidden">
         <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0"></div>
@@ -231,7 +245,7 @@ const HowItWorks: FC = () => {
          Extract your literature list and start writing.
         </p>
        </div>
-       <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+       <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem] rounded-sm">
         <img
          alt=""
          width="2174"

@@ -9,7 +9,7 @@ const Hero: FC = () => {
           <h1 className="font-tall text-center max-w-4xl text-5xl sm:text-7xl">
             Accelerate your{" "}
             <span className="relative whitespace-nowrap text-leaf">
-              <span className="relative">literature</span>
+              literature
             </span>{" "}
             search
           </h1>
@@ -19,10 +19,10 @@ const Hero: FC = () => {
           </p>
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row justify-center gap-3">
+      <div className="flex flex-col sm:flex-row justify-center gap-2">
         <Link
           to="/tos"
-          className="px-4 py-2 font-tall text-center uppercase font-bold text-slate-50 bg-leaf"
+          className="px-4 py-2 font-tall text-center uppercase font-bold text-slate-50 bg-leaf rounded-sm"
         >
           Grow your tree now
         </Link>

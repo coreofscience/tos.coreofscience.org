@@ -1,7 +1,7 @@
 import React, { FC, useContext } from "react";
 import { logEvent } from "firebase/analytics";
 import { useMutation } from "react-query";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import FileContext from "../../../context/FileContext";
@@ -68,20 +68,20 @@ const TOS: FC = () => {
       <FileErrors />
       <p>Review your input:</p>
       <div className="grid grid-cols-articles gap-2 items-center">
-        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col">
+        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col rounded-sm">
           <span className="font-semibold text-xl">
             {countFormat.format(articleCap)}/{countFormat.format(totalArticles)}
           </span>
           <span className="text-slate-500 text-sm">articles</span>
         </div>
-        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col">
+        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col rounded-sm">
           <span className="font-semibold text-xl">
             {countFormat.format(citationCap)}/
             {countFormat.format(totalCitations)}
           </span>
           <span className="text-slate-500 text-sm">citations</span>
         </div>
-        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col">
+        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col rounded-sm">
           <span className="font-semibold text-xl">
             {weightFormat.format(round(sizeCap, 2))}/
             {weightFormat.format(round(maxSize, 2))}
@@ -102,7 +102,7 @@ const TOS: FC = () => {
       <div>Time to create your Tree of Science.</div>
       <div>
         <button
-          className="inline-block font-tall text-4xl text-slate-50 bg-leaf px-12 py-6 uppercase disabled:bg-slate-400"
+          className="inline-block font-tall text-4xl text-slate-50 bg-leaf px-12 py-6 uppercase disabled:bg-slate-400 rounded-sm"
           disabled={
             isLoading ||
             !finished ||

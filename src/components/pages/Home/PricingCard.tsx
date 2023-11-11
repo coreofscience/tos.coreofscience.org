@@ -9,16 +9,12 @@ type Props = {
  features: string[];
 };
 
-const PricingCard: FC<Props> = ({
- name,
- price,
- features,
-}: Props) => {
+const PricingCard: FC<Props> = ({ name, price, features }: Props) => {
  const user = useUser();
 
  return (
   <section
-   className={`shadow-xl shadow-slate-900/10 flex flex-col px-6 sm:px-8 py-8 ${name.toLowerCase() === "pro" ? "order-first bg-leaf lg:order-none" : ""
+   className={`shadow-xl shadow-slate-900/10 flex flex-col px-6 sm:px-8 py-8 rounded-sm ${name.toLowerCase() === "pro" ? "order-first bg-leaf lg:order-none" : ""
     }`}
   >
    <h3
@@ -58,7 +54,7 @@ const PricingCard: FC<Props> = ({
         ? "/tos"
         : "/sign-up"
      }`}
-    className={`font-tall uppercase group inline-flex items-center justify-center py-2 px-4 text-sm focus:outline-none mt-8 focus-visible:outline-white ${name.toLowerCase() === "pro"
+    className={`font-tall uppercase group inline-flex items-center justify-center py-2 px-4 text-sm focus:outline-none mt-8 focus-visible:outline-white rounded-sm ${name.toLowerCase() === "pro"
       ? "font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 bg-white text-slate-900"
       : "ring-1 ring-slate-700"
      }`}
