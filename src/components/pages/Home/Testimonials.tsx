@@ -8,7 +8,7 @@ const Testimonials: FC = () => {
    className="flex flex-col container xs:px-0 gap-10 mx-auto max-w-7xl"
   >
    <div className="mx-auto max-w-2xl md:text-center">
-    <h2 className="text-3xl font-tall sm:text-4xl">
+    <h2 className="text-3xl font-tall text-center sm:text-4xl">
      Loved by researchers
     </h2>
    </div>

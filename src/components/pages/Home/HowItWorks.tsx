@@ -27,7 +27,7 @@ const HowItWorks: FC = () => {
   >
    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
     <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
-     <h2 className="font-tall text-slate-50 text-3xl sm:text-4xl md:text-5xl">
+     <h2 className="font-tall text-slate-50 text-center text-3xl sm:text-4xl md:text-5xl">
       How Tree of Science Works
      </h2>
      <p className="mt-6 text-lg text-slate-50">
