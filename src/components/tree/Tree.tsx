@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 
 import useFirebase from "../../hooks/useFirebase";
-import useUser from "../../hooks/useUser";
 
 import StarImage from "../vectors/StarImage";
 import CopyImage from "../vectors/CopyImage";
@@ -37,7 +36,6 @@ export interface Props {
 
 const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
   const firebase = useFirebase();
-  const user = useUser();
   const [show, setShow] = useState<Section | null>(null);
   const [infoEntries, setInfoEntries] = useState<
     [Section, RootInfo | TrunkInfo | LeafInfo | BranchInfo][]
@@ -203,9 +201,7 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
             </div>
           )
       )}
-      {user?.plan === "pro" && (
        <Download treeSections={treeSections} />
-      )}
     </div>
   );
 };

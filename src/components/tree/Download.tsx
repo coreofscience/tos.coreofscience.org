@@ -1,28 +1,49 @@
 import { FC, useLayoutEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+
+import useUser from "../../hooks/useUser";
+
+import { TreeResult } from "../../types/result";
 
 import DownloadIcon from "../vectors/Download";
-import { TreeResult } from "../../types/result";
 
 type Props = {
  treeSections: TreeResult
 }
 
+const createColumn = (articleProperty: string | number): string => {
+ if (typeof articleProperty === "number") {
+  return String(articleProperty)
+ }
+ return articleProperty.replace(/[\[\],]/gm, "")
+}
+
 const Download: FC<Props> = ({ treeSections }) => {
+ const user = useUser();
+
  const [uri, setUri] = useState<string>("")
 
  const csv = useMemo(() => {
   const articles = Object.values(treeSections).flat()
-  let csv: string = Object.keys(articles[0]).sort().join(',')
+  const headers: string = Object.keys(articles[0]).sort().join(',')
 
-  csv = csv.replace("leaf,", "")
-  csv = csv.replace("branch,", "")
-  csv = csv.replace("trunk,", "")
-  csv = csv.replace("root,", "")
-
+  let csv: string = headers.replace(/leaf,|branch,|trunk,|root,/g, "")
   for (const article of articles) {
-   csv = csv + "\n" + `${article.authors.join(";").replaceAll(",", "") ?? ""},${article.doi ? article.doi.replaceAll("[", "").replaceAll("]", "").replaceAll(",", ";") : ""},${article.issue ?? ""},${article.journal ? article.journal.replaceAll(",", ";") : ""},${article.keywords.join(";") ?? ""},${article.label ?? ""},${article.page ?? ""},${article.title ? article.title.replaceAll(",", "") : ""},${article.volume ?? ""},${article.year ?? ""}`
-  }
+   const row: string = [
+    createColumn(article.authors.join(";") ?? ""),
+    createColumn(article.doi ?? ""),
+    createColumn(article.issue ?? ""),
+    createColumn(article.journal ?? ""),
+    createColumn(article.keywords.join(";") ?? ""),
+    createColumn(article.label ?? ""),
+    createColumn(article.page ?? ""),
+    article.title ? article.title.replaceAll(",", "") : "",
+    createColumn(article.volume ?? ""),
+    createColumn(article.year ?? ""),
+   ].join(",")
 
+   csv = csv + "\n" + row
+  }
   return csv
  }, [treeSections])
 
@@ -31,6 +52,19 @@ const Download: FC<Props> = ({ treeSections }) => {
   const uri = URL.createObjectURL(blob)
   setUri(uri)
  }, [])
+
+ if (!user || user.plan !== "pro") {
+  return (
+   <Link
+    aria-label="download"
+    className="px-5 py-4 bg-slate-400/90 rounded-sm fixed bottom-10 right-10"
+    title="Become a pro user to download"
+    to="/pricing"
+   >
+    <DownloadIcon />
+   </Link>
+  )
+ }
 
  return (
   <a
