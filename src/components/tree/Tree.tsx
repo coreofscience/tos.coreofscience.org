@@ -15,6 +15,7 @@ import { mostCommon } from "../../utils/arrays";
 
 import TreeMenu from "./TreeMenu";
 import { TreeVis } from "./TreeVis";
+import Download from "./Download";
 
 import {
   Section,
@@ -200,6 +201,7 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
             </div>
           )
       )}
+       <Download treeSections={treeSections} />
     </div>
   );
 };
