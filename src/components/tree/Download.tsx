@@ -1,5 +1,6 @@
-import { FC, useLayoutEffect, useMemo, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
+import Papa from "papaparse";
 
 import useUser from "../../hooks/useUser";
 
@@ -11,47 +12,31 @@ type Props = {
  treeSections: TreeResult
 }
 
-const createColumn = (articleProperty: string | number): string => {
- if (typeof articleProperty === "number") {
-  return String(articleProperty)
- }
- return articleProperty.replace(/[\[\],]/gm, "")
-}
-
 const Download: FC<Props> = ({ treeSections }) => {
  const user = useUser();
+ const [isLoading, setIsLoading] = useState<boolean>(false);
 
- const [uri, setUri] = useState<string>("")
-
- const csv = useMemo(() => {
-  const articles = Object.values(treeSections).flat()
-  const headers: string = Object.keys(articles[0]).sort().join(',')
-
-  let csv: string = headers.replace(/leaf,|branch,|trunk,|root,/g, "")
-  for (const article of articles) {
-   const row: string = [
-    createColumn(article.authors.join(";") ?? ""),
-    createColumn(article.doi ?? ""),
-    createColumn(article.issue ?? ""),
-    createColumn(article.journal ?? ""),
-    createColumn(article.keywords.join(";") ?? ""),
-    createColumn(article.label ?? ""),
-    createColumn(article.page ?? ""),
-    article.title ? article.title.replaceAll(",", "") : "",
-    createColumn(article.volume ?? ""),
-    createColumn(article.year ?? ""),
-   ].join(",")
-
-   csv = csv + "\n" + row
-  }
-  return csv
- }, [treeSections])
-
- useLayoutEffect(() => {
+ const createUri = useCallback((csv: string): string => {
   const blob = new Blob([csv])
-  const uri = URL.createObjectURL(blob)
-  setUri(uri)
+  return URL.createObjectURL(blob)
  }, [])
+
+ const download = useCallback((uri: string) => {
+  const a = document.createElement("a")
+  a.setAttribute("href", uri)
+  a.setAttribute("download", "articles.csv")
+  a.click()
+  a.remove()
+ }, [])
+
+ const csvToJson = useCallback(() => {
+  setIsLoading(true)
+  const articles = Object.values(treeSections).flat()
+  const csv = Papa.unparse(articles)
+  const uri = createUri(csv)
+  download(uri)
+  setIsLoading(false)
+ }, [treeSections])
 
  if (!user || user.plan !== "pro") {
   return (
@@ -67,15 +52,18 @@ const Download: FC<Props> = ({ treeSections }) => {
  }
 
  return (
-  <a
+  <button
    aria-label="download"
    className="px-5 py-4 bg-leaf rounded-sm fixed bottom-10 right-10"
    title="Download CSV"
-   href={uri}
-   download="articles.csv"
+   onClick={csvToJson}
   >
-   <DownloadIcon />
-  </a>
+   {isLoading ? (
+    <p>LOADING...</p>
+   ) : (
+    <DownloadIcon />
+   )}
+  </button>
  )
 }
 

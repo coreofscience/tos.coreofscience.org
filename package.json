@@ -17,6 +17,7 @@
     "js-base64": "^3.7.5",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
+    "papaparse": "^5.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.2",
@@ -54,6 +55,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "@types/papaparse": "^5.3.11",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.15",
     "firebase-tools": "^12.4.7",
