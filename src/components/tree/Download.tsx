@@ -42,7 +42,7 @@ const Download: FC<Props> = ({ treeSections }) => {
   return (
    <Link
     aria-label="download"
-    className="px-5 py-4 bg-slate-400/90 fixed bottom-10 right-10 rounded-full shadow-sm hover:shadow-md active:shadow-md"
+    className="px-4 py-4 bg-slate-400/90 fixed bottom-10 right-10 rounded-full shadow-sm hover:shadow-md active:shadow-md"
     title="Become a pro user to download"
     to="/pricing"
    >
@@ -54,7 +54,7 @@ const Download: FC<Props> = ({ treeSections }) => {
  return (
   <button
    aria-label="download"
-   className="px-5 py-4 bg-leaf fixed bottom-10 right-10 rounded-full shadow-sm hover:shadow-md active:shadow-md"
+   className="px-4 py-4 bg-leaf fixed bottom-10 right-10 rounded-full shadow-sm hover:shadow-md active:shadow-md"
    title="Download CSV"
    onClick={csvToJson}
   >
