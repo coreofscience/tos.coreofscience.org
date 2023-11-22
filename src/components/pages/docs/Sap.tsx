@@ -8,15 +8,13 @@ const Sap: FC = () => {
   }, []);
 
   return (
-    <article className="prose prose-stone m-auto max-w-3xl">
+    <article className="prose prose-stone m-auto">
       <h1 className="font-tall uppercase">The elements of your tree</h1>
-      <blockquote>
-        <p>
-          Within minutes Tree of Science identifies core theories, essential
-          works, and latest contributions for a state-of- the-art literature
-          summary.
-        </p>
-      </blockquote>
+      <p>
+        Within minutes Tree of Science identifies core theories, essential
+        works, and latest contributions for a state-of- the-art literature
+        summary.
+      </p>
       <TableOfContent headings={HeadingData} />
       <section id="info-on-roots">
         <h2 className="uppercase font-tall text-root">Roots</h2>
@@ -72,7 +70,7 @@ const Sap: FC = () => {
         </p>
       </section>
       <section id="info-on-sap-algorithm">
-        <h2 className="uppercase font-tall text-sky-600">SAP Algorithm</h2>
+        <h2 className="uppercase font-tall">SAP Algorithm</h2>
         <p>
           The "SAP" algorithm mirrors the nutrient flow in a biological tree,
           symbolizing the intellectual lineage and influence between research
