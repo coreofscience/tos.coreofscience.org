@@ -1,8 +1,8 @@
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import TableOfContent from "../../common/TableOfContent";
 import { HeadingData } from "../../common/TableOfContent/constants";
 
-const Sap: FC = () => {
+const Sap = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

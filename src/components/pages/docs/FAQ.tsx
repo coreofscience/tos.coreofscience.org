@@ -1,12 +1,16 @@
-import { FC } from "react";
+import { useEffect } from "react";
 import Reference from "../../tree/Reference";
 
-const FAQ: FC = () => {
+const FAQ = () => {
+ useEffect(() => {
+  window.scrollTo(0, 0);
+ }, []);
+
  return (
   <section aria-labelledby="faq-title">
    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div className="mx-auto max-w-2xl lg:mx-0">
-     <h1 className="text-3xl font-tall sm:text-4xl">
+     <h1 id="faq-title" className="text-3xl font-tall sm:text-4xl">
       Frequently asked questions
      </h1>
      <p className="mt-4 text-lg sm:text-xl">
