@@ -218,6 +218,14 @@ const Footer = () => {
               FAQ
             </Link>
           </li>
+          <li>
+            <Link
+              className="text-sky-600 hover:text-sky-800 active:text-sky-800"
+              to="/docs/about"
+            >
+              About ToS
+            </Link>
+          </li>
         </ul>
       </div>
     </div>
