@@ -9,7 +9,7 @@ from io import StringIO
 from typing import Any, Dict, List
 
 import networkx as nx
-from bibx import Sap, read_any
+from bibx import Sap, read_any, Collection
 from firebase_admin import firestore, initialize_app, storage, auth
 from firebase_functions.firestore_fn import DocumentSnapshot, Event, on_document_created, on_document_written
 from firebase_functions.options import MemoryOption
@@ -20,10 +20,21 @@ logging.basicConfig(level=logging.INFO)
 initialize_app()
 
 
-def tree_from_strings(strings: List[str]) -> nx.DiGraph:
+def set_analysis_property(collection: Collection, ref) -> None:
+    cited = collection.cited_by_year()
+    published = collection.published_by_year()
+    _analysis = {
+        cited,
+        published,
+    }
+    ref.update({"_analysis": _analysis})
+
+
+def tree_from_strings(strings: List[str], ref) -> nx.DiGraph:
     """Creates a ToS tree from a list of strings."""
     collections = [read_any(StringIO(text)) for text in strings]
     collection = reduce(lambda x, y: x.merge(y), collections)
+    set_analysis_property(collection, ref)
     sap = Sap()
     graph = sap.create_graph(collection)
     graph = sap.clean_graph(graph)
@@ -105,7 +116,7 @@ def create_tree_v2(
 
     try:
         contents = get_contents(data, max_size_megabytes=max_size_megabytes)
-        tos = tree_from_strings(list(contents.values()))
+        tos = tree_from_strings(list(contents.values()), ref)
         result = convert_tos_to_json(tos)
         end = datetime.now()
         ref.update(
