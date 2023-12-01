@@ -21,11 +21,11 @@ initialize_app()
 
 
 def set_analysis_property(collection: Collection, ref) -> None:
-    cited = collection.cited_by_year()
-    published = collection.published_by_year()
+    cited = {str(key): value for key, value in collection.cited_by_year().items()}
+    published = {str(key): value for key, value in collection.published_by_year().items()}
     _analysis = {
-        cited,
-        published,
+        "cited": cited,
+        "published": published,
     }
     ref.update({"_analysis": _analysis})
 
