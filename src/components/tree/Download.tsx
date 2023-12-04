@@ -90,7 +90,7 @@ const Download: FC<Props> = ({ treeSections, _analysis }) => {
   return childButtons
  }, [downloadArticles])
 
- if (!user || user.plan === "pro") {
+ if (!user || user.plan !== "pro") {
   return (
    <Link
     aria-label="download"
