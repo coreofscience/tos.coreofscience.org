@@ -26,15 +26,18 @@ import {
   Keywords,
 } from "../../types/treeType";
 import { TreeResult } from "../../types/result";
+import { Analysis } from "../../types/Analysis";
+
 import { info } from "./constants/info";
 
 export interface Props {
   stars: Record<string, boolean>;
   treeSections: TreeResult;
   treePath: string;
+  _analysis?: Analysis
 }
 
-const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
+const Tree: FC<Props> = ({ treeSections, treePath, stars, _analysis }: Props) => {
   const firebase = useFirebase();
   const [show, setShow] = useState<Section | null>(null);
   const [infoEntries, setInfoEntries] = useState<
@@ -201,7 +204,7 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars }: Props) => {
             </div>
           )
       )}
-       <Download treeSections={treeSections} />
+       <Download _analysis={_analysis ?? undefined} treeSections={treeSections} />
     </div>
   );
 };

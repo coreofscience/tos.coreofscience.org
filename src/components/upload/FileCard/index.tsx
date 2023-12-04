@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import CancelFile from "../../vectors/CancelFile";
+import CancelIcon from "../../vectors/CancelIcon";
 import MoveFirstIcon from "../../vectors/MoveFirstIcon";
 import { round } from "../../../utils/math";
 
@@ -54,7 +54,7 @@ const FileCard: FC<Props> = ({
         onClick={remove}
         className="bg-root text-slate-50 h-8 w-8 flex justify-center items-center absolute top-0 right-0 hover:bg-red-500 active:bg-red-500 transition-colors ease-in"
       >
-        <CancelFile />
+        <CancelIcon />
       </button>
       <strong
         className="overflow-ellipsis overflow-hidden whitespace-nowrap max-w-[75%]"

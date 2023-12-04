@@ -66,6 +66,7 @@ const Result = () => {
   return (
     <Tree
       treeSections={treeMetadata.result}
+      _analysis={treeMetadata._analysis ?? undefined}
       treePath={treePath}
       stars={treeMetadata.stars || {}}
     />

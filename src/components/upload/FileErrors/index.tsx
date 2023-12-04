@@ -1,6 +1,6 @@
 import { FC, useContext } from "react";
 
-import CancelFile from "../../vectors/CancelFile";
+import CancelIcon from "../../vectors/CancelIcon";
 import FileContext from "../../../context/FileContext";
 import useInvalidFiles from "../../../hooks/useInvalidFiles";
 
@@ -25,7 +25,7 @@ const FileErrors: FC = () => {
               className="flex justify-center items-center flex-shrink-0 bg-red-500 w-6 h-6"
               title="dismiss"
             >
-              <CancelFile />
+              <CancelIcon />
             </button>
           </div>
         );
