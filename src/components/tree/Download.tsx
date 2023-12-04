@@ -12,7 +12,7 @@ import FloatingButtonMenu from "../common/FloatingButtonMenu";
 import DownloadIcon from "../vectors/Download";
 import CancelIcon from "../vectors/CancelIcon";
 import AddIcon from "../vectors/AddIcon";
-import FileArrowDown from "../vectors/FileArrowDown";
+import AnalysisIcon from "../vectors/AnalysisIcon";
 
 type Props = {
  treeSections: TreeResult
@@ -79,7 +79,7 @@ const Download: FC<Props> = ({ treeSections, _analysis }) => {
   if (_analysis) {
    childButtons.push({
     name: "Analysis",
-    icon: <FileArrowDown />,
+    icon: <AnalysisIcon />,
     action: downloadAnalysis,
     attributes: {
      "arial-label": "download",
@@ -90,7 +90,7 @@ const Download: FC<Props> = ({ treeSections, _analysis }) => {
   return childButtons
  }, [downloadArticles])
 
- if (!user || user.plan !== "pro") {
+ if (!user || user.plan === "pro") {
   return (
    <Link
     aria-label="download"
