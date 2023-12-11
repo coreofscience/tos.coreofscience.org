@@ -31,7 +31,7 @@ const Result = () => {
          * TODO: find a way to set `TreeMetadata` type through the `threeRef` retrieval function.
          */
         setTreeMetadata(doc.data() as TreeMetadata);
-      },
+      }
     );
 
     return () => unsubscribe();
@@ -66,7 +66,7 @@ const Result = () => {
   return (
     <Tree
       treeSections={treeMetadata.result}
-      _analysis={treeMetadata._analysis ?? undefined}
+      analysis={treeMetadata._analysis ?? undefined}
       treePath={treePath}
       stars={treeMetadata.stars || {}}
     />

@@ -34,10 +34,15 @@ export interface Props {
   stars: Record<string, boolean>;
   treeSections: TreeResult;
   treePath: string;
-  _analysis?: Analysis
+  analysis: Analysis | undefined;
 }
 
-const Tree: FC<Props> = ({ treeSections, treePath, stars, _analysis }: Props) => {
+const Tree: FC<Props> = ({
+  treeSections,
+  treePath,
+  stars,
+  analysis,
+}: Props) => {
   const firebase = useFirebase();
   const [show, setShow] = useState<Section | null>(null);
   const [infoEntries, setInfoEntries] = useState<
@@ -156,10 +161,18 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars, _analysis }: Props) =>
                   {info?.title ?? ""}
                 </h2>
                 {info?.info ? (
-                 <p>
-                   {`${info.info} ${info.doc}`} <Link className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in" to="/docs/sap">docs.</Link>
-                 </p>
-                  ) : ""}
+                  <p>
+                    {`${info.info} ${info.doc}`}{" "}
+                    <Link
+                      className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+                      to="/docs/sap"
+                    >
+                      docs.
+                    </Link>
+                  </p>
+                ) : (
+                  ""
+                )}
                 {keywords[sectionName].length > 0 && (
                   <p>
                     <strong>Keywords:</strong>{" "}
@@ -204,7 +217,7 @@ const Tree: FC<Props> = ({ treeSections, treePath, stars, _analysis }: Props) =>
             </div>
           )
       )}
-       <Download _analysis={_analysis ?? undefined} treeSections={treeSections} />
+      <Download analysis={analysis} treeSections={treeSections} />
     </div>
   );
 };
