@@ -14,10 +14,10 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Use Node 16
-        uses: actions/setup-node@v3
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: lts/iron
 
       - name: Use latest python version
         uses: actions/setup-python@v4
