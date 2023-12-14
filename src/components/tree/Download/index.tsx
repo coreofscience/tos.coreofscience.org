@@ -15,7 +15,7 @@ import { DownloadPropsType } from "./types";
 const Download: React.FC<DownloadPropsType> = ({ treeSections, analysis }) => {
   const user = useUser();
 
-  if (!user || user.plan === "pro") {
+  if (!user || user.plan !== "pro") {
     return (
       <Link
         aria-label="download"
