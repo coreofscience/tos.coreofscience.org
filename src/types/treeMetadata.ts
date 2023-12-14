@@ -1,8 +1,10 @@
 import { TreeResult } from "./result";
+import { Analysis } from "./Analysis";
 
 export interface TreeMetadata {
   createdDate: number;
   files: string[];
+  _analysis?: Analysis
   startedDate?: number;
   finishedDate?: number;
   result?: TreeResult;
