@@ -99,7 +99,7 @@ const TOS: FC = () => {
         </Link>
       </p>
       <br></br>
-      <div>Time to create your Tree of Science.</div>
+      <div>Let's start planting your tree.</div>
       <div>
         <button
           className="inline-block font-tall text-4xl text-slate-50 bg-leaf px-12 py-6 uppercase disabled:bg-slate-400 rounded-sm"
