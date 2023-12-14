@@ -48,20 +48,18 @@ const Result = () => {
 
   // Return waiting for a worker if not startedDate
   if (!treeMetadata.startedDate) {
-    return <Fragment>Waiting for a worker to process your tree...</Fragment>;
+    return <Fragment>Sowing your seeds now...</Fragment>;
   }
 
   // Return processing if startedDate and not finishedDate
   if (!treeMetadata.finishedDate) {
-    return <Fragment>Currently processing your tree...</Fragment>;
+    return <Fragment>Your tree is taking roots...</Fragment>;
   }
 
   // Return error processing if there's an error
   if (treeMetadata.error || !treeMetadata.result) {
     return (
-      <Fragment>
-        Life is hard, there was an error creating your tree...
-      </Fragment>
+      <Fragment>Life is hard, there was an error growing your tree...</Fragment>
     );
   }
 
