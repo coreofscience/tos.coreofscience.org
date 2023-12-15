@@ -12,6 +12,7 @@ import {
 import { flatten } from "lodash";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Link } from "react-router-dom";
 
 import useFirebase from "../../../hooks/useFirebase";
 import useUser from "../../../hooks/useUser";
@@ -20,8 +21,6 @@ import { TreeMetadata } from "../../../types/treeMetadata";
 import { TreeSummary } from "../../../types/treeSummary";
 
 import { mostCommon } from "../../../utils/arrays";
-import { Link } from "react-router-dom";
-import { UserContextType } from "../../../types/userContextType";
 
 const summarize = (tree: TreeMetadata): string => {
   if (!tree.result) {
@@ -53,7 +52,7 @@ const TreeHistory: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   /**
-   * Limite para el infinity scroll
+   * Limit for infinite scroll when the user is pro.
    */
   const l: number = useMemo(() => {
     return 2
@@ -90,7 +89,6 @@ const TreeHistory: FC = () => {
     if (!user || user.plan !== "pro") {
       return;
     }
-    console.log("pro")
     const proTreesQuery = createQuery(`users/${user.uid}/proTrees`, l, "pro")
     if (!proTreesQuery) {
       return;
