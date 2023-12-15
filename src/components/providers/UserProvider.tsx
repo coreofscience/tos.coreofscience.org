@@ -13,7 +13,7 @@ interface Props {
 const UserProvider: FC<Props> = ({ children }: Props) => {
   const firebase = useFirebase();
   const [acceptsEmail, setAcceptsEmail] = useState<boolean | undefined>(
-   true,
+   false,
   );
   const [user, setUser] = useState<UserContextType | null>(null);
 
