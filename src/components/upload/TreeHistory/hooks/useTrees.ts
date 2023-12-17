@@ -17,8 +17,9 @@ import { summarize } from "./utils/summarize";
 
 import { TreeMetadata } from "../../../../types/treeMetadata";
 import { TreeSummary } from "../../../../types/treeSummary";
+import { useTreesType } from "./type";
 
-export const useTrees = (type: "proTrees" | "trees", count: number) => {
+export const useTrees = (type: "proTrees" | "trees", count: number): useTreesType => {
   const firebase = useFirebase();
   const user = useUser();
   const [data, setData] = useState<TreeSummary[]>([]);
@@ -55,26 +56,27 @@ export const useTrees = (type: "proTrees" | "trees", count: number) => {
             (doc): TreeSummary => ({
               treeId: doc.id,
               summary: summarize(doc.data() as TreeMetadata) + doc.id,
-              isPro: false,
+              isPro: type === "proTrees",
             })
           ),
         ]);
         setHasMore(docs.length === count);
-        setIsLoading(false);
       })
       .catch((error) => {
         setHasMore(true);
-        setIsLoading(false);
         throw error;
-      });
+      })
+     .finally(() => {
+       setIsLoading(false);
+     })
   }, [
     user,
     lastDoc /* It's important to keep it here, so the callback is redefined based on the last doc */,
+    firebase,
   ]);
 
   useEffect(() => {
     if (!user?.uid) return;
-
     /**
      * Fetch initial list values
      */

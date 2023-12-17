@@ -3,33 +3,51 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
 
 import useUser from "../../../hooks/useUser";
-
 import { useTrees } from "./hooks/useTrees";
+
+import Loading from "./Loading";
 
 const TreeHistory: FC = () => {
   const user = useUser();
-  const trees = useTrees("proTrees", 3);
+  const proTrees = useTrees("proTrees", 3);
+  const trees = useTrees("trees", 3);
 
   if (!user) return null;
+
+  let allTrees = trees.state.data;
+  if (user.plan === "pro") {
+   allTrees = [...allTrees, ...proTrees.state.data]
+  }
 
   return (
     <div className="flex flex-col gap-3">
       <div>
         <h2 className="text-2xl font-tall font-bold uppercase">
-          Tree History ({trees.state.data.length})
+          Tree History ({user.plan === "pro" ? proTrees.state.data.length + trees.state.data.length : trees.state.data.length})
         </h2>
       </div>
-      <div id="scrollableDiv" style={{ height: 60, overflow: "auto" }}>
+      <div id="scrollableDiv" className="overflow-auto h-20">
         <InfiniteScroll
-          dataLength={trees.state.data.length}
-          next={trees.actions.fetchNextTrees}
-          hasMore={trees.state.hasMore}
-          loader={trees.state.isLoading ? <p>loading...</p> : ""}
+          dataLength={user.plan === "pro" ? proTrees.state.data.length + trees.state.data.length : trees.state.data.length}
+          next={() => {
+           if (user.plan === "pro") {
+            if (proTrees.state.hasMore) {
+             proTrees.actions.fetchNextTrees()
+            }
+            if (trees.state.hasMore) {
+             trees.actions.fetchNextTrees()
+            }
+           } else {
+            trees.actions.fetchNextTrees()
+           }
+          }}
+          hasMore={user.plan === "pro" ? proTrees.state.hasMore || trees.state.hasMore : trees.state.hasMore}
+          loader={<Loading user={user} proTrees={proTrees} trees={trees} />}
           endMessage={<p>No more data to load.</p>}
           scrollableTarget="scrollableDiv"
         >
           <ul>
-            {trees.state.data.map(({ treeId, summary, isPro }) => (
+            {allTrees.map(({ treeId, summary, isPro }) => (
               <li key={treeId}>
                 {isPro ? (
                   <Link
