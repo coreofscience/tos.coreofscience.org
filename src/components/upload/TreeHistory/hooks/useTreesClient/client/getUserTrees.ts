@@ -45,13 +45,9 @@ export const getTrees = async (
 
   const userTreeDocs = await getDocs(getUserTreeDocsQuery);
 
-  return userTreeDocs.docs.map((doc) => {
-    const data = doc.data() as TreeMetadata;
-    return {
-      treeId: doc.id,
-      summary: summarize(data),
-      createdDate: data.createdDate,
-      isPro: params.type === "proTrees",
-    };
-  });
+  return userTreeDocs.docs.map((doc) => ({
+    treeId: doc.id,
+    summary: summarize(doc.data() as TreeMetadata),
+    isPro: params.type === "proTrees",
+  }));
 };
