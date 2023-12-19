@@ -7,7 +7,7 @@ import { useTrees } from "./hooks/useTrees";
 
 const TreeHistory: FC = () => {
   const user = useUser();
-  const proTrees = useTrees(user?.plan === "pro" ? "proTrees" : "trees", 4);
+  const trees = useTrees(user?.plan === "pro" ? "proTrees" : "trees", 4);
 
   if (!user) return null;
 
@@ -15,20 +15,20 @@ const TreeHistory: FC = () => {
     <div className="flex flex-col gap-3">
       <div>
         <h2 className="text-2xl font-tall font-bold uppercase">
-          Tree History ({proTrees.state.data.length})
+          Tree History ({trees.state.data.length})
         </h2>
       </div>
       <div id="scrollableDiv" className="overflow-auto h-20">
         <InfiniteScroll
-          dataLength={proTrees.state.data.length}
-          next={proTrees.actions.fetchNextTrees}
-          hasMore={proTrees.state.hasMore}
-          loader={proTrees.state.status === "loading" && <p>Loading...</p>}
+          dataLength={trees.state.data.length}
+          next={trees.actions.fetchNextTrees}
+          hasMore={trees.state.hasMore}
+          loader={trees.state.status === "loading" && <p>Loading...</p>}
           endMessage={<p>No more data to load.</p>}
           scrollableTarget="scrollableDiv"
         >
           <ul>
-            {proTrees.state.data.map(({ treeId, summary, isPro }) => (
+            {trees.state.data.map(({ treeId, summary, isPro }) => (
               <li key={treeId}>
                 {isPro ? (
                   <Link
