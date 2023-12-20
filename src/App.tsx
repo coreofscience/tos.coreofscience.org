@@ -46,10 +46,6 @@ const App = () => {
                     path="/users/:userId/trees/:treeId"
                     element={<Result />}
                   />
-                  <Route
-                    path="/users/:userId/proTrees/:treeId"
-                    element={<Result />}
-                  />
                   <Route path="/docs/sap" element={<Sap />} />
                   <Route path="/docs/faq" element={<FAQ />} />
                   <Route path="/docs/about" element={<About />} />
