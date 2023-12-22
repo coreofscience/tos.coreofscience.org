@@ -101,16 +101,23 @@ def get_int_utcnow() -> int:
 
 
 def create_tree_v2(
-    event: Event[DocumentSnapshot | None], max_size_megabytes=10
+    event: Event[DocumentSnapshot | None],
+    max_size_megabytes=10,
+    plan_id: str | None = None,
 ) -> None:
     if event.data is None or (data := event.data.to_dict()) is None:
         return
-    logging.info(f"handling new created tree {event} {event.data.to_dict()}")
+    logging.info(f"handling new created tree {event} {data}")
 
     start = datetime.now()
 
     client = firestore.client()
     ref = client.document(event.document)
+    if plan_id is not None:
+        ref = (client.collection("users")
+               .document(event.params["userId"])
+               .collection("trees")
+               .document(event.params["treeId"]))
     ref.update({"startedDate": get_int_utcnow()})
     logging.info("Tree process started")
 
@@ -144,19 +151,48 @@ def create_tree_v2(
 
 
 @on_document_created(
-    document="users/{userId}/proTrees/{proTreeId}",
-    memory=MemoryOption.GB_1,
+    document="users/{userId}/trees/{treeId}",
+    memory=MemoryOption.MB_128,
+    timeout_sec=2,
 )
-def process_user_pro_tree(event: Event[DocumentSnapshot | None]) -> None:
-    create_tree_v2(event, max_size_megabytes=200)
+def create_tree_with_initial_info(event: Event[DocumentSnapshot | None]) -> None:
+    logging.info("Running create_tree_with_initial_info")
+    if event.data is None or (data := event.data.to_dict()) is None:
+        return
+    if event.data.to_dict().get("planId") is None:
+        return
+    if event.data.to_dict().get("planId") != "pro" and event.data.to_dict().get("planId") != "basic":
+        return
+    client = firestore.client()
+    if event.data.to_dict().get("planId") == "basic":
+        (client.collection("users")
+         .document(event.params["userId"])
+         .collection("basicAnalysis")
+         .document(event.params["treeId"])
+         .set(data))
+    if event.data.to_dict().get("planId") == "pro":
+        (client.collection("users")
+         .document(event.params["userId"])
+         .collection("proAnalysis")
+         .document(event.params["treeId"])
+         .set(data))
+    logging.info("create_tree_with_initial_info finished")
 
 
 @on_document_created(
-    document="users/{userId}/trees/{treeId}",
+    document="users/{userId}/proAnalysis/{treeId}",
+    memory=MemoryOption.GB_1,
+)
+def process_user_pro_tree(event: Event[DocumentSnapshot | None]) -> None:
+    create_tree_v2(event, max_size_megabytes=200, plan_id="pro")
+
+
+@on_document_created(
+    document="users/{userId}/basicAnalysis/{treeId}",
     memory=MemoryOption.MB_512,
 )
 def process_user_tree(event: Event[DocumentSnapshot | None]) -> None:
-    create_tree_v2(event, max_size_megabytes=20)
+    create_tree_v2(event, max_size_megabytes=20, plan_id="basic")
 
 
 @on_document_created(
@@ -164,7 +200,7 @@ def process_user_tree(event: Event[DocumentSnapshot | None]) -> None:
     memory=MemoryOption.MB_256,
 )
 def process_anonymous_tree(event: Event[DocumentSnapshot | None]) -> None:
-    create_tree_v2(event, max_size_megabytes=10)
+    create_tree_v2(event, max_size_megabytes=10, plan_id=None)
 
 
 @on_schedule(schedule="every 1 hours")
