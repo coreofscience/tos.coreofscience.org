@@ -19,26 +19,25 @@ export const getTrees = async (
   deps: UserTreesClientDepsType,
   params: {
     lastTreeId?: string;
-    type: "proTrees" | "trees";
     count: number;
   }
 ): Promise<TreeSummary[]> => {
   const getUserTreeDocsQuery = params.lastTreeId
     ? query(
-        collection(deps.firestore, `users/${deps.userId}/${params.type}`),
+        collection(deps.firestore, `users/${deps.userId}/trees`),
         orderBy("finishedDate", "desc"),
         startAfter(
           await getDoc(
             doc(
               deps.firestore,
-              `users/${deps.userId}/${params.type}/${params.lastTreeId}`
+              `users/${deps.userId}/trees/${params.lastTreeId}`
             )
           )
         ),
         limit(params.count)
       )
     : query(
-        collection(deps.firestore, `users/${deps.userId}/${params.type}`),
+        collection(deps.firestore, `users/${deps.userId}/trees`),
         orderBy("finishedDate", "desc"),
         limit(params.count)
       );
@@ -48,6 +47,6 @@ export const getTrees = async (
   return userTreeDocs.docs.map((doc) => ({
     treeId: doc.id,
     summary: summarize(doc.data() as TreeMetadata),
-    isPro: params.type === "proTrees",
+    planId: doc.data().planId,
   }));
 };

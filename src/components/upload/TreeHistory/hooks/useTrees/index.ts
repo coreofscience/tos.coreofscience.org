@@ -10,7 +10,7 @@ import { StateType } from "./types";
 /**
  * Consider converting into a context, if you need to add more logic.
  */
-export const useTrees = (type: "proTrees" | "trees", count: number) => {
+export const useTrees = (count: number) => {
   const treesClient = useTreesClient();
 
   const [state, setState] = useState<StateType>(getInitialState());
@@ -53,7 +53,7 @@ export const useTrees = (type: "proTrees" | "trees", count: number) => {
       state.data[state.data.length - 1]?.treeId;
 
     treesClient
-      .getTrees({ lastTreeId, type, count })
+      .getTrees({ lastTreeId, count })
       .then((trees) => mounted && setSuccessTrees(trees))
       .catch((error) => mounted && setFailedTrees(error));
 
@@ -74,7 +74,7 @@ export const useTrees = (type: "proTrees" | "trees", count: number) => {
     setState((prev) => ({ ...prev, status: "loading" }));
 
     treesClient
-      .getTrees({ type, count })
+      .getTrees({ count })
       .then((trees) => mounted && setSuccessTrees(trees))
       .catch((error) => mounted && setFailedTrees(error));
 
