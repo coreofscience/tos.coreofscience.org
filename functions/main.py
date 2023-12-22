@@ -150,11 +150,7 @@ def create_tree_v2(
         )
 
 
-@on_document_created(
-    document="users/{userId}/trees/{treeId}",
-    memory=MemoryOption.MB_128,
-    timeout_sec=2,
-)
+@on_document_created(document="users/{userId}/trees/{treeId}")
 def create_tree_with_initial_info(event: Event[DocumentSnapshot | None]) -> None:
     logging.info("Running create_tree_with_initial_info")
     if event.data is None or (data := event.data.to_dict()) is None:
