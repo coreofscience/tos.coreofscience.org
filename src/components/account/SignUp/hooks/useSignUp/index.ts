@@ -4,6 +4,7 @@ import {
   UserCredential,
   sendEmailVerification,
   User,
+  updateProfile,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
@@ -42,7 +43,17 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
               acceptsEmail: data.acceptsEmail,
             },
             { merge: true },
-          );
+          )
+           .then(() => {
+            setDoc(
+             doc(firebase.firestore, "plans", userCredential.user.uid),
+             {},
+            )
+           })
+
+          updateProfile(userCredential.user, {
+           displayName: data.name
+          })
 
           setTimeout(() => {
             navigate("/tos");

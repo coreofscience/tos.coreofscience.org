@@ -14,23 +14,15 @@ export const createTree = async ({
   if (!files.length) {
     throw new Error("Files cannot be empty.");
   }
-  const getCollectionPath = (user: UserContextType | null): string => {
-    const paths: {[plan: string]: (uid: string) => string} = {
-      pro: (uid: string): string => `users/${uid}/proTrees`,
-      basic: (uid: string): string => `users/${uid}/trees`,
-      free: (): string => "trees",
-    }
-    if (user) {
-      return paths[user.plan](user.uid);
-    }
-    return paths.free("");
-  }
 
-  const collectionPath = getCollectionPath(user);
-  const treesCollection = collection(firebase.firestore, collectionPath);
+  const treesCollection = collection(
+   firebase.firestore,
+   user?.uid ? `users/${user.uid}/trees` : "trees",
+  );
   const treeDoc = await addDoc(treesCollection, {
     files,
     createdDate: new Date().getTime(), // UTC timestamp.
+    planId: user?.uid ? user.plan : null,
   });
   if (!treeDoc.path) {
     throw new Error("Failed creating a new document.");
