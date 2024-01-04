@@ -111,7 +111,7 @@ def create_tree_v2(
 ) -> None:
     if event.data is None or (data := event.data.to_dict()) is None:
         return
-    logging.info(f"handling new created tree {event} {data}")
+    logging.info(f"handling new created tree {data}")
 
     start = datetime.now()
 
@@ -191,6 +191,9 @@ def create_tree_with_initial_info(event: Event[DocumentSnapshot | None]) -> None
     memory=MemoryOption.GB_1,
 )
 def process_user_pro_tree(event: Event[DocumentSnapshot | None]) -> None:
+    """
+    Analyse data with pro settings, whatever that means.
+    """
     create_tree_v2(event, max_size_megabytes=200, plan_id="pro")
 
 
@@ -199,6 +202,9 @@ def process_user_pro_tree(event: Event[DocumentSnapshot | None]) -> None:
     memory=MemoryOption.MB_512,
 )
 def process_user_tree(event: Event[DocumentSnapshot | None]) -> None:
+    """
+    Analyse data with basic settings, whatever that means.
+    """
     create_tree_v2(event, max_size_megabytes=20, plan_id="basic")
 
 
@@ -207,11 +213,17 @@ def process_user_tree(event: Event[DocumentSnapshot | None]) -> None:
     memory=MemoryOption.MB_256,
 )
 def process_anonymous_tree(event: Event[DocumentSnapshot | None]) -> None:
+    """
+    Analyse data for an anonymous user.
+    """
     create_tree_v2(event, max_size_megabytes=10, plan_id=None)
 
 
 @on_schedule(schedule="every 1 hours")
 def add_custom_claim_for_the_plan(_: ScheduledEvent) -> None:
+    """
+    Check the plans collection and update each user's custom claims accordingly.
+    """
     logging.info("Running add_custom_claim_for_the_plan")
     for plan in firestore.client().collection("plans").stream():
         try:
@@ -229,6 +241,9 @@ def add_custom_claim_for_the_plan(_: ScheduledEvent) -> None:
 
 @on_document_written(document="plans/{planId}")
 def update_user_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
+    """
+    When a plan is updated, change the user's custom claims accordingly.
+    """
     logging.info("Running update_user_plan")
     user_id = event.params["planId"]
     try:
