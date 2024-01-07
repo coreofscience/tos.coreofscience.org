@@ -3,6 +3,6 @@ export type UserContextType = {
  name: string;
  email: string;
  emailVerified: boolean;
- plan: string;
+ plan: "pro" | "basic";
  acceptsEmail?: boolean;
 };
