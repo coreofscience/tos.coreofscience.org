@@ -25,20 +25,16 @@ const TreeHistory: FC = () => {
           <Items trees={trees.state.data} />
         </ul>
       ) : (
-        <div id="scrollableDiv" className={`overflow-auto h-14`}>
-          <InfiniteScroll
-            dataLength={trees.state.data.length}
-            next={trees.actions.fetchNextTrees}
-            hasMore={trees.state.hasMore}
-            loader={trees.state.status === "loading" && <p>Loading...</p>}
-            style={{ overflow: "unset" }}
-            scrollableTarget="scrollableDiv"
-          >
-            <ul>
-              <Items trees={trees.state.data} />
-            </ul>
-          </InfiniteScroll>
-        </div>
+        <InfiniteScroll
+          dataLength={trees.state.data.length}
+          next={trees.actions.fetchNextTrees}
+          hasMore={trees.state.hasMore}
+          loader={trees.state.status === "loading" && <p>Loading...</p>}
+        >
+          <ul>
+            <Items trees={trees.state.data} />
+          </ul>
+        </InfiniteScroll>
       )}
     </div>
   );
