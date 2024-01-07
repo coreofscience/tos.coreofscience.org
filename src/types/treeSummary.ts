@@ -1,5 +1,5 @@
 export type TreeSummary = {
   treeId: string;
-  summary: string;
+  summary: { keywords: string[]; createdDate: Date } | null;
   planId: "pro" | "basic";
 };

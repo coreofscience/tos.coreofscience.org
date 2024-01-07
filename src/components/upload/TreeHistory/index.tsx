@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import Items from "./Items";
@@ -19,26 +19,27 @@ const TreeHistory: FC = () => {
           Tree History ({trees.state.data.length})
         </h2>
       </div>
-      <div id="scrollableDiv" className="overflow-auto h-20">
-        {user.plan === "basic" ? (
+      {user.plan === "basic" ? (
         <ul>
-         <Items trees={trees.state.data} />
+          <Items trees={trees.state.data} />
         </ul>
-       ) : (
-        <InfiniteScroll
-          dataLength={trees.state.data.length}
-          next={trees.actions.fetchNextTrees}
-          hasMore={trees.state.hasMore}
-          loader={trees.state.status === "loading" && <p>Loading...</p>}
-          endMessage={<p>No more data to load.</p>}
-          scrollableTarget="scrollableDiv"
-         >
-          <ul>
-           <Items trees={trees.state.data} />
-          </ul>
-        </InfiniteScroll>
-       )}
-      </div>
+      ) : (
+        <div id="scrollableDiv" className={`overflow-auto h-14`}>
+          <InfiniteScroll
+            dataLength={trees.state.data.length}
+            next={trees.actions.fetchNextTrees}
+            hasMore={trees.state.hasMore}
+            loader={trees.state.status === "loading" && <p>Loading...</p>}
+            endMessage={<p>No more trees found.</p>}
+            style={{ overflow: "unset" }}
+            scrollableTarget="scrollableDiv"
+          >
+            <ul>
+              <Items trees={trees.state.data} />
+            </ul>
+          </InfiniteScroll>
+        </div>
+      )}
     </div>
   );
 };

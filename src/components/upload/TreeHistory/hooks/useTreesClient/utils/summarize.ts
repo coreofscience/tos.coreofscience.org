@@ -4,9 +4,9 @@ import { mostCommon } from "../../../../../../utils/arrays";
 
 import { TreeMetadata } from "../../../../../../types/treeMetadata";
 
-export const summarize = (tree: TreeMetadata): string => {
+export const summarize = (tree: TreeMetadata) => {
   if (!tree.result) {
-    return "";
+    return null;
   }
   const { root, trunk, leaf } = tree.result;
   const allKeywords = flatten([
@@ -15,10 +15,13 @@ export const summarize = (tree: TreeMetadata): string => {
     ...leaf.map((node) => node.keywords),
   ]);
 
-  return mostCommon(
-    allKeywords
-      .filter((kw) => kw !== undefined)
-      .map((kw) => (kw as string).toLowerCase()),
-    4
-  ).join(", ");
+  return {
+    keywords: mostCommon(
+      allKeywords
+        .filter((kw) => kw !== undefined)
+        .map((kw) => (kw as string).toLowerCase()),
+      4
+    ),
+    createdDate: new Date(tree.createdDate),
+  };
 };
