@@ -6,9 +6,12 @@ import Items from "./Items";
 import useUser from "../../../hooks/useUser";
 import { useTrees } from "./hooks/useTrees";
 
+const TREES_PER_PAGE = 5;
+const TREE_ELEMENT_HEIGHT = 23.5;
+
 const TreeHistory: FC = () => {
   const user = useUser();
-  const trees = useTrees(3);
+  const trees = useTrees(TREES_PER_PAGE);
 
   if (!user) return null;
   if (!trees.state.data.length) return null;
@@ -16,9 +19,7 @@ const TreeHistory: FC = () => {
   return (
     <div className="flex flex-col gap-3">
       <div>
-        <h2 className="text-2xl font-tall font-bold uppercase">
-          Tree History
-        </h2>
+        <h2 className="text-2xl font-tall font-bold uppercase">Tree History</h2>
       </div>
       {user.plan === "basic" ? (
         <ul>
@@ -30,6 +31,7 @@ const TreeHistory: FC = () => {
           next={trees.actions.fetchNextTrees}
           hasMore={trees.state.hasMore}
           loader={trees.state.status === "loading" && <p>Loading...</p>}
+          height={TREE_ELEMENT_HEIGHT * (TREES_PER_PAGE - 1)}
         >
           <ul>
             <Items trees={trees.state.data} />
