@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import Items from "./Items";
@@ -11,12 +11,13 @@ const TreeHistory: FC = () => {
   const trees = useTrees(3);
 
   if (!user) return null;
+  if (!trees.state.data.length) return null;
 
   return (
     <div className="flex flex-col gap-3">
       <div>
         <h2 className="text-2xl font-tall font-bold uppercase">
-          Tree History ({trees.state.data.length})
+          Tree History
         </h2>
       </div>
       {user.plan === "basic" ? (
@@ -30,7 +31,6 @@ const TreeHistory: FC = () => {
             next={trees.actions.fetchNextTrees}
             hasMore={trees.state.hasMore}
             loader={trees.state.status === "loading" && <p>Loading...</p>}
-            endMessage={<p>No more trees found.</p>}
             style={{ overflow: "unset" }}
             scrollableTarget="scrollableDiv"
           >
