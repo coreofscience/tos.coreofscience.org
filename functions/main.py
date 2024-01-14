@@ -261,3 +261,24 @@ def update_user_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
         auth.set_custom_user_claims(user_id, {"plan": "pro"})
         return
     auth.set_custom_user_claims(user_id, {"plan": "basic"})
+
+
+@on_schedule(schedule="every 1 hour")
+def migrate_pro_trees_to_trees(_: ScheduledEvent) -> None:
+    """
+    Migrate pro trees to trees.
+    """
+    logging.info("running migrate_pro_trees_to_trees")
+    client = firestore.client()
+    for user in client.collection("users").stream():
+        for tree in client.collection(f"users/{user.id}/trees").stream():
+            plan = tree.to_dict().get("planId")
+            if plan is None:
+                tree.reference.update({"planId": "basic"})
+        for pro_tree in client.collection(f"users/{user.id}/proTrees").stream():
+            client.collection(f"users/{user.id}/trees").document(pro_tree.id).set(
+                {
+                    **pro_tree.to_dict(),
+                    "planId": "pro",
+                }
+            )
