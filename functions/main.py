@@ -263,7 +263,7 @@ def update_user_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
     auth.set_custom_user_claims(user_id, {"plan": "basic"})
 
 
-@on_schedule(schedule="every 1 hour")
+@on_schedule(schedule="every 1 hours")
 def migrate_pro_trees_to_trees(_: ScheduledEvent) -> None:
     """
     Migrate pro trees to trees.
