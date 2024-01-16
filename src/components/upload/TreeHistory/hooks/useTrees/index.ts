@@ -24,18 +24,18 @@ export const useTrees = (count: number) => {
         hasMore: trees.length === count,
         error: undefined,
       })),
-    []
+    [],
   );
 
   const setFailedTrees = useCallback(
     (error: Error) =>
       setState((prev) => ({ ...prev, status: "error", hasMore: true, error })),
-    []
+    [],
   );
 
   const fetchNextTrees = useCallback(
     () => setState((prev) => ({ ...prev, page: prev.page + 1 })),
-    []
+    [],
   );
 
   /**

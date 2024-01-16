@@ -25,7 +25,7 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
         }
 
         const userSnap = await getDoc(
-          doc(firebase.firestore, `users/${user.uid}`)
+          doc(firebase.firestore, `users/${user.uid}`),
         );
 
         user
@@ -51,7 +51,7 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
               acceptsEmail: false,
             });
           });
-      }
+      },
     );
 
     return () => unsubscribe();

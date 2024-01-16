@@ -2,7 +2,7 @@ import { FileMetadata } from "../types/fileMetadata";
 
 const computeQuantities = (
   files: FileMetadata[],
-  maxSize: number
+  maxSize: number,
 ): {
   totalArticles: number;
   totalCitations: number;
@@ -15,12 +15,12 @@ const computeQuantities = (
 
   const totalCitations = files.reduce(
     (acc, el) => acc + (el.citations || 0),
-    0
+    0,
   );
 
   const totalSize = files.reduce(
     (acc, el) => acc + (el.blob.size / 2 ** 20 || 0),
-    0
+    0,
   );
 
   let articleCap = 0;

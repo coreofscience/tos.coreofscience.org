@@ -19,7 +19,7 @@ const articlesToData = (
   articles: ArticleWithMetrics[],
   section: Section,
   width: number,
-  height: number
+  height: number,
 ) => {
   const radii = articles.map((article) => {
     if (
@@ -85,7 +85,7 @@ const articlesToData = (
 const treeSectionToData = (
   treeSections: TreeResult,
   width: number,
-  height: number
+  height: number,
 ) => {
   const data = [];
   for (const section in treeSections) {
@@ -95,8 +95,8 @@ const treeSectionToData = (
         treeSections[section as Section] ?? [],
         section as Section,
         width,
-        height
-      )
+        height,
+      ),
     );
   }
   return data;
@@ -108,7 +108,7 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
 
   const data = useMemo(
     () => treeSectionToData(treeSections, width, height),
-    [treeSections, width, height]
+    [treeSections, width, height],
   );
 
   useEffect(() => {
@@ -119,15 +119,15 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
       .force("charge", forceManyBody().strength(5))
       .force(
         "y",
-        forceY().y((d) => (d as any).centerY)
+        forceY().y((d) => (d as any).centerY),
       )
       .force(
         "x",
-        forceX().x((d) => (d as any).centerX)
+        forceX().x((d) => (d as any).centerX),
       )
       .force(
         "collide",
-        forceCollide().radius((d) => (d as any).radius + 2)
+        forceCollide().radius((d) => (d as any).radius + 2),
       )
       .on("tick", () => {
         svg
@@ -149,7 +149,7 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
                 .attr("cx", (v) => v.x)
                 .attr("cy", (v) => v.y)
                 .attr("title", (v) => v.article.label),
-            (exit) => exit.remove()
+            (exit) => exit.remove(),
           );
       });
     return () => {

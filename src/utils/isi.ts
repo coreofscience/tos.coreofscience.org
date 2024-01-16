@@ -25,7 +25,7 @@ const keywords = (text: string): string[] => {
         .trim()
         .split(";")
         .map((keyword) => keyword.trim().toLowerCase())
-        .filter((keyword) => Boolean(keyword))
+        .filter((keyword) => Boolean(keyword)),
     )
     .flat();
 };

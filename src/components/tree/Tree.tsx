@@ -50,7 +50,7 @@ const Tree: FC<Props> = ({
   >([]);
   const treeDocRef = useMemo(
     () => doc(firebase.firestore, treePath),
-    [firebase, treePath]
+    [firebase, treePath],
   );
 
   useEffect(() => {
@@ -63,8 +63,8 @@ const Tree: FC<Props> = ({
     setInfoEntries(
       Object.entries(infoClone) as [
         Section,
-        RootInfo | TrunkInfo | LeafInfo | BranchInfo
-      ][]
+        RootInfo | TrunkInfo | LeafInfo | BranchInfo,
+      ][],
     );
   }, []);
 
@@ -87,7 +87,7 @@ const Tree: FC<Props> = ({
         keywords[section].map((keyword) => {
           return keyword.toLowerCase();
         }),
-        5
+        5,
       );
     }
     return keywords;
@@ -111,10 +111,10 @@ const Tree: FC<Props> = ({
             [labelAsBase64]: !Boolean(stars[labelAsBase64]),
           },
         },
-        { merge: true }
+        { merge: true },
       );
     },
-    [treeDocRef, stars]
+    [treeDocRef, stars],
   );
 
   const toggleShow = useCallback((label: Section) => {
@@ -188,7 +188,7 @@ const Tree: FC<Props> = ({
                     return { article, labelAsBase64, star };
                   }),
                   "star",
-                  "desc"
+                  "desc",
                 ).map(({ article, labelAsBase64, star }) => (
                   <div
                     className="flex flex-row items-center [&:nth-child(2n+1)]:bg-slate-100 p-2 gap-2"
@@ -215,7 +215,7 @@ const Tree: FC<Props> = ({
                 ))}
               </div>
             </div>
-          )
+          ),
       )}
       <Download analysis={analysis} treeSections={treeSections} />
     </div>

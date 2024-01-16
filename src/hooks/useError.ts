@@ -18,7 +18,7 @@ const useError = () => {
       };
       add(metadata);
     },
-    [add]
+    [add],
   );
 };
 

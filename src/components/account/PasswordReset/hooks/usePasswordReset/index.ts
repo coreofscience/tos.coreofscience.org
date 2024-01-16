@@ -9,7 +9,7 @@ import { PasswordResetActionsType } from "./types";
 
 export const usePasswordReset = (): [
   AsyncActionStateType,
-  PasswordResetActionsType
+  PasswordResetActionsType,
 ] => {
   const firebase = useFirebase();
   const [state, setState] = useState<AsyncActionStateType>({

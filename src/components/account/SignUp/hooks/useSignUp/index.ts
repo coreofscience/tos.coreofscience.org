@@ -43,22 +43,21 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
               acceptsEmail: data.acceptsEmail,
             },
             { merge: true },
-          )
-           .then(() => {
+          ).then(() => {
             setDoc(
-             doc(firebase.firestore, "plans", userCredential.user.uid),
-             {},
-            )
-           })
+              doc(firebase.firestore, "plans", userCredential.user.uid),
+              {},
+            );
+          });
 
           updateProfile(userCredential.user, {
-           displayName: data.name
-          })
+            displayName: data.name,
+          });
 
           setTimeout(() => {
             navigate("/tos");
             const user: User = userCredential.user;
-            if (user) sendEmailVerification(user)
+            if (user) sendEmailVerification(user);
           }, 500);
         })
         .catch((error) => {

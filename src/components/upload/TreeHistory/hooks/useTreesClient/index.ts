@@ -18,7 +18,7 @@ export const useTreesClient = () => {
       user?.uid
         ? TreesClient({ firestore: firebase.firestore, userId: user.uid })
         : null,
-    [user, firebase]
+    [user, firebase],
   );
 
   return userTreesClient;

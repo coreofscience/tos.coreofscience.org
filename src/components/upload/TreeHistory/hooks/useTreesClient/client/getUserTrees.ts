@@ -7,6 +7,7 @@ import {
   getDocs,
   getDoc,
   doc,
+  where,
 } from "firebase/firestore";
 
 import { summarize } from "../utils/summarize";
@@ -20,26 +21,30 @@ export const getTrees = async (
   params: {
     lastTreeId?: string;
     count: number;
-  }
+  },
 ): Promise<TreeSummary[]> => {
   const getUserTreeDocsQuery = params.lastTreeId
     ? query(
         collection(deps.firestore, `users/${deps.userId}/trees`),
+        where("result", "!=", null),
+        orderBy("result", "desc"),
         orderBy("finishedDate", "desc"),
         startAfter(
           await getDoc(
             doc(
               deps.firestore,
-              `users/${deps.userId}/trees/${params.lastTreeId}`
-            )
-          )
+              `users/${deps.userId}/trees/${params.lastTreeId}`,
+            ),
+          ),
         ),
-        limit(params.count)
+        limit(params.count),
       )
     : query(
         collection(deps.firestore, `users/${deps.userId}/trees`),
+        where("result", "!=", null),
+        orderBy("result", "desc"),
         orderBy("finishedDate", "desc"),
-        limit(params.count)
+        limit(params.count),
       );
 
   const userTreeDocs = await getDocs(getUserTreeDocsQuery);

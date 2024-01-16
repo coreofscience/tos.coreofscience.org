@@ -14,7 +14,7 @@ const formatAuthors = (simple: boolean, authors: string[]): string => {
       `${author
         .split(".")
         .filter((s) => !!s)
-        .join(". ")}.`
+        .join(". ")}.`,
   );
   const [last, ...first] = [...cleanAuthors].reverse();
   return [first.reverse().join("; "), last].filter((s) => !!s).join(" & ");

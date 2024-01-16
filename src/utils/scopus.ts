@@ -29,7 +29,7 @@ const keywords = (content: string): string[] =>
         match.groups.key &&
         match.groups.value &&
         match.groups.key === "KW" &&
-        match.groups.value
+        match.groups.value,
     )
     .filter((keyword: string | false | undefined) => !!keyword) as string[];
 
@@ -40,7 +40,10 @@ const countArticles = (content: string): number =>
     .map((line) => line.match(RIS_PATTERN))
     .filter(
       (match) =>
-        !!match && match.groups && match.groups.key && match.groups.key === "ER"
+        !!match &&
+        match.groups &&
+        match.groups.key &&
+        match.groups.key === "ER",
     ).length;
 
 const countReferences = (content: string): number =>
@@ -69,7 +72,7 @@ const countReferences = (content: string): number =>
         }
         return { counting, count };
       },
-      { counting: false, count: 0 }
+      { counting: false, count: 0 },
     ).count;
 
 export { looksLikeScopus, keywords, countArticles, countReferences };

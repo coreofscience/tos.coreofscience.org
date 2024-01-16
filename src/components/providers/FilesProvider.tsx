@@ -56,7 +56,7 @@ const FilesProvider: FC<Props> = ({ children }: Props) => {
         ];
       });
     },
-    [files]
+    [files],
   );
 
   const value = useMemo(
@@ -68,7 +68,7 @@ const FilesProvider: FC<Props> = ({ children }: Props) => {
       progress,
       swap,
     }),
-    [add, files, remove, track, progress, swap]
+    [add, files, remove, track, progress, swap],
   );
 
   return <FileContext.Provider value={value}>{children}</FileContext.Provider>;

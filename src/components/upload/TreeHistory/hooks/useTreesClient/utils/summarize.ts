@@ -20,7 +20,7 @@ export const summarize = (tree: TreeMetadata) => {
       allKeywords
         .filter((kw) => kw !== undefined)
         .map((kw) => (kw as string).toLowerCase()),
-      4
+      4,
     ),
     createdDate: new Date(tree.createdDate),
   };

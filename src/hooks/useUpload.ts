@@ -30,12 +30,12 @@ const useUpload = () => {
               () => {},
               () => {
                 track(meta.hash, 100);
-              }
+              },
             );
           });
       });
     },
-    [add, track, firebase]
+    [add, track, firebase],
   );
 };
 

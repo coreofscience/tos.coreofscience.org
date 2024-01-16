@@ -15,7 +15,7 @@ const UploadIndicator: FC<Props> = ({ maxSize }) => {
   const files = useFiles();
 
   const [cappedFiles, setCappedFiles] = useState<{ [hash: string]: boolean }>(
-    {}
+    {},
   );
 
   let cumSize = 0;

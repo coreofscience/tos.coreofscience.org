@@ -16,8 +16,8 @@ export const createTree = async ({
   }
 
   const treesCollection = collection(
-   firebase.firestore,
-   user?.uid ? `users/${user.uid}/trees` : "trees",
+    firebase.firestore,
+    user?.uid ? `users/${user.uid}/trees` : "trees",
   );
   const treeDoc = await addDoc(treesCollection, {
     files,

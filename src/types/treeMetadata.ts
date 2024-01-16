@@ -4,7 +4,7 @@ import { Analysis } from "./Analysis";
 export interface TreeMetadata {
   createdDate: number;
   files: string[];
-  _analysis?: Analysis
+  _analysis?: Analysis;
   startedDate?: number;
   finishedDate?: number;
   result?: TreeResult;
