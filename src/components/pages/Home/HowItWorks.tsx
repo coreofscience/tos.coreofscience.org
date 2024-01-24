@@ -23,11 +23,11 @@ const HowItWorks: FC = () => {
     <section
       id="how-it-works"
       aria-label="How Tree of Science works"
-      className="overflow-hidden pt-20 pb-10 bg-leaf"
+      className="overflow-hidden bg-leaf pb-10 pt-20"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
-          <h2 className="font-tall text-slate-50 text-center text-3xl sm:text-4xl md:text-5xl">
+          <h2 className="text-center font-tall text-3xl text-slate-50 sm:text-4xl md:text-5xl">
             How Tree of Science Works
           </h2>
           <p className="mt-6 text-lg text-slate-50">
@@ -43,7 +43,7 @@ const HowItWorks: FC = () => {
               role="tablist"
             >
               <div
-                className={`group relative px-4 py-1 lg:p-6 rounded-l-sm ${
+                className={`group relative rounded-l-sm px-4 py-1 lg:p-6 ${
                   show === Section.PlantSeeds
                     ? "bg-green-200/10"
                     : "hover:bg-green-400/10 lg:hover:bg-green-400/10"
@@ -52,7 +52,7 @@ const HowItWorks: FC = () => {
               >
                 <h3>
                   <button
-                    className="text-lg text-slate-50 ui-not-focus-visible:outline-none"
+                    className="ui-not-focus-visible:outline-none text-lg text-slate-50"
                     role="tab"
                     type="button"
                     tabIndex={show === Section.PlantSeeds ? 0 : -1}
@@ -61,13 +61,13 @@ const HowItWorks: FC = () => {
                     Plant your seeds
                   </button>
                 </h3>
-                <p className="mt-2 hidden text-sm lg:block text-slate-50">
+                <p className="mt-2 hidden text-sm text-slate-50 lg:block">
                   Look up your topic on Scopus or Web of Science and import your
                   data into the Tree of Science application.
                 </p>
               </div>
               <div
-                className={`group relative px-4 py-1 lg:p-6 rounded-l-sm ${
+                className={`group relative rounded-l-sm px-4 py-1 lg:p-6 ${
                   show === Section.BuildTree
                     ? "bg-green-200/10"
                     : "hover:bg-green-400/10 lg:hover:bg-green-400/10"
@@ -76,7 +76,7 @@ const HowItWorks: FC = () => {
               >
                 <h3>
                   <button
-                    className="text-lg text-slate-50 ui-not-focus-visible:outline-none"
+                    className="ui-not-focus-visible:outline-none text-lg text-slate-50"
                     role="tab"
                     type="button"
                     tabIndex={show === Section.BuildTree ? 0 : -1}
@@ -85,14 +85,14 @@ const HowItWorks: FC = () => {
                     Build your tree
                   </button>
                 </h3>
-                <p className="mt-2 hidden text-sm lg:block text-slate-50">
+                <p className="mt-2 hidden text-sm text-slate-50 lg:block">
                   Build your Tree of Science with the most modern algoritms and
                   analyze your data on the fly.
                 </p>
               </div>
 
               <div
-                className={`group relative px-4 py-1 lg:p-6 rounded-l-sm ${
+                className={`group relative rounded-l-sm px-4 py-1 lg:p-6 ${
                   show === Section.IdentifyRelevantTheories
                     ? "bg-green-200/10"
                     : "hover:bg-green-400/10 lg:hover:bg-green-400/10"
@@ -101,7 +101,7 @@ const HowItWorks: FC = () => {
               >
                 <h3>
                   <button
-                    className="text-lg text-slate-50 ui-not-focus-visible:outline-none"
+                    className="ui-not-focus-visible:outline-none text-lg text-slate-50"
                     role="tab"
                     type="button"
                     tabIndex={
@@ -112,14 +112,14 @@ const HowItWorks: FC = () => {
                     Identify relevant theories
                   </button>
                 </h3>
-                <p className="mt-2 hidden text-slate-50 text-sm lg:block">
+                <p className="mt-2 hidden text-sm text-slate-50 lg:block">
                   Identify relevant theories that the field is based on (roots),
                   essential works (trunk) and newer publications (leaves).
                 </p>
               </div>
 
               <div
-                className={`group relative px-4 py-1 lg:p-6 rounded-l-sm ${
+                className={`group relative rounded-l-sm px-4 py-1 lg:p-6 ${
                   show === Section.ExtractYourLiteratureList
                     ? "bg-green-200/10"
                     : "hover:bg-green-400/10 lg:hover:bg-green-400/10"
@@ -128,7 +128,7 @@ const HowItWorks: FC = () => {
               >
                 <h3>
                   <button
-                    className="text-lg text-slate-50 ui-not-focus-visible:outline-none"
+                    className="ui-not-focus-visible:outline-none text-lg text-slate-50"
                     role="tab"
                     type="button"
                     tabIndex={
@@ -139,7 +139,7 @@ const HowItWorks: FC = () => {
                     Extract your literature list
                   </button>
                 </h3>
-                <p className="mt-2 hidden text-slate-50 text-sm lg:block">
+                <p className="mt-2 hidden text-sm text-slate-50 lg:block">
                   Extract your literature list and start writing.
                 </p>
               </div>
@@ -154,12 +154,12 @@ const HowItWorks: FC = () => {
             >
               <div className="relative sm:px-6 lg:hidden">
                 <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0"></div>
-                <p className="relative text-slate-50 mx-auto max-w-2xl text-base sm:text-center">
+                <p className="relative mx-auto max-w-2xl text-base text-slate-50 sm:text-center">
                   Look up your topic on Scopus or Web of Science and import your
                   data into the Tree of Science application.
                 </p>
               </div>
-              <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem] rounded-sm">
+              <div className="mt-10 w-[45rem] overflow-hidden rounded-sm bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
                 <img
                   alt=""
                   width="2174"
@@ -181,12 +181,12 @@ const HowItWorks: FC = () => {
             >
               <div className="relative sm:px-6 lg:hidden">
                 <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0"></div>
-                <p className="relative text-slate-50 mx-auto max-w-2xl text-base sm:text-center">
+                <p className="relative mx-auto max-w-2xl text-base text-slate-50 sm:text-center">
                   Build your Tree of Science with the most modern algoritms and
                   analyze your data on the fly.
                 </p>
               </div>
-              <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem] rounded-sm">
+              <div className="mt-10 w-[45rem] overflow-hidden rounded-sm bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
                 <img
                   alt=""
                   width="2174"
@@ -213,12 +213,12 @@ const HowItWorks: FC = () => {
             >
               <div className="relative sm:px-6 lg:hidden">
                 <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0"></div>
-                <p className="relative text-slate-50 mx-auto max-w-2xl text-base sm:text-center">
+                <p className="relative mx-auto max-w-2xl text-base text-slate-50 sm:text-center">
                   Identify relevant theories that the field is based on (roots),
                   essential works (trunk) and newer publications (leaves).
                 </p>
               </div>
-              <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem] rounded-sm">
+              <div className="mt-10 w-[45rem] overflow-hidden rounded-sm bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
                 <img
                   alt=""
                   width="2174"
@@ -245,11 +245,11 @@ const HowItWorks: FC = () => {
             >
               <div className="relative sm:px-6 lg:hidden">
                 <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0"></div>
-                <p className="relative text-slate-50 mx-auto max-w-2xl text-base sm:text-center">
+                <p className="relative mx-auto max-w-2xl text-base text-slate-50 sm:text-center">
                   Extract your literature list and start writing.
                 </p>
               </div>
-              <div className="mt-10 w-[45rem] overflow-hidden bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem] rounded-sm">
+              <div className="mt-10 w-[45rem] overflow-hidden rounded-sm bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
                 <img
                   alt=""
                   width="2174"

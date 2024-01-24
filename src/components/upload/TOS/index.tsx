@@ -67,32 +67,32 @@ const TOS: FC = () => {
       <UploadIndicator maxSize={maxSize} />
       <FileErrors />
       <p>Review your input:</p>
-      <div className="grid grid-cols-articles gap-2 items-center">
-        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col rounded-sm">
-          <span className="font-semibold text-xl">
+      <div className="grid grid-cols-articles items-center gap-2">
+        <div className="flex h-24 flex-col items-center justify-center rounded-sm bg-slate-100">
+          <span className="text-xl font-semibold">
             {countFormat.format(articleCap)}/{countFormat.format(totalArticles)}
           </span>
-          <span className="text-slate-500 text-sm">articles</span>
+          <span className="text-sm text-slate-500">articles</span>
         </div>
-        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col rounded-sm">
-          <span className="font-semibold text-xl">
+        <div className="flex h-24 flex-col items-center justify-center rounded-sm bg-slate-100">
+          <span className="text-xl font-semibold">
             {countFormat.format(citationCap)}/
             {countFormat.format(totalCitations)}
           </span>
-          <span className="text-slate-500 text-sm">citations</span>
+          <span className="text-sm text-slate-500">citations</span>
         </div>
-        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col rounded-sm">
-          <span className="font-semibold text-xl">
+        <div className="flex h-24 flex-col items-center justify-center rounded-sm bg-slate-100">
+          <span className="text-xl font-semibold">
             {weightFormat.format(round(sizeCap, 2))}/
             {weightFormat.format(round(maxSize, 2))}
           </span>
-          <span className="text-slate-500 text-sm">size [MB]</span>
+          <span className="text-sm text-slate-500">size [MB]</span>
         </div>
       </div>
       <p>
         For extra processing capacity check out our&nbsp;
         <Link
-          className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+          className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
           to="/pricing"
         >
           plans and pricing.
@@ -102,7 +102,7 @@ const TOS: FC = () => {
       <div>Let's start planting your tree.</div>
       <div>
         <button
-          className="inline-block font-tall text-4xl text-slate-50 bg-leaf px-12 py-6 uppercase disabled:bg-slate-400 rounded-sm"
+          className="inline-block rounded-sm bg-leaf px-12 py-6 font-tall text-4xl uppercase text-slate-50 disabled:bg-slate-400"
           disabled={
             isLoading ||
             !finished ||

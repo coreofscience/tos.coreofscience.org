@@ -7,36 +7,36 @@ const HamburgerMenu = () => {
     <>
       <div className="flex gap-1 md:gap-4 xl:hidden">
         <button onClick={() => setOpen(!open)} className="relative">
-          <div className="relative z-20 flex items-center justify-center w-[30px] h-[30px] transform">
-            <div className="flex flex-col justify-around w-[20px] h-[20px] transform overflow-hidden">
+          <div className="relative z-20 flex h-[30px] w-[30px] transform items-center justify-center">
+            <div className="flex h-[20px] w-[20px] transform flex-col justify-around overflow-hidden">
               <div
-                className={`bg-leaf h-[2.5px] w-7 transform ${
+                className={`h-[2.5px] w-7 transform bg-leaf ${
                   open && "translate-x-10"
                 }`}
               ></div>
               <div
-                className={`bg-leaf h-[2.5px] w-7 transform ${
+                className={`h-[2.5px] w-7 transform bg-leaf ${
                   open && "translate-x-10"
                 }`}
               ></div>
               <div
-                className={`bg-leaf h-[2.5px] w-7 transform ${
+                className={`h-[2.5px] w-7 transform bg-leaf ${
                   open && "translate-x-10"
                 }`}
               ></div>
 
               <div
-                className={`absolute items-center justify-between transform top-2.5 -translate-x-10 flex ${
-                  open ? "translate-x-0 w-12" : "w-0"
+                className={`absolute top-2.5 flex -translate-x-10 transform items-center justify-between ${
+                  open ? "w-12 translate-x-0" : "w-0"
                 }`}
               >
                 <div
-                  className={`absolute bg-leaf h-[2.5px] w-5 transform rotate-0 ${
+                  className={`absolute h-[2.5px] w-5 rotate-0 transform bg-leaf ${
                     open && "rotate-45"
                   }`}
                 ></div>
                 <div
-                  className={`absolute bg-leaf h-[2.5px] w-5 transform -rotate-0 ${
+                  className={`absolute h-[2.5px] w-5 -rotate-0 transform bg-leaf ${
                     open && "-rotate-45"
                   }`}
                 ></div>
@@ -48,13 +48,13 @@ const HamburgerMenu = () => {
       {open && (
         <div>
           <div
-            className="fixed z-10 inset-0 bg-slate-300/50 opacity-100"
+            className="fixed inset-0 z-10 bg-slate-300/50 opacity-100"
             id="headlessui-popover-overlay-:r9i:"
             aria-hidden="true"
             data-headlessui-state="open"
             onClick={() => setOpen(!open)}
           ></div>
-          <div className="absolute z-10 inset-x-0 mt-10 container flex flex-col bg-white p-4 text-black shadow-md">
+          <div className="container absolute inset-x-0 z-10 mt-10 flex flex-col bg-white p-4 text-black shadow-md">
             <a
               className="block w-full p-2"
               data-headlessui-state="open"

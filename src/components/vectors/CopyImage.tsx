@@ -1,7 +1,7 @@
 const CopyImage = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="w-[23px] h-[23px] fill-current"
+    className="h-[23px] w-[23px] fill-current"
     viewBox="0 0 25 25"
     fill="none"
   >

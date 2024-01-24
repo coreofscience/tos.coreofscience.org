@@ -18,7 +18,7 @@ const TestimonialCard: FC<Props> = ({
 }: Props) => {
   return (
     <li>
-      <figure className="relative bg-white p-6 shadow-xl rounded-sm shadow-slate-900/10">
+      <figure className="relative rounded-sm bg-white p-6 shadow-xl shadow-slate-900/10">
         <QuoteIcon />
         <blockquote className="relative">
           <p className="text-lg">{review}</p>

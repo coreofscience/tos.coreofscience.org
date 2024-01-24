@@ -13,16 +13,16 @@ const Header = () => {
   const location = useLocation();
 
   return (
-    <div className="text-leaf flex flex-row items-center justify-between">
-      <div className="text-leaf flex flex-row items-center gap-1 md:gap-4 lg:gap-8">
+    <div className="flex flex-row items-center justify-between text-leaf">
+      <div className="flex flex-row items-center gap-1 text-leaf md:gap-4 lg:gap-8">
         <Link className="flex flex-row items-center gap-2" to="/">
-          <TreeOfScience className="w-20 h-20" />
+          <TreeOfScience className="h-20 w-20" />
           {location.pathname === "/" ? (
-            <h1 className="font-tall uppercase text-2xl font-bold hidden sm:inline md:text-4xl">
+            <h1 className="hidden font-tall text-2xl font-bold uppercase sm:inline md:text-4xl">
               Tree of Science
             </h1>
           ) : (
-            <span className="font-tall uppercase text-2xl font-bold hidden sm:inline md:text-4xl">
+            <span className="hidden font-tall text-2xl font-bold uppercase sm:inline md:text-4xl">
               Tree of Science
             </span>
           )}
@@ -33,15 +33,15 @@ const Header = () => {
           </ul>
         )}
       </div>
-      <div className="flex flex-row items-center text-xs md:text-md md:text-lg gap-1 xs:gap-2">
+      <div className="md:text-md xs:gap-2 flex flex-row items-center gap-1 text-xs md:text-lg">
         {user?.uid ? (
           <>
-            <span className="overflow-ellipsis hidden sm:inline">
+            <span className="hidden overflow-ellipsis sm:inline">
               {user.email}
             </span>
             <button
               onClick={() => signOut(firebase.auth)}
-              className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf rounded-sm"
+              className="rounded-sm bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
             >
               Log Out
             </button>
@@ -50,14 +50,14 @@ const Header = () => {
           <>
             {location.pathname !== "/log-in" && (
               <Link
-                className="px-4 py-2 font-tall uppercase font-bold rounded-sm"
+                className="rounded-sm px-4 py-2 font-tall font-bold uppercase"
                 to="/log-in"
               >
                 Log In
               </Link>
             )}
             <Link
-              className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf rounded-sm"
+              className="rounded-sm bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
               to="/sign-up"
             >
               Sign up

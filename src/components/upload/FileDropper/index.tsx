@@ -51,16 +51,16 @@ const FileDropper: FC<Props> = ({ maxSize }) => {
   });
   return (
     <div
-      className="flex flex-col itemc-center bg-slate-100 text-stone-500 cursor-pointer p-4 h-32 rounded-sm overflow-hidden"
+      className="itemc-center flex h-32 cursor-pointer flex-col overflow-hidden rounded-sm bg-slate-100 p-4 text-stone-500"
       {...getRootProps()}
     >
       <input style={{ display: "none" }} {...getInputProps()} />
       {isDragActive ? (
-        <p className="flex h-full w-full m-auto items-center justify-center text-center fancy-bg-dashed-b">
+        <p className="fancy-bg-dashed-b m-auto flex h-full w-full items-center justify-center text-center">
           Drop the files here...
         </p>
       ) : (
-        <p className="flex h-full w-full m-auto items-center justify-center text-center fancy-bg-dahsed-a">
+        <p className="fancy-bg-dahsed-a m-auto flex h-full w-full items-center justify-center text-center">
           Drag &amp; Drop your seed files here, or choose your files.
         </p>
       )}

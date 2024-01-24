@@ -11,7 +11,7 @@ interface Props {
 const AppLayout: FC<Props> = ({ children }: Props) => {
   const location = useLocation();
   return (
-    <div className="grid grid-rows-[auto 1fr auto] h-full gap-4 mt-4 md:gap-16 md:mt-16">
+    <div className="grid-rows-[auto 1fr auto] mt-4 grid h-full gap-4 md:mt-16 md:gap-16">
       <header>
         <div className="container">
           <Header />

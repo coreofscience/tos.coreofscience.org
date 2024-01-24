@@ -21,15 +21,15 @@ const SignUp: FC = () => {
   return (
     <Fragment>
       <form
-        className="flex flex-col gap-4 max-w-md m-auto"
+        className="m-auto flex max-w-md flex-col gap-4"
         onSubmit={form.handleSubmit(signUpActions.signUp)}
       >
-        <h2 className="text-2xl md:text-4xl font-tall uppercase">Sign Up</h2>
+        <h2 className="font-tall text-2xl uppercase md:text-4xl">Sign Up</h2>
         <div className="flex flex-col gap-2">
           <input
             {...form.register("name")}
             type="text"
-            className="p-2 border border-stone-500 rounded-sm"
+            className="rounded-sm border border-stone-500 p-2"
             placeholder="Name"
           />
           <Message message={form.formState.errors.name?.message} type="error" />
@@ -38,7 +38,7 @@ const SignUp: FC = () => {
           <input
             {...form.register("email")}
             type="email"
-            className="p-2 border border-stone-500 rounded-sm"
+            className="rounded-sm border border-stone-500 p-2"
             placeholder="email@example.com"
           />
           <Message
@@ -50,7 +50,7 @@ const SignUp: FC = () => {
           <input
             {...form.register("password")}
             type="password"
-            className="p-2 border border-stone-500 rounded-sm"
+            className="rounded-sm border border-stone-500 p-2"
             placeholder="password"
           />
           <Message
@@ -62,7 +62,7 @@ const SignUp: FC = () => {
           <input
             {...form.register("acceptsEmail")}
             type="checkbox"
-            className="mr-2 w-4 h-4"
+            className="mr-2 h-4 w-4"
           />
           <label className="text-gray-700" htmlFor="acceptsEmail">
             I like to receive the Tree of Science newsletter to stay in touch
@@ -73,7 +73,7 @@ const SignUp: FC = () => {
         <div>
           <input
             type="submit"
-            className="px-4 py-2 font-tall uppercase font-bold text-slate-50 bg-leaf rounded-sm"
+            className="rounded-sm bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
             value="SIGN UP"
           />
         </div>

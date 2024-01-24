@@ -10,7 +10,7 @@ const FAQ = () => {
     <section aria-labelledby="faq-title">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0">
-          <h1 id="faq-title" className="text-3xl font-tall sm:text-4xl">
+          <h1 id="faq-title" className="font-tall text-3xl sm:text-4xl">
             Frequently asked questions
           </h1>
           <p className="mt-4 text-lg sm:text-xl">
@@ -22,7 +22,7 @@ const FAQ = () => {
           <li>
             <ul className="flex flex-col gap-y-8">
               <li className="flex flex-col gap-2">
-                <h2 className="text-xl font-tall">
+                <h2 className="font-tall text-xl">
                   What is the Tree of Science?
                 </h2>
                 <p>
@@ -40,7 +40,7 @@ const FAQ = () => {
                 </p>
               </li>
               <li className="flex flex-col gap-2">
-                <h2 className="text-xl font-tall">
+                <h2 className="font-tall text-xl">
                   Who is the Tree of Science intended for?
                 </h2>
                 <p>
@@ -59,7 +59,7 @@ const FAQ = () => {
                 </p>
               </li>
               <li className="flex flex-col gap-2">
-                <h2 className="text-xl font-tall">
+                <h2 className="font-tall text-xl">
                   Is Tree of Science Open Source?
                 </h2>
                 <p>
@@ -75,7 +75,7 @@ const FAQ = () => {
           <li>
             <ul className="flex flex-col gap-y-8">
               <li className="flex flex-col gap-2">
-                <h2 className="text-xl font-tall">
+                <h2 className="font-tall text-xl">
                   How do I cite Tree of Science in my research?
                 </h2>
                 <p>
@@ -100,7 +100,7 @@ const FAQ = () => {
                 />
               </li>
               <li className="flex flex-col gap-2">
-                <h2 className="text-xl font-tall">
+                <h2 className="font-tall text-xl">
                   Where Can I Access In-Depth Information About the Tree of
                   Science Algorithm?
                 </h2>
@@ -125,7 +125,7 @@ const FAQ = () => {
                 </p>
               </li>
               <li className="flex flex-col gap-2">
-                <h2 className="text-xl font-tall">
+                <h2 className="font-tall text-xl">
                   Is Using Tree of Science Free?
                 </h2>
                 <p>
@@ -144,14 +144,14 @@ const FAQ = () => {
           <li>
             <ul className="flex flex-col gap-y-8">
               <li className="flex flex-col gap-2">
-                <h2 className="text-xl font-tall">
+                <h2 className="font-tall text-xl">
                   What is the Meaning of Each Section of the Tree of Science?
                 </h2>
                 <p>
                   The Tree of Science visualizes the landscape of scientific
                   research through various components:
                 </p>
-                <ul className="list-disc mt-2 text-sm">
+                <ul className="mt-2 list-disc text-sm">
                   <li>
                     <strong>Roots</strong>: These are seminal papers that serve
                     as foundational works in a field. They are origin points for
@@ -180,7 +180,7 @@ const FAQ = () => {
                 </p>
               </li>
               <li className="flex flex-col gap-2">
-                <h2 className="text-xl font-tall">
+                <h2 className="font-tall text-xl">
                   Can we expect more inventory features?
                 </h2>
                 <p>
@@ -188,7 +188,7 @@ const FAQ = () => {
                 </p>
               </li>
               <li className="flex flex-col gap-2">
-                <h2 className="text-xl font-tall">
+                <h2 className="font-tall text-xl">
                   Do you have any tutorials or guides?
                 </h2>
                 <p>

@@ -147,7 +147,7 @@ const Tree: FC<Props> = ({
               <div className="flex flex-col gap-2">
                 <h2
                   className={
-                    "uppercase font-tall font-semibold text-2xl " +
+                    "font-tall text-2xl font-semibold uppercase " +
                     {
                       root: "text-root",
                       trunk: "text-trunk",
@@ -164,7 +164,7 @@ const Tree: FC<Props> = ({
                   <p>
                     {`${info.info} ${info.doc}`}{" "}
                     <Link
-                      className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+                      className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
                       to="/docs/sap"
                     >
                       docs.
@@ -191,12 +191,12 @@ const Tree: FC<Props> = ({
                   "desc",
                 ).map(({ article, labelAsBase64, star }) => (
                   <div
-                    className="flex flex-row items-center [&:nth-child(2n+1)]:bg-slate-100 p-2 gap-2"
+                    className="flex flex-row items-center gap-2 p-2 [&:nth-child(2n+1)]:bg-slate-100"
                     key={`article-${article.label}`}
                   >
                     <Reference key={article.label} {...article} />
                     <button
-                      className="text-slate-300 active:text-slate-400 hover:text-slate-400"
+                      className="text-slate-300 hover:text-slate-400 active:text-slate-400"
                       onClick={() => copy(article.label)}
                     >
                       <CopyImage />
@@ -205,7 +205,7 @@ const Tree: FC<Props> = ({
                       className={
                         star
                           ? "text-yellow-500"
-                          : "text-slate-300 active:text-slate-400 hover:text-slate-400"
+                          : "text-slate-300 hover:text-slate-400 active:text-slate-400"
                       }
                       onClick={() => toggleStar(labelAsBase64)}
                     >

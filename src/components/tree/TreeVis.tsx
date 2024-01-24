@@ -159,7 +159,7 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
 
   return (
     <div ref={ref}>
-      <svg className="w-full h-full min-h-[620px]" ref={svgRef} />
+      <svg className="h-full min-h-[620px] w-full" ref={svgRef} />
     </div>
   );
 };

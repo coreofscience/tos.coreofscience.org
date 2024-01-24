@@ -19,7 +19,7 @@ const Download: React.FC<DownloadPropsType> = ({ treeSections, analysis }) => {
     return (
       <Link
         aria-label="download"
-        className="px-4 py-4 bg-slate-400/90 fixed bottom-10 right-10 rounded-full shadow-sm hover:shadow-md active:shadow-md"
+        className="fixed bottom-10 right-10 rounded-full bg-slate-400/90 px-4 py-4 shadow-sm hover:shadow-md active:shadow-md"
         title="Become a pro user to download"
         to="/pricing"
       >
