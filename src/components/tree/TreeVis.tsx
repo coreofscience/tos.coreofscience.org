@@ -1,5 +1,4 @@
-import { FC, useEffect, useMemo, useRef } from "react";
-import { useMeasure } from "react-use";
+import { ArticleWithMetrics, Section, TreeResult } from "../../types/result";
 import {
   select,
   forceSimulation,
@@ -8,8 +7,8 @@ import {
   forceX,
   forceY,
 } from "d3";
-
-import { ArticleWithMetrics, Section, TreeResult } from "../../types/result";
+import { FC, useEffect, useMemo, useRef } from "react";
+import { useMeasure } from "react-use";
 
 interface Props {
   treeResult: TreeResult;

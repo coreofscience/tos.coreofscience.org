@@ -1,11 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
-
-import { getInitialState } from "./getInitialState";
-
-import { useTreesClient } from "../useTreesClient";
-
 import { TreeSummary } from "../../../../../types/treeSummary";
+import { useTreesClient } from "../useTreesClient";
+import { getInitialState } from "./getInitialState";
 import { StateType } from "./types";
+import { useCallback, useEffect, useState } from "react";
 
 /**
  * Consider converting into a context, if you need to add more logic.

@@ -1,9 +1,7 @@
-import { useMemo } from "react";
-
-import useUser from "../../../../../hooks/useUser";
 import useFirebase from "../../../../../hooks/useFirebase";
-
+import useUser from "../../../../../hooks/useUser";
 import { TreesClient } from "./client";
+import { useMemo } from "react";
 
 /**
  * Deals with user trees actions, such as retrieve them from the DB.

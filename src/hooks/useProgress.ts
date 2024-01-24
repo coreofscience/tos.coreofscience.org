@@ -1,5 +1,5 @@
-import { useContext, useState, useEffect } from "react";
 import FileContext from "../context/FileContext";
+import { useContext, useState, useEffect } from "react";
 
 const useProgress = (hash: string) => {
   const [value, set] = useState(0);

@@ -1,6 +1,6 @@
-import { FC, useState } from "react";
-import { sendEmailVerification } from "firebase/auth";
 import useFirebase from "../../../hooks/useFirebase";
+import { sendEmailVerification } from "firebase/auth";
+import { FC, useState } from "react";
 
 const EmailVerification: FC = () => {
   const firebase = useFirebase();

@@ -1,7 +1,6 @@
-import React, { FC, Suspense, useContext, useEffect, useState } from "react";
-
 import FileContext from "../../../context/FileContext";
 import useFiles from "../../../hooks/useFiles";
+import React, { FC, Suspense, useContext, useEffect, useState } from "react";
 
 const FileCard = React.lazy(() => import("../FileCard"));
 

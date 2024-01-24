@@ -1,6 +1,5 @@
-import { FC } from "react";
-
 import PricingCard from "./PricingCard";
+import { FC } from "react";
 
 const includedFeaturesForBasic: string[] = [
   "Up to 10 megabyte file sizes",

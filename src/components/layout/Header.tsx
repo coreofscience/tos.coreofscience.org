@@ -1,11 +1,10 @@
-import { signOut } from "firebase/auth";
-import { Link, useLocation } from "react-router-dom";
-import useUser from "../../hooks/useUser";
-
-import TreeOfScience from "../vectors/TreeOfScience";
 import useFirebase from "../../hooks/useFirebase";
+import useUser from "../../hooks/useUser";
+import TreeOfScience from "../vectors/TreeOfScience";
 import HamburgerMenu from "./HamburgerMenu";
 import NavBar from "./NavBar";
+import { signOut } from "firebase/auth";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const firebase = useFirebase();

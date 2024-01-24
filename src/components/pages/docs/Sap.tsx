@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import TableOfContent from "../../common/TableOfContent";
 import { HeadingData } from "../../common/TableOfContent/constants";
+import { useEffect } from "react";
 
 const Sap = () => {
   useEffect(() => {

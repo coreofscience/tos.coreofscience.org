@@ -1,6 +1,5 @@
-import { createContext } from "react";
-
 import { FileContextType } from "../types/fileContextType";
+import { createContext } from "react";
 
 const FileContext = createContext<FileContextType>({
   add: () => {},

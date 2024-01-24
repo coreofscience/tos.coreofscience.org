@@ -1,11 +1,9 @@
-import { useCallback, useState } from "react";
-import { sendPasswordResetEmail } from "firebase/auth";
-
 import useFirebase from "../../../../../hooks/useFirebase";
-
 import { AsyncActionStateType } from "../../../../../types/asyncActionStateType";
 import { PaswordResetFormFieldsType } from "../../types";
 import { PasswordResetActionsType } from "./types";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { useCallback, useState } from "react";
 
 export const usePasswordReset = (): [
   AsyncActionStateType,

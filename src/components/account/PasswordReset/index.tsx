@@ -1,14 +1,11 @@
+import { Message } from "../common/Message";
+import { defaultLoginFormFieldsState } from "./constants/defaultState";
+import { usePasswordReset } from "./hooks/usePasswordReset";
+import { passwordResetSchema } from "./schema";
+import { PaswordResetFormFieldsType } from "./types";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { FC, Fragment } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-
-import { Message } from "../common/Message";
-
-import { defaultLoginFormFieldsState } from "./constants/defaultState";
-import { passwordResetSchema } from "./schema";
-import { usePasswordReset } from "./hooks/usePasswordReset";
-
-import { PaswordResetFormFieldsType } from "./types";
 
 const PasswordReset: FC = () => {
   const form = useForm<PaswordResetFormFieldsType>({

@@ -1,8 +1,7 @@
-import { FC, useContext } from "react";
-
-import CancelIcon from "../../vectors/CancelIcon";
 import FileContext from "../../../context/FileContext";
 import useInvalidFiles from "../../../hooks/useInvalidFiles";
+import CancelIcon from "../../vectors/CancelIcon";
+import { FC, useContext } from "react";
 
 const FileErrors: FC = () => {
   const { remove } = useContext(FileContext);

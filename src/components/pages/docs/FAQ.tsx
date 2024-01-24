@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import Reference from "../../tree/Reference";
+import { useEffect } from "react";
 
 const FAQ = () => {
   useEffect(() => {

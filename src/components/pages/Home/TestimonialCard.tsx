@@ -1,5 +1,5 @@
-import { FC } from "react";
 import QuoteIcon from "../../vectors/QuoteIcon";
+import { FC } from "react";
 
 type Props = {
   review: string;

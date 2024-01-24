@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-
 import { FloatingButtonMenuPropsType } from "./types";
+import React, { useState } from "react";
 
 const FloatingButtonMenu: React.FC<FloatingButtonMenuPropsType> = ({
   children,

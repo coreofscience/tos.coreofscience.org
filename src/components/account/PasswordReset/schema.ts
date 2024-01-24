@@ -1,5 +1,5 @@
-import { object, string } from "yup";
 import { errorMessages } from "../common/errorMessages";
+import { object, string } from "yup";
 
 export const passwordResetSchema = object()
   .shape({

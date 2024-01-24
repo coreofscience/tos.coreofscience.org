@@ -1,16 +1,12 @@
+import useUser from "../../../hooks/useUser";
+import FloatingButtonMenu from "../../common/FloatingButtonMenu";
+import AddIcon from "../../vectors/AddIcon";
+import CancelIcon from "../../vectors/CancelIcon";
+import DownloadIcon from "../../vectors/Download";
+import FloatingButtonMenuItems from "./FloatingButtonMenuItems";
+import { DownloadPropsType } from "./types";
 import React from "react";
 import { Link } from "react-router-dom";
-
-import useUser from "../../../hooks/useUser";
-
-import FloatingButtonMenu from "../../common/FloatingButtonMenu";
-
-import DownloadIcon from "../../vectors/Download";
-import CancelIcon from "../../vectors/CancelIcon";
-import AddIcon from "../../vectors/AddIcon";
-import FloatingButtonMenuItems from "./FloatingButtonMenuItems";
-
-import { DownloadPropsType } from "./types";
 
 const Download: React.FC<DownloadPropsType> = ({ treeSections, analysis }) => {
   const user = useUser();

@@ -1,14 +1,11 @@
-import React, { FC, useMemo } from "react";
-
-import Testimonials from "./Testimonials";
-import Hero from "./Hero";
-import Pricing from "./Pricing";
-import GetStarted from "./GetStarted";
-import HowItWorks from "./HowItWorks";
-
 import useUser from "../../../hooks/useUser";
-
 import getMaxSize from "../../../utils/getMaxSize";
+import GetStarted from "./GetStarted";
+import Hero from "./Hero";
+import HowItWorks from "./HowItWorks";
+import Pricing from "./Pricing";
+import Testimonials from "./Testimonials";
+import React, { FC, useMemo } from "react";
 
 const FileDropper = React.lazy(() => import("../../upload/FileDropper"));
 

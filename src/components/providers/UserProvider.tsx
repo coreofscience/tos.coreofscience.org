@@ -1,10 +1,9 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
-import { onAuthStateChanged, User, IdTokenResult } from "firebase/auth";
 import UserContext from "../../context/UserContext";
 import useFirebase from "../../hooks/useFirebase";
-import { doc, getDoc } from "firebase/firestore";
-
 import { UserContextType } from "../../types/userContextType";
+import { onAuthStateChanged, User, IdTokenResult } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import React, { FC, useEffect, useMemo, useState } from "react";
 
 interface Props {
   children?: React.ReactElement;

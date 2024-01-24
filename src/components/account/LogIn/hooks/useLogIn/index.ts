@@ -1,12 +1,10 @@
-import { useCallback, useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-
 import useFirebase from "../../../../../hooks/useFirebase";
-
 import { AsyncActionStateType } from "../../../../../types/asyncActionStateType";
 import { LogInFormFieldsType } from "../../types";
 import { LogInActionsType } from "./types";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const messageByErrorCodeMap: Record<string, string> = {
   "auth/user-not-found": "Couldn't find your account",

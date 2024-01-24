@@ -1,5 +1,5 @@
-import { FC } from "react";
 import { Heading } from "../../../types/tableOfContent";
+import { FC } from "react";
 
 type Props = {
   headings: Heading[];

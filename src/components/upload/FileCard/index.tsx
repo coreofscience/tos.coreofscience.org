@@ -1,8 +1,7 @@
-import { FC } from "react";
-
+import { round } from "../../../utils/math";
 import CancelIcon from "../../vectors/CancelIcon";
 import MoveFirstIcon from "../../vectors/MoveFirstIcon";
-import { round } from "../../../utils/math";
+import { FC } from "react";
 
 interface Props {
   name: string;

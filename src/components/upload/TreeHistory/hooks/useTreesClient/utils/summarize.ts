@@ -1,8 +1,6 @@
-import { flatten } from "lodash";
-
-import { mostCommon } from "../../../../../../utils/arrays";
-
 import { TreeMetadata } from "../../../../../../types/treeMetadata";
+import { mostCommon } from "../../../../../../utils/arrays";
+import { flatten } from "lodash";
 
 export const summarize = (tree: TreeMetadata) => {
   if (!tree.result) {

@@ -1,12 +1,11 @@
-import { Link, useLocation } from "react-router-dom";
-
-import CoreOfScience from "../vectors/CoreOfScience";
-import GitHubIcon from "../vectors/GitHubIcon";
-import FacebookIcon from "../vectors/FacebookIcon";
-import YoutubeIcon from "../vectors/YoutubeIcon";
-import TwitterIcon from "../vectors/TwitterIcon";
 import Reference from "../tree/Reference";
+import CoreOfScience from "../vectors/CoreOfScience";
+import FacebookIcon from "../vectors/FacebookIcon";
+import GitHubIcon from "../vectors/GitHubIcon";
+import TwitterIcon from "../vectors/TwitterIcon";
+import YoutubeIcon from "../vectors/YoutubeIcon";
 import NavBar from "./NavBar";
+import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
   const location = useLocation();

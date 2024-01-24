@@ -1,8 +1,7 @@
-import { FC } from "react";
-import { Section } from "../../types/treeType";
-
-import { info } from "./constants/info";
 import { TreeResult } from "../../types/result";
+import { Section } from "../../types/treeType";
+import { info } from "./constants/info";
+import { FC } from "react";
 
 type Props = {
   section: Section;

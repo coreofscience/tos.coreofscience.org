@@ -1,12 +1,11 @@
+import useError from "../../../hooks/useError";
+import useUpload from "../../../hooks/useUpload";
+import { looksLikeIsi } from "../../../utils/isi";
+import { looksLikeScopus } from "../../../utils/scopus";
+import FileErrorMap from "../errors";
 import { FC, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useLocation, useNavigate } from "react-router-dom";
-
-import { looksLikeIsi } from "../../../utils/isi";
-import { looksLikeScopus } from "../../../utils/scopus";
-import useUpload from "../../../hooks/useUpload";
-import useError from "../../../hooks/useError";
-import FileErrorMap from "../errors";
 
 interface Props {
   maxSize: number;

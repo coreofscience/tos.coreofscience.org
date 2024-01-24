@@ -1,9 +1,7 @@
-import { useContext, useEffect, useState } from "react";
-import isEqual from "lodash/isEqual";
-
 import FileContext from "../context/FileContext";
-
 import { FileMetadata } from "../types/fileMetadata";
+import isEqual from "lodash/isEqual";
+import { useContext, useEffect, useState } from "react";
 
 const useInvalidFiles = (): FileMetadata[] => {
   const [invalidFiles, set] = useState<FileMetadata[]>([]);

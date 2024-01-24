@@ -1,22 +1,6 @@
-import { FC, useCallback, useState, useEffect, useMemo } from "react";
-import orderBy from "lodash/orderBy";
-import { encode } from "js-base64";
-import { Link } from "react-router-dom";
-
-import { doc, setDoc } from "firebase/firestore";
-
 import useFirebase from "../../hooks/useFirebase";
-
-import StarImage from "../vectors/StarImage";
-import CopyImage from "../vectors/CopyImage";
-
-import Reference from "./Reference";
-import { mostCommon } from "../../utils/arrays";
-
-import TreeMenu from "./TreeMenu";
-import { TreeVis } from "./TreeVis";
-import Download from "./Download";
-
+import { Analysis } from "../../types/Analysis";
+import { TreeResult } from "../../types/result";
 import {
   Section,
   RootInfo,
@@ -25,10 +9,19 @@ import {
   BranchInfo,
   Keywords,
 } from "../../types/treeType";
-import { TreeResult } from "../../types/result";
-import { Analysis } from "../../types/Analysis";
-
+import { mostCommon } from "../../utils/arrays";
+import CopyImage from "../vectors/CopyImage";
+import StarImage from "../vectors/StarImage";
+import Download from "./Download";
+import Reference from "./Reference";
+import TreeMenu from "./TreeMenu";
+import { TreeVis } from "./TreeVis";
 import { info } from "./constants/info";
+import { doc, setDoc } from "firebase/firestore";
+import { encode } from "js-base64";
+import orderBy from "lodash/orderBy";
+import { FC, useCallback, useState, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 
 export interface Props {
   stars: Record<string, boolean>;

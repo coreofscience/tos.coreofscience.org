@@ -1,7 +1,6 @@
-import { setDoc, doc } from "firebase/firestore";
-
 import useFirebase from "../../../hooks/useFirebase";
 import { UserContextType } from "../../../types/userContextType";
+import { setDoc, doc } from "firebase/firestore";
 
 type Props = {
   user: UserContextType;

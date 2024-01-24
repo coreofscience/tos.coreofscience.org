@@ -1,15 +1,12 @@
-import { FC, Fragment } from "react";
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-
 import { Message } from "../common/Message";
-
 import { defaultLoginFormFieldsState } from "./constants/defaultState";
-import { loginSchema } from "./schema";
 import { useSignIn } from "./hooks/useLogIn";
-
+import { loginSchema } from "./schema";
 import { LogInFormFieldsType } from "./types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FC, Fragment } from "react";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 const LogIn: FC = () => {
   const form = useForm<LogInFormFieldsType>({

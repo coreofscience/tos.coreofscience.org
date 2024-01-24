@@ -1,5 +1,5 @@
-import { FC } from "react";
 import TestimonialCard from "./TestimonialCard";
+import { FC } from "react";
 
 const Testimonials: FC = () => {
   return (

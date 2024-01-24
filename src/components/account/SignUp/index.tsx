@@ -1,14 +1,11 @@
+import { Message } from "../common/Message";
+import { defaultSignUpFormFieldsState } from "./constants/defaultState";
+import { useSignUp } from "./hooks/useSignUp";
+import { signUpSchema } from "./schema";
+import { SignUpFormFieldsType } from "./types";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { FC, Fragment } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-
-import { signUpSchema } from "./schema";
-import { defaultSignUpFormFieldsState } from "./constants/defaultState";
-
-import { SignUpFormFieldsType } from "./types";
-
-import { Message } from "../common/Message";
-import { useSignUp } from "./hooks/useSignUp";
 
 const SignUp: FC = () => {
   const form = useForm<SignUpFormFieldsType>({

@@ -1,5 +1,5 @@
-import { FC } from "react";
 import { FloatingButtonMenuItemPropsType } from "./types";
+import { FC } from "react";
 
 const FloatingButtonMenuItem: FC<FloatingButtonMenuItemPropsType> = (props) => (
   <div className="relative flex items-center justify-center">

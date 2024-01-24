@@ -1,7 +1,7 @@
-import { FC } from "react";
-import CheckCircleIcon from "../../vectors/CheckCircleIcon";
-import { Link } from "react-router-dom";
 import useUser from "../../../hooks/useUser";
+import CheckCircleIcon from "../../vectors/CheckCircleIcon";
+import { FC } from "react";
+import { Link } from "react-router-dom";
 
 type Props = {
   name: string;

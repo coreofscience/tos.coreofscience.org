@@ -1,9 +1,7 @@
-import { FC } from "react";
-
-import TreeMenuButton from "./TreeMenuButton";
-
-import { Info, Section } from "../../types/treeType";
 import { TreeResult } from "../../types/result";
+import { Info, Section } from "../../types/treeType";
+import TreeMenuButton from "./TreeMenuButton";
+import { FC } from "react";
 
 type Props = {
   info: Info;

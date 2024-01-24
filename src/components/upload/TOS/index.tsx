@@ -1,23 +1,18 @@
-import React, { FC, useContext } from "react";
+import FileContext from "../../../context/FileContext";
+import useFiles from "../../../hooks/useFiles";
+import useFirebase from "../../../hooks/useFirebase";
+import useUser from "../../../hooks/useUser";
+import computeQuantities from "../../../utils/computeQuantities";
+import getMaxSize from "../../../utils/getMaxSize";
+import { countFormat, round, weightFormat } from "../../../utils/math";
+import AcceptsEmail from "../AcceptsEmail";
+import EmailVerification from "../EmailVerification";
+import { createTree } from "./createTree";
 import { logEvent } from "firebase/analytics";
+import React, { FC, useContext } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-import FileContext from "../../../context/FileContext";
-
-import useFiles from "../../../hooks/useFiles";
-import useFirebase from "../../../hooks/useFirebase";
-
-import computeQuantities from "../../../utils/computeQuantities";
-import { countFormat, round, weightFormat } from "../../../utils/math";
-import getMaxSize from "../../../utils/getMaxSize";
-
-import { createTree } from "./createTree";
-import useUser from "../../../hooks/useUser";
-
-import EmailVerification from "../EmailVerification";
-import AcceptsEmail from "../AcceptsEmail";
 
 const FileDropper = React.lazy(() => import("../FileDropper"));
 const UploadIndicator = React.lazy(() => import("../UploadIndicator"));

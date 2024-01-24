@@ -1,5 +1,4 @@
 import { getTrees } from "./getUserTrees";
-
 import { UserTreesClientDepsType } from "./types";
 
 export const TreesClient = (deps: UserTreesClientDepsType) => ({

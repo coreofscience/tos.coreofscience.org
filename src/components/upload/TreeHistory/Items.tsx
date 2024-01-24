@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
-import { FC } from "react";
-
-import { TreeSummary } from "../../../types/treeSummary";
 import useUser from "../../../hooks/useUser";
+import { TreeSummary } from "../../../types/treeSummary";
+import { FC } from "react";
+import { Link } from "react-router-dom";
 
 type Props = {
   trees: TreeSummary[];

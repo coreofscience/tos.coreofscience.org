@@ -1,10 +1,8 @@
+import useUser from "../../../hooks/useUser";
+import Items from "./Items";
+import { useTrees } from "./hooks/useTrees";
 import { FC } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-
-import Items from "./Items";
-
-import useUser from "../../../hooks/useUser";
-import { useTrees } from "./hooks/useTrees";
 
 const TREES_PER_PAGE = 5;
 const TREE_ELEMENT_HEIGHT = 23.5;
