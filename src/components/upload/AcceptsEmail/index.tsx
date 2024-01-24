@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { setDoc, doc } from "firebase/firestore";
 
 import useFirebase from "../../../hooks/useFirebase";

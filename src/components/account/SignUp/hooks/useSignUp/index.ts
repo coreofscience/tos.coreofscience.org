@@ -70,7 +70,7 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
           });
         });
     },
-    [firebase.auth, navigate],
+    [firebase.auth, firebase.firestore, navigate],
   );
 
   return [state, { signUp }];

@@ -22,6 +22,14 @@ const Hero: FC = () => {
         >
           Grow your tree now
         </Link>
+        <a
+          href="https://www.loom.com/share/287b5cfeab214ff08d392ec4ab6de27c"
+          target="_blank"
+          rel="noreferrer"
+          className="px-4 py-2 font-tall text-center uppercase font-bold text-slate-50 bg-leaf rounded-sm"
+        >
+          Watch the video
+        </a>
       </div>
     </section>
   );

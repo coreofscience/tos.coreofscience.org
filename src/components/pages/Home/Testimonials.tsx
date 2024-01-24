@@ -12,12 +12,9 @@ const Testimonials: FC = () => {
           Loved by researchers
         </h2>
       </div>
-      <ul
-        role="list"
-        className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:max-w-none xl:grid-cols-3"
-      >
+      <ul className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:max-w-none xl:grid-cols-3">
         <li>
-          <ul role="list" className="flex flex-col gap-y-6 sm:gap-y-8">
+          <ul className="flex flex-col gap-y-6 sm:gap-y-8">
             <TestimonialCard
               review="This organization has a great impact on researchers worldwide! Their methodologies and products (software) are exceptional! This organization comes highly recommended, and Professor Sebastian Robledo is a wonderful human being."
               name="Jose Miguel Lopez Zuluaga"
@@ -28,7 +25,7 @@ const Testimonials: FC = () => {
           </ul>
         </li>
         <li>
-          <ul role="list" className="flex flex-col gap-y-6 sm:gap-y-8">
+          <ul className="flex flex-col gap-y-6 sm:gap-y-8">
             <TestimonialCard
               review="It has been an excellent teaching and learning experience in the field of scientometric analysis. It will always be a pleasure to work again with a high-performance team like Core of Science, as we concluded the course with the submission of our scientific article to the Journal of Scientometric Research."
               name="Ronny Omar Molina Morán"
@@ -39,7 +36,7 @@ const Testimonials: FC = () => {
           </ul>
         </li>
         <li>
-          <ul role="list" className="flex flex-col gap-y-6 sm:gap-y-8">
+          <ul className="flex flex-col gap-y-6 sm:gap-y-8">
             <TestimonialCard
               review="Excellent methodology, it allows you to create a structure for the theoretical framework of the research to be developed in record time."
               name="Jhon Antuny Pabón León"

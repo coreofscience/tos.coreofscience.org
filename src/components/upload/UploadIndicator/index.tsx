@@ -31,7 +31,7 @@ const UploadIndicator: FC<Props> = ({ maxSize }) => {
         setCappedFiles((prev) => ({ ...prev, [file.hash]: true }));
       }
     }
-  }, [files]);
+  }, [files, maxSize]);
 
   if (files.length === 0) {
     return null;

@@ -55,7 +55,7 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
     );
 
     return () => unsubscribe();
-  }, []);
+  }, [firebase.auth, firebase.firestore]);
 
   const userValue = useMemo(() => user, [user]);
 

@@ -24,7 +24,7 @@ export const useTrees = (count: number) => {
         hasMore: trees.length === count,
         error: undefined,
       })),
-    [],
+    [count],
   );
 
   const setFailedTrees = useCallback(
@@ -60,7 +60,14 @@ export const useTrees = (count: number) => {
     return () => {
       mounted = false;
     };
-  }, [treesClient, state.page]);
+  }, [
+    treesClient,
+    state.page,
+    count,
+    setSuccessTrees,
+    setFailedTrees,
+    state.data,
+  ]);
 
   /**
    * Retrieves first user trees page.
@@ -82,7 +89,7 @@ export const useTrees = (count: number) => {
       mounted = false;
       setState(getInitialState());
     };
-  }, [treesClient]);
+  }, [treesClient, count, setSuccessTrees, setFailedTrees]);
 
   return {
     state,

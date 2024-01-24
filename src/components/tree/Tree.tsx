@@ -66,7 +66,7 @@ const Tree: FC<Props> = ({
         RootInfo | TrunkInfo | LeafInfo | BranchInfo,
       ][],
     );
-  }, []);
+  }, [treeSections.branch_1]);
 
   const keywords: Keywords = useMemo(() => {
     const keywords: Keywords = {

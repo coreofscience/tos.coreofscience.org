@@ -17,22 +17,25 @@ export const usePasswordReset = (): [
     message: "",
   });
 
-  const sendEmail = useCallback((data: PaswordResetFormFieldsType) => {
-    setState({ status: "in-progress", message: "" });
-    sendPasswordResetEmail(firebase.auth, data.email)
-      .then(() => {
-        setState({
-          status: "success",
-          message: "Password reset email sent successfuly.",
+  const sendEmail = useCallback(
+    (data: PaswordResetFormFieldsType) => {
+      setState({ status: "in-progress", message: "" });
+      sendPasswordResetEmail(firebase.auth, data.email)
+        .then(() => {
+          setState({
+            status: "success",
+            message: "Password reset email sent successfuly.",
+          });
+        })
+        .catch(() => {
+          setState({
+            status: "failure",
+            message: "There was an issue sending your passrord reset email",
+          });
         });
-      })
-      .catch(() => {
-        setState({
-          status: "failure",
-          message: "There was an issue sending your passrord reset email",
-        });
-      });
-  }, []);
+    },
+    [firebase.auth],
+  );
 
   return [state, { sendEmail }];
 };

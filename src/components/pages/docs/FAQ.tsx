@@ -18,12 +18,9 @@ const FAQ = () => {
             and someone will get back to you.
           </p>
         </div>
-        <ul
-          role="list"
-          className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3"
-        >
+        <ul className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
           <li>
-            <ul role="list" className="flex flex-col gap-y-8">
+            <ul className="flex flex-col gap-y-8">
               <li className="flex flex-col gap-2">
                 <h2 className="text-xl font-tall">
                   What is the Tree of Science?
@@ -76,7 +73,7 @@ const FAQ = () => {
             </ul>
           </li>
           <li>
-            <ul role="list" className="flex flex-col gap-y-8">
+            <ul className="flex flex-col gap-y-8">
               <li className="flex flex-col gap-2">
                 <h2 className="text-xl font-tall">
                   How do I cite Tree of Science in my research?
@@ -119,6 +116,7 @@ const FAQ = () => {
                   <a
                     href="http://dx.doi.org/10.15446/ing.investig.v40n1.77718"
                     target="_blank"
+                    rel="noreferrer"
                     className="text-sky-600 hover:text-sky-800"
                   >
                     here
@@ -144,7 +142,7 @@ const FAQ = () => {
             </ul>
           </li>
           <li>
-            <ul role="list" className="flex flex-col gap-y-8">
+            <ul className="flex flex-col gap-y-8">
               <li className="flex flex-col gap-2">
                 <h2 className="text-xl font-tall">
                   What is the Meaning of Each Section of the Tree of Science?
@@ -202,6 +200,7 @@ const FAQ = () => {
                   <a
                     href="https://www.youtube.com/@CoreofScience/videos"
                     target="_blank"
+                    rel="noreferrer"
                     className="text-sky-600 hover:text-sky-800"
                   >
                     Tree of Science Tutorials

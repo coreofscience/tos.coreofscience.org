@@ -22,21 +22,24 @@ export const useSignIn = (): [AsyncActionStateType, LogInActionsType] => {
     message: "",
   });
 
-  const logIn = useCallback((data: LogInFormFieldsType) => {
-    signInWithEmailAndPassword(firebase.auth, data.email, data.password)
-      .then(() => {
-        setState({ status: "success", message: "Successfully logged in" });
-        navigate("/tos");
-      })
-      .catch((error) => {
-        setState({
-          status: "failure",
-          message:
-            messageByErrorCodeMap[error.code] ??
-            "There was an error loggin in to your account, please try again",
+  const logIn = useCallback(
+    (data: LogInFormFieldsType) => {
+      signInWithEmailAndPassword(firebase.auth, data.email, data.password)
+        .then(() => {
+          setState({ status: "success", message: "Successfully logged in" });
+          navigate("/tos");
+        })
+        .catch((error) => {
+          setState({
+            status: "failure",
+            message:
+              messageByErrorCodeMap[error.code] ??
+              "There was an error loggin in to your account, please try again",
+          });
         });
-      });
-  }, []);
+    },
+    [firebase.auth, navigate],
+  );
 
   return [state, { logIn }];
 };

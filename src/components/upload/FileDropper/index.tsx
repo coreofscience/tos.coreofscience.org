@@ -43,7 +43,7 @@ const FileDropper: FC<Props> = ({ maxSize }) => {
         });
       });
     },
-    [upload, error, maxSize],
+    [upload, error, maxSize, location.pathname, navigate],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

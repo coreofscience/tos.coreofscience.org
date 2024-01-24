@@ -31,7 +31,7 @@ const TestimonialCard: FC<Props> = ({
           </div>
           <div className="overflow-hidden bg-slate-50">
             <img
-              alt="Image of the avatar of the review"
+              alt="avatar of the review"
               loading="lazy"
               width="56"
               height="56"
