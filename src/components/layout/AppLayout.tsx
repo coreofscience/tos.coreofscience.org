@@ -1,8 +1,7 @@
+import Footer from "./Footer";
+import Header from "./Header";
 import { FC, ReactNode } from "react";
 import { useLocation } from "react-router-dom";
-
-import Header from "./Header";
-import Footer from "./Footer";
 
 interface Props {
   children?: ReactNode;
@@ -11,7 +10,7 @@ interface Props {
 const AppLayout: FC<Props> = ({ children }: Props) => {
   const location = useLocation();
   return (
-    <div className="grid grid-rows-[auto 1fr auto] h-full gap-4 mt-4 md:gap-16 md:mt-16">
+    <div className="grid-rows-[auto 1fr auto] mt-4 grid h-full gap-4 md:mt-16 md:gap-16">
       <header>
         <div className="container">
           <Header />

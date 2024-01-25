@@ -1,7 +1,6 @@
-import React, { FC, Suspense, useContext, useEffect, useState } from "react";
-
 import FileContext from "../../../context/FileContext";
 import useFiles from "../../../hooks/useFiles";
+import React, { FC, Suspense, useContext, useEffect, useState } from "react";
 
 const FileCard = React.lazy(() => import("../FileCard"));
 
@@ -31,14 +30,14 @@ const UploadIndicator: FC<Props> = ({ maxSize }) => {
         setCappedFiles((prev) => ({ ...prev, [file.hash]: true }));
       }
     }
-  }, [files]);
+  }, [files, maxSize]);
 
   if (files.length === 0) {
     return null;
   }
 
   return (
-    <div className="grid gap-2 grid-cols-articles">
+    <div className="grid grid-cols-articles gap-2">
       <Suspense fallback="loading...">
         {files.map((file) => {
           cumSize += file.blob.size / 2 ** 20;

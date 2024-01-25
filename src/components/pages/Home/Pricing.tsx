@@ -1,6 +1,5 @@
-import { FC } from "react";
-
 import PricingCard from "./PricingCard";
+import { FC } from "react";
 
 const includedFeaturesForBasic: string[] = [
   "Up to 10 megabyte file sizes",
@@ -17,14 +16,14 @@ const Pricing: FC = () => {
     <section
       id="pricing"
       aria-label="Pricing"
-      className="container flex flex-col mx-auto gap-10 xs:px-0"
+      className="xs:px-0 container mx-auto flex flex-col gap-10"
     >
       <div className="md:text-center">
-        <h2 className="text-3xl font-tall sm:text-4xl text-center">
+        <h2 className="text-center font-tall text-3xl sm:text-4xl">
           Simple pricing for everyone
         </h2>
       </div>
-      <div className="grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-3xl lg:place-self-center lg:gap-x-8 lg:grid-cols-2 xl:mx-0 xl:gap-x-8">
+      <div className="grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-3xl lg:grid-cols-2 lg:gap-x-8 lg:place-self-center xl:mx-0 xl:gap-x-8">
         <PricingCard
           name="Pro"
           price="$10/month"

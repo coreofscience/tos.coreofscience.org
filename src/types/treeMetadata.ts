@@ -1,5 +1,5 @@
-import { TreeResult } from "./result";
 import { Analysis } from "./Analysis";
+import { TreeResult } from "./result";
 
 export interface TreeMetadata {
   createdDate: number;

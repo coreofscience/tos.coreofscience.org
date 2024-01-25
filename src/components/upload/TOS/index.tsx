@@ -1,23 +1,18 @@
-import React, { FC, useContext } from "react";
+import FileContext from "../../../context/FileContext";
+import useFiles from "../../../hooks/useFiles";
+import useFirebase from "../../../hooks/useFirebase";
+import useUser from "../../../hooks/useUser";
+import computeQuantities from "../../../utils/computeQuantities";
+import getMaxSize from "../../../utils/getMaxSize";
+import { countFormat, round, weightFormat } from "../../../utils/math";
+import AcceptsEmail from "../AcceptsEmail";
+import EmailVerification from "../EmailVerification";
+import { createTree } from "./createTree";
 import { logEvent } from "firebase/analytics";
+import React, { FC, useContext } from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-import FileContext from "../../../context/FileContext";
-
-import useFiles from "../../../hooks/useFiles";
-import useFirebase from "../../../hooks/useFirebase";
-
-import computeQuantities from "../../../utils/computeQuantities";
-import { countFormat, round, weightFormat } from "../../../utils/math";
-import getMaxSize from "../../../utils/getMaxSize";
-
-import { createTree } from "./createTree";
-import useUser from "../../../hooks/useUser";
-
-import EmailVerification from "../EmailVerification";
-import AcceptsEmail from "../AcceptsEmail";
 
 const FileDropper = React.lazy(() => import("../FileDropper"));
 const UploadIndicator = React.lazy(() => import("../UploadIndicator"));
@@ -67,32 +62,32 @@ const TOS: FC = () => {
       <UploadIndicator maxSize={maxSize} />
       <FileErrors />
       <p>Review your input:</p>
-      <div className="grid grid-cols-articles gap-2 items-center">
-        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col rounded-sm">
-          <span className="font-semibold text-xl">
+      <div className="grid grid-cols-articles items-center gap-2">
+        <div className="flex h-24 flex-col items-center justify-center rounded-sm bg-slate-100">
+          <span className="text-xl font-semibold">
             {countFormat.format(articleCap)}/{countFormat.format(totalArticles)}
           </span>
-          <span className="text-slate-500 text-sm">articles</span>
+          <span className="text-sm text-slate-500">articles</span>
         </div>
-        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col rounded-sm">
-          <span className="font-semibold text-xl">
+        <div className="flex h-24 flex-col items-center justify-center rounded-sm bg-slate-100">
+          <span className="text-xl font-semibold">
             {countFormat.format(citationCap)}/
             {countFormat.format(totalCitations)}
           </span>
-          <span className="text-slate-500 text-sm">citations</span>
+          <span className="text-sm text-slate-500">citations</span>
         </div>
-        <div className="h-24 bg-slate-100 flex justify-center items-center flex-col rounded-sm">
-          <span className="font-semibold text-xl">
+        <div className="flex h-24 flex-col items-center justify-center rounded-sm bg-slate-100">
+          <span className="text-xl font-semibold">
             {weightFormat.format(round(sizeCap, 2))}/
             {weightFormat.format(round(maxSize, 2))}
           </span>
-          <span className="text-slate-500 text-sm">size [MB]</span>
+          <span className="text-sm text-slate-500">size [MB]</span>
         </div>
       </div>
       <p>
         For extra processing capacity check out our&nbsp;
         <Link
-          className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+          className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
           to="/pricing"
         >
           plans and pricing.
@@ -102,7 +97,7 @@ const TOS: FC = () => {
       <div>Let's start planting your tree.</div>
       <div>
         <button
-          className="inline-block font-tall text-4xl text-slate-50 bg-leaf px-12 py-6 uppercase disabled:bg-slate-400 rounded-sm"
+          className="inline-block rounded-sm bg-leaf px-12 py-6 font-tall text-4xl uppercase text-slate-50 disabled:bg-slate-400"
           disabled={
             isLoading ||
             !finished ||

@@ -1,6 +1,6 @@
 const MoveFirstIcon = () => (
   <svg
-    className="fill-slate-50 w-4 h-4"
+    className="h-4 w-4 fill-slate-50"
     viewBox="0 0 18 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

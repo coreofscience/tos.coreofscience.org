@@ -1,5 +1,5 @@
-import { FC } from "react";
 import { Heading } from "../../../types/tableOfContent";
+import { FC } from "react";
 
 type Props = {
   headings: Heading[];
@@ -22,7 +22,7 @@ const TableOfContent: FC<Props> = ({ headings }) => {
               <a
                 href={`#${id}`}
                 className={
-                  "text-sky-600 hover:text-sky-800 underline-offset-2" +
+                  "text-sky-600 underline-offset-2 hover:text-sky-800" +
                   paddingClass
                 }
               >

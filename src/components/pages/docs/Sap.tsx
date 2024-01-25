@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import TableOfContent from "../../common/TableOfContent";
 import { HeadingData } from "../../common/TableOfContent/constants";
+import { useEffect } from "react";
 
 const Sap = () => {
   useEffect(() => {
@@ -17,7 +17,7 @@ const Sap = () => {
       </p>
       <TableOfContent headings={HeadingData} />
       <section id="info-on-roots">
-        <h2 className="uppercase font-tall text-root">Roots</h2>
+        <h2 className="font-tall uppercase text-root">Roots</h2>
         <p>
           The "Roots" in the Tree of Science algorithm symbolize foundational
           works or seminal papers in a given field. These are the building
@@ -30,7 +30,7 @@ const Sap = () => {
         </p>
       </section>
       <section id="info-on-trunk">
-        <h2 className="uppercase font-tall text-trunk">Trunk</h2>
+        <h2 className="font-tall uppercase text-trunk">Trunk</h2>
         <p>
           The "Trunk" serves as the central column of collective knowledge,
           consisting of works that are derived from the roots and serve as a
@@ -43,7 +43,7 @@ const Sap = () => {
         </p>
       </section>
       <section id="info-on-branches">
-        <h2 className="uppercase font-tall text-branch">Branches</h2>
+        <h2 className="font-tall uppercase text-branch">Branches</h2>
         <p>
           To generate the branches of the Tree of Science, our algorithm
           clusters articles into distinct subfields or specialized areas of
@@ -58,7 +58,7 @@ const Sap = () => {
         </p>
       </section>
       <section id="info-on-leaves">
-        <h2 className="uppercase font-tall text-leaf">Leaves</h2>
+        <h2 className="font-tall uppercase text-leaf">Leaves</h2>
         <p>
           The "Leaves" represent the most recent, edge-cutting research in a
           field. These papers are considered as the ones that have not cited
@@ -70,7 +70,7 @@ const Sap = () => {
         </p>
       </section>
       <section id="info-on-sap-algorithm">
-        <h2 className="uppercase font-tall">SAP Algorithm</h2>
+        <h2 className="font-tall uppercase">SAP Algorithm</h2>
         <p>
           The "SAP" algorithm mirrors the nutrient flow in a biological tree,
           symbolizing the intellectual lineage and influence between research

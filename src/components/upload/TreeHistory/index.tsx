@@ -1,10 +1,8 @@
+import useUser from "../../../hooks/useUser";
+import Items from "./Items";
+import { useTrees } from "./hooks/useTrees";
 import { FC } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-
-import Items from "./Items";
-
-import useUser from "../../../hooks/useUser";
-import { useTrees } from "./hooks/useTrees";
 
 const TREES_PER_PAGE = 5;
 const TREE_ELEMENT_HEIGHT = 23.5;
@@ -19,7 +17,7 @@ const TreeHistory: FC = () => {
   return (
     <div className="flex flex-col gap-3">
       <div>
-        <h2 className="text-2xl font-tall font-bold uppercase">Tree History</h2>
+        <h2 className="font-tall text-2xl font-bold uppercase">Tree History</h2>
       </div>
       {user.plan === "basic" ? (
         <ul>

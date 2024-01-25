@@ -1,4 +1,5 @@
 import { Info } from "../../../types/treeType";
+
 export const info: Info = {
   root: {
     title: "Root",

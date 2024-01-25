@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
-import { FC } from "react";
-
-import { TreeSummary } from "../../../types/treeSummary";
 import useUser from "../../../hooks/useUser";
+import { TreeSummary } from "../../../types/treeSummary";
+import { FC } from "react";
+import { Link } from "react-router-dom";
 
 type Props = {
   trees: TreeSummary[];
@@ -18,12 +17,12 @@ const Items: FC<Props> = ({ trees }) => {
       {trees.map(({ treeId, summary, planId }) => (
         <li key={treeId}>
           <Link
-            className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in flex flex-row items-center h-5 mb-px"
+            className="mb-px flex h-5 flex-row items-center text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
             to={`/users/${user.uid}/trees/${treeId}`}
           >
             {summary?.keywords.join(", ") ?? ""}
             {planId === "pro" && (
-              <span className="text-xs ml-2 px-3 py-0.5 bg-leaf text-slate-50 font-semibold flex-shrink-0">
+              <span className="ml-2 flex-shrink-0 bg-leaf px-3 py-0.5 text-xs font-semibold text-slate-50">
                 PRO
               </span>
             )}

@@ -1,6 +1,6 @@
-import React, { FC, useState } from "react";
-import { sendEmailVerification } from "firebase/auth";
 import useFirebase from "../../../hooks/useFirebase";
+import { sendEmailVerification } from "firebase/auth";
+import { FC, useState } from "react";
 
 const EmailVerification: FC = () => {
   const firebase = useFirebase();
@@ -12,22 +12,22 @@ const EmailVerification: FC = () => {
   };
 
   return !hidden ? (
-    <div className="flex flex-col gap-2 p-4 text-slate-50 bg-leaf">
+    <div className="flex flex-col gap-2 bg-leaf p-4 text-slate-50">
       <p>
         Please verify your email.&nbsp;
-        <a
+        <span
           onClick={handle}
-          className="underline text-slate-50 hover:text-slate-200 cursor-pointer"
+          className="cursor-pointer text-slate-50 underline hover:text-slate-200"
         >
           Resend email
-        </a>
+        </span>
         . &nbsp;
-        <a
+        <span
           onClick={() => setHidden(true)}
-          className="underline text-slate-50 hover:text-slate-200 cursor-pointer"
+          className="cursor-pointer text-slate-50 underline hover:text-slate-200"
         >
           I already verified my email
-        </a>
+        </span>
         .
       </p>
     </div>

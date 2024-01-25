@@ -1,8 +1,7 @@
-import { FC, useContext } from "react";
-
-import CancelIcon from "../../vectors/CancelIcon";
 import FileContext from "../../../context/FileContext";
 import useInvalidFiles from "../../../hooks/useInvalidFiles";
+import CancelIcon from "../../vectors/CancelIcon";
+import { FC, useContext } from "react";
 
 const FileErrors: FC = () => {
   const { remove } = useContext(FileContext);
@@ -16,13 +15,13 @@ const FileErrors: FC = () => {
     <div className="flex flex-col items-start gap-2">
       {files.map((file) => {
         return (
-          <div className="flex flex-row gap-2 items-center" key={file.hash}>
+          <div className="flex flex-row items-center gap-2" key={file.hash}>
             <span>
               <strong>{file.name}</strong> {file.error}.
             </span>
             <button
               onClick={() => remove(file.hash)}
-              className="flex justify-center items-center flex-shrink-0 bg-red-500 w-6 h-6"
+              className="flex h-6 w-6 flex-shrink-0 items-center justify-center bg-red-500"
               title="dismiss"
             >
               <CancelIcon />

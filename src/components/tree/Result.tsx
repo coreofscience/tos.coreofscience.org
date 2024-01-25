@@ -1,11 +1,8 @@
-import React, { Fragment, useEffect, useState } from "react";
-
-import { doc, onSnapshot } from "firebase/firestore";
-import { useLocation } from "react-router-dom";
-
 import useFirebase from "../../hooks/useFirebase";
-
 import { TreeMetadata } from "../../types/treeMetadata";
+import { doc, onSnapshot } from "firebase/firestore";
+import React, { Fragment, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Tree = React.lazy(() => import("./Tree"));
 const NotFound = React.lazy(() => import("../NotFound"));

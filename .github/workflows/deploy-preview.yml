@@ -14,8 +14,19 @@ jobs:
         with:
           node-version: lts/iron
 
-      - run: |
-          npm ci
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Quality check
+        run: |
+          npm run eslint
+          npm run prettier
+          npm test
+        env:
+          CI: true
+
+      - name: Build
+        run: |
           npm run build
         env:
           CI: true

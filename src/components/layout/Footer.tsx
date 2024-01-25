@@ -1,21 +1,20 @@
-import { Link, useLocation } from "react-router-dom";
-
-import CoreOfScience from "../vectors/CoreOfScience";
-import GitHubIcon from "../vectors/GitHubIcon";
-import FacebookIcon from "../vectors/FacebookIcon";
-import YoutubeIcon from "../vectors/YoutubeIcon";
-import TwitterIcon from "../vectors/TwitterIcon";
 import Reference from "../tree/Reference";
+import CoreOfScience from "../vectors/CoreOfScience";
+import FacebookIcon from "../vectors/FacebookIcon";
+import GitHubIcon from "../vectors/GitHubIcon";
+import TwitterIcon from "../vectors/TwitterIcon";
+import YoutubeIcon from "../vectors/YoutubeIcon";
 import NavBar from "./NavBar";
+import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
   const location = useLocation();
 
   return (
     <div className="flex flex-col gap-4 py-16 md:gap-8">
-      <div className="grid gap-4 grid-cols-[1fr] md:gap-12 md:fancy-areas">
-        <section className="flex flex-col gap-2 md:area-cite">
-          <h4 className="text-xl font-tall uppercase text-root">
+      <div className="md:fancy-areas grid grid-cols-[1fr] gap-4 md:gap-12">
+        <section className="md:area-cite flex flex-col gap-2">
+          <h4 className="font-tall text-xl uppercase text-root">
             Citing Tree of Science
           </h4>
           <ul className="flex flex-col gap-2">
@@ -94,8 +93,8 @@ const Footer = () => {
             </li>
           </ul>
         </section>
-        <section className="flex flex-col gap-2 md:area-social">
-          <h4 className="text-xl font-tall uppercase text-root">
+        <section className="md:area-social flex flex-col gap-2">
+          <h4 className="font-tall text-xl uppercase text-root">
             Social media
           </h4>
           <ul className="flex flex-row gap-2">
@@ -141,15 +140,15 @@ const Footer = () => {
             </li>
           </ul>
         </section>
-        <section className="flex flex-col gap-2 md:area-git">
-          <h4 className="text-xl font-tall uppercase text-root">
+        <section className="md:area-git flex flex-col gap-2">
+          <h4 className="font-tall text-xl uppercase text-root">
             This project on GitHub
           </h4>
           <ul>
             <li>
               <a
                 href="https://github.com/coreofscience/sap.coreofscience.com"
-                className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+                className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -159,7 +158,7 @@ const Footer = () => {
             <li>
               <a
                 href="https://github.com/coreofscience/gcloud-tos"
-                className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+                className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -169,7 +168,7 @@ const Footer = () => {
             <li>
               <a
                 href="https://github.com/coreofscience/python-bibx"
-                className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+                className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -185,7 +184,7 @@ const Footer = () => {
           rel="noopener noreferrer"
           href="https://coreofscience.com"
         >
-          <CoreOfScience className="w-10 h-10" />
+          <CoreOfScience className="h-10 w-10" />
         </a>
         <span>
           A{" "}
@@ -200,7 +199,7 @@ const Footer = () => {
         </span>
       </div>
       <div className="flex sm:justify-center">
-        <ul className="flex flex-col sm:gap-4 sm:flex-row lg:gap-8">
+        <ul className="flex flex-col sm:flex-row sm:gap-4 lg:gap-8">
           {location.pathname === "/" && <NavBar origin="footer" />}
           <li>
             <Link

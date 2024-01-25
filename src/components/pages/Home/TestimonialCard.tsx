@@ -1,5 +1,5 @@
-import { FC } from "react";
 import QuoteIcon from "../../vectors/QuoteIcon";
+import { FC } from "react";
 
 type Props = {
   review: string;
@@ -18,7 +18,7 @@ const TestimonialCard: FC<Props> = ({
 }: Props) => {
   return (
     <li>
-      <figure className="relative bg-white p-6 shadow-xl rounded-sm shadow-slate-900/10">
+      <figure className="relative rounded-sm bg-white p-6 shadow-xl shadow-slate-900/10">
         <QuoteIcon />
         <blockquote className="relative">
           <p className="text-lg">{review}</p>
@@ -31,7 +31,7 @@ const TestimonialCard: FC<Props> = ({
           </div>
           <div className="overflow-hidden bg-slate-50">
             <img
-              alt="Image of the avatar of the review"
+              alt="avatar of the review"
               loading="lazy"
               width="56"
               height="56"

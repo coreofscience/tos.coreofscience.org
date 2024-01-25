@@ -1,9 +1,8 @@
-import { useCallback, useContext } from "react";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-
 import FileContext from "../context/FileContext";
 import metadata from "../utils/metadata";
 import useFirebase from "./useFirebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { useCallback, useContext } from "react";
 
 const useUpload = () => {
   const { add, track } = useContext(FileContext);

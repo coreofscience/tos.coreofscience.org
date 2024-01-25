@@ -1,10 +1,10 @@
-import { createContext } from "react";
+import { FirebaseContextType } from "../types/firebaseContext";
+import { getAnalytics, logEvent } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
 import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 import { connectStorageEmulator, getStorage } from "firebase/storage";
-import { getAnalytics, logEvent } from "firebase/analytics";
-import { FirebaseContextType } from "../types/firebaseContext";
+import { createContext } from "react";
 
 const app = initializeApp({
   apiKey: import.meta.env.VITE_APIKEY,

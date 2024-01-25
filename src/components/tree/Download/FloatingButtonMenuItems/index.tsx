@@ -1,12 +1,9 @@
-import React from "react";
-
-import { useFloatingButton } from "./hooks/useFloatingButton";
-
 import FloatingButtonMenuItem from "../../../common/FloatingButtonMenuItem";
-import DownloadIcon from "../../../vectors/Download";
 import AnalysisIcon from "../../../vectors/AnalysisIcon";
-
+import DownloadIcon from "../../../vectors/Download";
 import { DownloadPropsType } from "../types";
+import { useFloatingButton } from "./hooks/useFloatingButton";
+import React from "react";
 
 const FloatingButtonMenuItems: React.FC<DownloadPropsType> = ({
   treeSections,

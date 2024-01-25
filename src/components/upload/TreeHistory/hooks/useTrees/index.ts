@@ -1,11 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
-
-import { getInitialState } from "./getInitialState";
-
-import { useTreesClient } from "../useTreesClient";
-
 import { TreeSummary } from "../../../../../types/treeSummary";
+import { useTreesClient } from "../useTreesClient";
+import { getInitialState } from "./getInitialState";
 import { StateType } from "./types";
+import { useCallback, useEffect, useState } from "react";
 
 /**
  * Consider converting into a context, if you need to add more logic.
@@ -24,7 +21,7 @@ export const useTrees = (count: number) => {
         hasMore: trees.length === count,
         error: undefined,
       })),
-    [],
+    [count],
   );
 
   const setFailedTrees = useCallback(
@@ -60,7 +57,14 @@ export const useTrees = (count: number) => {
     return () => {
       mounted = false;
     };
-  }, [treesClient, state.page]);
+  }, [
+    treesClient,
+    state.page,
+    count,
+    setSuccessTrees,
+    setFailedTrees,
+    state.data,
+  ]);
 
   /**
    * Retrieves first user trees page.
@@ -82,7 +86,7 @@ export const useTrees = (count: number) => {
       mounted = false;
       setState(getInitialState());
     };
-  }, [treesClient]);
+  }, [treesClient, count, setSuccessTrees, setFailedTrees]);
 
   return {
     state,

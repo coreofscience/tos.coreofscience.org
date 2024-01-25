@@ -1,3 +1,7 @@
+import { TreeMetadata } from "../../../../../../types/treeMetadata";
+import { TreeSummary } from "../../../../../../types/treeSummary";
+import { summarize } from "../utils/summarize";
+import { UserTreesClientDepsType } from "./types";
 import {
   collection,
   limit,
@@ -9,12 +13,6 @@ import {
   doc,
   where,
 } from "firebase/firestore";
-
-import { summarize } from "../utils/summarize";
-import { TreeSummary } from "../../../../../../types/treeSummary";
-
-import { TreeMetadata } from "../../../../../../types/treeMetadata";
-import { UserTreesClientDepsType } from "./types";
 
 export const getTrees = async (
   deps: UserTreesClientDepsType,

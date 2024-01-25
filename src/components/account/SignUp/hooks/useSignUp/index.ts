@@ -1,4 +1,7 @@
-import { useCallback, useState } from "react";
+import useFirebase from "../../../../../hooks/useFirebase";
+import { AsyncActionStateType } from "../../../../../types/asyncActionStateType";
+import { SignUpFormFieldsType } from "../../types";
+import { SignUpActionsType } from "./types";
 import {
   createUserWithEmailAndPassword,
   UserCredential,
@@ -6,14 +9,9 @@ import {
   User,
   updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
-
-import useFirebase from "../../../../../hooks/useFirebase";
-
-import { SignUpFormFieldsType } from "../../types";
-import { SignUpActionsType } from "./types";
-import { AsyncActionStateType } from "../../../../../types/asyncActionStateType";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
   const firebase = useFirebase();
@@ -70,7 +68,7 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
           });
         });
     },
-    [firebase.auth, navigate],
+    [firebase.auth, firebase.firestore, navigate],
   );
 
   return [state, { signUp }];

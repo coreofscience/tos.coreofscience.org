@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const AppLayout = React.lazy(() => import("./components/layout/AppLayout"));
 const TOS = React.lazy(() => import("./components/upload/TOS"));

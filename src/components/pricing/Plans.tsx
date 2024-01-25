@@ -1,5 +1,5 @@
-import { FC } from "react";
 import Pricing from "../pages/Home/Pricing";
+import { FC } from "react";
 
 const Plans: FC = () => {
   return <Pricing />;

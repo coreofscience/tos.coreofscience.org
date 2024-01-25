@@ -1,22 +1,6 @@
-import { FC, useCallback, useState, useEffect, useMemo } from "react";
-import orderBy from "lodash/orderBy";
-import { encode } from "js-base64";
-import { Link } from "react-router-dom";
-
-import { doc, setDoc } from "firebase/firestore";
-
 import useFirebase from "../../hooks/useFirebase";
-
-import StarImage from "../vectors/StarImage";
-import CopyImage from "../vectors/CopyImage";
-
-import Reference from "./Reference";
-import { mostCommon } from "../../utils/arrays";
-
-import TreeMenu from "./TreeMenu";
-import { TreeVis } from "./TreeVis";
-import Download from "./Download";
-
+import { Analysis } from "../../types/Analysis";
+import { TreeResult } from "../../types/result";
 import {
   Section,
   RootInfo,
@@ -25,10 +9,19 @@ import {
   BranchInfo,
   Keywords,
 } from "../../types/treeType";
-import { TreeResult } from "../../types/result";
-import { Analysis } from "../../types/Analysis";
-
+import { mostCommon } from "../../utils/arrays";
+import CopyImage from "../vectors/CopyImage";
+import StarImage from "../vectors/StarImage";
+import Download from "./Download";
+import Reference from "./Reference";
+import TreeMenu from "./TreeMenu";
+import { TreeVis } from "./TreeVis";
 import { info } from "./constants/info";
+import { doc, setDoc } from "firebase/firestore";
+import { encode } from "js-base64";
+import orderBy from "lodash/orderBy";
+import { FC, useCallback, useState, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 
 export interface Props {
   stars: Record<string, boolean>;
@@ -66,7 +59,7 @@ const Tree: FC<Props> = ({
         RootInfo | TrunkInfo | LeafInfo | BranchInfo,
       ][],
     );
-  }, []);
+  }, [treeSections.branch_1]);
 
   const keywords: Keywords = useMemo(() => {
     const keywords: Keywords = {
@@ -147,7 +140,7 @@ const Tree: FC<Props> = ({
               <div className="flex flex-col gap-2">
                 <h2
                   className={
-                    "uppercase font-tall font-semibold text-2xl " +
+                    "font-tall text-2xl font-semibold uppercase " +
                     {
                       root: "text-root",
                       trunk: "text-trunk",
@@ -164,7 +157,7 @@ const Tree: FC<Props> = ({
                   <p>
                     {`${info.info} ${info.doc}`}{" "}
                     <Link
-                      className="text-sky-600 hover:text-sky-800 active:text-sky-800 transition-colors ease-in"
+                      className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
                       to="/docs/sap"
                     >
                       docs.
@@ -191,12 +184,12 @@ const Tree: FC<Props> = ({
                   "desc",
                 ).map(({ article, labelAsBase64, star }) => (
                   <div
-                    className="flex flex-row items-center [&:nth-child(2n+1)]:bg-slate-100 p-2 gap-2"
+                    className="flex flex-row items-center gap-2 p-2 [&:nth-child(2n+1)]:bg-slate-100"
                     key={`article-${article.label}`}
                   >
                     <Reference key={article.label} {...article} />
                     <button
-                      className="text-slate-300 active:text-slate-400 hover:text-slate-400"
+                      className="text-slate-300 hover:text-slate-400 active:text-slate-400"
                       onClick={() => copy(article.label)}
                     >
                       <CopyImage />
@@ -205,7 +198,7 @@ const Tree: FC<Props> = ({
                       className={
                         star
                           ? "text-yellow-500"
-                          : "text-slate-300 active:text-slate-400 hover:text-slate-400"
+                          : "text-slate-300 hover:text-slate-400 active:text-slate-400"
                       }
                       onClick={() => toggleStar(labelAsBase64)}
                     >

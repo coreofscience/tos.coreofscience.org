@@ -1,5 +1,5 @@
-import { FC, Fragment } from "react";
 import { Article } from "../../types/article";
+import { FC, Fragment } from "react";
 
 const titleCase = (sentence: string): string =>
   sentence

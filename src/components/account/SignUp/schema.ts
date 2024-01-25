@@ -1,5 +1,5 @@
-import { boolean, object, string } from "yup";
 import { errorMessages } from "../common/errorMessages";
+import { boolean, object, string } from "yup";
 
 export const signUpSchema = object()
   .shape({

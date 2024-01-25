@@ -2,7 +2,7 @@ const YoutubeIcon = () => (
   <svg
     viewBox="0 0 512 512"
     xmlns="http://www.w3.org/2000/svg"
-    className="w-8 h-8"
+    className="h-8 w-8"
   >
     <title id="title" lang="en">
       YouTube

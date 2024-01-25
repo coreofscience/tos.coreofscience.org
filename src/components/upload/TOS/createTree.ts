@@ -1,6 +1,6 @@
-import { addDoc, collection } from "firebase/firestore";
 import { FirebaseContextType } from "../../../types/firebaseContext";
 import { UserContextType } from "../../../types/userContextType";
+import { addDoc, collection } from "firebase/firestore";
 
 export const createTree = async ({
   firebase,

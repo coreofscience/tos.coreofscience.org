@@ -1,8 +1,7 @@
-import { FC } from "react";
-
+import { round } from "../../../utils/math";
 import CancelIcon from "../../vectors/CancelIcon";
 import MoveFirstIcon from "../../vectors/MoveFirstIcon";
-import { round } from "../../../utils/math";
+import { FC } from "react";
 
 interface Props {
   name: string;
@@ -38,31 +37,31 @@ const FileCard: FC<Props> = ({
     <div
       className={
         capped
-          ? "flex flex-col gap-2 items-center justify-center shadow-md relative p-8 text-center rounded-sm overflow-hidden bg-slate-100"
-          : "flex flex-col gap-2 items-center justify-center shadow-md relative p-8 text-center rounded-sm overflow-hidden"
+          ? "relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-sm bg-slate-100 p-8 text-center shadow-md"
+          : "relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-sm p-8 text-center shadow-md"
       }
     >
       {capped && (
         <button
           onClick={move}
-          className="bg-root text-slate-50 h-8 w-8 flex justify-center items-center absolute top-0 left-0 hover:bg-leaf active:bg-leaf transition-colors ease-in"
+          className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center bg-root text-slate-50 transition-colors ease-in hover:bg-leaf active:bg-leaf"
         >
           <MoveFirstIcon />
         </button>
       )}
       <button
         onClick={remove}
-        className="bg-root text-slate-50 h-8 w-8 flex justify-center items-center absolute top-0 right-0 hover:bg-red-500 active:bg-red-500 transition-colors ease-in"
+        className="absolute right-0 top-0 flex h-8 w-8 items-center justify-center bg-root text-slate-50 transition-colors ease-in hover:bg-red-500 active:bg-red-500"
       >
         <CancelIcon />
       </button>
       <strong
-        className="overflow-ellipsis overflow-hidden whitespace-nowrap max-w-[75%]"
+        className="max-w-[75%] overflow-hidden overflow-ellipsis whitespace-nowrap"
         title={name}
       >
         {name}
       </strong>
-      <small className="flex-grow flex flex-col items-center justify-center text-sm text-slate-500">
+      <small className="flex flex-grow flex-col items-center justify-center text-sm text-slate-500">
         {keywords.join(", ")}
       </small>
       <div>
@@ -94,7 +93,7 @@ const FileCard: FC<Props> = ({
       </div>
       <div className="absolute bottom-0 h-[3px] w-full bg-slate-100">
         <div
-          className="bg-leaf w-full h-[3px] origin-left"
+          className="h-[3px] w-full origin-left bg-leaf"
           style={{ transform: `scaleX(${progress / 100})` }}
         />
       </div>

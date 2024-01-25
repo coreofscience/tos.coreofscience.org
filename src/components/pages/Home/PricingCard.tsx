@@ -1,7 +1,7 @@
-import { FC } from "react";
-import CheckCircleIcon from "../../vectors/CheckCircleIcon";
-import { Link } from "react-router-dom";
 import useUser from "../../../hooks/useUser";
+import CheckCircleIcon from "../../vectors/CheckCircleIcon";
+import { FC } from "react";
+import { Link } from "react-router-dom";
 
 type Props = {
   name: string;
@@ -14,26 +14,25 @@ const PricingCard: FC<Props> = ({ name, price, features }: Props) => {
 
   return (
     <section
-      className={`shadow-xl shadow-slate-900/10 flex flex-col px-6 sm:px-8 py-8 rounded-sm ${
+      className={`flex flex-col rounded-sm px-6 py-8 shadow-xl shadow-slate-900/10 sm:px-8 ${
         name.toLowerCase() === "pro" ? "order-first bg-leaf lg:order-none" : ""
       }`}
     >
       <h3
-        className={`text-4xl uppercase font-tall ${
+        className={`font-tall text-4xl uppercase ${
           name.toLowerCase() === "pro" ? "text-slate-100" : "text-slate-900"
         }`}
       >
         {name}
       </h3>
       <p
-        className={`font-tall mt-5 text-2xl font-light ${
+        className={`mt-5 font-tall text-2xl font-light ${
           name.toLowerCase() === "pro" ? "text-slate-100" : "text-slate-900"
         }`}
       >
         {price}
       </p>
       <ul
-        role="list"
         className={`order-last mt-10 flex flex-col gap-y-3 text-sm ${
           name.toLowerCase() === "pro" ? "text-slate-100" : "text-slate-900"
         }`}
@@ -59,16 +58,16 @@ const PricingCard: FC<Props> = ({ name, price, features }: Props) => {
                 ? "/tos"
                 : "/sign-up"
         }`}
-        className={`font-tall uppercase group inline-flex items-center justify-center py-2 px-4 text-sm focus:outline-none mt-8 focus-visible:outline-white rounded-sm ${
+        className={`group mt-8 inline-flex items-center justify-center rounded-sm px-4 py-2 font-tall text-sm uppercase focus:outline-none focus-visible:outline-white ${
           name.toLowerCase() === "pro"
-            ? "font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 bg-white text-slate-900"
+            ? "bg-white font-semibold text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2"
             : "ring-1 ring-slate-700"
         }`}
         aria-label={`Get started with the ${name} plan for ${price}`}
       >
         {name.toLowerCase() === "pro"
           ? "Contact us"
-          : name.toLowerCase() == "basic"
+          : name.toLowerCase() === "basic"
             ? "Sign up"
             : "Grow Your Tree"}
       </Link>
