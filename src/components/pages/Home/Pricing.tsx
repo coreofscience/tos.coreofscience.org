@@ -1,3 +1,4 @@
+import useUser from "../../../hooks/useUser";
 import PricingCard from "./PricingCard";
 import { FC } from "react";
 
@@ -11,7 +12,13 @@ const includedFeaturesForPro: string[] = [
   "Unlimited history",
 ];
 
+const includedFeaturesForConcierge: string[] = [
+  "All the features of Pro",
+  "An expert to help you get started",
+];
+
 const Pricing: FC = () => {
+  const user = useUser();
   return (
     <section
       id="pricing"
@@ -23,16 +30,28 @@ const Pricing: FC = () => {
           Simple pricing for everyone
         </h2>
       </div>
-      <div className="grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-3xl lg:grid-cols-2 lg:gap-x-8 lg:place-self-center xl:mx-0 xl:gap-x-8">
-        <PricingCard
-          name="Pro"
-          price="$10/month"
-          features={includedFeaturesForPro}
-        />
+      <div className="grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-6xl lg:grid-cols-3 lg:gap-x-8 lg:place-self-center xl:mx-0 xl:gap-x-8">
         <PricingCard
           name="Basic"
           price="$0/month"
+          cta="Sign up for free"
+          href={user?.uid ? "/tos" : "/sign-up"}
           features={includedFeaturesForBasic}
+        />
+        <PricingCard
+          name="Pro"
+          price="$10/month"
+          cta="Contact us"
+          href="mailto:technology@coreofscience.org"
+          features={includedFeaturesForPro}
+          primary
+        />
+        <PricingCard
+          name="Concierge"
+          price="Contact us"
+          cta="Contact us"
+          href="mailto:technology@coreofscience.org"
+          features={includedFeaturesForConcierge}
         />
       </div>
     </section>
