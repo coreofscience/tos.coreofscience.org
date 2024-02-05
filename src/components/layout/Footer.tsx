@@ -225,6 +225,14 @@ const Footer = () => {
               About ToS
             </Link>
           </li>
+          <li>
+            <Link
+              className="text-sky-600 hover:text-sky-800 active:text-sky-800"
+              to="/docs/press"
+            >
+              Press Release
+            </Link>
+          </li>
         </ul>
       </div>
     </div>
