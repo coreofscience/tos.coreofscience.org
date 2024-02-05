@@ -21,6 +21,9 @@ const UserProvider = React.lazy(
 const Sap = React.lazy(() => import("./components/pages/docs/Sap"));
 const FAQ = React.lazy(() => import("./components/pages/docs/FAQ"));
 const About = React.lazy(() => import("./components/pages/docs/About"));
+const PressRelease = React.lazy(
+  () => import("./components/pages/docs/PressRelease"),
+);
 const Home = React.lazy(() => import("./components/pages/Home"));
 
 const queryClient = new QueryClient();
@@ -49,6 +52,7 @@ const App = () => {
                   <Route path="/docs/sap" element={<Sap />} />
                   <Route path="/docs/faq" element={<FAQ />} />
                   <Route path="/docs/about" element={<About />} />
+                  <Route path="/docs/press" element={<PressRelease />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </AppLayout>

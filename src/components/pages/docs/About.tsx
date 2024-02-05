@@ -27,7 +27,7 @@ const About = () => {
         Since its initial launch, <strong>Tree of Science</strong> has
         captivated the global academic community. Our first version engaged
         around 11,000 users and processed over 2 million queries from the Web of
-        Science (WoS), showcasing our tool&#39;s broad appeal and utility. The
+        Science (WoS), showcasing our tool's broad appeal and utility. The
         overwhelming response led to the formation of Core of Science, with{" "}
         <strong>Tree of Science</strong> as its cornerstone, but with a broader
         vision of creating an array of scientometric products.
@@ -41,8 +41,8 @@ const About = () => {
         community.
       </p>
       <p>
-        <strong>Tree of Science</strong> is not just a tool; it&#39;s a gateway
-        to a world of scientific discovery and analysis. Our platform offers
+        <strong>Tree of Science</strong> is not just a tool; it's a gateway to a
+        world of scientific discovery and analysis. Our platform offers
         intuitive and powerful visualization and analysis capabilities, making
         complex scientific data accessible and engaging. We are proud to serve a
         diverse and growing user base, ranging from budding scientists and
