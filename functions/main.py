@@ -271,8 +271,9 @@ def clean_pro_trees(_: ScheduledEvent) -> None:
     logging.info("running clean_pro_trees")
     client = firestore.client()
     for user in client.collection("users").stream():
+        pro_tree: DocumentSnapshot
         for pro_tree in client.collection(f"users/{user.id}/proTrees").stream():
-            pro_tree.delete()
+            pro_tree.reference.delete()
 
 
 @on_schedule(schedule="every 1 hours")
@@ -282,6 +283,8 @@ def clean_empty_plans(_: ScheduledEvent) -> None:
     """
     logging.info("running clean_empty_plans")
     client = firestore.client()
+    plan: DocumentSnapshot
     for plan in client.collection("plans").stream():
-        if "endDate" not in plan.to_dict():
-            plan.delete()
+        data = plan.to_dict()
+        if not data or "endDate" not in data:
+            plan.reference.delete()
