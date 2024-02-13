@@ -41,12 +41,7 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
               acceptsEmail: data.acceptsEmail,
             },
             { merge: true },
-          ).then(() => {
-            setDoc(
-              doc(firebase.firestore, "plans", userCredential.user.uid),
-              {},
-            );
-          });
+          );
 
           updateProfile(userCredential.user, {
             displayName: data.name,
