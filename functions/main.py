@@ -264,21 +264,24 @@ def update_user_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
 
 
 @on_schedule(schedule="every 1 hours")
-def migrate_pro_trees_to_trees(_: ScheduledEvent) -> None:
+def clean_pro_trees(_: ScheduledEvent) -> None:
     """
-    Migrate pro trees to trees.
+    Clean the old pro trees.
     """
-    logging.info("running migrate_pro_trees_to_trees")
+    logging.info("running clean_pro_trees")
     client = firestore.client()
     for user in client.collection("users").stream():
-        for tree in client.collection(f"users/{user.id}/trees").stream():
-            plan = tree.to_dict().get("planId")
-            if plan is None:
-                tree.reference.update({"planId": "basic"})
         for pro_tree in client.collection(f"users/{user.id}/proTrees").stream():
-            client.collection(f"users/{user.id}/trees").document(pro_tree.id).set(
-                {
-                    **pro_tree.to_dict(),
-                    "planId": "pro",
-                }
-            )
+            pro_tree.delete()
+
+
+@on_schedule(schedule="every 1 hours")
+def clean_empty_plans(_: ScheduledEvent) -> None:
+    """
+    Clean the empty plans.
+    """
+    logging.info("running clean_empty_plans")
+    client = firestore.client()
+    for plan in client.collection("plans").stream():
+        if "endDate" not in plan.to_dict():
+            plan.delete()
