@@ -261,32 +261,3 @@ def update_user_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
         auth.set_custom_user_claims(user_id, {"plan": "pro"})
         return
     auth.set_custom_user_claims(user_id, {"plan": "basic"})
-
-
-@on_schedule(schedule="every 1 hours")
-def clean_pro_trees(_: ScheduledEvent) -> None:
-    """
-    Clean the old pro trees.
-    """
-    logging.info("running clean_pro_trees")
-    client = firestore.client()
-    users = client.collection("users").get()
-    for user in users:
-        pro_tree: DocumentSnapshot
-        for pro_tree in client.collection(f"users/{user.id}/proTrees").stream():
-            pro_tree.reference.delete()
-
-
-@on_schedule(schedule="every 1 hours")
-def clean_empty_plans(_: ScheduledEvent) -> None:
-    """
-    Clean the empty plans.
-    """
-    logging.info("running clean_empty_plans")
-    client = firestore.client()
-    plans = client.collection("plans").get()
-    plan: DocumentSnapshot
-    for plan in plans:
-        data = plan.to_dict()
-        if not data or "endDate" not in data:
-            plan.reference.delete()
