@@ -19,12 +19,12 @@ jobs:
         with:
           node-version: lts/iron
 
-      - name: Use latest python version
+      - name: Setup python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Build
+      - name: Build UI
         run: |
           npm ci
           npm run build
@@ -39,7 +39,7 @@ jobs:
           VITE_APPID: "1:421154467745:web:d7dd5ed17243869ba765e0"
           VITE_MEASUREMENTID: "G-N2245DYRQN"
 
-      - name: Deploy
+      - name: Prepare functions
         shell: bash
         run: |
           cd functions
@@ -47,4 +47,13 @@ jobs:
           source ./venv/bin/activate
           pip install -r requirements.txt
           cd ..
-          npm run deploy -- --token=${{ secrets.FIREBASE_TOKEN }} -P dev
+
+      - name: Deploy
+        shell: bash
+        run: |
+          echo $RAW_CREDENTIALS > $GOOGLE_APPLICATION_CREDENTIALS
+          npm run deploy -- -P dev
+          rm $GOOGLE_APPLICATION_CREDENTIALS
+        env:
+          RAW_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COREOFSCIENCE_DEV }}
+          GOOGLE_APPLICATION_CREDENTIALS: .credentials.json
