@@ -1,15 +1,15 @@
 import logging
-from datetime import datetime
+from datetime import UTC, datetime
 from functools import reduce
 from io import StringIO
 from typing import Any, Dict, List
 
+from google.cloud.firestore import DocumentSnapshot
 import networkx as nx
 from bibx import Sap, read_any, Collection
 from firebase_admin import firestore, initialize_app, storage, auth
+from firebase_functions.core import Change
 from firebase_functions.firestore_fn import (
-    Change,
-    DocumentSnapshot,
     Event,
     on_document_created,
     on_document_written,
@@ -101,7 +101,7 @@ def get_contents(
 
 
 def get_int_utcnow() -> int:
-    return int(datetime.utcnow().timestamp())
+    return int(datetime.now(UTC).timestamp())
 
 
 def create_tree_v2(
@@ -230,9 +230,9 @@ def add_custom_claim_for_the_plan(_: ScheduledEvent) -> None:
             auth.get_user(plan.id)
         except auth.UserNotFoundError:
             continue
-        if (
-            not ("endDate" in plan.to_dict())
-            or int(plan.to_dict().get("endDate").timestamp()) < get_int_utcnow()
+        data = plan.to_dict()
+        if data and (
+            "endDate" not in data or int(data["endDate"].timestamp()) < get_int_utcnow()
         ):
             auth.set_custom_user_claims(plan.id, {"plan": "basic"})
         else:
