@@ -72,9 +72,11 @@ def convert_tos_to_json(tree: nx.DiGraph) -> Dict[str, List[Dict]]:
 
     if "branch" in output:
         for i in [1, 2, 3]:
-            output[f"branch_{i}"] = [
-                data for data in output["branch"] if data.get("branch") == i
-            ]
+            output[f"branch_{i}"] = sorted(
+                [data for data in output["branch"] if data.get("branch") == i],
+                key=lambda article: article.get("year", 0),
+                reverse=True,
+            )
         del output["branch"]
 
     return output
