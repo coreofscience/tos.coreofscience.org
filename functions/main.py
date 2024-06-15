@@ -22,6 +22,12 @@ logging.basicConfig(level=logging.INFO)
 initialize_app()
 
 
+ROOT = "root"
+TRUNK = "trunk"
+BRANCH = "branch"
+LEAF = "leaf"
+
+
 def set_analysis_property(collection: Collection, ref) -> None:
     cited = {str(key): value for key, value in collection.cited_by_year().items()}
     published = {
@@ -50,7 +56,7 @@ def convert_tos_to_json(tree: nx.DiGraph) -> Dict[str, List[Dict]]:
     Converts a ToS graph in the default format to be processed by the frontend.
     """
     output = {}
-    sections = ["root", "trunk", "branch", "leaf"]
+    sections = [ROOT, TRUNK, BRANCH, LEAF]
     for section in sections:
         data = sorted(
             [
@@ -70,14 +76,21 @@ def convert_tos_to_json(tree: nx.DiGraph) -> Dict[str, List[Dict]]:
         )
         output[section] = data
 
-    if "branch" in output:
+    if BRANCH in output:
         for i in [1, 2, 3]:
-            output[f"branch_{i}"] = sorted(
-                [data for data in output["branch"] if data.get("branch") == i],
+            output[f"{BRANCH}_{i}"] = sorted(
+                [data for data in output[BRANCH] if data.get(BRANCH) == i],
                 key=lambda article: article.get("year", 0),
                 reverse=True,
             )
-        del output["branch"]
+        del output[BRANCH]
+
+    if LEAF in output:
+        output[LEAF] = sorted(
+            output[LEAF],
+            key=lambda article: article.get("year", 0),
+            reverse=True,
+        )
 
     return output
 
