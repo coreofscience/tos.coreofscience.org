@@ -1,6 +1,6 @@
-import useFirebase from "../../hooks/useFirebase";
-import { AsyncActionStateType } from "../../types/asyncActionStateType";
-import { Message } from "../common/Message";
+import useFirebase from "../../../hooks/useFirebase";
+import { AsyncActionStateType } from "../../../types/asyncActionStateType";
+import { Message } from "../../common/Message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { FC, Fragment, useCallback, useState } from "react";

@@ -6,11 +6,11 @@ const AppLayout = React.lazy(() => import("./components/layout/AppLayout"));
 const TOS = React.lazy(() => import("./components/upload/TOS"));
 const Result = React.lazy(() => import("./components/tree/Result"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
-const LogIn = React.lazy(() => import("./components/account/LogIn"));
-const SignUp = React.lazy(() => import("./components/account/SignUp"));
+const LogIn = React.lazy(() => import("./components/pages/account/LogIn"));
+const SignUp = React.lazy(() => import("./components/pages/account/SignUp"));
 const Plans = React.lazy(() => import("./components/pricing/Plans"));
 const PasswordReset = React.lazy(
-  () => import("./components/account/PasswordReset"),
+  () => import("./components/pages/account/PasswordReset"),
 );
 const FilesProvider = React.lazy(
   () => import("./components/providers/FilesProvider"),
