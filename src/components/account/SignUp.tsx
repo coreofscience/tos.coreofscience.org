@@ -1,8 +1,7 @@
-import { Message } from "./common/Message";
+import useFirebase from "../../hooks/useFirebase";
+import { AsyncActionStateType } from "../../types/asyncActionStateType";
+import { Message } from "../common/Message";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FC, Fragment } from "react";
-import { useForm } from "react-hook-form";
-import { object, string, boolean } from "yup";
 import {
   createUserWithEmailAndPassword,
   UserCredential,
@@ -11,17 +10,17 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import { FC, Fragment } from "react";
 import { useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AsyncActionStateType } from "../../types/asyncActionStateType";
-import useFirebase from "../../hooks/useFirebase";
+import { object, string, boolean } from "yup";
 
 type SignUpFormFieldsType = {
   name: string;
   email: string;
   password: string;
   acceptsEmail?: boolean;
-
 };
 
 const signUpSchema = object()
