@@ -1,15 +1,44 @@
-import { Heading } from "../../../types/tableOfContent";
 import { FC } from "react";
 
-type Props = {
-  headings: Heading[];
+type Heading = {
+  text: string;
+  level: number;
+  id: string;
 };
 
-const TableOfContent: FC<Props> = ({ headings }) => {
+const headingData: Heading[] = [
+  {
+    level: 2,
+    text: "Roots",
+    id: "info-on-roots",
+  },
+  {
+    level: 2,
+    text: "Trunk",
+    id: "info-on-trunk",
+  },
+  {
+    level: 2,
+    text: "Branches",
+    id: "info-on-branches",
+  },
+  {
+    level: 2,
+    text: "Leaves",
+    id: "info-on-leaves",
+  },
+  {
+    level: 2,
+    text: "SAP Algorithm",
+    id: "info-on-sap-algorithm",
+  },
+];
+
+const TableOfContents: FC = () => {
   return (
     <div className="prose prose-stone">
       <ul>
-        {headings.map((heading) => {
+        {headingData.map((heading) => {
           const id = heading.id;
           const indentation = {
             3: " pl-2",
@@ -36,4 +65,4 @@ const TableOfContent: FC<Props> = ({ headings }) => {
   );
 };
 
-export default TableOfContent;
+export default TableOfContents;

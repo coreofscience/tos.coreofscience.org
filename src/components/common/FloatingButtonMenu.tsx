@@ -1,7 +1,12 @@
-import { FloatingButtonMenuPropsType } from "./types";
-import React, { useState } from "react";
+import { FC, ReactNode, useState } from "react";
 
-const FloatingButtonMenu: React.FC<FloatingButtonMenuPropsType> = ({
+type FloatingButtonMenuPropsType = {
+  iconResting: ReactNode;
+  iconActive: ReactNode;
+  children?: ReactNode;
+};
+
+const FloatingButtonMenu: FC<FloatingButtonMenuPropsType> = ({
   children,
   iconResting,
   iconActive,
@@ -18,7 +23,7 @@ const FloatingButtonMenu: React.FC<FloatingButtonMenuPropsType> = ({
 
       <button
         className="self-center rounded-full bg-leaf px-5 py-5 shadow-sm hover:shadow-md active:shadow-md"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={(prev) => setIsOpen(!prev)}
       >
         {!isOpen ? iconActive : iconResting}
       </button>
