@@ -26,7 +26,7 @@ const computeQuantities = (
   let articleCap = 0;
   let citationCap = 0;
   let sizeCap = 0;
-  for (let file of files) {
+  for (const file of files) {
     sizeCap += file.blob.size / 2 ** 20;
     if (sizeCap > maxSize) {
       sizeCap -= file.blob.size / 2 ** 20;

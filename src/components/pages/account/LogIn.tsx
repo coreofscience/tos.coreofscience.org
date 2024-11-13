@@ -32,7 +32,7 @@ type LogInActionsType = {
   logIn: (data: LogInFormFieldsType) => void;
 };
 
-export const useSignIn = (): [AsyncActionStateType, LogInActionsType] => {
+const useSignIn = (): [AsyncActionStateType, LogInActionsType] => {
   const firebase = useFirebase();
   const navigate = useNavigate();
   const [state, setState] = useState<AsyncActionStateType>({

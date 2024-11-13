@@ -3,7 +3,9 @@ import { useEffect } from "react";
 
 const Sap = () => {
   useEffect(() => {
-    window && window.scrollTo(0, 0);
+    if (window) {
+      window.scrollTo(0, 0);
+    }
   }, []);
 
   return (

@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const AppLayout = React.lazy(() => import("./components/layout/AppLayout"));
-const TOS = React.lazy(() => import("./components/upload/TOS"));
+const Tos = React.lazy(() => import("./components/upload/Tos"));
 const Result = React.lazy(() => import("./components/tree/Result"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
 const LogIn = React.lazy(() => import("./components/pages/account/LogIn"));
@@ -19,7 +19,7 @@ const UserProvider = React.lazy(
   () => import("./components/providers/UserProvider"),
 );
 const Sap = React.lazy(() => import("./components/pages/docs/Sap"));
-const FAQ = React.lazy(() => import("./components/pages/docs/FAQ"));
+const Faq = React.lazy(() => import("./components/pages/docs/Faq"));
 const About = React.lazy(() => import("./components/pages/docs/About"));
 const PressRelease = React.lazy(
   () => import("./components/pages/docs/PressRelease"),
@@ -41,7 +41,7 @@ const App = () => {
               <AppLayout>
                 <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/tos" element={<TOS />} />
+                  <Route path="/tos" element={<Tos />} />
                   <Route path="/log-in" element={<LogIn />} />
                   <Route path="/sign-up" element={<SignUp />} />
                   <Route path="/reset-password" element={<PasswordReset />} />
@@ -53,7 +53,7 @@ const App = () => {
                     element={<Result />}
                   />
                   <Route path="/docs/sap" element={<Sap />} />
-                  <Route path="/docs/faq" element={<FAQ />} />
+                  <Route path="/docs/faq" element={<Faq />} />
                   <Route path="/docs/about" element={<About />} />
                   <Route path="/docs/press" element={<PressRelease />} />
                   <Route path="/buy/pro" element={<ProBuyflow />} />

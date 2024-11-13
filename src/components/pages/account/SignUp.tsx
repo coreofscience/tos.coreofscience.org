@@ -38,7 +38,7 @@ export type SignUpActionsType = {
   signUp: (data: SignUpFormFieldsType) => void;
 };
 
-export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
+const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
   const firebase = useFirebase();
   const navigate = useNavigate();
   const [state, setState] = useState<AsyncActionStateType>({
