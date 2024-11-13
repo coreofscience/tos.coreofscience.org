@@ -32,7 +32,7 @@
     "start": "vite",
     "start:emulators": "mkdir -p ~/.cache/tos/ && firebase emulators:start --import ~/.cache/tos/emulators --export-on-exit",
     "start:ui": "VITE_USE_EMULATORS=true vite",
-    "build": "tsc && vite build",
+    "build": "tsc -b && vite build",
     "serve": "vite preview",
     "deploy": "firebase deploy",
     "eslint": "eslint .",
