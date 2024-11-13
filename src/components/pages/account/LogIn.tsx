@@ -1,11 +1,13 @@
 import useFirebase from "../../../hooks/useFirebase";
+import useNext from "../../../hooks/useNext";
+import useUser from "../../../hooks/useUser";
 import { AsyncActionStateType } from "../../../types/asyncActionStateType";
 import { Message } from "../../common/Message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FC, Fragment, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { object, string } from "yup";
 
 type LogInFormFieldsType = {
@@ -37,13 +39,14 @@ export const useSignIn = (): [AsyncActionStateType, LogInActionsType] => {
     status: "idle",
     message: "",
   });
+  const { next } = useNext();
 
   const logIn = useCallback(
     (data: LogInFormFieldsType) => {
       signInWithEmailAndPassword(firebase.auth, data.email, data.password)
         .then(() => {
           setState({ status: "success", message: "Successfully logged in" });
-          navigate("/tos");
+          navigate(next || "/tos");
         })
         .catch((error) => {
           setState({
@@ -54,7 +57,7 @@ export const useSignIn = (): [AsyncActionStateType, LogInActionsType] => {
           });
         });
     },
-    [firebase.auth, navigate],
+    [firebase.auth, navigate, next],
   );
 
   return [state, { logIn }];
@@ -70,6 +73,13 @@ const LogIn: FC = () => {
   });
 
   const [logInState, logInActions] = useSignIn();
+
+  const { next, nextSearch } = useNext();
+  const user = useUser();
+
+  if (user && next) {
+    return <Navigate to={next} />;
+  }
 
   return (
     <Fragment>
@@ -114,7 +124,10 @@ const LogIn: FC = () => {
           type={logInState.status === "failure" ? "error" : "info"}
         />
         <Link
-          to="/reset-password"
+          to={{
+            pathname: "/reset-password",
+            search: nextSearch,
+          }}
           className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
         >
           Forgot your password?

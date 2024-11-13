@@ -1,10 +1,13 @@
 import useFirebase from "../../../hooks/useFirebase";
+import useNext from "../../../hooks/useNext";
+import useUser from "../../../hooks/useUser";
 import { AsyncActionStateType } from "../../../types/asyncActionStateType";
 import { Message } from "../../common/Message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { FC, Fragment, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
 import { object, string } from "yup";
 
 type PaswordResetFormFieldsType = {
@@ -63,6 +66,13 @@ const PasswordReset: FC = () => {
   });
 
   const [passwordResetState, passwordResetActions] = usePasswordReset();
+
+  const user = useUser();
+  const { next } = useNext();
+
+  if (user && next) {
+    return <Navigate to={next || "/"} />;
+  }
 
   return (
     <Fragment>

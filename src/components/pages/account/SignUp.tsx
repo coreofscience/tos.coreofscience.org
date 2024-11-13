@@ -1,4 +1,6 @@
 import useFirebase from "../../../hooks/useFirebase";
+import useNext from "../../../hooks/useNext";
+import useUser from "../../../hooks/useUser";
 import { AsyncActionStateType } from "../../../types/asyncActionStateType";
 import { Message } from "../../common/Message";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,7 +15,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { FC, Fragment } from "react";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { object, string, boolean } from "yup";
 
 type SignUpFormFieldsType = {
@@ -44,6 +46,8 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
     message: "",
   });
 
+  const { next } = useNext();
+
   const signUp = useCallback(
     (data: SignUpFormFieldsType) => {
       setState({
@@ -71,7 +75,7 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
           });
 
           setTimeout(() => {
-            navigate("/tos");
+            navigate(next || "/tos");
             const user: User = userCredential.user;
             if (user) sendEmailVerification(user);
           }, 500);
@@ -86,7 +90,7 @@ export const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
           });
         });
     },
-    [firebase.auth, firebase.firestore, navigate],
+    [firebase.auth, firebase.firestore, navigate, next],
   );
 
   return [state, { signUp }];
@@ -104,6 +108,13 @@ const SignUp: FC = () => {
   });
 
   const [signUpState, signUpActions] = useSignUp();
+
+  const { next } = useNext();
+  const user = useUser();
+
+  if (user && next) {
+    return <Navigate to={next} />;
+  }
 
   return (
     <Fragment>
