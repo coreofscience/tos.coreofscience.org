@@ -1,9 +1,11 @@
+from enum import Enum
 import logging
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from functools import reduce
 from io import StringIO
 from typing import Any, Dict, List
 
+import arrow
 from google.cloud.firestore import DocumentSnapshot
 import networkx as nx
 from bibx import Sap, read_any, Collection
@@ -16,6 +18,7 @@ from firebase_functions.firestore_fn import (
 )
 from firebase_functions.options import MemoryOption
 from firebase_functions.scheduler_fn import on_schedule, ScheduledEvent
+from pydantic import BaseModel, ValidationError
 
 logging.basicConfig(level=logging.INFO)
 
@@ -26,6 +29,8 @@ ROOT = "root"
 TRUNK = "trunk"
 BRANCH = "branch"
 LEAF = "leaf"
+
+INVOICING_LEEWAY_HOURS = 6
 
 
 def set_analysis_property(collection: Collection, ref) -> None:
@@ -276,3 +281,85 @@ def update_user_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
         auth.set_custom_user_claims(user_id, {"plan": "pro"})
         return
     auth.set_custom_user_claims(user_id, {"plan": "basic"})
+
+
+class Period(Enum):
+    monthly = "monthly"
+    yearly = "yearly"
+
+
+class Subscription(BaseModel):
+    period: Period
+    price_usc: int
+    start_date: datetime | None = None
+    end_date: datetime | None = None
+    canceled: bool = False
+
+
+@on_document_written(document="subscriptions/{subscriptionId}")
+def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
+    """
+    When a new subscription is created, add it to the plans collection.
+    """
+    logging.info("running create_subscription_plan")
+    if (
+        event.data is None
+        or event.data.after is None
+        or (data := event.data.after.to_dict()) is None
+    ):
+        return
+
+    user_id = event.params["subscriptionId"]
+
+    try:
+        subscription = Subscription.model_validate(data)
+        if subscription.canceled:
+            logging.info("subscription is canceled")
+            return
+        if subscription.end_date and subscription.end_date < datetime.now(UTC):
+            logging.info("subscription is expired")
+            return
+        if subscription.start_date is None:
+            logging.info("subscription start date is not set")
+            event.data.after.reference.update({"start_date": datetime.now(UTC)})
+            return
+        asd = arrow.get(subscription.start_date)
+        if subscription.period == Period.monthly:
+            period = "month"
+        elif subscription.period == Period.yearly:
+            period = "year"
+        else:
+            raise ValueError("invalid period")
+
+        end_date = asd.ceil(period).datetime
+        # Create first invoice
+        total_seconds_to_charge = (end_date - subscription.start_date).total_seconds()
+        total_seconds_in_period = (
+            end_date - asd.floor(period).datetime
+        ).total_seconds()
+        total_price_usc = int(
+            subscription.price_usc * total_seconds_to_charge / total_seconds_in_period
+        )
+        firestore.client().collection("users").document(user_id).collection(
+            "invoices"
+        ).add(
+            {
+                "price_usc": subscription.price_usc,
+                "period": subscription.period.value,
+                "start_date": subscription.start_date,
+                "end_date": end_date,
+                "total_price_usc": total_price_usc,
+            }
+        )
+        # Update plan
+        firestore.client().collection("plans").document(user_id).set(
+            {
+                # Give some leeway for the invoicing process
+                "endDate": end_date + timedelta(hours=INVOICING_LEEWAY_HOURS),
+            }
+        )
+
+    except ValidationError:
+        logging.exception("invalid subscription data")
+        return
+    logging.info("create_subscription_plan finished successfully")
