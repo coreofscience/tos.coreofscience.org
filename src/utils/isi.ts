@@ -44,4 +44,4 @@ const countReferences = (text: string): number => {
     .reduce((n, m) => n + m, 0);
 };
 
-export { ISI_PATTERN, looksLikeIsi, keywords, countArticles, countReferences };
+export { looksLikeIsi, keywords, countArticles, countReferences };

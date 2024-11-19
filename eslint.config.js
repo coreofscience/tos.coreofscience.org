@@ -1,5 +1,6 @@
 import js from "@eslint/js";
 import reactQuery from "@tanstack/eslint-plugin-query";
+import pluginImport from "eslint-plugin-import";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import globals from "globals";
@@ -18,6 +19,7 @@ export default tseslint.config(
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       "react-query": reactQuery,
+      import: pluginImport,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
