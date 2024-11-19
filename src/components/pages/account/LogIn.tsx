@@ -1,11 +1,11 @@
 import useFirebase from "../../../hooks/useFirebase";
 import useNext from "../../../hooks/useNext";
 import useUser from "../../../hooks/useUser";
-import { AsyncActionStateType } from "../../../types/asyncActionStateType";
 import { Message } from "../../common/Message";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { FC, Fragment, useCallback, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { Auth, signInWithEmailAndPassword } from "firebase/auth";
+import { FC, Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { object, string } from "yup";
@@ -22,45 +22,16 @@ const loginSchema = object()
   })
   .required();
 
-const messageByErrorCodeMap: Record<string, string> = {
-  "auth/user-not-found": "Couldn't find your account",
-  "auth/wrong-password":
-    "Unable to log in, please be sure to use the proper email/password",
-};
-
-type LogInActionsType = {
-  logIn: (data: LogInFormFieldsType) => void;
-};
-
-const useSignIn = (): [AsyncActionStateType, LogInActionsType] => {
-  const firebase = useFirebase();
-  const navigate = useNavigate();
-  const [state, setState] = useState<AsyncActionStateType>({
-    status: "idle",
-    message: "",
-  });
-  const { next } = useNext();
-
-  const logIn = useCallback(
-    (data: LogInFormFieldsType) => {
-      signInWithEmailAndPassword(firebase.auth, data.email, data.password)
-        .then(() => {
-          setState({ status: "success", message: "Successfully logged in" });
-          navigate(next || "/tos");
-        })
-        .catch((error) => {
-          setState({
-            status: "failure",
-            message:
-              messageByErrorCodeMap[error.code] ??
-              "There was an error loggin in to your account, please try again",
-          });
-        });
-    },
-    [firebase.auth, navigate, next],
-  );
-
-  return [state, { logIn }];
+const logIn = async ({
+  auth,
+  email,
+  password,
+}: {
+  auth: Auth;
+  email: string;
+  password: string;
+}): Promise<void> => {
+  await signInWithEmailAndPassword(auth, email, password);
 };
 
 const LogIn: FC = () => {
@@ -71,11 +42,21 @@ const LogIn: FC = () => {
     },
     resolver: yupResolver(loginSchema),
   });
-
-  const [logInState, logInActions] = useSignIn();
-
+  const navigate = useNavigate();
   const { next, nextSearch } = useNext();
   const user = useUser();
+  const firebase = useFirebase();
+
+  const {
+    mutate: signIn,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationFn: logIn,
+    onSuccess: () => {
+      navigate(next || "/tos");
+    },
+  });
 
   if (user && next) {
     return <Navigate to={next} />;
@@ -85,7 +66,13 @@ const LogIn: FC = () => {
     <Fragment>
       <form
         className="m-auto flex max-w-md flex-col gap-4"
-        onSubmit={form.handleSubmit(logInActions.logIn)}
+        onSubmit={form.handleSubmit((data) =>
+          signIn({
+            auth: firebase.auth,
+            email: data.email,
+            password: data.password,
+          }),
+        )}
       >
         <h2 className="font-tall text-2xl uppercase md:text-4xl">Log In</h2>
         <div className="flex flex-col gap-2">
@@ -120,8 +107,14 @@ const LogIn: FC = () => {
           />
         </div>
         <Message
-          message={logInState.message}
-          type={logInState.status === "failure" ? "error" : "info"}
+          message={
+            isSuccess
+              ? "Successfully logged you in."
+              : isError
+                ? "There was an issue logging you in."
+                : ""
+          }
+          type={isError ? "error" : "info"}
         />
         <Link
           to={{

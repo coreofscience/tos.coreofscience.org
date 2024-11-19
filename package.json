@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@hookform/resolvers": "^3.4.0",
+    "@tanstack/react-query": "^5.60.5",
     "@types/d3": "^7.4.0",
     "@types/lodash": "^4.17.4",
     "@types/md5": "^2.2.0",
@@ -21,7 +22,6 @@
     "react-dropzone": "^14.2.2",
     "react-hook-form": "^7.51.4",
     "react-infinite-scroll-component": "^6.1.0",
-    "react-query": "^3.39.2",
     "react-router-dom": "^6.23.1",
     "react-use": "^17.4.0",
     "yup": "^1.0.2"
@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
+    "@tanstack/eslint-plugin-query": "^5.60.1",
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",

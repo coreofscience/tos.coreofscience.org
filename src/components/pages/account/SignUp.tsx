@@ -1,28 +1,59 @@
 import useFirebase from "../../../hooks/useFirebase";
 import useNext from "../../../hooks/useNext";
 import useUser from "../../../hooks/useUser";
-import { AsyncActionStateType } from "../../../types/asyncActionStateType";
 import { Message } from "../../common/Message";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutation } from "@tanstack/react-query";
 import {
   createUserWithEmailAndPassword,
-  UserCredential,
   sendEmailVerification,
-  User,
   updateProfile,
+  Auth,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { Firestore, doc, setDoc } from "firebase/firestore";
 import { FC, Fragment } from "react";
-import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Navigate, useNavigate } from "react-router-dom";
 import { object, string, boolean } from "yup";
+
+const signUp = async ({
+  auth,
+  firestore,
+  name,
+  email,
+  password,
+  acceptsEmail,
+}: {
+  auth: Auth;
+  firestore: Firestore;
+  name: string;
+  email: string;
+  password: string;
+  acceptsEmail: boolean;
+}): Promise<void> => {
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password,
+  );
+  await setDoc(
+    doc(firestore, `/users/${userCredential.user.uid}`),
+    {
+      acceptsEmail: acceptsEmail,
+    },
+    { merge: true },
+  );
+  await updateProfile(userCredential.user, {
+    displayName: name,
+  });
+  await sendEmailVerification(userCredential.user);
+};
 
 type SignUpFormFieldsType = {
   name: string;
   email: string;
   password: string;
-  acceptsEmail?: boolean;
+  acceptsEmail: boolean;
 };
 
 const signUpSchema = object()
@@ -30,70 +61,12 @@ const signUpSchema = object()
     name: string().required(),
     email: string().required().email("Invalid email address"),
     password: string().required().min(8, "Invalid password"),
-    acceptsEmail: boolean(),
+    acceptsEmail: boolean().required(),
   })
   .required();
 
 export type SignUpActionsType = {
   signUp: (data: SignUpFormFieldsType) => void;
-};
-
-const useSignUp = (): [AsyncActionStateType, SignUpActionsType] => {
-  const firebase = useFirebase();
-  const navigate = useNavigate();
-  const [state, setState] = useState<AsyncActionStateType>({
-    status: "idle",
-    message: "",
-  });
-
-  const { next } = useNext();
-
-  const signUp = useCallback(
-    (data: SignUpFormFieldsType) => {
-      setState({
-        status: "in-progress",
-        message: "Creating account...",
-      });
-      createUserWithEmailAndPassword(firebase.auth, data.email, data.password)
-        .then((userCredential: UserCredential) => {
-          setState({
-            status: "success",
-            message:
-              "Successfully signed up, you will be redirected to home in a few...",
-          });
-
-          setDoc(
-            doc(firebase.firestore, `/users/${userCredential.user.uid}`),
-            {
-              acceptsEmail: data.acceptsEmail,
-            },
-            { merge: true },
-          );
-
-          updateProfile(userCredential.user, {
-            displayName: data.name,
-          });
-
-          setTimeout(() => {
-            navigate(next || "/tos");
-            const user: User = userCredential.user;
-            if (user) sendEmailVerification(user);
-          }, 500);
-        })
-        .catch((error) => {
-          setState({
-            status: "failure",
-            message:
-              error.code === "auth/email-already-in-use"
-                ? "An account already exists with the email you entered"
-                : "There was an error creating your account, please try again",
-          });
-        });
-    },
-    [firebase.auth, firebase.firestore, navigate, next],
-  );
-
-  return [state, { signUp }];
 };
 
 const SignUp: FC = () => {
@@ -106,11 +79,23 @@ const SignUp: FC = () => {
     },
     resolver: yupResolver(signUpSchema),
   });
-
-  const [signUpState, signUpActions] = useSignUp();
-
+  const firebase = useFirebase();
+  const navigate = useNavigate();
   const { next } = useNext();
   const user = useUser();
+
+  const {
+    mutate: create,
+    isSuccess,
+    isError,
+  } = useMutation({
+    mutationFn: signUp,
+    onSuccess: () => {
+      setTimeout(() => {
+        navigate(next || "/tos");
+      }, 500);
+    },
+  });
 
   if (user && next) {
     return <Navigate to={next} />;
@@ -120,7 +105,13 @@ const SignUp: FC = () => {
     <Fragment>
       <form
         className="m-auto flex max-w-md flex-col gap-4"
-        onSubmit={form.handleSubmit(signUpActions.signUp)}
+        onSubmit={form.handleSubmit((data) =>
+          create({
+            auth: firebase.auth,
+            firestore: firebase.firestore,
+            ...data,
+          }),
+        )}
       >
         <h2 className="font-tall text-2xl uppercase md:text-4xl">Sign Up</h2>
         <div className="flex flex-col gap-2">
@@ -176,8 +167,14 @@ const SignUp: FC = () => {
           />
         </div>
         <Message
-          message={signUpState.message}
-          type={signUpState.status === "failure" ? "error" : "info"}
+          message={
+            isSuccess
+              ? "Account created successfully."
+              : isError
+                ? "There was an issue creating your account."
+                : ""
+          }
+          type={isError ? "error" : "info"}
         />
       </form>
     </Fragment>

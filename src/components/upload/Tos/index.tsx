@@ -8,9 +8,9 @@ import { countFormat, round, weightFormat } from "../../../utils/math";
 import AcceptsEmail from "../AcceptsEmail";
 import EmailVerification from "../EmailVerification";
 import { createTree } from "./createTree";
+import { useMutation } from "@tanstack/react-query";
 import { logEvent } from "firebase/analytics";
 import React, { FC, useContext } from "react";
-import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -43,9 +43,10 @@ const Tos: FC = () => {
 
   const {
     mutate: create,
-    isLoading,
+    isPending,
     isError,
-  } = useMutation(createTree, {
+  } = useMutation({
+    mutationFn: createTree,
     onSuccess: (treePath: string) =>
       navigate(`/${treePath}`, { replace: true }),
   });
@@ -99,7 +100,7 @@ const Tos: FC = () => {
         <button
           className="inline-block rounded-sm bg-leaf px-12 py-6 font-tall text-4xl uppercase text-slate-50 disabled:bg-slate-400"
           disabled={
-            isLoading ||
+            isPending ||
             !finished ||
             totalArticles === 0 ||
             totalCitations === 0
@@ -111,7 +112,7 @@ const Tos: FC = () => {
             logEvent(firebase.analytics, "tree_created");
           }}
         >
-          {isLoading ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
+          {isPending ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
         </button>
       </div>
       {isError && (
