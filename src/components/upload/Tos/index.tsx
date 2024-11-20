@@ -85,15 +85,17 @@ const Tos: FC = () => {
           <span className="text-sm text-slate-500">size [MB]</span>
         </div>
       </div>
-      <p>
-        For extra processing capacity check out our&nbsp;
-        <Link
-          className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
-          to="/pricing"
-        >
-          plans and pricing.
-        </Link>
-      </p>
+      {(!user || user.plan !== "pro") && (
+        <p>
+          For extra processing capacity check out our&nbsp;
+          <Link
+            className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
+            to="/pricing"
+          >
+            plans and pricing.
+          </Link>
+        </p>
+      )}
       <br></br>
       <div>Let's start planting your tree.</div>
       <div>
