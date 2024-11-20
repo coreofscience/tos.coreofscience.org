@@ -28,6 +28,7 @@ const Home = React.lazy(() => import("./components/pages/Home"));
 const ProBuyflow = React.lazy(
   () => import("./components/pages/buyflow/ProBuyflow"),
 );
+const Thanks = React.lazy(() => import("./components/pages/buyflow/Thanks"));
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,7 @@ const App = () => {
                   <Route path="/docs/about" element={<About />} />
                   <Route path="/docs/press" element={<PressRelease />} />
                   <Route path="/buy/pro" element={<ProBuyflow />} />
+                  <Route path="/buy/pro/thanks" element={<Thanks />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </AppLayout>
