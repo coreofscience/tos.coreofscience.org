@@ -21,6 +21,7 @@ from firebase_functions.scheduler_fn import on_schedule, ScheduledEvent
 from pydantic import BaseModel, ValidationError
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 initialize_app()
 
@@ -105,7 +106,7 @@ def get_contents(
 ) -> Dict[str, str]:
     """Get the contents for the files in order to create the graph."""
     names = [f"isi-files/{name}" for name in document_data["files"]]
-    logging.info("Reading source files", extra={"names": names})
+    logger.info("Reading source files", extra={"names": names})
     blobs = list(filter(None, [storage.bucket().get_blob(name) for name in names]))
 
     size = 0
@@ -131,7 +132,7 @@ def create_tree_v2(
 ) -> None:
     if event.data is None or (data := event.data.to_dict()) is None:
         return
-    logging.info(f"handling new created tree {data}")
+    logger.info(f"handling new created tree {data}")
 
     start = datetime.now()
 
@@ -145,7 +146,7 @@ def create_tree_v2(
             .document(event.params["treeId"])
         )
     ref.update({"startedDate": get_int_utcnow()})
-    logging.info("Tree process started")
+    logger.info("Tree process started")
 
     try:
         contents = get_contents(data, max_size_megabytes=max_size_megabytes)
@@ -161,9 +162,9 @@ def create_tree_v2(
                 "totalTimeMillis": (end - start).total_seconds() * 1000,
             }
         )
-        logging.info("Tree process finished")
+        logger.info("Tree process finished")
     except Exception as error:
-        logging.exception("Tree process failed")
+        logger.exception("Tree process failed")
         end = datetime.now()
         ref.update(
             {
@@ -178,7 +179,7 @@ def create_tree_v2(
 
 @on_document_created(document="users/{userId}/trees/{treeId}")
 def create_tree_with_initial_info(event: Event[DocumentSnapshot | None]) -> None:
-    logging.info("Running create_tree_with_initial_info")
+    logger.info("Running create_tree_with_initial_info")
     if event.data is None or (data := event.data.to_dict()) is None:
         return
     if "planId" not in data:
@@ -203,7 +204,7 @@ def create_tree_with_initial_info(event: Event[DocumentSnapshot | None]) -> None
             .document(event.params["treeId"])
             .set(data)
         )
-    logging.info("create_tree_with_initial_info finished")
+    logger.info("create_tree_with_initial_info finished")
 
 
 @on_document_created(
@@ -244,7 +245,7 @@ def add_custom_claim_for_the_plan(_: ScheduledEvent) -> None:
     """
     Check the plans collection and update each user's custom claims accordingly.
     """
-    logging.info("Running add_custom_claim_for_the_plan")
+    logger.info("Running add_custom_claim_for_the_plan")
     for plan in firestore.client().collection("plans").stream():
         try:
             auth.get_user(plan.id)
@@ -264,7 +265,7 @@ def update_user_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
     """
     When a plan is updated, change the user's custom claims accordingly.
     """
-    logging.info("Running update_user_plan")
+    logger.info("Running update_user_plan")
     user_id = event.params["planId"]
     try:
         auth.get_user(user_id)
@@ -284,8 +285,8 @@ def update_user_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
 
 
 class Period(Enum):
-    monthly = "monthly"
-    yearly = "yearly"
+    month = "month"
+    year = "year"
 
 
 class Subscription(BaseModel):
@@ -301,7 +302,7 @@ def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> N
     """
     When a new subscription is created, add it to the plans collection.
     """
-    logging.info("running create_subscription_plan")
+    logger.info("running create_subscription_plan")
     if (
         event.data is None
         or event.data.after is None
@@ -310,39 +311,31 @@ def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> N
         return
 
     user_id = event.params["subscriptionId"]
+    client = firestore.client()
 
     try:
         subscription = Subscription.model_validate(data)
         if subscription.canceled:
-            logging.info("subscription is canceled")
+            logger.info("subscription is canceled")
             return
         if subscription.end_date and subscription.end_date < datetime.now(UTC):
-            logging.info("subscription is expired")
+            logger.info("subscription is expired")
             return
         if subscription.start_date is None:
-            logging.info("subscription start date is not set")
+            logger.info("subscription start date is not set")
             event.data.after.reference.update({"start_date": datetime.now(UTC)})
             return
         asd = arrow.get(subscription.start_date)
-        if subscription.period == Period.monthly:
-            period = "month"
-        elif subscription.period == Period.yearly:
-            period = "year"
-        else:
-            raise ValueError("invalid period")
-
-        end_date = asd.ceil(period).datetime
+        end_date = asd.ceil(subscription.period.value).datetime
         # Create first invoice
         total_seconds_to_charge = (end_date - subscription.start_date).total_seconds()
         total_seconds_in_period = (
-            end_date - asd.floor(period).datetime
+            end_date - asd.floor(subscription.period.value).datetime
         ).total_seconds()
         total_price_usc = int(
             subscription.price_usc * total_seconds_to_charge / total_seconds_in_period
         )
-        firestore.client().collection("users").document(user_id).collection(
-            "invoices"
-        ).add(
+        client.collection("users").document(user_id).collection("invoices").add(
             {
                 "price_usc": subscription.price_usc,
                 "period": subscription.period.value,
@@ -352,7 +345,7 @@ def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> N
             }
         )
         # Update plan
-        firestore.client().collection("plans").document(user_id).set(
+        client.collection("plans").document(user_id).set(
             {
                 # Give some leeway for the invoicing process
                 "endDate": end_date + timedelta(hours=INVOICING_LEEWAY_HOURS),
@@ -360,6 +353,68 @@ def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> N
         )
 
     except ValidationError:
-        logging.exception("invalid subscription data")
+        logger.exception("invalid subscription data")
         return
-    logging.info("create_subscription_plan finished successfully")
+    logger.info("create_subscription_plan finished successfully")
+
+
+def _renew_subscriptions(period: Period) -> None:
+    client = firestore.client()
+    snapshot: DocumentSnapshot
+    for snapshot in (
+        client.collection("subscriptions").where("period", "==", period.value).stream()
+    ):
+        data = snapshot.to_dict()
+        if not data:
+            logger.info("skipping subscription %s without data", snapshot.id)
+            continue
+        try:
+            subscription = Subscription.model_validate(data)
+        except ValidationError:
+            logger.exception(
+                "invalid subscription data for subscription %s", snapshot.id
+            )
+            continue
+        if subscription.canceled:
+            logger.info("subscription %s is canceled", snapshot.id)
+            continue
+        asd = arrow.utcnow()
+        if subscription.end_date and subscription.end_date < asd.datetime:
+            logger.info("subscription %s is expired", snapshot.id)
+            continue
+        if subscription.start_date is None or asd.datetime < subscription.start_date:
+            logger.info("subscription %s hasn't started yet", snapshot.id)
+            continue
+        invoice_start = asd.floor(period.value).datetime
+        invoice_end = asd.ceil(period.value).datetime
+        # Create invoice
+        client.collection("users").document(snapshot.id).collection("invoices").add(
+            {
+                "price_usc": subscription.price_usc,
+                "period": subscription.period.value,
+                "start_date": invoice_start,
+                "end_date": invoice_end,
+                "total_price_usc": subscription.price_usc,
+            }
+        )
+        # Update plan
+        client.collection("plans").document(snapshot.id).set(
+            {
+                # Give some leeway for the invoicing process
+                "endDate": invoice_end + timedelta(hours=INVOICING_LEEWAY_HOURS),
+            }
+        )
+
+
+@on_schedule(schedule="0 0 1 1 *")
+def renew_annual_subscriptions(_: ScheduledEvent):
+    logger.info("running renew_annual_subscriptions")
+    _renew_subscriptions(Period.year)
+    logger.info("renew_annual_subscriptions finished")
+
+
+@on_schedule(schedule="0 0 1 * *")
+def renew_monthly_subscriptions(_: ScheduledEvent):
+    logger.info("running renew_annual_subscriptions")
+    _renew_subscriptions(Period.month)
+    logger.info("renew_annual_subscriptions finished")

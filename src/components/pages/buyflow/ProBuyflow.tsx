@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Firestore, doc, setDoc } from "firebase/firestore";
 import { Navigate, useNavigate } from "react-router-dom";
 
-type SubscriptionPerios = "monthly" | "yearly";
+type SubscriptionPerios = "month" | "year";
 
 type Subscription = {
   period: SubscriptionPerios;
@@ -73,12 +73,13 @@ const ProBuyflow = () => {
       <div className="flex flex-row items-center justify-center gap-4">
         <button
           className="rounded-sm bg-leaf px-4 py-2 text-center font-tall font-bold uppercase text-slate-50"
+          disabled={subscribeMutation.isPending || subscribeMutation.isSuccess}
           onClick={() =>
             subscribeMutation.mutate({
               firestore: firebase.firestore,
               userId: user.uid,
               subscription: {
-                period: "monthly",
+                period: "month",
                 // Will create the subscriptions with price 0 for now
                 price_usc: 0,
               },
@@ -89,12 +90,13 @@ const ProBuyflow = () => {
         </button>
         <button
           className="rounded-sm bg-leaf px-4 py-2 text-center font-tall font-bold uppercase text-slate-50"
+          disabled={subscribeMutation.isPending || subscribeMutation.isSuccess}
           onClick={() =>
             subscribeMutation.mutate({
               firestore: firebase.firestore,
               userId: user.uid,
               subscription: {
-                period: "yearly",
+                period: "year",
                 // Will create the subscriptions with price 0 for now
                 price_usc: 0,
               },

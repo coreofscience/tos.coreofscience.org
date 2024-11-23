@@ -33,6 +33,9 @@
     "singleProjectMode": true,
     "auth": {
       "port": 9099
+    },
+    "pubsub": {
+      "port": 8085
     }
   },
   "storage": {
