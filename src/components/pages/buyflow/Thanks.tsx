@@ -27,7 +27,12 @@ const Thanks = () => {
           You now have access to all the pro features of Tree of Science.
         </p>
         <p className="text-center text-lg">
-          Your subscription will be billed monthly/yearly.
+          As you probably noticed you were not charged, and you won't be charged
+          for the time being.
+        </p>
+        <p>
+          Once we start charging for Tree of Science Pro, you will be given the
+          option to renew or cancel your subscription.
         </p>
       </div>
       <div className="flex flex-row items-center justify-center gap-4">
