@@ -415,6 +415,6 @@ def renew_annual_subscriptions(_: ScheduledEvent):
 
 @on_schedule(schedule="0 0 1 * *")
 def renew_monthly_subscriptions(_: ScheduledEvent):
-    logger.info("running renew_annual_subscriptions")
+    logger.info("running renew_monthly_subscriptions")
     _renew_subscriptions(Period.month)
-    logger.info("renew_annual_subscriptions finished")
+    logger.info("renew_monthly_subscriptions finished")
