@@ -9,7 +9,7 @@ type SubscriptionPerios = "month" | "year";
 
 type Subscription = {
   period: SubscriptionPerios;
-  price_usc: number;
+  price: string;
 };
 
 const subscribe = async ({
@@ -23,8 +23,10 @@ const subscribe = async ({
 }) => {
   // Create a new subscription document
   await setDoc(doc(firestore, `/subscriptions/${userId}`), {
+    plan_id: "pro",
     period: subscription.period,
-    price_usc: subscription.price_usc,
+    price: subscription.price,
+    currency: "USD",
     start_date: new Date(),
   });
 };
@@ -81,7 +83,7 @@ const ProBuyflow = () => {
               subscription: {
                 period: "month",
                 // Will create the subscriptions with price 0 for now
-                price_usc: 0,
+                price: "10.00",
               },
             })
           }
@@ -98,7 +100,7 @@ const ProBuyflow = () => {
               subscription: {
                 period: "year",
                 // Will create the subscriptions with price 0 for now
-                price_usc: 0,
+                price: "100.00",
               },
             })
           }

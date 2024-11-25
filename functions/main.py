@@ -1,15 +1,15 @@
-from enum import Enum
 import logging
 from datetime import UTC, datetime, timedelta
+from decimal import Decimal
+from enum import Enum
 from functools import reduce
 from io import StringIO
 from typing import Any, Dict, List
 
 import arrow
-from google.cloud.firestore import DocumentSnapshot
 import networkx as nx
-from bibx import Sap, read_any, Collection
-from firebase_admin import firestore, initialize_app, storage, auth
+from bibx import Collection, Sap, read_any
+from firebase_admin import auth, firestore, initialize_app, storage
 from firebase_functions.core import Change
 from firebase_functions.firestore_fn import (
     Event,
@@ -17,7 +17,8 @@ from firebase_functions.firestore_fn import (
     on_document_written,
 )
 from firebase_functions.options import MemoryOption
-from firebase_functions.scheduler_fn import on_schedule, ScheduledEvent
+from firebase_functions.scheduler_fn import ScheduledEvent, on_schedule
+from google.cloud.firestore import DocumentSnapshot
 from pydantic import BaseModel, ValidationError
 
 logging.basicConfig(level=logging.INFO)
@@ -289,12 +290,60 @@ class Period(Enum):
     year = "year"
 
 
-class Subscription(BaseModel):
+class Invoice(BaseModel):
+    plan_id: str
     period: Period
-    price_usc: int
+    price: Decimal
+    currency: str
+    start_date: datetime
+    end_date: datetime
+
+    def to_firebase(self):
+        return {
+            **self.model_dump(),
+            "period": self.period.value,
+            "price": str(self.price),
+        }
+
+
+class Subscription(BaseModel):
+    plan_id: str
+    period: Period
+    price: Decimal
+    currency: str
     start_date: datetime | None = None
     end_date: datetime | None = None
     canceled: bool = False
+
+    def pro_rate(self, start_date: datetime) -> Decimal:
+        """Pro rate the price for the given period with a given start date"""
+        pro_rate_start = arrow.get(start_date)
+        start, end = pro_rate_start.span(self.period.value)
+        days_to_charge = (end - pro_rate_start).days
+        days_in_period = (end - start).days
+        return self.price * Decimal(days_to_charge) / Decimal(days_in_period)
+
+    def invoice(self, start_date: datetime) -> Invoice:
+        """Create an invoice for the given period"""
+        pro_rate_start = arrow.get(start_date)
+        start, end = pro_rate_start.span(self.period.value)
+        if pro_rate_start - start < timedelta(hours=INVOICING_LEEWAY_HOURS):
+            return Invoice(
+                plan_id=self.plan_id,
+                period=self.period,
+                price=self.price,
+                currency=self.currency,
+                start_date=start.datetime,
+                end_date=end.datetime,
+            )
+        return Invoice(
+            plan_id=self.plan_id,
+            period=self.period,
+            price=self.pro_rate(start_date),
+            currency=self.currency,
+            start_date=start_date,
+            end_date=end.datetime,
+        )
 
 
 @on_document_written(document="subscriptions/{subscriptionId}")
@@ -325,33 +374,17 @@ def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> N
             logger.info("subscription start date is not set")
             event.data.after.reference.update({"start_date": datetime.now(UTC)})
             return
-        asd = arrow.get(subscription.start_date)
-        end_date = asd.ceil(subscription.period.value).datetime
-        # Create first invoice
-        total_seconds_to_charge = (end_date - subscription.start_date).total_seconds()
-        total_seconds_in_period = (
-            end_date - asd.floor(subscription.period.value).datetime
-        ).total_seconds()
-        total_price_usc = int(
-            subscription.price_usc * total_seconds_to_charge / total_seconds_in_period
-        )
+        invoice = subscription.invoice(subscription.start_date)
         client.collection("users").document(user_id).collection("invoices").add(
-            {
-                "price_usc": subscription.price_usc,
-                "period": subscription.period.value,
-                "start_date": subscription.start_date,
-                "end_date": end_date,
-                "total_price_usc": total_price_usc,
-            }
+            invoice.to_firebase()
         )
         # Update plan
         client.collection("plans").document(user_id).set(
             {
                 # Give some leeway for the invoicing process
-                "endDate": end_date + timedelta(hours=INVOICING_LEEWAY_HOURS),
+                "endDate": invoice.end_date + timedelta(hours=INVOICING_LEEWAY_HOURS),
             }
         )
-
     except ValidationError:
         logger.exception("invalid subscription data")
         return
@@ -378,30 +411,24 @@ def _renew_subscriptions(period: Period) -> None:
         if subscription.canceled:
             logger.info("subscription %s is canceled", snapshot.id)
             continue
-        asd = arrow.utcnow()
-        if subscription.end_date and subscription.end_date < asd.datetime:
+        now = arrow.utcnow()
+        if subscription.end_date and subscription.end_date < now.datetime:
             logger.info("subscription %s is expired", snapshot.id)
             continue
-        if subscription.start_date is None or asd.datetime < subscription.start_date:
+        if subscription.start_date is None or now.datetime < subscription.start_date:
             logger.info("subscription %s hasn't started yet", snapshot.id)
             continue
-        invoice_start = asd.floor(period.value).datetime
-        invoice_end = asd.ceil(period.value).datetime
+
         # Create invoice
+        invoice = subscription.invoice(now.datetime)
         client.collection("users").document(snapshot.id).collection("invoices").add(
-            {
-                "price_usc": subscription.price_usc,
-                "period": subscription.period.value,
-                "start_date": invoice_start,
-                "end_date": invoice_end,
-                "total_price_usc": subscription.price_usc,
-            }
+            invoice.to_firebase()
         )
         # Update plan
         client.collection("plans").document(snapshot.id).set(
             {
                 # Give some leeway for the invoicing process
-                "endDate": invoice_end + timedelta(hours=INVOICING_LEEWAY_HOURS),
+                "endDate": invoice.end_date + timedelta(hours=INVOICING_LEEWAY_HOURS),
             }
         )
 
