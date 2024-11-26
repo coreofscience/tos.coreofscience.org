@@ -391,7 +391,7 @@ def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> N
     logger.info("create_subscription_plan finished successfully")
 
 
-def _renew_subscriptions(period: Period) -> None:
+def _renew_subscriptions(period: Period, renew_time: datetime) -> None:
     client = firestore.client()
     snapshot: DocumentSnapshot
     for snapshot in (
@@ -411,16 +411,15 @@ def _renew_subscriptions(period: Period) -> None:
         if subscription.canceled:
             logger.info("subscription %s is canceled", snapshot.id)
             continue
-        now = arrow.utcnow()
-        if subscription.end_date and subscription.end_date < now.datetime:
+        if subscription.end_date and subscription.end_date < renew_time:
             logger.info("subscription %s is expired", snapshot.id)
             continue
-        if subscription.start_date is None or now.datetime < subscription.start_date:
+        if subscription.start_date is None or renew_time < subscription.start_date:
             logger.info("subscription %s hasn't started yet", snapshot.id)
             continue
 
         # Create invoice
-        invoice = subscription.invoice(now.datetime)
+        invoice = subscription.invoice(renew_time)
         client.collection("users").document(snapshot.id).collection("invoices").add(
             invoice.to_firebase()
         )
@@ -434,14 +433,14 @@ def _renew_subscriptions(period: Period) -> None:
 
 
 @on_schedule(schedule="0 0 1 1 *")
-def renew_annual_subscriptions(_: ScheduledEvent):
+def renew_annual_subscriptions(event: ScheduledEvent):
     logger.info("running renew_annual_subscriptions")
-    _renew_subscriptions(Period.year)
+    _renew_subscriptions(Period.year, event.schedule_time)
     logger.info("renew_annual_subscriptions finished")
 
 
 @on_schedule(schedule="0 0 1 * *")
-def renew_monthly_subscriptions(_: ScheduledEvent):
+def renew_monthly_subscriptions(event: ScheduledEvent):
     logger.info("running renew_monthly_subscriptions")
-    _renew_subscriptions(Period.month)
+    _renew_subscriptions(Period.month, event.schedule_time)
     logger.info("renew_monthly_subscriptions finished")
