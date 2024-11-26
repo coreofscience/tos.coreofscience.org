@@ -8,10 +8,13 @@ const Result = React.lazy(() => import("./components/tree/Result"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
 const LogIn = React.lazy(() => import("./components/pages/account/LogIn"));
 const SignUp = React.lazy(() => import("./components/pages/account/SignUp"));
-const Plans = React.lazy(() => import("./components/pricing/Plans"));
+const VerifyEmail = React.lazy(
+  () => import("./components/pages/account/VerifyEmail"),
+);
 const PasswordReset = React.lazy(
   () => import("./components/pages/account/PasswordReset"),
 );
+const Plans = React.lazy(() => import("./components/pricing/Plans"));
 const FilesProvider = React.lazy(
   () => import("./components/providers/FilesProvider"),
 );
@@ -45,6 +48,7 @@ const App = () => {
                   <Route path="/tos" element={<Tos />} />
                   <Route path="/log-in" element={<LogIn />} />
                   <Route path="/sign-up" element={<SignUp />} />
+                  <Route path="/account/verify" element={<VerifyEmail />} />
                   <Route path="/reset-password" element={<PasswordReset />} />
                   <Route path="/pricing" element={<Plans />} />
                   <Route path="/tree/:treeId" element={<Result />} />

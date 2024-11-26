@@ -55,6 +55,18 @@ const ProBuyflow = () => {
       />
     );
   }
+
+  if (!user.emailVerified) {
+    return (
+      <Navigate
+        to={{
+          pathname: "/account/verify",
+          search: `?next=${encodeURIComponent("/buy/pro")}`,
+        }}
+      />
+    );
+  }
+
   return (
     <div className="flex flex-col gap-24">
       <div className="flex justify-center">

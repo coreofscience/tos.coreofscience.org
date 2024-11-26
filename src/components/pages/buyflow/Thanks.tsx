@@ -10,11 +10,12 @@ const Thanks = () => {
       <Navigate
         to={{
           pathname: "/log-in",
-          search: `?next=${encodeURIComponent("/buy/pro")}`,
+          search: `?next=${encodeURIComponent("/buy/pro/thanks")}`,
         }}
       />
     );
   }
+
   return (
     <div className="flex flex-col gap-24">
       <div className="flex justify-center">
