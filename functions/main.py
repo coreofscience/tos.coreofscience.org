@@ -315,19 +315,19 @@ class Subscription(BaseModel):
     end_date: datetime | None = None
     canceled: bool = False
 
-    def pro_rate(self, start_date: datetime) -> Decimal:
+    def prorate(self, start_date: datetime) -> Decimal:
         """Pro rate the price for the given period with a given start date"""
-        pro_rate_start = arrow.get(start_date)
-        start, end = pro_rate_start.span(self.period.value)
-        days_to_charge = (end - pro_rate_start).days
+        prorate_start = arrow.get(start_date)
+        start, end = prorate_start.span(self.period.value)
+        days_to_charge = (end - prorate_start).days
         days_in_period = (end - start).days
         return self.price * Decimal(days_to_charge) / Decimal(days_in_period)
 
     def invoice(self, start_date: datetime) -> Invoice:
         """Create an invoice for the given period"""
-        pro_rate_start = arrow.get(start_date)
-        start, end = pro_rate_start.span(self.period.value)
-        if pro_rate_start - start < timedelta(hours=INVOICING_LEEWAY_HOURS):
+        prorate_start = arrow.get(start_date)
+        start, end = prorate_start.span(self.period.value)
+        if prorate_start - start < timedelta(hours=INVOICING_LEEWAY_HOURS):
             return Invoice(
                 plan_id=self.plan_id,
                 period=self.period,
@@ -339,7 +339,7 @@ class Subscription(BaseModel):
         return Invoice(
             plan_id=self.plan_id,
             period=self.period,
-            price=self.pro_rate(start_date),
+            price=self.prorate(start_date),
             currency=self.currency,
             start_date=start_date,
             end_date=end.datetime,
