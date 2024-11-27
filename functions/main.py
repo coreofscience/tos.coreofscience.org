@@ -346,6 +346,39 @@ class Subscription(BaseModel):
         )
 
 
+def _process_subscription(
+    subscription: Subscription,
+    processing_time: datetime,
+    user_id: str,
+) -> None:
+    if subscription.canceled:
+        logger.info("subscription %s is canceled", user_id)
+        return
+    if subscription.end_date and subscription.end_date < processing_time:
+        logger.info("subscription %s is expired", user_id)
+        return
+    if subscription.start_date is None or processing_time < subscription.start_date:
+        logger.info("subscription %s hasn't started yet", user_id)
+        return
+    client = firestore.client()
+    transaction = client.transaction()
+    # Create invoice
+    invoice = subscription.invoice(processing_time)
+    transaction.create(
+        client.collection("users").document(user_id).collection("invoices").document(),
+        invoice.to_firebase(),
+    )
+    # Update plan
+    transaction.set(
+        client.collection("plans").document(user_id),
+        {
+            # Give some leeway for the invoicing process
+            "endDate": invoice.end_date + timedelta(hours=INVOICING_LEEWAY_HOURS),
+        },
+    )
+    transaction.commit()
+
+
 @on_document_written(document="subscriptions/{subscriptionId}")
 def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
     """
@@ -359,35 +392,20 @@ def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> N
     ):
         return
 
-    user_id = event.params["subscriptionId"]
-    client = firestore.client()
-
     try:
         subscription = Subscription.model_validate(data)
-        if subscription.canceled:
-            logger.info("subscription is canceled")
-            return
-        if subscription.end_date and subscription.end_date < datetime.now(UTC):
-            logger.info("subscription is expired")
-            return
-        if subscription.start_date is None:
-            logger.info("subscription start date is not set")
-            event.data.after.reference.update({"start_date": datetime.now(UTC)})
-            return
-        invoice = subscription.invoice(subscription.start_date)
-        client.collection("users").document(user_id).collection("invoices").add(
-            invoice.to_firebase()
-        )
-        # Update plan
-        client.collection("plans").document(user_id).set(
-            {
-                # Give some leeway for the invoicing process
-                "endDate": invoice.end_date + timedelta(hours=INVOICING_LEEWAY_HOURS),
-            }
-        )
     except ValidationError:
         logger.exception("invalid subscription data")
         return
+    if subscription.start_date is None:
+        logger.info("subscription start date is not set")
+        event.data.after.reference.update({"start_date": datetime.now(UTC)})
+        return
+    _process_subscription(
+        subscription,
+        subscription.start_date,
+        event.data.after.id,
+    )
     logger.info("create_subscription_plan finished successfully")
 
 
@@ -408,27 +426,10 @@ def _renew_subscriptions(period: Period, renew_time: datetime) -> None:
                 "invalid subscription data for subscription %s", snapshot.id
             )
             continue
-        if subscription.canceled:
-            logger.info("subscription %s is canceled", snapshot.id)
-            continue
-        if subscription.end_date and subscription.end_date < renew_time:
-            logger.info("subscription %s is expired", snapshot.id)
-            continue
-        if subscription.start_date is None or renew_time < subscription.start_date:
-            logger.info("subscription %s hasn't started yet", snapshot.id)
-            continue
-
-        # Create invoice
-        invoice = subscription.invoice(renew_time)
-        client.collection("users").document(snapshot.id).collection("invoices").add(
-            invoice.to_firebase()
-        )
-        # Update plan
-        client.collection("plans").document(snapshot.id).set(
-            {
-                # Give some leeway for the invoicing process
-                "endDate": invoice.end_date + timedelta(hours=INVOICING_LEEWAY_HOURS),
-            }
+        _process_subscription(
+            subscription,
+            renew_time,
+            snapshot.id,
         )
 
 
