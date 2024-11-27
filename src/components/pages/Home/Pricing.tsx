@@ -41,8 +41,8 @@ const Pricing: FC = () => {
         <PricingCard
           name="Pro"
           price="$10/month"
-          cta="Contact us"
-          href="mailto:technology@coreofscience.org"
+          cta="Buy now"
+          href="/buy/pro"
           features={includedFeaturesForPro}
           primary
         />

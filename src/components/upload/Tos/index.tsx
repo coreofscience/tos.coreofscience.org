@@ -8,9 +8,9 @@ import { countFormat, round, weightFormat } from "../../../utils/math";
 import AcceptsEmail from "../AcceptsEmail";
 import EmailVerification from "../EmailVerification";
 import { createTree } from "./createTree";
+import { useMutation } from "@tanstack/react-query";
 import { logEvent } from "firebase/analytics";
 import React, { FC, useContext } from "react";
-import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -28,7 +28,7 @@ const hasFinished = (
     true,
   );
 
-const TOS: FC = () => {
+const Tos: FC = () => {
   const { progress } = useContext(FileContext);
   const files = useFiles();
   const hashes = files.map((file) => file.hash);
@@ -43,9 +43,10 @@ const TOS: FC = () => {
 
   const {
     mutate: create,
-    isLoading,
+    isPending,
     isError,
-  } = useMutation(createTree, {
+  } = useMutation({
+    mutationFn: createTree,
     onSuccess: (treePath: string) =>
       navigate(`/${treePath}`, { replace: true }),
   });
@@ -84,33 +85,36 @@ const TOS: FC = () => {
           <span className="text-sm text-slate-500">size [MB]</span>
         </div>
       </div>
-      <p>
-        For extra processing capacity check out our&nbsp;
-        <Link
-          className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
-          to="/pricing"
-        >
-          plans and pricing.
-        </Link>
-      </p>
+      {(!user || user.plan !== "pro") && (
+        <p>
+          For extra processing capacity check out our&nbsp;
+          <Link
+            className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
+            to="/pricing"
+          >
+            plans and pricing.
+          </Link>
+        </p>
+      )}
       <br></br>
       <div>Let's start planting your tree.</div>
       <div>
         <button
           className="inline-block rounded-sm bg-leaf px-12 py-6 font-tall text-4xl uppercase text-slate-50 disabled:bg-slate-400"
           disabled={
-            isLoading ||
+            isPending ||
             !finished ||
             totalArticles === 0 ||
             totalCitations === 0
           }
           onClick={() => {
-            finished &&
+            if (finished) {
               create({ firebase, files: files.map((file) => file.hash), user });
+            }
             logEvent(firebase.analytics, "tree_created");
           }}
         >
-          {isLoading ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
+          {isPending ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
         </button>
       </div>
       {isError && (
@@ -121,4 +125,4 @@ const TOS: FC = () => {
   );
 };
 
-export default TOS;
+export default Tos;

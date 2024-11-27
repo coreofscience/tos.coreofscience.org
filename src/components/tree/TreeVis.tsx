@@ -118,15 +118,15 @@ export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
       .force("charge", forceManyBody().strength(5))
       .force(
         "y",
-        forceY().y((d) => (d as any).centerY),
+        forceY().y((d) => (d as { centerY: number }).centerY),
       )
       .force(
         "x",
-        forceX().x((d) => (d as any).centerX),
+        forceX().x((d) => (d as { centerX: number }).centerX),
       )
       .force(
         "collide",
-        forceCollide().radius((d) => (d as any).radius + 2),
+        forceCollide().radius((d) => (d as { radius: number }).radius + 2),
       )
       .on("tick", () => {
         svg

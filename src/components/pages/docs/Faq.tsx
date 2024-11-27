@@ -1,7 +1,7 @@
 import Reference from "../../tree/Reference";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 
-const FAQ = () => {
+const Faq: FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -218,4 +218,4 @@ const FAQ = () => {
   );
 };
 
-export default FAQ;
+export default Faq;

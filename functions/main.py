@@ -1,13 +1,15 @@
 import logging
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
+from decimal import Decimal
+from enum import Enum
 from functools import reduce
 from io import StringIO
 from typing import Any, Dict, List
 
-from google.cloud.firestore import DocumentSnapshot
+import arrow
 import networkx as nx
-from bibx import Sap, read_any, Collection
-from firebase_admin import firestore, initialize_app, storage, auth
+from bibx import Collection, Sap, read_any
+from firebase_admin import auth, firestore, initialize_app, storage
 from firebase_functions.core import Change
 from firebase_functions.firestore_fn import (
     Event,
@@ -15,9 +17,12 @@ from firebase_functions.firestore_fn import (
     on_document_written,
 )
 from firebase_functions.options import MemoryOption
-from firebase_functions.scheduler_fn import on_schedule, ScheduledEvent
+from firebase_functions.scheduler_fn import ScheduledEvent, on_schedule
+from google.cloud.firestore import DocumentSnapshot
+from pydantic import BaseModel, ValidationError
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 initialize_app()
 
@@ -26,6 +31,8 @@ ROOT = "root"
 TRUNK = "trunk"
 BRANCH = "branch"
 LEAF = "leaf"
+
+INVOICING_LEEWAY_HOURS = 6
 
 
 def set_analysis_property(collection: Collection, ref) -> None:
@@ -100,7 +107,7 @@ def get_contents(
 ) -> Dict[str, str]:
     """Get the contents for the files in order to create the graph."""
     names = [f"isi-files/{name}" for name in document_data["files"]]
-    logging.info("Reading source files", extra={"names": names})
+    logger.info("Reading source files", extra={"names": names})
     blobs = list(filter(None, [storage.bucket().get_blob(name) for name in names]))
 
     size = 0
@@ -126,7 +133,7 @@ def create_tree_v2(
 ) -> None:
     if event.data is None or (data := event.data.to_dict()) is None:
         return
-    logging.info(f"handling new created tree {data}")
+    logger.info(f"handling new created tree {data}")
 
     start = datetime.now()
 
@@ -140,7 +147,7 @@ def create_tree_v2(
             .document(event.params["treeId"])
         )
     ref.update({"startedDate": get_int_utcnow()})
-    logging.info("Tree process started")
+    logger.info("Tree process started")
 
     try:
         contents = get_contents(data, max_size_megabytes=max_size_megabytes)
@@ -156,9 +163,9 @@ def create_tree_v2(
                 "totalTimeMillis": (end - start).total_seconds() * 1000,
             }
         )
-        logging.info("Tree process finished")
+        logger.info("Tree process finished")
     except Exception as error:
-        logging.exception("Tree process failed")
+        logger.exception("Tree process failed")
         end = datetime.now()
         ref.update(
             {
@@ -173,7 +180,7 @@ def create_tree_v2(
 
 @on_document_created(document="users/{userId}/trees/{treeId}")
 def create_tree_with_initial_info(event: Event[DocumentSnapshot | None]) -> None:
-    logging.info("Running create_tree_with_initial_info")
+    logger.info("Running create_tree_with_initial_info")
     if event.data is None or (data := event.data.to_dict()) is None:
         return
     if "planId" not in data:
@@ -198,7 +205,7 @@ def create_tree_with_initial_info(event: Event[DocumentSnapshot | None]) -> None
             .document(event.params["treeId"])
             .set(data)
         )
-    logging.info("create_tree_with_initial_info finished")
+    logger.info("create_tree_with_initial_info finished")
 
 
 @on_document_created(
@@ -239,7 +246,7 @@ def add_custom_claim_for_the_plan(_: ScheduledEvent) -> None:
     """
     Check the plans collection and update each user's custom claims accordingly.
     """
-    logging.info("Running add_custom_claim_for_the_plan")
+    logger.info("Running add_custom_claim_for_the_plan")
     for plan in firestore.client().collection("plans").stream():
         try:
             auth.get_user(plan.id)
@@ -259,7 +266,7 @@ def update_user_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
     """
     When a plan is updated, change the user's custom claims accordingly.
     """
-    logging.info("Running update_user_plan")
+    logger.info("Running update_user_plan")
     user_id = event.params["planId"]
     try:
         auth.get_user(user_id)
@@ -276,3 +283,165 @@ def update_user_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
         auth.set_custom_user_claims(user_id, {"plan": "pro"})
         return
     auth.set_custom_user_claims(user_id, {"plan": "basic"})
+
+
+class Period(Enum):
+    month = "month"
+    year = "year"
+
+
+class Invoice(BaseModel):
+    plan_id: str
+    period: Period
+    price: Decimal
+    currency: str
+    start_date: datetime
+    end_date: datetime
+
+    def to_firebase(self):
+        return {
+            **self.model_dump(),
+            "period": self.period.value,
+            "price": str(self.price),
+        }
+
+
+class Subscription(BaseModel):
+    plan_id: str
+    period: Period
+    price: Decimal
+    currency: str
+    start_date: datetime | None = None
+    end_date: datetime | None = None
+    canceled: bool = False
+
+    def prorate(self, start_date: datetime) -> Decimal:
+        """Pro rate the price for the given period with a given start date"""
+        prorate_start = arrow.get(start_date)
+        start, end = prorate_start.span(self.period.value)
+        days_to_charge = (end - prorate_start).days
+        days_in_period = (end - start).days
+        return self.price * Decimal(days_to_charge) / Decimal(days_in_period)
+
+    def invoice(self, start_date: datetime) -> Invoice:
+        """Create an invoice for the given period"""
+        prorate_start = arrow.get(start_date)
+        start, end = prorate_start.span(self.period.value)
+        if prorate_start - start < timedelta(hours=INVOICING_LEEWAY_HOURS):
+            return Invoice(
+                plan_id=self.plan_id,
+                period=self.period,
+                price=self.price,
+                currency=self.currency,
+                start_date=start.datetime,
+                end_date=end.datetime,
+            )
+        return Invoice(
+            plan_id=self.plan_id,
+            period=self.period,
+            price=self.prorate(start_date),
+            currency=self.currency,
+            start_date=start_date,
+            end_date=end.datetime,
+        )
+
+
+def _process_subscription(
+    subscription: Subscription,
+    processing_time: datetime,
+    user_id: str,
+) -> None:
+    if subscription.canceled:
+        logger.info("subscription %s is canceled", user_id)
+        return
+    if subscription.end_date and subscription.end_date < processing_time:
+        logger.info("subscription %s is expired", user_id)
+        return
+    if subscription.start_date is None or processing_time < subscription.start_date:
+        logger.info("subscription %s hasn't started yet", user_id)
+        return
+    client = firestore.client()
+    transaction = client.transaction()
+    # Create invoice
+    invoice = subscription.invoice(processing_time)
+    transaction.create(
+        client.collection("users").document(user_id).collection("invoices").document(),
+        invoice.to_firebase(),
+    )
+    # Update plan
+    transaction.set(
+        client.collection("plans").document(user_id),
+        {
+            # Give some leeway for the invoicing process
+            "endDate": invoice.end_date + timedelta(hours=INVOICING_LEEWAY_HOURS),
+        },
+    )
+    transaction.commit()
+
+
+@on_document_written(document="subscriptions/{subscriptionId}")
+def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
+    """
+    When a new subscription is created, add it to the plans collection.
+    """
+    logger.info("running create_subscription_plan")
+    if (
+        event.data is None
+        or event.data.after is None
+        or (data := event.data.after.to_dict()) is None
+    ):
+        return
+
+    try:
+        subscription = Subscription.model_validate(data)
+    except ValidationError:
+        logger.exception("invalid subscription data")
+        return
+    if subscription.start_date is None:
+        logger.info("subscription start date is not set")
+        event.data.after.reference.update({"start_date": datetime.now(UTC)})
+        return
+    _process_subscription(
+        subscription,
+        subscription.start_date,
+        event.data.after.id,
+    )
+    logger.info("create_subscription_plan finished successfully")
+
+
+def _renew_subscriptions(period: Period, renew_time: datetime) -> None:
+    client = firestore.client()
+    snapshot: DocumentSnapshot
+    for snapshot in (
+        client.collection("subscriptions").where("period", "==", period.value).stream()
+    ):
+        data = snapshot.to_dict()
+        if not data:
+            logger.info("skipping subscription %s without data", snapshot.id)
+            continue
+        try:
+            subscription = Subscription.model_validate(data)
+        except ValidationError:
+            logger.exception(
+                "invalid subscription data for subscription %s", snapshot.id
+            )
+            continue
+        _process_subscription(
+            subscription,
+            renew_time,
+            snapshot.id,
+        )
+
+
+@on_schedule(schedule="0 0 1 1 *")
+def renew_annual_subscriptions(event: ScheduledEvent):
+    logger.info("running renew_annual_subscriptions")
+    _renew_subscriptions(Period.year, event.schedule_time)
+    logger.info("renew_annual_subscriptions finished")
+
+
+@on_schedule(schedule="0 0 1 * *")
+def renew_monthly_subscriptions(event: ScheduledEvent):
+    logger.info("running renew_monthly_subscriptions")
+    _renew_subscriptions(Period.month, event.schedule_time)
+    logger.info("renew_monthly_subscriptions finished")

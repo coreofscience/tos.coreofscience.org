@@ -1,10 +1,11 @@
-import TableOfContent from "../../common/TableOfContent";
-import { HeadingData } from "../../common/TableOfContent/constants";
+import TableOfContents from "../../common/TableOfContents";
 import { useEffect } from "react";
 
 const Sap = () => {
   useEffect(() => {
-    window && window.scrollTo(0, 0);
+    if (window) {
+      window.scrollTo(0, 0);
+    }
   }, []);
 
   return (
@@ -15,7 +16,7 @@ const Sap = () => {
         works, and latest contributions for a state-of- the-art literature
         summary.
       </p>
-      <TableOfContent headings={HeadingData} />
+      <TableOfContents />
       <section id="info-on-roots">
         <h2 className="font-tall uppercase text-root">Roots</h2>
         <p>

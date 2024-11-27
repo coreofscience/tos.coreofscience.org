@@ -71,7 +71,7 @@ const Tree: FC<Props> = ({
       branch_3: [],
     };
     const sections: Section[] = Object.keys(keywords) as Section[];
-    for (let section of sections) {
+    for (const section of sections) {
       for (const article of treeSections[section] ?? []) {
         if (!article.keywords) continue;
         keywords[section] = keywords[section].concat(article.keywords);
@@ -101,7 +101,7 @@ const Tree: FC<Props> = ({
         {
           stars: {
             ...stars,
-            [labelAsBase64]: !Boolean(stars[labelAsBase64]),
+            [labelAsBase64]: !stars[labelAsBase64],
           },
         },
         { merge: true },

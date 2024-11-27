@@ -2,7 +2,9 @@ import { useEffect } from "react";
 
 const PresRelease = () => {
   useEffect(() => {
-    window && window.scrollTo(0, 0);
+    if (window) {
+      window.scrollTo(0, 0);
+    }
   });
 
   return (

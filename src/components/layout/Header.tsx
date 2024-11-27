@@ -1,4 +1,5 @@
 import useFirebase from "../../hooks/useFirebase";
+import useNext from "../../hooks/useNext";
 import useUser from "../../hooks/useUser";
 import TreeOfScience from "../vectors/TreeOfScience";
 import HamburgerMenu from "./HamburgerMenu";
@@ -10,6 +11,7 @@ const Header = () => {
   const firebase = useFirebase();
   const user = useUser();
   const location = useLocation();
+  const { nextSearch } = useNext();
 
   return (
     <div className="flex flex-row items-center justify-between text-leaf">
@@ -50,14 +52,14 @@ const Header = () => {
             {location.pathname !== "/log-in" && (
               <Link
                 className="rounded-sm px-4 py-2 font-tall font-bold uppercase"
-                to="/log-in"
+                to={{ pathname: "/log-in", search: nextSearch }}
               >
                 Log In
               </Link>
             )}
             <Link
               className="rounded-sm bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
-              to="/sign-up"
+              to={{ pathname: "/sign-up", search: nextSearch }}
             >
               Sign up
             </Link>
