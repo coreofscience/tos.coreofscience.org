@@ -23,7 +23,7 @@ const FloatingButtonMenu: FC<FloatingButtonMenuPropsType> = ({
 
       <button
         className="self-center rounded-full bg-leaf px-5 py-5 shadow-sm hover:shadow-md active:shadow-md"
-        onClick={(prev) => setIsOpen(!prev)}
+        onClick={() => setIsOpen((prev) => !prev)}
       >
         {!isOpen ? iconActive : iconResting}
       </button>
