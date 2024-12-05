@@ -18,7 +18,7 @@ from firebase_functions.firestore_fn import (
 )
 from firebase_functions.options import MemoryOption
 from firebase_functions.scheduler_fn import ScheduledEvent, on_schedule
-from google.cloud.firestore import DocumentSnapshot
+from google.cloud.firestore import DocumentReference, DocumentSnapshot
 from pydantic import BaseModel, ValidationError
 
 logging.basicConfig(level=logging.INFO)
@@ -35,7 +35,7 @@ LEAF = "leaf"
 INVOICING_LEEWAY_HOURS = 6
 
 
-def set_analysis_property(collection: Collection, ref) -> None:
+def set_analysis_property(collection: Collection, ref: DocumentReference) -> None:
     cited = {str(key): value for key, value in collection.cited_by_year().items()}
     published = {
         str(key): value for key, value in collection.published_by_year().items()
@@ -47,7 +47,7 @@ def set_analysis_property(collection: Collection, ref) -> None:
     ref.update({"_analysis": _analysis})
 
 
-def tree_from_strings(strings: List[str], ref) -> nx.DiGraph:
+def tree_from_strings(strings: List[str], ref: DocumentReference) -> nx.DiGraph:
     """Creates a ToS tree from a list of strings."""
     collections = [read_any(StringIO(text)) for text in strings]
     collection = reduce(lambda x, y: x.merge(y), collections)
@@ -56,6 +56,29 @@ def tree_from_strings(strings: List[str], ref) -> nx.DiGraph:
     graph = sap.create_graph(collection)
     graph = sap.clean_graph(graph)
     return sap.tree(graph)
+
+
+def _round_to_signed_64bit(num: int):
+    min_int64 = -(2**63)
+    max_int64 = 2**63 - 1
+    if num < min_int64:
+        return min_int64
+    elif num > max_int64:
+        return max_int64
+    else:
+        return int(round(num))
+
+
+def _clear_datum(datum: dict) -> dict:
+    clear = {
+        key: val
+        for key, val in datum.items()
+        if not key.startswith("_") and key != "extra"
+    }
+    clear[ROOT] = _round_to_signed_64bit(clear.get(ROOT, 0))
+    clear[TRUNK] = _round_to_signed_64bit(clear.get(TRUNK, 0))
+    clear[LEAF] = _round_to_signed_64bit(clear.get(LEAF, 0))
+    return clear
 
 
 def convert_tos_to_json(tree: nx.DiGraph) -> Dict[str, List[Dict]]:
@@ -69,11 +92,7 @@ def convert_tos_to_json(tree: nx.DiGraph) -> Dict[str, List[Dict]]:
             [
                 {
                     "label": node,
-                    **{
-                        key: val
-                        for key, val in data.items()
-                        if not key.startswith("_") and key != "extra"
-                    },
+                    **_clear_datum(data),
                 }
                 for node, data in tree.nodes.items()
                 if tree.nodes[node][section] > 0

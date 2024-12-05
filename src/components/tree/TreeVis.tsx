@@ -14,6 +14,14 @@ interface Props {
   treeResult: TreeResult;
 }
 
+const clamp = (
+  n: number,
+  min: number,
+  max: number,
+  scale: number,
+  offset: number,
+): number => ((n - min) / (max - min + 1)) * scale + offset;
+
 const articlesToData = (
   articles: ArticleWithMetrics[],
   section: Section,
@@ -59,8 +67,8 @@ const articlesToData = (
     } else {
       r =
         section === "leaf"
-          ? ((article[section] - minRadius) / (maxRadius - minRadius)) * 15 + 12
-          : ((article[section] - minRadius) / (maxRadius - minRadius)) * 10 + 8;
+          ? clamp(article[section], minRadius, maxRadius, 15, 12)
+          : clamp(article[section], minRadius, maxRadius, 10, 8);
     }
     return {
       className: {
