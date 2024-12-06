@@ -120,7 +120,7 @@ const Tos: FC = () => {
       {isError && (
         <div className="error">There was an error creating the your tree.</div>
       )}
-      <TreeHistory />
+      {!!user && <TreeHistory userId={user.uid} />}
     </div>
   );
 };
