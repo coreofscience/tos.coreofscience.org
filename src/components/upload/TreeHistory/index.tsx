@@ -7,7 +7,6 @@ import { flatten } from "lodash";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const TREES_PER_PAGE = 5;
-const TREE_ELEMENT_HEIGHT = 23.5;
 
 interface Props {
   userId: string;
@@ -53,9 +52,6 @@ const TreeHistory = ({ userId }: Props) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <div>
-        <h2 className="font-tall text-2xl font-bold uppercase">Tree History</h2>
-      </div>
       {user.plan === "basic" ? (
         <ul>
           <Items trees={data} />
@@ -66,7 +62,6 @@ const TreeHistory = ({ userId }: Props) => {
           next={trees.fetchNextPage}
           hasMore={trees.hasNextPage}
           loader={trees.isLoading && <p>Loading...</p>}
-          height={TREE_ELEMENT_HEIGHT * (TREES_PER_PAGE - 1)}
         >
           <ul>
             <Items trees={data} />

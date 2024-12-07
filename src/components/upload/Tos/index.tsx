@@ -120,7 +120,12 @@ const Tos: FC = () => {
       {isError && (
         <div className="error">There was an error creating the your tree.</div>
       )}
-      {!!user && <TreeHistory userId={user.uid} />}
+      <Link
+        className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
+        to="/history"
+      >
+        Tree history
+      </Link>
     </div>
   );
 };
