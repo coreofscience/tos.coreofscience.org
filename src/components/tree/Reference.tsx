@@ -22,6 +22,7 @@ const formatAuthors = (simple: boolean, authors: string[]): string => {
 
 const Reference: FC<Article & { simple?: boolean }> = ({
   label,
+  permalink,
   authors,
   year,
   title,
@@ -71,6 +72,16 @@ const Reference: FC<Article & { simple?: boolean }> = ({
 
           {". "}
         </Fragment>
+      )}
+      {!!permalink && (
+        <a
+          className="text-sky-600 hover:text-sky-800"
+          href={permalink}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {permalink}
+        </a>
       )}
       {!!doi && (
         <a
