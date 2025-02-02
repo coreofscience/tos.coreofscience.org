@@ -8,7 +8,7 @@ from typing import Any, Dict, List
 
 import arrow
 import networkx as nx
-from bibx import Collection, Sap, read_any
+from bibx import Collection, Sap, query_openalex, read_any
 from firebase_admin import auth, firestore, initialize_app, storage
 from firebase_functions.core import Change
 from firebase_functions.firestore_fn import (
@@ -51,6 +51,25 @@ def tree_from_strings(strings: List[str], ref: DocumentReference) -> nx.DiGraph:
     """Creates a ToS tree from a list of strings."""
     collections = [read_any(StringIO(text)) for text in strings]
     collection = reduce(lambda x, y: x.merge(y), collections)
+    set_analysis_property(collection, ref)
+    sap = Sap()
+    graph = sap.create_graph(collection)
+    graph = sap.clean_graph(graph)
+    return sap.tree(graph)
+
+
+def tree_from_queries(queries: list[dict], ref: DocumentReference) -> nx.DiGraph:
+    """Creates a ToS tree from a list of queries."""
+    collections = []
+    for query in queries:
+        engine = query["engine"]
+        search = query["search"]
+        if engine == "openalex":
+            collection = query_openalex(search)
+            collections.append(collection)
+        else:
+            raise ValueError(f"Unknown engine: {engine}")
+    collection = reduce(Collection.merge, collections)
     set_analysis_property(collection, ref)
     sap = Sap()
     graph = sap.create_graph(collection)
@@ -169,8 +188,13 @@ def create_tree_v2(
     logger.info("Tree process started")
 
     try:
-        contents = get_contents(data, max_size_megabytes=max_size_megabytes)
-        tos = tree_from_strings(list(contents.values()), ref)
+        if 'files' in data:
+            contents = get_contents(data, max_size_megabytes=max_size_megabytes)
+            tos = tree_from_strings(list(contents.values()), ref)
+        elif 'queries' in data:
+            tos = tree_from_queries(data['queries'], ref)
+        else:
+            raise ValueError("No files or queries found in the tree data")
         result = convert_tos_to_json(tos)
         end = datetime.now()
         ref.update(
