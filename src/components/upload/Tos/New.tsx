@@ -24,7 +24,7 @@ const New = () => {
   return (
     <div>
       <form
-        className="flex flex-col"
+        className="flex flex-col gap-8"
         onSubmit={(e) => {
           e.preventDefault();
           create({ firebase, search, user });
@@ -32,15 +32,23 @@ const New = () => {
         }}
       >
         <input
+          className="rounded-sm px-6 py-3 text-xl ring-1 ring-slate-400 focus:ring-leaf focus:outline-2 focus:outline-none"
           name="search"
           type="text"
+          placeholder="bit patterned media OR bit patterned magnetic recording"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           disabled={isPending}
         ></input>
-        <button type="submit" disabled={isPending}>
-          Create
-        </button>
+        <div className="flex flex-row items-center justify-center">
+          <button
+            className="rounded-sm bg-leaf px-8 py-4 font-tall text-2xl uppercase text-slate-50 disabled:bg-slate-400"
+            type="submit"
+            disabled={isPending || !search}
+          >
+            Create
+          </button>
+        </div>
       </form>
     </div>
   );
