@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const AppLayout = React.lazy(() => import("./components/layout/AppLayout"));
 const Tos = React.lazy(() => import("./components/upload/Tos"));
+const New = React.lazy(() => import("./components/upload/Tos/New"));
 const Result = React.lazy(() => import("./components/tree/Result"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
 const LogIn = React.lazy(() => import("./components/pages/account/LogIn"));
@@ -45,6 +46,7 @@ const App = () => {
               <AppLayout>
                 <Routes>
                   <Route path="/" element={<Home />} />
+                  <Route path="/tos/new" element={<New />} />
                   <Route path="/tos" element={<Tos />} />
                   <Route path="/log-in" element={<LogIn />} />
                   <Route path="/sign-up" element={<SignUp />} />

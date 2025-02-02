@@ -185,12 +185,14 @@ const Tree: FC<Props> = ({
                 ).map(({ article, labelAsBase64, star }) => (
                   <div
                     className="flex flex-row items-center gap-2 p-2 [&:nth-child(2n+1)]:bg-slate-100"
-                    key={`article-${article.label}`}
+                    key={`article-${article.label || article.permalink}`}
                   >
-                    <Reference key={article.label} {...article} />
+                    <Reference {...article} />
                     <button
                       className="text-slate-300 hover:text-slate-400 active:text-slate-400"
-                      onClick={() => copy(article.label)}
+                      onClick={() =>
+                        copy(article.label || article.permalink || "")
+                      }
                     >
                       <CopyImage />
                     </button>

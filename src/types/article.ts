@@ -1,5 +1,6 @@
 export interface Article {
   label: string;
+  permalink?: string;
   authors?: string[];
   keywords?: string[];
   year?: number | null;

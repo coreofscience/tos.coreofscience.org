@@ -29,3 +29,32 @@ export const createTree = async ({
   }
   return treeDoc.path;
 };
+
+export const createOpenAlexTree = async ({
+  firebase,
+  search,
+  user,
+}: {
+  firebase: FirebaseContextType;
+  search: string;
+  user: UserContextType | null;
+}): Promise<string> => {
+  const treesCollection = collection(
+    firebase.firestore,
+    user?.uid ? `users/${user.uid}/trees` : "trees",
+  );
+  const treeDoc = await addDoc(treesCollection, {
+    queries: [
+      {
+        engine: "openalex",
+        search,
+      },
+    ],
+    createdDate: new Date().getTime(), // UTC timestamp.
+    planId: user?.uid ? user.plan : null,
+  });
+  if (!treeDoc.path) {
+    throw new Error("Failed creating a new document.");
+  }
+  return treeDoc.path;
+};
