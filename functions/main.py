@@ -8,7 +8,7 @@ from typing import Any, Dict, List
 
 import arrow
 import networkx as nx
-from bibx import Collection, Sap, query_openalex, read_any
+from bibx import Collection, HandleReferences, Sap, query_openalex, read_any
 from firebase_admin import auth, firestore, initialize_app, storage
 from firebase_functions.core import Change
 from firebase_functions.firestore_fn import (
@@ -58,14 +58,19 @@ def tree_from_strings(strings: List[str], ref: DocumentReference) -> nx.DiGraph:
     return sap.tree(graph)
 
 
-def tree_from_queries(queries: list[dict], ref: DocumentReference) -> nx.DiGraph:
+def tree_from_queries(
+    queries: list[dict], ref: DocumentReference, plan_id: str | None
+) -> nx.DiGraph:
     """Creates a ToS tree from a list of queries."""
     collections = []
     for query in queries:
         engine = query["engine"]
         search = query["search"]
+        references = (
+            HandleReferences.FULL if plan_id == "pro" else HandleReferences.BASIC
+        )
         if engine == "openalex":
-            collection = query_openalex(search)
+            collection = query_openalex(search, references=references)
             collections.append(collection)
         else:
             raise ValueError(f"Unknown engine: {engine}")
@@ -188,11 +193,11 @@ def create_tree_v2(
     logger.info("Tree process started")
 
     try:
-        if 'files' in data:
+        if "files" in data:
             contents = get_contents(data, max_size_megabytes=max_size_megabytes)
             tos = tree_from_strings(list(contents.values()), ref)
-        elif 'queries' in data:
-            tos = tree_from_queries(data['queries'], ref)
+        elif "queries" in data:
+            tos = tree_from_queries(data["queries"], ref, plan_id)
         else:
             raise ValueError("No files or queries found in the tree data")
         result = convert_tos_to_json(tos)
