@@ -39,6 +39,7 @@ const TreeHistory = ({ userId }: Props) => {
 
   if (!user) return "You must log in to see your history";
   if (!trees.query.data?.length) return "No trees found";
+  if (trees.query.isError) return "There was an error loading your trees";
 
   const data = sortBy(
     trees.query.data.map((doc) => {
@@ -57,7 +58,7 @@ const TreeHistory = ({ userId }: Props) => {
     <div className="flex flex-col gap-3">
       {user.plan === "basic" ? (
         <ul className="flex flex-col gap-2">
-          <Items trees={data.slice(3)} />
+          <Items trees={data.slice(0, 3)} />
         </ul>
       ) : (
         <div className="flex flex-col gap-8">
