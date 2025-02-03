@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 const FileDropper = React.lazy(() => import("../FileDropper"));
 const UploadIndicator = React.lazy(() => import("../UploadIndicator"));
 const FileErrors = React.lazy(() => import("../FileErrors"));
-const TreeHistory = React.lazy(() => import("../TreeHistory"));
 
 const hasFinished = (
   files: string[],
