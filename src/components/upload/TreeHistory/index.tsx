@@ -1,40 +1,81 @@
 import useUser from "../../../hooks/useUser";
+import { TreeMetadata } from "../../../types/treeMetadata";
+import { mostCommon } from "../../../utils/arrays";
 import Items from "./Items";
 import { useTrees } from "./hooks/useTrees";
-import { FC } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { flatten, sortBy } from "lodash";
 
-const TREES_PER_PAGE = 5;
-const TREE_ELEMENT_HEIGHT = 23.5;
+const TREES_PER_PAGE = 500;
 
-const TreeHistory: FC = () => {
+interface Props {
+  userId: string;
+}
+
+const summarize = (tree: TreeMetadata) => {
+  if (!tree.result) {
+    return null;
+  }
+  const { root, trunk, leaf } = tree.result;
+  const allKeywords = flatten([
+    ...root.map((node) => node.keywords),
+    ...trunk.map((node) => node.keywords),
+    ...leaf.map((node) => node.keywords),
+  ]);
+
+  return {
+    keywords: mostCommon(
+      allKeywords
+        .filter((kw) => kw !== undefined)
+        .map((kw) => (kw as string).toLowerCase()),
+      4,
+    ),
+    createdDate: new Date(tree.createdDate),
+  };
+};
+
+const TreeHistory = ({ userId }: Props) => {
   const user = useUser();
-  const trees = useTrees(TREES_PER_PAGE);
+  const trees = useTrees(userId, TREES_PER_PAGE);
 
-  if (!user) return null;
-  if (!trees.state.data.length) return null;
+  if (!user) return "You must log in to see your history";
+  if (!trees.query.data?.length) return "No trees found";
+
+  const data = sortBy(
+    trees.query.data.map((doc) => {
+      const datum = doc.data() as TreeMetadata;
+      return {
+        treeId: doc.id,
+        summary: summarize(datum),
+        createdDate: datum.createdDate,
+        planId: datum.planId,
+      };
+    }),
+    (datum) => -datum.createdDate,
+  );
 
   return (
     <div className="flex flex-col gap-3">
-      <div>
-        <h2 className="font-tall text-2xl font-bold uppercase">Tree History</h2>
-      </div>
       {user.plan === "basic" ? (
-        <ul>
-          <Items trees={trees.state.data} />
+        <ul className="flex flex-col gap-2">
+          <Items trees={data.slice(3)} />
         </ul>
       ) : (
-        <InfiniteScroll
-          dataLength={trees.state.data.length}
-          next={trees.actions.fetchNextTrees}
-          hasMore={trees.state.hasMore}
-          loader={trees.state.status === "loading" && <p>Loading...</p>}
-          height={TREE_ELEMENT_HEIGHT * (TREES_PER_PAGE - 1)}
-        >
-          <ul>
-            <Items trees={trees.state.data} />
+        <div className="flex flex-col gap-8">
+          <ul className="flex flex-col gap-2">
+            <Items trees={data} />
           </ul>
-        </InfiniteScroll>
+          {trees.hasNext && (
+            <div>
+              <button
+                onClick={() => trees.fetchNextPage()}
+                disabled={!trees.query.isLoading}
+                className="rounded-sm bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
+              >
+                Load More
+              </button>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

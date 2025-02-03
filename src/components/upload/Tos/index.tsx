@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 const FileDropper = React.lazy(() => import("../FileDropper"));
 const UploadIndicator = React.lazy(() => import("../UploadIndicator"));
 const FileErrors = React.lazy(() => import("../FileErrors"));
-const TreeHistory = React.lazy(() => import("../TreeHistory"));
 
 const hasFinished = (
   files: string[],
@@ -129,7 +128,12 @@ const Tos: FC = () => {
       {isError && (
         <div className="error">There was an error creating the your tree.</div>
       )}
-      <TreeHistory />
+      <Link
+        className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
+        to="/history"
+      >
+        Tree history
+      </Link>
     </div>
   );
 };
