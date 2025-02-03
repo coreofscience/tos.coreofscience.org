@@ -39,12 +39,12 @@ const TreeHistory = ({ userId }: Props) => {
 
   if (!user) return "You must log in to see your history";
   if (!trees.query.data?.length) return "No trees found";
-  if (!trees.query.isError)
+  if (trees.query.isError)
     return (
       <div>
         <p>Error loading trees</p>
         <code>
-          <pre>{trees.query.error}</pre>
+          <pre>{JSON.stringify(trees.query.error)}</pre>
         </code>
       </div>
     );
