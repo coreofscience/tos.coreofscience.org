@@ -7,7 +7,7 @@ import { createOpenAlexTree } from "./createTree";
 import { useMutation } from "@tanstack/react-query";
 import { logEvent } from "firebase/analytics";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const New = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const New = () => {
   });
 
   return (
-    <div>
+    <div className="flex flex-col gap-8">
       <form
         className="flex flex-col gap-8"
         onSubmit={(e) => {
@@ -50,6 +50,14 @@ const New = () => {
           </button>
         </div>
       </form>
+      <div className="flex flex-row items-center justify-center">
+        <Link
+          className="text-sky-600 hover:text-sky-800 active:text-sky-800"
+          to="/history"
+        >
+          Tree History
+        </Link>
+      </div>
     </div>
   );
 };
