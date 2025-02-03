@@ -10,6 +10,7 @@ import arrow
 import networkx as nx
 from bibx import Collection, HandleReferences, Sap, query_openalex, read_any
 from firebase_admin import auth, firestore, initialize_app, storage
+from firebase_functions import logger
 from firebase_functions.core import Change
 from firebase_functions.firestore_fn import (
     Event,
@@ -21,10 +22,8 @@ from firebase_functions.scheduler_fn import ScheduledEvent, on_schedule
 from google.cloud.firestore import DocumentReference, DocumentSnapshot
 from pydantic import BaseModel, ValidationError
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
 initialize_app()
+logging.basicConfig(level=logging.INFO)
 
 
 ROOT = "root"
@@ -67,7 +66,7 @@ def tree_from_queries(
         engine = query["engine"]
         search = query["search"]
         references = (
-            HandleReferences.FULL if plan_id == "pro" else HandleReferences.BASIC
+            HandleReferences.COMMON if plan_id == "pro" else HandleReferences.BASIC
         )
         if engine == "openalex":
             collection = query_openalex(search, references=references)
@@ -213,7 +212,7 @@ def create_tree_v2(
         )
         logger.info("Tree process finished")
     except Exception as error:
-        logger.exception("Tree process failed")
+        logger.error("Tree process failed", error)
         end = datetime.now()
         ref.update(
             {
@@ -443,7 +442,7 @@ def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> N
     try:
         subscription = Subscription.model_validate(data)
     except ValidationError:
-        logger.exception("invalid subscription data")
+        logger.error("invalid subscription data")
         return
     if subscription.start_date is None:
         logger.info("subscription start date is not set")
@@ -470,9 +469,7 @@ def _renew_subscriptions(period: Period, renew_time: datetime) -> None:
         try:
             subscription = Subscription.model_validate(data)
         except ValidationError:
-            logger.exception(
-                "invalid subscription data for subscription %s", snapshot.id
-            )
+            logger.error("invalid subscription data for subscription %s", snapshot.id)
             continue
         _process_subscription(
             subscription,

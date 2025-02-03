@@ -1,5 +1,5 @@
 firebase-admin~=6.6.0
 firebase_functions~=0.4.2
-bibx==0.4.0
+bibx==0.4.1
 pydantic~=2.10.6
 arrow~=1.3.0
