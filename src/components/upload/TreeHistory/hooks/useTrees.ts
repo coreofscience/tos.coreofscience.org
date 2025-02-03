@@ -25,7 +25,7 @@ export const useTrees = (userId: string, max: number) => {
   const firebase = useFirebase();
   const [limit, setLimit] = useState(25);
   const query = useQuery({
-    queryKey: ["trees", limit],
+    queryKey: ["trees", userId, limit],
     queryFn: async () => {
       const query = getQuery(firebase.firestore, userId, limit);
       return (await getDocs(query)).docs;

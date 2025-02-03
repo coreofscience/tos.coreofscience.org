@@ -39,6 +39,7 @@ const TreeHistory = ({ userId }: Props) => {
 
   if (!user) return "You must log in to see your history";
   if (!trees.query.data?.length) return "No trees found";
+  if (!trees.query.isError) return "There was an error fetching your trees.";
 
   const data = sortBy(
     trees.query.data.map((doc) => {
@@ -52,6 +53,8 @@ const TreeHistory = ({ userId }: Props) => {
     }),
     (datum) => -datum.createdDate,
   );
+
+  console.log({ data });
 
   return (
     <div className="flex flex-col gap-3">
