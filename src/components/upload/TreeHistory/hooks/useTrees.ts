@@ -30,6 +30,7 @@ export const useTrees = (userId: string, max: number) => {
       const query = getQuery(firebase.firestore, userId, limit);
       return (await getDocs(query)).docs;
     },
+    enabled: !!firebase && !!userId,
   });
   return {
     query,
