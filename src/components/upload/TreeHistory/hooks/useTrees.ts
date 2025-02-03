@@ -16,7 +16,7 @@ const getQuery = (firestore: Firestore, userId: string, count: number) => {
     collection(firestore, `users/${userId}/trees`),
     where("result", "!=", null),
     orderBy("result", "desc"),
-    orderBy("createdDate", "desc"),
+    orderBy("finishedDate", "desc"),
     limit(count),
   );
 };
