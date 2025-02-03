@@ -4,9 +4,8 @@ import { mostCommon } from "../../../utils/arrays";
 import Items from "./Items";
 import { useTrees } from "./hooks/useTrees";
 import { flatten } from "lodash";
-import InfiniteScroll from "react-infinite-scroll-component";
 
-const TREES_PER_PAGE = 5;
+const TREES_PER_PAGE = 500;
 
 interface Props {
   userId: string;
@@ -39,34 +38,37 @@ const TreeHistory = ({ userId }: Props) => {
   const trees = useTrees(userId, TREES_PER_PAGE);
 
   if (!user) return null;
-  if (!trees.data?.pages.length) return null;
+  if (!trees.query.data?.length) return null;
 
-  const data = trees.data.pages
-    .map((page) => page)
-    .flat()
-    .map((doc) => ({
-      treeId: doc.id,
-      summary: summarize(doc.data() as TreeMetadata),
-      planId: doc.data().planId,
-    }));
+  const data = trees.query.data.map((doc) => ({
+    treeId: doc.id,
+    summary: summarize(doc.data() as TreeMetadata),
+    planId: doc.data().planId,
+  }));
 
   return (
     <div className="flex flex-col gap-3">
       {user.plan === "basic" ? (
         <ul>
-          <Items trees={data} />
+          <Items trees={data.slice(3)} />
         </ul>
       ) : (
-        <InfiniteScroll
-          dataLength={data.length}
-          next={trees.fetchNextPage}
-          hasMore={trees.hasNextPage}
-          loader={trees.isLoading && <p>Loading...</p>}
-        >
+        <div className="flex flex-col gap-8">
           <ul>
             <Items trees={data} />
           </ul>
-        </InfiniteScroll>
+          {trees.hasNext && (
+            <div>
+              <button
+                onClick={() => trees.fetchNextPage()}
+                disabled={!trees.query.isLoading}
+                className="rounded-sm bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
+              >
+                Load More
+              </button>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

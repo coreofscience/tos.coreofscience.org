@@ -1,55 +1,42 @@
 import useFirebase from "../../../../hooks/useFirebase";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
-  DocumentReference,
   Firestore,
   collection,
   getDocs,
   limit,
   orderBy,
   query,
-  startAfter,
   where,
 } from "firebase/firestore";
+import { useState } from "react";
 
-const getQuery = (
-  firestore: Firestore,
-  userId: string,
-  pageParam: DocumentReference | null,
-  count: number,
-) => {
-  return pageParam !== null
-    ? query(
-        collection(firestore, `users/${userId}/trees`),
-        where("result", "!=", null),
-        orderBy("result", "desc"),
-        orderBy("finishedDate", "desc"),
-        startAfter(pageParam),
-        limit(count),
-      )
-    : query(
-        collection(firestore, `users/${userId}/trees`),
-        where("result", "!=", null),
-        orderBy("result", "desc"),
-        orderBy("finishedDate", "desc"),
-        limit(count),
-      );
+const getQuery = (firestore: Firestore, userId: string, count: number) => {
+  return query(
+    collection(firestore, `users/${userId}/trees`),
+    where("result", "!=", null),
+    orderBy("result", "desc"),
+    orderBy("createdDate", "desc"),
+    limit(count),
+  );
 };
 
-export const useTrees = (userId: string, count: number) => {
+export const useTrees = (userId: string, max: number) => {
   const firebase = useFirebase();
-  const infiniteQuery = useInfiniteQuery({
-    queryKey: ["trees"],
-    queryFn: async ({ pageParam }: { pageParam: DocumentReference | null }) => {
-      // Fetch the data
-      const query = getQuery(firebase.firestore, userId, pageParam, count);
+  const [limit, setLimit] = useState(25);
+  const query = useQuery({
+    queryKey: ["trees", limit],
+    queryFn: async () => {
+      const query = getQuery(firebase.firestore, userId, limit);
       return (await getDocs(query)).docs;
     },
-    initialPageParam: null,
-    getNextPageParam: (lastPage) => {
-      const lastDoc = lastPage ? lastPage[lastPage.length - 1].ref : null;
-      return lastDoc;
-    },
   });
-  return infiniteQuery;
+  return {
+    query,
+    fetchNextPage: () => {
+      setLimit((prev) => Math.min(max, prev * 2));
+    },
+    hasNext:
+      !!query.data && query.data.length === limit && query.data.length < max,
+  };
 };
