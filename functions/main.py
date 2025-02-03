@@ -8,8 +8,9 @@ from typing import Any, Dict, List
 
 import arrow
 import networkx as nx
-from bibx import Collection, Sap, read_any
+from bibx import Collection, EnrichReferences, Sap, query_openalex, read_any
 from firebase_admin import auth, firestore, initialize_app, storage
+from firebase_functions import logger
 from firebase_functions.core import Change
 from firebase_functions.firestore_fn import (
     Event,
@@ -21,10 +22,8 @@ from firebase_functions.scheduler_fn import ScheduledEvent, on_schedule
 from google.cloud.firestore import DocumentReference, DocumentSnapshot
 from pydantic import BaseModel, ValidationError
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
 initialize_app()
+logging.basicConfig(level=logging.INFO)
 
 
 ROOT = "root"
@@ -51,6 +50,28 @@ def tree_from_strings(strings: List[str], ref: DocumentReference) -> nx.DiGraph:
     """Creates a ToS tree from a list of strings."""
     collections = [read_any(StringIO(text)) for text in strings]
     collection = reduce(lambda x, y: x.merge(y), collections)
+    set_analysis_property(collection, ref)
+    sap = Sap()
+    graph = sap.create_graph(collection)
+    graph = sap.clean_graph(graph)
+    return sap.tree(graph)
+
+
+def tree_from_queries(
+    queries: list[dict], ref: DocumentReference, plan_id: str | None
+) -> nx.DiGraph:
+    """Creates a ToS tree from a list of queries."""
+    collections = []
+    for query in queries:
+        engine = query["engine"]
+        search = query["search"]
+        enrich = EnrichReferences.MOST if plan_id == "pro" else EnrichReferences.COMMON
+        if engine == "openalex":
+            collection = query_openalex(search, enrich=enrich)
+            collections.append(collection)
+        else:
+            raise ValueError(f"Unknown engine: {engine}")
+    collection = reduce(Collection.merge, collections)
     set_analysis_property(collection, ref)
     sap = Sap()
     graph = sap.create_graph(collection)
@@ -169,8 +190,13 @@ def create_tree_v2(
     logger.info("Tree process started")
 
     try:
-        contents = get_contents(data, max_size_megabytes=max_size_megabytes)
-        tos = tree_from_strings(list(contents.values()), ref)
+        if "files" in data:
+            contents = get_contents(data, max_size_megabytes=max_size_megabytes)
+            tos = tree_from_strings(list(contents.values()), ref)
+        elif "queries" in data:
+            tos = tree_from_queries(data["queries"], ref, plan_id)
+        else:
+            raise ValueError("No files or queries found in the tree data")
         result = convert_tos_to_json(tos)
         end = datetime.now()
         ref.update(
@@ -184,7 +210,7 @@ def create_tree_v2(
         )
         logger.info("Tree process finished")
     except Exception as error:
-        logger.exception("Tree process failed")
+        logger.error("Tree process failed", error)
         end = datetime.now()
         ref.update(
             {
@@ -414,7 +440,7 @@ def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> N
     try:
         subscription = Subscription.model_validate(data)
     except ValidationError:
-        logger.exception("invalid subscription data")
+        logger.error("invalid subscription data")
         return
     if subscription.start_date is None:
         logger.info("subscription start date is not set")
@@ -441,9 +467,7 @@ def _renew_subscriptions(period: Period, renew_time: datetime) -> None:
         try:
             subscription = Subscription.model_validate(data)
         except ValidationError:
-            logger.exception(
-                "invalid subscription data for subscription %s", snapshot.id
-            )
+            logger.error("invalid subscription data for subscription %s", snapshot.id)
             continue
         _process_subscription(
             subscription,

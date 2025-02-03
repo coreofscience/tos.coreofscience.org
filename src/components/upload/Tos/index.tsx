@@ -58,6 +58,15 @@ const Tos: FC = () => {
       <div>
         <p>Get your seed files from web of knowledge.</p>
         <p>Then, upload your files for processing.</p>
+        <p>
+          Do you want to{" "}
+          <Link
+            className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
+            to="/tos/new"
+          >
+            try something new?
+          </Link>
+        </p>
       </div>
       <FileDropper maxSize={maxSize} />
       <UploadIndicator maxSize={maxSize} />
