@@ -8,7 +8,7 @@ from typing import Any, Dict, List
 
 import arrow
 import networkx as nx
-from bibx import Collection, HandleReferences, Sap, query_openalex, read_any
+from bibx import Collection, EnrichReferences, Sap, query_openalex, read_any
 from firebase_admin import auth, firestore, initialize_app, storage
 from firebase_functions import logger
 from firebase_functions.core import Change
@@ -65,11 +65,9 @@ def tree_from_queries(
     for query in queries:
         engine = query["engine"]
         search = query["search"]
-        references = (
-            HandleReferences.COMMON if plan_id == "pro" else HandleReferences.BASIC
-        )
+        enrich = EnrichReferences.MOST if plan_id == "pro" else EnrichReferences.COMMON
         if engine == "openalex":
-            collection = query_openalex(search, references=references)
+            collection = query_openalex(search, enrich=enrich)
             collections.append(collection)
         else:
             raise ValueError(f"Unknown engine: {engine}")
