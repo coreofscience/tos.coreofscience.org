@@ -54,8 +54,6 @@ const TreeHistory = ({ userId }: Props) => {
     (datum) => -datum.createdDate,
   );
 
-  console.log({ data });
-
   return (
     <div className="flex flex-col gap-3">
       {user.plan === "basic" ? (
