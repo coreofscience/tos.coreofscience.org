@@ -3,7 +3,7 @@ import { TreeMetadata } from "../../../types/treeMetadata";
 import { mostCommon } from "../../../utils/arrays";
 import Items from "./Items";
 import { useTrees } from "./hooks/useTrees";
-import { flatten } from "lodash";
+import { flatten, sortBy } from "lodash";
 
 const TREES_PER_PAGE = 500;
 
@@ -40,15 +40,18 @@ const TreeHistory = ({ userId }: Props) => {
   if (!user) return "You must log in to see your history";
   if (!trees.query.data?.length) return "No trees found";
 
-  const data = trees.query.data.map((doc) => {
-    const datum = doc.data() as TreeMetadata;
-    return {
-      treeId: doc.id,
-      summary: summarize(datum),
-      createdDate: datum.createdDate,
-      planId: datum.planId,
-    };
-  });
+  const data = sortBy(
+    trees.query.data.map((doc) => {
+      const datum = doc.data() as TreeMetadata;
+      return {
+        treeId: doc.id,
+        summary: summarize(datum),
+        createdDate: datum.createdDate,
+        planId: datum.planId,
+      };
+    }),
+    (datum) => -datum.createdDate,
+  );
 
   return (
     <div className="flex flex-col gap-3">
