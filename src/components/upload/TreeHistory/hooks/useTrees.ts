@@ -37,6 +37,6 @@ export const useTrees = (userId: string, max: number) => {
       setLimit((prev) => Math.min(max, prev * 2));
     },
     hasNext:
-      !!query.data && query.data.length === limit && query.data.length < max,
+      !query.data || (query.data.length === limit && query.data.length < max),
   };
 };

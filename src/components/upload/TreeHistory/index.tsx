@@ -37,8 +37,8 @@ const TreeHistory = ({ userId }: Props) => {
   const user = useUser();
   const trees = useTrees(userId, TREES_PER_PAGE);
 
-  if (!user) return null;
-  if (!trees.query.data?.length) return null;
+  if (!user) return "You must log in to see your history";
+  if (!trees.query.data?.length) return "No trees found";
 
   const data = trees.query.data.map((doc) => {
     const datum = doc.data() as TreeMetadata;
