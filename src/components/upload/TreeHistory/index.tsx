@@ -60,7 +60,7 @@ const TreeHistory = ({ userId }: Props) => {
     <div className="flex flex-col gap-3">
       {user.plan === "basic" ? (
         <ul className="flex flex-col gap-2">
-          <Items trees={data.slice(3)} />
+          <Items trees={data.slice(0, 3)} />
         </ul>
       ) : (
         <div className="flex flex-col gap-8">
