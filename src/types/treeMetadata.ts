@@ -10,4 +10,5 @@ export interface TreeMetadata {
   result?: TreeResult;
   error?: string;
   stars?: Record<string /* base64 of the Article label */, boolean>;
+  planId?: "pro" | "basic";
 }

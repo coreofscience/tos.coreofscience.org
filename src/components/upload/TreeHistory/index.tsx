@@ -40,21 +40,25 @@ const TreeHistory = ({ userId }: Props) => {
   if (!user) return null;
   if (!trees.query.data?.length) return null;
 
-  const data = trees.query.data.map((doc) => ({
-    treeId: doc.id,
-    summary: summarize(doc.data() as TreeMetadata),
-    planId: doc.data().planId,
-  }));
+  const data = trees.query.data.map((doc) => {
+    const datum = doc.data() as TreeMetadata;
+    return {
+      treeId: doc.id,
+      summary: summarize(datum),
+      createdDate: datum.createdDate,
+      planId: datum.planId,
+    };
+  });
 
   return (
     <div className="flex flex-col gap-3">
       {user.plan === "basic" ? (
-        <ul>
+        <ul className="flex flex-col gap-2">
           <Items trees={data.slice(3)} />
         </ul>
       ) : (
         <div className="flex flex-col gap-8">
-          <ul>
+          <ul className="flex flex-col gap-2">
             <Items trees={data} />
           </ul>
           {trees.hasNext && (
