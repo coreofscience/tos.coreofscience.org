@@ -96,7 +96,7 @@ const Footer = () => {
           <h4 className="font-tall text-xl uppercase text-root">
             Social media
           </h4>
-          <ul className="flex flex-row gap-2 min-w-40">
+          <ul className="flex min-w-40 flex-row gap-2">
             <li>
               <Button variant="link" size="link" asChild>
                 <a

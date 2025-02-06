@@ -33,7 +33,7 @@ const New = () => {
         }}
       >
         <input
-          className="rounded-sm px-6 py-3 text-xl ring-1 ring-slate-400 focus:ring-leaf focus:outline-2 focus:outline-none"
+          className="rounded-sm px-6 py-3 text-xl ring-1 ring-slate-400 focus:outline-none focus:outline-2 focus:ring-leaf"
           name="search"
           type="text"
           placeholder="bit patterned media OR bit patterned magnetic recording"

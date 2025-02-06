@@ -40,11 +40,11 @@ const VerifyEmail = () => {
   return (
     <div className="flex flex-col gap-16">
       <div className="flex justify-center">
-        <h2 className="text-center font-bold font-tall text-4xl sm:text-6xl">
+        <h2 className="text-center font-tall text-4xl font-bold sm:text-6xl">
           Please verify your email
         </h2>
       </div>
-      <div className="flex flex-col gap-4 items-center">
+      <div className="flex flex-col items-center gap-4">
         <p className="text-center text-lg">
           We've sent you an email with a link to verify your email address.
         </p>

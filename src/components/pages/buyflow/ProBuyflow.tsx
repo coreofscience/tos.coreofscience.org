@@ -70,14 +70,14 @@ const ProBuyflow = () => {
   return (
     <div className="flex flex-col gap-24">
       <div className="flex justify-center">
-        <h2 className="text-center font-bold font-tall text-5xl sm:text-7xl">
+        <h2 className="text-center font-tall text-5xl font-bold sm:text-7xl">
           Get Tree of Science Pro
         </h2>
       </div>
-      <div className="flex flex-col gap-4 items-center">
+      <div className="flex flex-col items-center gap-4">
         <div>
           <p>With Tree of Science Pro you get:</p>
-          <ul className="list-disc list-inside">
+          <ul className="list-inside list-disc">
             <li>Upload files up to 100MB</li>
             <li>Unlimited history</li>
           </ul>

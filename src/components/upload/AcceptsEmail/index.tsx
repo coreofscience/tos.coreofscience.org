@@ -31,7 +31,7 @@ const AcceptsEmail = ({ user }: Props) => {
   };
 
   return user.acceptsEmail === undefined ? (
-    <div className="flex flex-col gap-2 rounded-sm px-8 py-4 border-leaf border-2">
+    <div className="flex flex-col gap-2 rounded-sm border-2 border-leaf px-8 py-4">
       <p>
         I like to receive the Tree of Science newsletter to stay in touch and to
         learn about latest trends on literature searches and new product

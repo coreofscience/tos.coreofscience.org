@@ -19,11 +19,11 @@ const Thanks = () => {
   return (
     <div className="flex flex-col gap-24">
       <div className="flex justify-center">
-        <h2 className="text-center font-bold font-tall text-5xl sm:text-7xl">
+        <h2 className="text-center font-tall text-5xl font-bold sm:text-7xl">
           Thanks for purchasing Tree of Science Pro!
         </h2>
       </div>
-      <div className="flex flex-col gap-4 items-center">
+      <div className="flex flex-col items-center gap-4">
         <p className="text-center text-lg">
           You now have access to all the pro features of Tree of Science.
         </p>
