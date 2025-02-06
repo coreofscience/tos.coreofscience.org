@@ -10,6 +10,7 @@ import {
   Keywords,
 } from "../../types/treeType";
 import { mostCommon } from "../../utils/arrays";
+import Button from "../ui/Button";
 import CopyImage from "../vectors/CopyImage";
 import StarImage from "../vectors/StarImage";
 import Download from "./Download";
@@ -156,12 +157,9 @@ const Tree: FC<Props> = ({
                 {info?.info ? (
                   <p>
                     {`${info.info} ${info.doc}`}{" "}
-                    <Link
-                      className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
-                      to="/docs/sap"
-                    >
-                      docs.
-                    </Link>
+                    <Button variant="link" size="link" asChild>
+                      <Link to="/docs/sap">docs.</Link>
+                    </Button>
                   </p>
                 ) : (
                   ""

@@ -1,4 +1,5 @@
 import Reference from "../../tree/Reference";
+import Button from "../../ui/Button";
 import { FC, useEffect } from "react";
 
 const Faq: FC = () => {
@@ -113,14 +114,15 @@ const Faq: FC = () => {
                   biological tree and the flow of intellectual influence in
                   scientific research. You can read the paper for a full
                   understanding of the algorithm{" "}
-                  <a
-                    href="http://dx.doi.org/10.15446/ing.investig.v40n1.77718"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sky-600 hover:text-sky-800"
-                  >
-                    here
-                  </a>
+                  <Button variant="link" size="link" asChild>
+                    <a
+                      href="http://dx.doi.org/10.15446/ing.investig.v40n1.77718"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      here
+                    </a>
+                  </Button>
                   .
                 </p>
               </li>
@@ -197,14 +199,15 @@ const Faq: FC = () => {
                   channel. You can access various tutorials and video guides to
                   help you get the most out of our tool. Visit our YouTube
                   channel at{" "}
-                  <a
-                    href="https://www.youtube.com/@CoreofScience/videos"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sky-600 hover:text-sky-800"
-                  >
-                    Tree of Science Tutorials
-                  </a>{" "}
+                  <Button variant="link" size="link" asChild>
+                    <a
+                      href="https://www.youtube.com/@CoreofScience/videos"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Tree of Science Tutorials
+                    </a>
+                  </Button>{" "}
                   to explore our educational content. Whether you're a
                   first-time user or looking to explore advanced features, our
                   channel has something for everyone.

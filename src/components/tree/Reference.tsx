@@ -1,4 +1,5 @@
 import { Article } from "../../types/article";
+import Button from "../ui/Button";
 import { FC, Fragment } from "react";
 
 const titleCase = (sentence: string): string =>
@@ -73,25 +74,24 @@ const Reference: FC<Article & { simple?: boolean }> = ({
           {". "}
         </Fragment>
       )}
-      {!!permalink && (
-        <a
-          className="text-sky-600 hover:text-sky-800"
-          href={permalink}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {permalink}
-        </a>
-      )}
-      {!!doi && (
-        <a
-          className="text-sky-600 hover:text-sky-800"
-          href={`https://dx.doi.org/${doi}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {simple ? doi : `https://dx.doi.org/${doi}`}
-        </a>
+      {permalink ? (
+        <Button size="link" variant="link" asChild>
+          <a href={permalink} target="_blank" rel="noopener noreferrer">
+            {permalink}
+          </a>
+        </Button>
+      ) : (
+        !!doi && (
+          <Button size="link" variant="link" asChild>
+            <a
+              href={`https://dx.doi.org/${doi}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {simple ? doi : `https://dx.doi.org/${doi}`}
+            </a>
+          </Button>
+        )
       )}
     </div>
   );

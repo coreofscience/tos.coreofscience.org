@@ -5,6 +5,7 @@ import useUser from "../../../hooks/useUser";
 import computeQuantities from "../../../utils/computeQuantities";
 import getMaxSize from "../../../utils/getMaxSize";
 import { countFormat, round, weightFormat } from "../../../utils/math";
+import Button from "../../ui/Button";
 import AcceptsEmail from "../AcceptsEmail";
 import EmailVerification from "../EmailVerification";
 import { createTree } from "./createTree";
@@ -59,12 +60,9 @@ const Tos: FC = () => {
         <p>Then, upload your files for processing.</p>
         <p>
           Do you want to{" "}
-          <Link
-            className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
-            to="/tos/new"
-          >
-            try something new?
-          </Link>
+          <Button variant="link" size="link" asChild>
+            <Link to="/tos/new">try something new?</Link>
+          </Button>
         </p>
       </div>
       <FileDropper maxSize={maxSize} />
@@ -96,19 +94,17 @@ const Tos: FC = () => {
       {(!user || user.plan !== "pro") && (
         <p>
           For extra processing capacity check out our&nbsp;
-          <Link
-            className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
-            to="/pricing"
-          >
-            plans and pricing.
-          </Link>
+          <Button variant="link" size="link" asChild>
+            <Link to="/pricing">plans and pricing.</Link>
+          </Button>
         </p>
       )}
       <br></br>
       <div>Let's start planting your tree.</div>
       <div>
-        <button
-          className="inline-block rounded-sm bg-leaf px-12 py-6 font-tall text-4xl uppercase text-slate-50 disabled:bg-slate-400"
+        <Button
+          className="uppercase"
+          size="huge"
           disabled={
             isPending ||
             !finished ||
@@ -122,18 +118,17 @@ const Tos: FC = () => {
             logEvent(firebase.analytics, "tree_created");
           }}
         >
-          {isPending ? "LOADING..." : finished ? "CONTINUE" : "UPLOADING..."}
-        </button>
+          {isPending ? "loading..." : finished ? "continue" : "uploading..."}
+        </Button>
       </div>
       {isError && (
         <div className="error">There was an error creating the your tree.</div>
       )}
-      <Link
-        className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
-        to="/history"
-      >
-        Tree history
-      </Link>
+      <div>
+        <Button variant="link" size="link" asChild>
+          <Link to="/history">Tree history</Link>
+        </Button>
+      </div>
     </div>
   );
 };

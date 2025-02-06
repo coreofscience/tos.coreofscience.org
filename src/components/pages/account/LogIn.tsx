@@ -2,6 +2,7 @@ import useFirebase from "../../../hooks/useFirebase";
 import useNext from "../../../hooks/useNext";
 import useUser from "../../../hooks/useUser";
 import { Message } from "../../common/Message";
+import Button from "../../ui/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { Auth, signInWithEmailAndPassword } from "firebase/auth";
@@ -116,15 +117,16 @@ const LogIn: FC = () => {
           }
           type={isError ? "error" : "info"}
         />
-        <Link
-          to={{
-            pathname: "/reset-password",
-            search: nextSearch,
-          }}
-          className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
-        >
-          Forgot your password?
-        </Link>
+        <Button variant="link" size="link" asChild>
+          <Link
+            to={{
+              pathname: "/reset-password",
+              search: nextSearch,
+            }}
+          >
+            Forgot your password?
+          </Link>
+        </Button>
       </form>
     </Fragment>
   );
