@@ -1,4 +1,4 @@
-import Pricing from "../pages/Home/Pricing";
+import Pricing from "../pages/home/Pricing";
 import { FC } from "react";
 
 const Plans: FC = () => {

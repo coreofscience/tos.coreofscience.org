@@ -29,7 +29,7 @@ const About = React.lazy(() => import("./components/pages/docs/About"));
 const PressRelease = React.lazy(
   () => import("./components/pages/docs/PressRelease"),
 );
-const Home = React.lazy(() => import("./components/pages/Home"));
+const Home = React.lazy(() => import("./components/pages/home"));
 const ProBuyflow = React.lazy(
   () => import("./components/pages/buyflow/ProBuyflow"),
 );
