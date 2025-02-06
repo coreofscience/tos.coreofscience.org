@@ -101,11 +101,9 @@ const LogIn: FC = () => {
           />
         </div>
         <div>
-          <input
-            type="submit"
-            className="rounded-sm bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
-            value="LOG IN"
-          />
+          <Button className="uppercase" asChild>
+            <input type="submit" value="log in" />
+          </Button>
         </div>
         <Message
           message={
