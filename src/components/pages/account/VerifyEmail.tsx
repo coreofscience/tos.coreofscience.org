@@ -1,6 +1,7 @@
 import useFirebase from "../../../hooks/useFirebase";
 import useNext from "../../../hooks/useNext";
 import useUser from "../../../hooks/useUser";
+import Button from "../../ui/Button";
 import { useMutation } from "@tanstack/react-query";
 import { User, sendEmailVerification } from "firebase/auth";
 import { useState } from "react";
@@ -37,27 +38,27 @@ const VerifyEmail = () => {
   }
 
   return (
-    <div className="flex flex-col gap-24">
+    <div className="flex flex-col gap-16">
       <div className="flex justify-center">
-        <h2 className="text-center font-bold font-tall text-5xl sm:text-7xl">
+        <h2 className="text-center font-tall text-4xl font-bold sm:text-6xl">
           Please verify your email
         </h2>
       </div>
-      <div className="flex flex-col gap-4 items-center">
+      <div className="flex flex-col items-center gap-4">
         <p className="text-center text-lg">
           We've sent you an email with a link to verify your email address.
         </p>
       </div>
       <div className="flex flex-row items-center justify-center gap-4">
-        <button
-          className="rounded-sm bg-leaf px-4 py-2 text-center font-tall font-bold uppercase text-slate-50 disabled:bg-slate-400"
+        <Button
+          className="uppercase"
           onClick={() =>
             resendMutation.mutate({ user: firebase.auth.currentUser })
           }
           disabled={resendMutation.isPending || disabled}
         >
           Resend email
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@
  */
 import useFirebase from "../../../hooks/useFirebase";
 import useUser from "../../../hooks/useUser";
+import Button from "../../ui/Button";
 import { createOpenAlexTree } from "./createTree";
 import { useMutation } from "@tanstack/react-query";
 import { logEvent } from "firebase/analytics";
@@ -32,7 +33,7 @@ const New = () => {
         }}
       >
         <input
-          className="rounded-sm px-6 py-3 text-xl ring-1 ring-slate-400 focus:ring-leaf focus:outline-2 focus:outline-none"
+          className="rounded-sm px-6 py-3 text-xl ring-1 ring-slate-400 focus:outline-none focus:outline-2 focus:ring-leaf"
           name="search"
           type="text"
           placeholder="bit patterned media OR bit patterned magnetic recording"
@@ -41,22 +42,20 @@ const New = () => {
           disabled={isPending}
         ></input>
         <div className="flex flex-row items-center justify-center">
-          <button
-            className="rounded-sm bg-leaf px-8 py-4 font-tall text-2xl uppercase text-slate-50 disabled:bg-slate-400"
+          <Button
+            className="uppercase"
+            size="huge"
             type="submit"
             disabled={isPending || !search}
           >
             Create
-          </button>
+          </Button>
         </div>
       </form>
       <div className="flex flex-row items-center justify-center">
-        <Link
-          className="text-sky-600 hover:text-sky-800 active:text-sky-800"
-          to="/history"
-        >
-          Tree History
-        </Link>
+        <Button variant="link" size="link" asChild>
+          <Link to="/history">Tree History</Link>
+        </Button>
       </div>
     </div>
   );

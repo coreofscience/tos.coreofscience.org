@@ -1,8 +1,7 @@
 import Reference from "../tree/Reference";
+import Button from "../ui/Button";
 import CoreOfScience from "../vectors/CoreOfScience";
-import FacebookIcon from "../vectors/FacebookIcon";
 import GitHubIcon from "../vectors/GitHubIcon";
-import TwitterIcon from "../vectors/TwitterIcon";
 import YoutubeIcon from "../vectors/YoutubeIcon";
 import NavBar from "./NavBar";
 import { Link, useLocation } from "react-router-dom";
@@ -97,46 +96,30 @@ const Footer = () => {
           <h4 className="font-tall text-xl uppercase text-root">
             Social media
           </h4>
-          <ul className="flex flex-row gap-2">
+          <ul className="flex min-w-40 flex-row gap-2">
             <li>
-              <a
-                href="https://github.com/coreofscience/"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="GitHub"
-              >
-                <GitHubIcon />
-              </a>
+              <Button variant="link" size="link" asChild>
+                <a
+                  href="https://github.com/coreofscience/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="GitHub"
+                >
+                  <GitHubIcon />
+                </a>
+              </Button>
             </li>
             <li>
-              <a
-                href="https://www.facebook.com/coreofscience"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="facebook"
-              >
-                <FacebookIcon />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.youtube.com/channel/UCgFXO_IbFGkZRyj6heWpEBw"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="youtube"
-              >
-                <YoutubeIcon />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://twitter.com/core_of_science"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="twitter"
-              >
-                <TwitterIcon />
-              </a>
+              <Button variant="link" size="link" asChild>
+                <a
+                  href="https://www.youtube.com/channel/UCgFXO_IbFGkZRyj6heWpEBw"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="youtube"
+                >
+                  <YoutubeIcon />
+                </a>
+              </Button>
             </li>
           </ul>
         </section>
@@ -146,34 +129,37 @@ const Footer = () => {
           </h4>
           <ul>
             <li>
-              <a
-                href="https://github.com/coreofscience/sap.coreofscience.com"
-                className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                front-end
-              </a>
+              <Button variant="link" size="link" asChild>
+                <a
+                  href="https://github.com/coreofscience/sap.coreofscience.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  front-end
+                </a>
+              </Button>
             </li>
             <li>
-              <a
-                href="https://github.com/coreofscience/gcloud-tos"
-                className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                back-end
-              </a>
+              <Button variant="link" size="link" asChild>
+                <a
+                  href="https://github.com/coreofscience/gcloud-tos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  back-end
+                </a>
+              </Button>
             </li>
             <li>
-              <a
-                href="https://github.com/coreofscience/python-bibx"
-                className="text-sky-600 transition-colors ease-in hover:text-sky-800 active:text-sky-800"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                algorithms
-              </a>
+              <Button variant="link" size="link" asChild>
+                <a
+                  href="https://github.com/coreofscience/python-bibx"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  algorithms
+                </a>
+              </Button>
             </li>
           </ul>
         </section>
@@ -202,36 +188,24 @@ const Footer = () => {
         <ul className="flex flex-col sm:flex-row sm:gap-4 lg:gap-8">
           {location.pathname === "/" && <NavBar origin="footer" />}
           <li>
-            <Link
-              className="text-sky-600 hover:text-sky-800 active:text-sky-800"
-              to="/docs/sap"
-            >
-              Your tree explained
-            </Link>
+            <Button variant="link" size="link" asChild>
+              <Link to="/docs/sap">Your tree explained</Link>
+            </Button>
           </li>
           <li>
-            <Link
-              className="text-sky-600 hover:text-sky-800 active:text-sky-800"
-              to="/docs/faq"
-            >
-              FAQ
-            </Link>
+            <Button variant="link" size="link" asChild>
+              <Link to="/docs/faq">FAQ</Link>
+            </Button>
           </li>
           <li>
-            <Link
-              className="text-sky-600 hover:text-sky-800 active:text-sky-800"
-              to="/docs/about"
-            >
-              About ToS
-            </Link>
+            <Button variant="link" size="link" asChild>
+              <Link to="/docs/about">About ToS</Link>
+            </Button>
           </li>
           <li>
-            <Link
-              className="text-sky-600 hover:text-sky-800 active:text-sky-800"
-              to="/docs/press"
-            >
-              Press Release
-            </Link>
+            <Button variant="link" size="link" asChild>
+              <Link to="/docs/press">Press Release</Link>
+            </Button>
           </li>
         </ul>
       </div>

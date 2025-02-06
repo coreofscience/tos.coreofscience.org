@@ -2,6 +2,7 @@ import useFirebase from "../../../hooks/useFirebase";
 import useNext from "../../../hooks/useNext";
 import useUser from "../../../hooks/useUser";
 import { Message } from "../../common/Message";
+import Button from "../../ui/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -160,11 +161,9 @@ const SignUp: FC = () => {
           </label>
         </div>
         <div>
-          <input
-            type="submit"
-            className="rounded-sm bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
-            value="SIGN UP"
-          />
+          <Button className="uppercase" asChild>
+            <input type="submit" value="sign up" />
+          </Button>
         </div>
         <Message
           message={

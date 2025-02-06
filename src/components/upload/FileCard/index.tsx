@@ -1,4 +1,5 @@
 import { round } from "../../../utils/math";
+import Button from "../../ui/Button";
 import CancelIcon from "../../vectors/CancelIcon";
 import MoveFirstIcon from "../../vectors/MoveFirstIcon";
 import { FC } from "react";
@@ -49,12 +50,14 @@ const FileCard: FC<Props> = ({
           <MoveFirstIcon />
         </button>
       )}
-      <button
+      <Button
+        size="icon"
+        variant="root"
         onClick={remove}
-        className="absolute right-0 top-0 flex h-8 w-8 items-center justify-center bg-root text-slate-50 transition-colors ease-in hover:bg-red-500 active:bg-red-500"
+        className="absolute right-0 top-0 hover:bg-red-500 active:bg-red-500"
       >
         <CancelIcon />
-      </button>
+      </Button>
       <strong
         className="max-w-[75%] overflow-hidden overflow-ellipsis whitespace-nowrap"
         title={name}

@@ -1,6 +1,7 @@
 import useFirebase from "../../hooks/useFirebase";
 import useNext from "../../hooks/useNext";
 import useUser from "../../hooks/useUser";
+import Button from "../ui/Button";
 import TreeOfScience from "../vectors/TreeOfScience";
 import HamburgerMenu from "./HamburgerMenu";
 import NavBar from "./NavBar";
@@ -16,53 +17,53 @@ const Header = () => {
   return (
     <div className="flex flex-row items-center justify-between text-leaf">
       <div className="flex flex-row items-center gap-1 text-leaf md:gap-4 lg:gap-8">
-        <Link className="flex flex-row items-center gap-2" to="/">
-          <TreeOfScience className="h-20 w-20" />
-          {location.pathname === "/" ? (
-            <h1 className="hidden font-tall text-2xl font-bold uppercase sm:inline md:text-4xl">
-              Tree of Science
-            </h1>
-          ) : (
-            <span className="hidden font-tall text-2xl font-bold uppercase sm:inline md:text-4xl">
-              Tree of Science
-            </span>
-          )}
-        </Link>
+        <Button variant="asChild" size="link" asChild>
+          <Link className="flex flex-row items-center gap-2" to="/">
+            <TreeOfScience className="h-20 w-20" />
+            {location.pathname === "/" ? (
+              <h1 className="hidden font-tall text-2xl font-bold uppercase sm:inline md:text-4xl">
+                Tree of Science
+              </h1>
+            ) : (
+              <span className="hidden font-tall text-2xl font-bold uppercase sm:inline md:text-4xl">
+                Tree of Science
+              </span>
+            )}
+          </Link>
+        </Button>
         {location.pathname === "/" && (
           <ul className="hidden gap-1 md:gap-4 lg:gap-8 xl:flex">
             <NavBar origin="header" />
           </ul>
         )}
       </div>
-      <div className="md:text-md xs:gap-2 flex flex-row items-center gap-1 text-xs md:text-lg">
+      <div className="flex flex-row items-center gap-2 text-xs md:gap-4 md:text-lg">
         {user?.uid ? (
           <>
             <span className="hidden overflow-ellipsis sm:inline">
               {user.email}
             </span>
-            <button
+            <Button
               onClick={() => signOut(firebase.auth)}
-              className="rounded-sm bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
+              className="uppercase"
             >
               Log Out
-            </button>
+            </Button>
           </>
         ) : (
           <>
             {location.pathname !== "/log-in" && (
-              <Link
-                className="rounded-sm px-4 py-2 font-tall font-bold uppercase"
-                to={{ pathname: "/log-in", search: nextSearch }}
-              >
-                Log In
-              </Link>
+              <Button className="uppercase" asChild>
+                <Link to={{ pathname: "/log-in", search: nextSearch }}>
+                  Log In
+                </Link>
+              </Button>
             )}
-            <Link
-              className="rounded-sm bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
-              to={{ pathname: "/sign-up", search: nextSearch }}
-            >
-              Sign up
-            </Link>
+            <Button className="uppercase" asChild>
+              <Link to={{ pathname: "/sign-up", search: nextSearch }}>
+                Sign up
+              </Link>
+            </Button>
           </>
         )}
         {location.pathname === "/" && <HamburgerMenu />}

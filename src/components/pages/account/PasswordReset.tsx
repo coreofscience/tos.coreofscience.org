@@ -2,6 +2,7 @@ import useFirebase from "../../../hooks/useFirebase";
 import useNext from "../../../hooks/useNext";
 import useUser from "../../../hooks/useUser";
 import { Message } from "../../common/Message";
+import Button from "../../ui/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { Auth, sendPasswordResetEmail } from "firebase/auth";
@@ -77,11 +78,9 @@ const PasswordReset: FC = () => {
           />
         </div>
         <div>
-          <input
-            type="submit"
-            className="bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
-            value="SEND"
-          />
+          <Button className="uppercase" asChild>
+            <input type="submit" value="send" />
+          </Button>
         </div>
         <Message
           message={

@@ -1,3 +1,4 @@
+import Button from "../../ui/Button";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
@@ -9,12 +10,9 @@ const GetStarted: FC = () => {
           Your tree explained
         </h2>
         <p className="text-lg">Learn all about the elements of your tree.</p>
-        <Link
-          className="rounded-sm bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
-          to="/docs/sap"
-        >
-          Learn more
-        </Link>
+        <Button className="uppercase" asChild>
+          <Link to="/docs/sap">Learn more</Link>
+        </Button>
       </div>
     </section>
   );
