@@ -12,7 +12,7 @@ const EmailVerification: FC = () => {
   };
 
   return !hidden ? (
-    <div className="flex flex-col gap-2 bg-leaf p-4 text-slate-50">
+    <div className="flex flex-col gap-2 bg-leaf p-4 rounded-sm text-slate-50">
       <p>
         Please verify your email.&nbsp;
         <span
