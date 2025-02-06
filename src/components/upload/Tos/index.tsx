@@ -124,11 +124,13 @@ const Tos: FC = () => {
       {isError && (
         <div className="error">There was an error creating the your tree.</div>
       )}
-      <div>
-        <Button variant="link" size="link" asChild>
-          <Link to="/history">Tree history</Link>
-        </Button>
-      </div>
+      {user && (
+        <div>
+          <Button variant="link" size="link" asChild>
+            <Link to="/history">Tree history</Link>
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

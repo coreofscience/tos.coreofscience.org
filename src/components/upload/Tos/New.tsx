@@ -41,6 +41,29 @@ const New = () => {
           onChange={(e) => setSearch(e.target.value)}
           disabled={isPending}
         ></input>
+        <p className="text-center">
+          <small className="text-slate-600">
+            Your search will be executed in{" "}
+            <Button variant="link" size="link" asChild>
+              <a
+                href="https://openalex.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                OpenAlex
+              </a>
+            </Button>{" "}
+            before processing.
+          </small>
+          {(!user || user.plan !== "pro") && (
+            <small className="text-slate-600">
+              Works better using the pro plan, see{" "}
+              <Button variant="link" size="link" asChild>
+                <Link to="/pricing">plans and pricing.</Link>
+              </Button>
+            </small>
+          )}
+        </p>
         <div className="flex flex-row items-center justify-center">
           <Button
             className="uppercase"
@@ -52,11 +75,13 @@ const New = () => {
           </Button>
         </div>
       </form>
-      <div className="flex flex-row items-center justify-center">
-        <Button variant="link" size="link" asChild>
-          <Link to="/history">Tree History</Link>
-        </Button>
-      </div>
+      {user && (
+        <div className="flex flex-row items-center justify-center">
+          <Button variant="link" size="link" asChild>
+            <Link to="/history">Tree History</Link>
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

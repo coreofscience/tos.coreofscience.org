@@ -1,3 +1,4 @@
+import cn from "../../utils/cn";
 import Footer from "./Footer";
 import Header from "./Header";
 import { FC, ReactNode } from "react";
@@ -10,14 +11,14 @@ interface Props {
 const AppLayout: FC<Props> = ({ children }: Props) => {
   const location = useLocation();
   return (
-    <div className="grid-rows-[auto 1fr auto] mt-4 grid h-full gap-4 md:mt-16 md:gap-16">
+    <div className="grid-rows-[auto_1fr_auto] mt-4 grid min-h-dvh gap-4 md:mt-16 md:gap-16">
       <header>
         <div className="container">
           <Header />
         </div>
       </header>
-      <main>
-        <div className={location.pathname !== "/" ? "container" : ""}>
+      <main className="grid place-items-center">
+        <div className={cn({ container: location.pathname !== "/" })}>
           {children}
         </div>
       </main>

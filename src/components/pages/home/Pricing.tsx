@@ -5,11 +5,13 @@ import { FC } from "react";
 const includedFeaturesForBasic: string[] = [
   "Up to 10 megabyte file sizes",
   "History of last 3 searches",
+  "Basic search with OpenAlex",
 ];
 
 const includedFeaturesForPro: string[] = [
   "Up to 100 megabyte file sizes",
   "Unlimited history",
+  "Advanced OpenAlex search",
 ];
 
 const includedFeaturesForConcierge: string[] = [
