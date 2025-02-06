@@ -54,7 +54,7 @@ const New = () => {
               </a>
             </Button>{" "}
             before processing.
-          </small>
+          </small>{" "}
           {(!user || user.plan !== "pro") && (
             <small className="text-slate-600">
               Works better using the pro plan, see{" "}
