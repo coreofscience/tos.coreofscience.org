@@ -17,18 +17,20 @@ const Header = () => {
   return (
     <div className="flex flex-row items-center justify-between text-leaf">
       <div className="flex flex-row items-center gap-1 text-leaf md:gap-4 lg:gap-8">
-        <Link className="flex flex-row items-center gap-2" to="/">
-          <TreeOfScience className="h-20 w-20" />
-          {location.pathname === "/" ? (
-            <h1 className="hidden font-tall text-2xl font-bold uppercase sm:inline md:text-4xl">
-              Tree of Science
-            </h1>
-          ) : (
-            <span className="hidden font-tall text-2xl font-bold uppercase sm:inline md:text-4xl">
-              Tree of Science
-            </span>
-          )}
-        </Link>
+        <Button variant="asChild" size="link" asChild>
+          <Link className="flex flex-row items-center gap-2" to="/">
+            <TreeOfScience className="h-20 w-20" />
+            {location.pathname === "/" ? (
+              <h1 className="hidden font-tall text-2xl font-bold uppercase sm:inline md:text-4xl">
+                Tree of Science
+              </h1>
+            ) : (
+              <span className="hidden font-tall text-2xl font-bold uppercase sm:inline md:text-4xl">
+                Tree of Science
+              </span>
+            )}
+          </Link>
+        </Button>
         {location.pathname === "/" && (
           <ul className="hidden gap-1 md:gap-4 lg:gap-8 xl:flex">
             <NavBar origin="header" />

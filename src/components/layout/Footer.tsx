@@ -100,24 +100,28 @@ const Footer = () => {
           </h4>
           <ul className="flex flex-row gap-2 min-w-40">
             <li>
-              <a
-                href="https://github.com/coreofscience/"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="GitHub"
-              >
-                <GitHubIcon />
-              </a>
+              <Button variant="link" size="link" asChild>
+                <a
+                  href="https://github.com/coreofscience/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="GitHub"
+                >
+                  <GitHubIcon />
+                </a>
+              </Button>
             </li>
             <li>
-              <a
-                href="https://www.youtube.com/channel/UCgFXO_IbFGkZRyj6heWpEBw"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="youtube"
-              >
-                <YoutubeIcon />
-              </a>
+              <Button variant="link" size="link" asChild>
+                <a
+                  href="https://www.youtube.com/channel/UCgFXO_IbFGkZRyj6heWpEBw"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="youtube"
+                >
+                  <YoutubeIcon />
+                </a>
+              </Button>
             </li>
           </ul>
         </section>
