@@ -38,7 +38,7 @@ const UserProvider: FC<Props> = ({ children }: Props) => {
                 (idTokenResult.claims?.plan as "pro" | "basic" | undefined) ??
                 "basic",
               emailVerified: user.emailVerified,
-              acceptsEmail: userSnap.data()?.acceptsEmail ?? false,
+              acceptsEmail: userSnap.data()?.acceptsEmail,
             });
           })
           .catch((err) => {

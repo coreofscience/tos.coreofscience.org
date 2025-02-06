@@ -1,4 +1,5 @@
 import useFirebase from "../../../hooks/useFirebase";
+import Button from "../../ui/Button";
 import { sendEmailVerification } from "firebase/auth";
 import { FC, useState } from "react";
 
@@ -12,22 +13,16 @@ const EmailVerification: FC = () => {
   };
 
   return !hidden ? (
-    <div className="flex flex-col gap-2 bg-leaf p-4 rounded-sm text-slate-50">
+    <div className="flex flex-col gap-2 px-8 py-4 rounded-sm border-2 border-leaf">
       <p>
         Please verify your email.&nbsp;
-        <span
-          onClick={handle}
-          className="cursor-pointer text-slate-50 underline hover:text-slate-200"
-        >
+        <Button variant="link" size="link" onClick={handle}>
           Resend email
-        </span>
+        </Button>
         . &nbsp;
-        <span
-          onClick={() => setHidden(true)}
-          className="cursor-pointer text-slate-50 underline hover:text-slate-200"
-        >
+        <Button variant="link" size="link" onClick={() => setHidden(true)}>
           I already verified my email
-        </span>
+        </Button>
         .
       </p>
     </div>
