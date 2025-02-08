@@ -2,22 +2,54 @@ import FileContext from "../../../context/FileContext";
 import useFiles from "../../../hooks/useFiles";
 import useFirebase from "../../../hooks/useFirebase";
 import useUser from "../../../hooks/useUser";
+import { FirebaseContextType } from "../../../types/firebaseContext";
+import { UserContextType } from "../../../types/userContextType";
 import computeQuantities from "../../../utils/computeQuantities";
 import getMaxSize from "../../../utils/getMaxSize";
 import { countFormat, round, weightFormat } from "../../../utils/math";
 import Button from "../../ui/Button";
-import AcceptsEmail from "../AcceptsEmail";
-import EmailVerification from "../EmailVerification";
-import { createTree } from "./createTree";
+import AcceptsEmail from "../../upload/AcceptsEmail";
+import EmailVerification from "../../upload/EmailVerification";
 import { useMutation } from "@tanstack/react-query";
 import { logEvent } from "firebase/analytics";
-import React, { FC, useContext } from "react";
+import { addDoc, collection } from "firebase/firestore";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const FileDropper = React.lazy(() => import("../FileDropper"));
-const UploadIndicator = React.lazy(() => import("../UploadIndicator"));
-const FileErrors = React.lazy(() => import("../FileErrors"));
+const FileDropper = React.lazy(() => import("../../upload/FileDropper"));
+const UploadIndicator = React.lazy(
+  () => import("../../upload/UploadIndicator"),
+);
+const FileErrors = React.lazy(() => import("../../upload/FileErrors"));
+
+const createTree = async ({
+  firebase,
+  files,
+  user,
+}: {
+  firebase: FirebaseContextType;
+  files: string[];
+  user: UserContextType | null;
+}): Promise<string> => {
+  if (!files.length) {
+    throw new Error("Files cannot be empty.");
+  }
+
+  const treesCollection = collection(
+    firebase.firestore,
+    user?.uid ? `users/${user.uid}/trees` : "trees",
+  );
+  const treeDoc = await addDoc(treesCollection, {
+    files,
+    createdDate: new Date().getTime(), // UTC timestamp.
+    planId: user?.uid ? user.plan : null,
+  });
+  if (!treeDoc.path) {
+    throw new Error("Failed creating a new document.");
+  }
+  return treeDoc.path;
+};
 
 const hasFinished = (
   files: string[],
@@ -28,7 +60,7 @@ const hasFinished = (
     true,
   );
 
-const Tos: FC = () => {
+const Tos = () => {
   const { progress } = useContext(FileContext);
   const files = useFiles();
   const hashes = files.map((file) => file.hash);

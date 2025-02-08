@@ -3,12 +3,43 @@
  */
 import useFirebase from "../../../hooks/useFirebase";
 import useUser from "../../../hooks/useUser";
+import { FirebaseContextType } from "../../../types/firebaseContext";
+import { UserContextType } from "../../../types/userContextType";
 import Button from "../../ui/Button";
-import { createOpenAlexTree } from "./createTree";
 import { useMutation } from "@tanstack/react-query";
 import { logEvent } from "firebase/analytics";
+import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+const createOpenAlexTree = async ({
+  firebase,
+  search,
+  user,
+}: {
+  firebase: FirebaseContextType;
+  search: string;
+  user: UserContextType | null;
+}): Promise<string> => {
+  const treesCollection = collection(
+    firebase.firestore,
+    user?.uid ? `users/${user.uid}/trees` : "trees",
+  );
+  const treeDoc = await addDoc(treesCollection, {
+    queries: [
+      {
+        engine: "openalex",
+        search,
+      },
+    ],
+    createdDate: new Date().getTime(), // UTC timestamp.
+    planId: user?.uid ? user.plan : null,
+  });
+  if (!treeDoc.path) {
+    throw new Error("Failed creating a new document.");
+  }
+  return treeDoc.path;
+};
 
 const New = () => {
   const navigate = useNavigate();
