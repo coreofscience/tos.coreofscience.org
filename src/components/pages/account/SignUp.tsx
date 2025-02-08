@@ -12,7 +12,7 @@ import {
   Auth,
 } from "firebase/auth";
 import { Firestore, doc, setDoc } from "firebase/firestore";
-import { FC, Fragment } from "react";
+import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { Navigate, useNavigate } from "react-router-dom";
 import { object, string, boolean } from "yup";
@@ -70,7 +70,7 @@ export type SignUpActionsType = {
   signUp: (data: SignUpFormFieldsType) => void;
 };
 
-const SignUp: FC = () => {
+const SignUp = () => {
   const form = useForm<SignUpFormFieldsType>({
     defaultValues: {
       name: "",

@@ -6,7 +6,7 @@ import Button from "../../ui/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { Auth, signInWithEmailAndPassword } from "firebase/auth";
-import { FC, Fragment } from "react";
+import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { object, string } from "yup";
@@ -35,7 +35,7 @@ const logIn = async ({
   await signInWithEmailAndPassword(auth, email, password);
 };
 
-const LogIn: FC = () => {
+const LogIn = () => {
   const form = useForm<LogInFormFieldsType>({
     defaultValues: {
       email: "",

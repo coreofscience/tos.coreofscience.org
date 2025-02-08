@@ -1,5 +1,4 @@
 import Button from "../ui/Button";
-import { FC } from "react";
 
 type Heading = {
   text: string;
@@ -29,7 +28,7 @@ const headingData: Heading[] = [
   },
 ];
 
-const TableOfContents: FC = () => {
+const TableOfContents = () => {
   return (
     <div className="prose prose-stone">
       <ul>

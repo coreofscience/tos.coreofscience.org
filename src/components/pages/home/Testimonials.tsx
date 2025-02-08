@@ -1,7 +1,6 @@
 import TestimonialCard from "./TestimonialCard";
-import { FC } from "react";
 
-const Testimonials: FC = () => {
+const Testimonials = () => {
   return (
     <section
       id="testimonials"

@@ -1,6 +1,5 @@
 import useUser from "../../../hooks/useUser";
 import PricingCard from "./PricingCard";
-import { FC } from "react";
 
 const includedFeaturesForBasic: string[] = [
   "Up to 10 megabyte file sizes",
@@ -19,7 +18,7 @@ const includedFeaturesForConcierge: string[] = [
   "An expert to help you get started",
 ];
 
-const Pricing: FC = () => {
+const Pricing = () => {
   const user = useUser();
   return (
     <section

@@ -7,7 +7,7 @@ const Tos = React.lazy(() => import("./components/upload/Tos"));
 const New = React.lazy(() => import("./components/upload/Tos/New"));
 const Result = React.lazy(() => import("./components/tree/Result"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
-const History = React.lazy(() => import("./components/pages/trees/History"));
+const History = React.lazy(() => import("./components/pages/history"));
 const LogIn = React.lazy(() => import("./components/pages/account/LogIn"));
 const SignUp = React.lazy(() => import("./components/pages/account/SignUp"));
 const VerifyEmail = React.lazy(
@@ -16,7 +16,7 @@ const VerifyEmail = React.lazy(
 const PasswordReset = React.lazy(
   () => import("./components/pages/account/PasswordReset"),
 );
-const Plans = React.lazy(() => import("./components/pricing/Plans"));
+const Plans = React.lazy(() => import("./components/pages/pricing"));
 const FilesProvider = React.lazy(
   () => import("./components/providers/FilesProvider"),
 );

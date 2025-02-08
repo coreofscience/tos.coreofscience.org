@@ -4,7 +4,7 @@ import CheckCircleIcon from "../../vectors/CheckCircleIcon";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
-type Props = {
+type PricingCardProps = {
   name: string;
   price: number | string;
   cta: string;
@@ -13,14 +13,14 @@ type Props = {
   primary?: boolean;
 };
 
-const PricingCard: FC<Props> = ({
+const PricingCard: FC<PricingCardProps> = ({
   name,
   price,
   cta,
   href,
   features,
   primary,
-}: Props) => {
+}) => {
   return (
     <section
       className={`flex flex-col gap-8 rounded-sm px-6 py-8 shadow-xl shadow-slate-900/10 sm:px-8 ${

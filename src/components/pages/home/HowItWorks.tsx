@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
 enum Section {
   PlantSeeds = "PLANT_SEEDS",
@@ -7,7 +7,7 @@ enum Section {
   ExtractYourLiteratureList = "EXTRACT_YOUR_LITERATURE_LIST",
 }
 
-const HowItWorks: FC = () => {
+const HowItWorks = () => {
   const [show, setShow] = useState<Section>(Section.PlantSeeds);
 
   const toggleShow = useCallback((label: Section) => {

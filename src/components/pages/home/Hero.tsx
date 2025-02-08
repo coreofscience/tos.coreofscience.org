@@ -1,8 +1,7 @@
 import Button from "../../ui/Button";
-import { FC } from "react";
 import { Link } from "react-router-dom";
 
-const Hero: FC = () => {
+const Hero = () => {
   return (
     <section className="container flex flex-col gap-8">
       <div className="flex items-center justify-center gap-8">

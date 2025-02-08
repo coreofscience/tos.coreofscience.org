@@ -4,11 +4,11 @@ import Header from "./Header";
 import { FC, ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 
-interface Props {
+type AppLayoutProps = {
   children?: ReactNode;
-}
+};
 
-const AppLayout: FC<Props> = ({ children }: Props) => {
+const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   const location = useLocation();
   return (
     <div className="grid-rows-[auto_1fr_auto] mt-4 grid min-h-dvh gap-4 md:mt-16 md:gap-16">

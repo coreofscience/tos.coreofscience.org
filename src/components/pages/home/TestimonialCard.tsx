@@ -1,7 +1,7 @@
 import QuoteIcon from "../../vectors/QuoteIcon";
 import { FC } from "react";
 
-type Props = {
+type TestimonialCardProps = {
   review: string;
   name: string;
   occupation: string;
@@ -9,13 +9,13 @@ type Props = {
   country: string;
 };
 
-const TestimonialCard: FC<Props> = ({
+const TestimonialCard: FC<TestimonialCardProps> = ({
   review,
   name,
   occupation,
   img,
   country,
-}: Props) => {
+}) => {
   return (
     <li>
       <figure className="relative rounded-sm bg-white p-6 shadow-xl shadow-slate-900/10">

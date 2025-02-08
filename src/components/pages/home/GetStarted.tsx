@@ -1,8 +1,7 @@
 import Button from "../../ui/Button";
-import { FC } from "react";
 import { Link } from "react-router-dom";
 
-const GetStarted: FC = () => {
+const GetStarted = () => {
   return (
     <section className="container mx-auto max-w-7xl">
       <div className="mx-auto flex max-w-lg flex-col items-center justify-center gap-8 text-center">

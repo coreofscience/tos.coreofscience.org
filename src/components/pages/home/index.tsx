@@ -5,11 +5,11 @@ import Hero from "./Hero";
 import HowItWorks from "./HowItWorks";
 import Pricing from "./Pricing";
 import Testimonials from "./Testimonials";
-import React, { FC, useMemo } from "react";
+import React, { useMemo } from "react";
 
 const FileDropper = React.lazy(() => import("../../upload/FileDropper"));
 
-const Home: FC = () => {
+const Home = () => {
   const user = useUser();
   const maxSize: number = useMemo(() => getMaxSize(user), [user]);
   return (

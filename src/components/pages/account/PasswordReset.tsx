@@ -6,7 +6,7 @@ import Button from "../../ui/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { Auth, sendPasswordResetEmail } from "firebase/auth";
-import { FC, Fragment } from "react";
+import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
 import { object, string } from "yup";
@@ -31,7 +31,7 @@ const passwordResetSchema = object()
   })
   .required();
 
-const PasswordReset: FC = () => {
+const PasswordReset = () => {
   const form = useForm<PaswordResetFormFieldsType>({
     defaultValues: {
       email: "",

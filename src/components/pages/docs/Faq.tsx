@@ -1,8 +1,8 @@
 import Reference from "../../tree/Reference";
 import Button from "../../ui/Button";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 
-const Faq: FC = () => {
+const Faq = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
