@@ -1,5 +1,5 @@
-import useFirebase from "../../../hooks/useFirebase";
-import Button from "../../ui/Button";
+import useFirebase from "../../hooks/useFirebase";
+import Button from "../ui/Button";
 import { sendEmailVerification } from "firebase/auth";
 import { FC, useState } from "react";
 

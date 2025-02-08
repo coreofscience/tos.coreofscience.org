@@ -1,8 +1,8 @@
-import FileContext from "../../../context/FileContext";
-import useFiles from "../../../hooks/useFiles";
+import FileContext from "../../context/FileContext";
+import useFiles from "../../hooks/useFiles";
 import React, { FC, Suspense, useContext, useEffect, useState } from "react";
 
-const FileCard = React.lazy(() => import("../FileCard"));
+const FileCard = React.lazy(() => import("./FileCard"));
 
 interface Props {
   maxSize: number;

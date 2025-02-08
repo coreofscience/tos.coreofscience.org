@@ -1,6 +1,6 @@
-import useFirebase from "../../../hooks/useFirebase";
-import { UserContextType } from "../../../types/userContextType";
-import Button from "../../ui/Button";
+import useFirebase from "../../hooks/useFirebase";
+import { UserContextType } from "../../types/userContextType";
+import Button from "../ui/Button";
 import { setDoc, doc } from "firebase/firestore";
 
 type Props = {
