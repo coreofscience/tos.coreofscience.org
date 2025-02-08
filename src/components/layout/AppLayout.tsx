@@ -18,7 +18,7 @@ const AppLayout: FC<AppLayoutProps> = ({ children }) => {
         </div>
       </header>
       <main className="grid place-items-center">
-        <div className={cn({ container: location.pathname !== "/" })}>
+        <div className={cn("w-full", { container: location.pathname !== "/" })}>
           {children}
         </div>
       </main>
