@@ -1,6 +1,7 @@
 import useUser from "../../../hooks/useUser";
 import { TreeMetadata } from "../../../types/treeMetadata";
 import { mostCommon } from "../../../utils/arrays";
+import Button from "../../ui/Button";
 import Items from "./Items";
 import { useTrees } from "./hooks/useTrees";
 import { flatten, sortBy } from "lodash";
@@ -67,13 +68,13 @@ const TreeHistory = ({ userId }: Props) => {
           </ul>
           {trees.hasNext && (
             <div>
-              <button
+              <Button
                 onClick={() => trees.fetchNextPage()}
-                disabled={!trees.query.isLoading}
-                className="rounded-sm bg-leaf px-4 py-2 font-tall font-bold uppercase text-slate-50"
+                disabled={trees.query.isLoading}
+                className="uppercase"
               >
                 Load More
-              </button>
+              </Button>
             </div>
           )}
         </div>
