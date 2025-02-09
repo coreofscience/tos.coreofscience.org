@@ -3,25 +3,31 @@ import useNext from "../../../hooks/useNext";
 import useUser from "../../../hooks/useUser";
 import { Message } from "../../common/Message";
 import Button from "../../ui/Button";
-import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../ui/Form";
+import { Input } from "../../ui/Input";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Auth, signInWithEmailAndPassword } from "firebase/auth";
-import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { object, string } from "yup";
+import { z } from "zod";
 
-type LogInFormFieldsType = {
-  email: string;
-  password: string;
-};
+const logInSchema = z.object({
+  email: z.string().email(),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters long." }),
+});
 
-const loginSchema = object()
-  .shape({
-    email: string().required().email("Invalid email address"),
-    password: string().required().min(8, "Invalid password"),
-  })
-  .required();
+type LogInFormFieldsType = z.infer<typeof logInSchema>;
 
 const logIn = async ({
   auth,
@@ -37,11 +43,11 @@ const logIn = async ({
 
 const LogIn = () => {
   const form = useForm<LogInFormFieldsType>({
+    resolver: zodResolver(logInSchema),
     defaultValues: {
       email: "",
       password: "",
     },
-    resolver: yupResolver(loginSchema),
   });
   const navigate = useNavigate();
   const { next, nextSearch } = useNext();
@@ -64,69 +70,79 @@ const LogIn = () => {
   }
 
   return (
-    <Fragment>
-      <form
-        className="m-auto flex max-w-md flex-col gap-4"
-        onSubmit={form.handleSubmit((data) =>
-          signIn({
-            auth: firebase.auth,
-            email: data.email,
-            password: data.password,
-          }),
-        )}
-      >
-        <h2 className="font-tall text-2xl uppercase md:text-4xl">Log In</h2>
-        <div className="flex flex-col gap-2">
-          <input
-            {...form.register("email")}
-            type="email"
-            className="rounded-sm border border-stone-500 p-2"
-            placeholder="email@example.com"
+    <div className="flex flex-col items-center gap-8">
+      <Form {...form}>
+        <form
+          className="m-auto flex w-full max-w-md flex-col gap-4"
+          onSubmit={form.handleSubmit((data) =>
+            signIn({
+              auth: firebase.auth,
+              email: data.email,
+              password: data.password,
+            }),
+          )}
+        >
+          <h2 className="font-tall text-2xl uppercase md:text-4xl">Log In</h2>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder="email@example.com"
+                  />
+                </FormControl>
+                <FormDescription>Enter your email address.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
           />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input {...field} type="password" placeholder="password" />
+                </FormControl>
+                <FormDescription>A very secure password</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div>
+            <Button className="uppercase" asChild>
+              <input type="submit" value="log in" />
+            </Button>
+          </div>
           <Message
-            message={form.formState.errors.email?.message}
-            type="error"
+            message={
+              isSuccess
+                ? "Successfully logged you in."
+                : isError
+                  ? "There was an issue logging you in."
+                  : ""
+            }
+            type={isError ? "error" : "info"}
           />
-        </div>
-        <div className="flex flex-col gap-2">
-          <input
-            {...form.register("password")}
-            type="password"
-            className="rounded-sm border border-stone-500 p-2"
-            placeholder="password"
-          />
-          <Message
-            message={form.formState.errors.password?.message}
-            type="error"
-          />
-        </div>
-        <div>
-          <Button className="uppercase" asChild>
-            <input type="submit" value="log in" />
-          </Button>
-        </div>
-        <Message
-          message={
-            isSuccess
-              ? "Successfully logged you in."
-              : isError
-                ? "There was an issue logging you in."
-                : ""
-          }
-          type={isError ? "error" : "info"}
-        />
-        <Button variant="link" size="link" asChild>
-          <Link
-            to={{
-              pathname: "/reset-password",
-              search: nextSearch,
-            }}
-          >
-            Forgot your password?
-          </Link>
-        </Button>
-      </form>
-    </Fragment>
+        </form>
+      </Form>
+      <Button variant="link" size="link" asChild>
+        <Link
+          to={{
+            pathname: "/reset-password",
+            search: nextSearch,
+          }}
+        >
+          Forgot your password?
+        </Link>
+      </Button>
+    </div>
   );
 };
 

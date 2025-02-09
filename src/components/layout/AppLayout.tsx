@@ -11,7 +11,7 @@ type AppLayoutProps = {
 const AppLayout: FC<AppLayoutProps> = ({ children }) => {
   const location = useLocation();
   return (
-    <div className="grid-rows-[auto_1fr_auto] mt-4 grid min-h-dvh gap-4 md:mt-16 md:gap-16">
+    <div className="mt-4 grid min-h-dvh grid-rows-[auto_1fr_auto] gap-4 md:mt-16 md:gap-16">
       <header>
         <div className="container">
           <Header />
