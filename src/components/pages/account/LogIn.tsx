@@ -108,7 +108,7 @@ const LogIn = () => {
                 <FormControl>
                   <Input {...field} type="password" placeholder="password" />
                 </FormControl>
-                <FormDescription>A very secure password</FormDescription>
+                <FormDescription>A very secure password.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

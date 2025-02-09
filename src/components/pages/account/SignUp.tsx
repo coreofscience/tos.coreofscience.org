@@ -178,7 +178,7 @@ const SignUp = () => {
                 />
               </FormControl>
               <div className="flex flex-col gap-2">
-                <FormLabel>Accept email marketing.</FormLabel>
+                <FormLabel>Accept email marketing</FormLabel>
                 <FormDescription>
                   I like to receive the Tree of Science newsletter to stay in
                   touch and to learn about latest trends on literature searches
