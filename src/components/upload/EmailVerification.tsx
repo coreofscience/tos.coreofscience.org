@@ -1,9 +1,9 @@
 import useFirebase from "../../hooks/useFirebase";
 import Button from "../ui/Button";
 import { sendEmailVerification } from "firebase/auth";
-import { FC, useState } from "react";
+import { useState } from "react";
 
-const EmailVerification: FC = () => {
+const EmailVerification = () => {
   const firebase = useFirebase();
   const [hidden, setHidden] = useState<boolean>(false);
 

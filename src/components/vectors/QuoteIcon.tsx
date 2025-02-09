@@ -1,6 +1,4 @@
-import { FC } from "react";
-
-const QuoteIcon: FC = () => {
+const QuoteIcon = () => {
   return (
     <svg
       aria-hidden="true"
