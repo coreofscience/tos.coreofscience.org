@@ -1,5 +1,5 @@
-import { Analysis } from "../../../../../../types/Analysis";
-import { TreeResult } from "../../../../../../types/result";
+import { Analysis } from "../../../../../types/Analysis";
+import { TreeResult } from "../../../../../types/result";
 import { downloadFile } from "./utils/downloadFile";
 import { fileAsUri } from "./utils/fileAsUri";
 import Papa from "papaparse";

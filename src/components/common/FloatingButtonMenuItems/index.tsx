@@ -1,8 +1,8 @@
-import { Analysis } from "../../../../types/Analysis";
-import { TreeResult } from "../../../../types/result";
-import FloatingButtonMenuItem from "../../../common/FloatingButtonMenuItem";
-import AnalysisIcon from "../../../vectors/AnalysisIcon";
-import DownloadIcon from "../../../vectors/Download";
+import { Analysis } from "../../../types/Analysis";
+import { TreeResult } from "../../../types/result";
+import FloatingButtonMenuItem from "../../common/FloatingButtonMenuItem";
+import AnalysisIcon from "../../vectors/AnalysisIcon";
+import DownloadIcon from "../../vectors/Download";
 import { useFloatingButton } from "./hooks/useFloatingButton";
 import React, { FC } from "react";
 
