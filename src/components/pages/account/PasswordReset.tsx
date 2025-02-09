@@ -3,13 +3,22 @@ import useNext from "../../../hooks/useNext";
 import useUser from "../../../hooks/useUser";
 import { Message } from "../../common/Message";
 import Button from "../../ui/Button";
-import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../ui/Form";
+import { Input } from "../../ui/Input";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Auth, sendPasswordResetEmail } from "firebase/auth";
-import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { Navigate } from "react-router-dom";
-import { object, string } from "yup";
+import { z } from "zod";
 
 const sendEmail = async ({
   auth,
@@ -21,22 +30,18 @@ const sendEmail = async ({
   await sendPasswordResetEmail(auth, email);
 };
 
-type PaswordResetFormFieldsType = {
-  email: string;
-};
+const passwordResetSchema = z.object({
+  email: z.string().email(),
+});
 
-const passwordResetSchema = object()
-  .shape({
-    email: string().required().email("Invalid email address"),
-  })
-  .required();
+type PaswordResetFormFieldsType = z.infer<typeof passwordResetSchema>;
 
 const PasswordReset = () => {
   const form = useForm<PaswordResetFormFieldsType>({
+    resolver: zodResolver(passwordResetSchema),
     defaultValues: {
       email: "",
     },
-    resolver: yupResolver(passwordResetSchema),
   });
   const firebase = useFirebase();
   const {
@@ -55,7 +60,7 @@ const PasswordReset = () => {
   }
 
   return (
-    <Fragment>
+    <Form {...form}>
       <form
         className="m-auto flex max-w-md flex-col gap-4"
         onSubmit={form.handleSubmit((data) =>
@@ -65,18 +70,24 @@ const PasswordReset = () => {
         <h2 className="font-tall text-2xl uppercase md:text-4xl">
           Reset your passrword
         </h2>
-        <div className="flex flex-col gap-2">
-          <input
-            {...form.register("email")}
-            type="email"
-            className="border border-stone-500 p-2"
-            placeholder="email@example.com"
-          />
-          <Message
-            message={form.formState.errors.email?.message}
-            type="error"
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  type="email"
+                  placeholder="email@example.com"
+                />
+              </FormControl>
+              <FormDescription>Enter your email address.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div>
           <Button className="uppercase" asChild>
             <input type="submit" value="send" />
@@ -93,7 +104,7 @@ const PasswordReset = () => {
           type={isError ? "error" : "info"}
         />
       </form>
-    </Fragment>
+    </Form>
   );
 };
 

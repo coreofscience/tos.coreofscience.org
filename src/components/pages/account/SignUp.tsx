@@ -3,7 +3,18 @@ import useNext from "../../../hooks/useNext";
 import useUser from "../../../hooks/useUser";
 import { Message } from "../../common/Message";
 import Button from "../../ui/Button";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { Checkbox } from "../../ui/Checkbox";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../ui/Form";
+import { Input } from "../../ui/Input";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import {
   createUserWithEmailAndPassword,
@@ -12,10 +23,10 @@ import {
   Auth,
 } from "firebase/auth";
 import { Firestore, doc, setDoc } from "firebase/firestore";
-import { Fragment } from "react";
+import { omit } from "lodash";
 import { useForm } from "react-hook-form";
 import { Navigate, useNavigate } from "react-router-dom";
-import { object, string, boolean } from "yup";
+import { z } from "zod";
 
 const signUp = async ({
   auth,
@@ -30,55 +41,48 @@ const signUp = async ({
   name: string;
   email: string;
   password: string;
-  acceptsEmail: boolean;
+  acceptsEmail?: boolean;
 }): Promise<void> => {
   const userCredential = await createUserWithEmailAndPassword(
     auth,
     email,
     password,
   );
-  await setDoc(
-    doc(firestore, `/users/${userCredential.user.uid}`),
-    {
-      acceptsEmail: acceptsEmail,
-    },
-    { merge: true },
-  );
+  if (acceptsEmail !== undefined) {
+    await setDoc(
+      doc(firestore, `/users/${userCredential.user.uid}`),
+      {
+        acceptsEmail: acceptsEmail,
+      },
+      { merge: true },
+    );
+  }
   await updateProfile(userCredential.user, {
     displayName: name,
   });
   await sendEmailVerification(userCredential.user);
 };
 
-type SignUpFormFieldsType = {
-  name: string;
-  email: string;
-  password: string;
-  acceptsEmail: boolean;
-};
+const signUpSchema = z.object({
+  name: z.string().nonempty(),
+  email: z.string().email(),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters long." }),
+  acceptsEmail: z.boolean().default(false).optional(),
+});
 
-const signUpSchema = object()
-  .shape({
-    name: string().required(),
-    email: string().required().email("Invalid email address"),
-    password: string().required().min(8, "Invalid password"),
-    acceptsEmail: boolean().required(),
-  })
-  .required();
-
-export type SignUpActionsType = {
-  signUp: (data: SignUpFormFieldsType) => void;
-};
+type SignUpFormFieldsType = z.infer<typeof signUpSchema>;
 
 const SignUp = () => {
   const form = useForm<SignUpFormFieldsType>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: "",
       email: "",
       password: "",
       acceptsEmail: false,
     },
-    resolver: yupResolver(signUpSchema),
   });
   const firebase = useFirebase();
   const navigate = useNavigate();
@@ -103,7 +107,7 @@ const SignUp = () => {
   }
 
   return (
-    <Fragment>
+    <Form {...form}>
       <form
         className="m-auto flex max-w-md flex-col gap-4"
         onSubmit={form.handleSubmit((data) =>
@@ -115,54 +119,79 @@ const SignUp = () => {
         )}
       >
         <h2 className="font-tall text-2xl uppercase md:text-4xl">Sign Up</h2>
-        <div className="flex flex-col gap-2">
-          <input
-            {...form.register("name")}
-            type="text"
-            className="rounded-sm border border-stone-500 p-2"
-            placeholder="Name"
-          />
-          <Message message={form.formState.errors.name?.message} type="error" />
-        </div>
-        <div className="flex flex-col gap-2">
-          <input
-            {...form.register("email")}
-            type="email"
-            className="rounded-sm border border-stone-500 p-2"
-            placeholder="email@example.com"
-          />
-          <Message
-            message={form.formState.errors.email?.message}
-            type="error"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <input
-            {...form.register("password")}
-            type="password"
-            className="rounded-sm border border-stone-500 p-2"
-            placeholder="password"
-          />
-          <Message
-            message={form.formState.errors.password?.message}
-            type="error"
-          />
-        </div>
-        <div className="flex flex-row items-baseline">
-          <input
-            {...form.register("acceptsEmail")}
-            type="checkbox"
-            className="mr-2 h-4 w-4"
-          />
-          <label className="text-gray-700" htmlFor="acceptsEmail">
-            I like to receive the Tree of Science newsletter to stay in touch
-            and to learn about latest trends on literature searches and new
-            product features first.
-          </label>
-        </div>
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input {...field} type="text" placeholder="John Doe" />
+              </FormControl>
+              <FormDescription>Enter your name.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  type="email"
+                  placeholder="email@example.com"
+                />
+              </FormControl>
+              <FormDescription>Enter your email address.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input {...field} type="password" placeholder="password" />
+              </FormControl>
+              <FormDescription>A strong and secure password.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="acceptsEmail"
+          render={({ field }) => (
+            <FormItem className="flex flex-row gap-2 leading-none">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  {...omit(field, "value", "onChange")}
+                />
+              </FormControl>
+              <div className="flex flex-col gap-2">
+                <FormLabel>Accept email marketing</FormLabel>
+                <FormDescription>
+                  I like to receive the Tree of Science newsletter to stay in
+                  touch and to learn about latest trends on literature searches
+                  and new product features first.
+                </FormDescription>
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div>
-          <Button className="uppercase" asChild>
-            <input type="submit" value="sign up" />
+          <Button className="uppercase" type="submit">
+            Sing up
           </Button>
         </div>
         <Message
@@ -176,7 +205,7 @@ const SignUp = () => {
           type={isError ? "error" : "info"}
         />
       </form>
-    </Fragment>
+    </Form>
   );
 };
 
