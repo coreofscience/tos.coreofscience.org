@@ -22,9 +22,7 @@ import { z } from "zod";
 
 const logInSchema = z.object({
   email: z.string().email(),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long." }),
+  password: z.string().nonempty({ message: "Password is required." }),
 });
 
 type LogInFormFieldsType = z.infer<typeof logInSchema>;
