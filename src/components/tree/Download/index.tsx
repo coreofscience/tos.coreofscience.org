@@ -1,14 +1,20 @@
 import useUser from "../../../hooks/useUser";
+import { Analysis } from "../../../types/Analysis";
+import { TreeResult } from "../../../types/result";
 import FloatingButtonMenu from "../../common/FloatingButtonMenu";
 import AddIcon from "../../vectors/AddIcon";
 import CancelIcon from "../../vectors/CancelIcon";
 import DownloadIcon from "../../vectors/Download";
 import FloatingButtonMenuItems from "./FloatingButtonMenuItems";
-import { DownloadPropsType } from "./types";
-import React from "react";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 
-const Download: React.FC<DownloadPropsType> = ({ treeSections, analysis }) => {
+type DownloadProps = {
+  treeSections: TreeResult;
+  analysis: Analysis | undefined;
+};
+
+const Download: FC<DownloadProps> = ({ treeSections, analysis }) => {
   const user = useUser();
 
   if (!user || user.plan !== "pro") {
@@ -25,14 +31,12 @@ const Download: React.FC<DownloadPropsType> = ({ treeSections, analysis }) => {
   }
 
   return (
-    <>
-      <FloatingButtonMenu iconResting={<CancelIcon />} iconActive={<AddIcon />}>
-        <FloatingButtonMenuItems
-          treeSections={treeSections}
-          analysis={analysis}
-        />
-      </FloatingButtonMenu>
-    </>
+    <FloatingButtonMenu iconResting={<CancelIcon />} iconActive={<AddIcon />}>
+      <FloatingButtonMenuItems
+        treeSections={treeSections}
+        analysis={analysis}
+      />
+    </FloatingButtonMenu>
   );
 };
 

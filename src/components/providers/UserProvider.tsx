@@ -5,11 +5,11 @@ import { onAuthStateChanged, User, IdTokenResult } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import React, { FC, useEffect, useMemo, useState } from "react";
 
-interface Props {
+type UserProviderProps = {
   children?: React.ReactElement;
-}
+};
 
-const UserProvider: FC<Props> = ({ children }: Props) => {
+const UserProvider: FC<UserProviderProps> = ({ children }) => {
   const firebase = useFirebase();
   const [user, setUser] = useState<UserContextType | null>(null);
 

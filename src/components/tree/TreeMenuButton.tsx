@@ -5,7 +5,7 @@ import Button from "../ui/Button";
 import { info } from "./constants/info";
 import { FC } from "react";
 
-type Props = {
+type TreeMenuButtonProps = {
   section: Section;
   show: Section | null;
   className?: string;
@@ -13,13 +13,13 @@ type Props = {
   treeSections: TreeResult;
 };
 
-const TreeMenuButton: FC<Props> = ({
+const TreeMenuButton: FC<TreeMenuButtonProps> = ({
   section,
   show,
   className,
   toggleShow,
   treeSections,
-}: Props) => {
+}) => {
   return (
     <Button
       className={cn(className, "flex-col gap-1", {

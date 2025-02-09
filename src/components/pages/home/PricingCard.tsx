@@ -49,7 +49,7 @@ const PricingCard: FC<PricingCardProps> = ({
         {features.map((feature) => (
           <li className="flex items-center" key={feature}>
             <CheckCircleIcon
-              textColor={primary ? "text-slate-100" : "text-slate-900"}
+              className={primary ? "text-slate-100" : "text-slate-900"}
             />
             <span>{feature}</span>
           </li>

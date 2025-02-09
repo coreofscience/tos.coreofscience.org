@@ -4,11 +4,11 @@ import React, { FC, Suspense, useContext, useEffect, useState } from "react";
 
 const FileCard = React.lazy(() => import("./FileCard"));
 
-interface Props {
+type UploadIndicatorProps = {
   maxSize: number;
-}
+};
 
-const UploadIndicator: FC<Props> = ({ maxSize }) => {
+const UploadIndicator: FC<UploadIndicatorProps> = ({ maxSize }) => {
   const { remove, swap } = useContext(FileContext);
   const { progress } = useContext(FileContext);
   const files = useFiles();

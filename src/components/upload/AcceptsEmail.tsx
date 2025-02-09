@@ -3,11 +3,11 @@ import { UserContextType } from "../../types/userContextType";
 import Button from "../ui/Button";
 import { setDoc, doc } from "firebase/firestore";
 
-type Props = {
+type AcceptsEmailProps = {
   user: UserContextType;
 };
 
-const AcceptsEmail = ({ user }: Props) => {
+const AcceptsEmail = ({ user }: AcceptsEmailProps) => {
   const firebase = useFirebase();
 
   const handleAccept = () => {

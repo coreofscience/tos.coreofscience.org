@@ -2,16 +2,20 @@ import useError from "../../hooks/useError";
 import useUpload from "../../hooks/useUpload";
 import { looksLikeIsi } from "../../utils/isi";
 import { looksLikeScopus } from "../../utils/scopus";
-import FileErrorMap from "./errors";
 import { FC, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useLocation, useNavigate } from "react-router-dom";
 
-interface Props {
-  maxSize: number;
-}
+const FileErrorMap = {
+  not_supported: "does not look like a valid ISI file",
+  max_size: (maxSize: number) => `is too big to process (max. ${maxSize}MB)`,
+};
 
-const FileDropper: FC<Props> = ({ maxSize }) => {
+type FileDropperProps = {
+  maxSize: number;
+};
+
+const FileDropper: FC<FileDropperProps> = ({ maxSize }) => {
   const upload = useUpload();
   const error = useError();
   const location = useLocation();

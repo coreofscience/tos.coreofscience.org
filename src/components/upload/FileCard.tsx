@@ -4,7 +4,7 @@ import CancelIcon from "../vectors/CancelIcon";
 import MoveFirstIcon from "../vectors/MoveFirstIcon";
 import { FC } from "react";
 
-interface Props {
+type FileCardProps = {
   name: string;
   keywords?: string[];
   articles?: number;
@@ -15,9 +15,9 @@ interface Props {
   capped?: boolean;
   cumSize: number;
   maxSize: number;
-}
+};
 
-const FileCard: FC<Props> = ({
+const FileCard: FC<FileCardProps> = ({
   name,
   keywords = [],
   articles = 0,
@@ -28,7 +28,7 @@ const FileCard: FC<Props> = ({
   capped = true,
   cumSize = 0,
   maxSize,
-}: Props) => {
+}) => {
   const countFormat = new Intl.NumberFormat(undefined);
   const weightFormat = new Intl.NumberFormat(undefined, {
     minimumFractionDigits: 2,

@@ -1,11 +1,17 @@
+import { Analysis } from "../../../../types/Analysis";
+import { TreeResult } from "../../../../types/result";
 import FloatingButtonMenuItem from "../../../common/FloatingButtonMenuItem";
 import AnalysisIcon from "../../../vectors/AnalysisIcon";
 import DownloadIcon from "../../../vectors/Download";
-import { DownloadPropsType } from "../types";
 import { useFloatingButton } from "./hooks/useFloatingButton";
-import React from "react";
+import React, { FC } from "react";
 
-const FloatingButtonMenuItems: React.FC<DownloadPropsType> = ({
+type FloatingButtonMenuItemsProps = {
+  treeSections: TreeResult;
+  analysis: Analysis | undefined;
+};
+
+const FloatingButtonMenuItems: FC<FloatingButtonMenuItemsProps> = ({
   treeSections,
   analysis,
 }) => {

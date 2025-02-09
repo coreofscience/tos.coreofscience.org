@@ -24,19 +24,14 @@ import orderBy from "lodash/orderBy";
 import { FC, useCallback, useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
-export interface Props {
+type TreeProps = {
   stars: Record<string, boolean>;
   treeSections: TreeResult;
   treePath: string;
   analysis: Analysis | undefined;
-}
+};
 
-const Tree: FC<Props> = ({
-  treeSections,
-  treePath,
-  stars,
-  analysis,
-}: Props) => {
+const Tree: FC<TreeProps> = ({ treeSections, treePath, stars, analysis }) => {
   const firebase = useFirebase();
   const [show, setShow] = useState<Section | null>(null);
   const [infoEntries, setInfoEntries] = useState<
