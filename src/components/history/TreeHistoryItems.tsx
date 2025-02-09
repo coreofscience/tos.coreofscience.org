@@ -1,19 +1,16 @@
-import useUser from "../../../hooks/useUser";
-import { TreeSummary } from "../../../types/treeSummary";
-import Button from "../../ui/Button";
+import { TreeSummary } from "../../types/treeSummary";
+import { UserContextType } from "../../types/userContextType";
+import Button from "../ui/Button";
 import moment from "moment";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
-type Props = {
+type TreeHistoryItemsProps = {
   trees: TreeSummary[];
+  user: UserContextType;
 };
 
-const Items: FC<Props> = ({ trees }) => {
-  const user = useUser();
-
-  if (!user) return null;
-
+const TreeHistoryItems: FC<TreeHistoryItemsProps> = ({ trees, user }) => {
   return (
     <>
       {trees.map(({ treeId, summary, planId, createdDate }) => {
@@ -40,4 +37,4 @@ const Items: FC<Props> = ({ trees }) => {
   );
 };
 
-export default Items;
+export default TreeHistoryItems;

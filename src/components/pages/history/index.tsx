@@ -1,5 +1,5 @@
 import useUser from "../../../hooks/useUser";
-import TreeHistory from "../../upload/TreeHistory";
+import TreeHistory from "../../history/TreeHistory";
 
 const History = () => {
   const user = useUser();
@@ -9,7 +9,7 @@ const History = () => {
         <h2 className="font-tall text-2xl font-bold uppercase">Tree History</h2>
       </div>
       {user ? (
-        <TreeHistory userId={user.uid} />
+        <TreeHistory user={user} />
       ) : (
         <p>Log in to see your tree history.</p>
       )}
