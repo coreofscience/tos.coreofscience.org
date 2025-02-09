@@ -2,11 +2,11 @@ import Button from "../ui/Button";
 import { FC } from "react";
 import { useLocation } from "react-router-dom";
 
-type Props = {
+type NavBarProps = {
   origin: "footer" | "header";
 };
 
-const NavBar: FC<Props> = ({ origin }) => {
+const NavBar: FC<NavBarProps> = ({ origin }) => {
   const location = useLocation();
   const isFooter = origin.toLowerCase() === "footer";
 

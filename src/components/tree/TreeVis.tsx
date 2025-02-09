@@ -10,9 +10,9 @@ import {
 import { FC, useEffect, useMemo, useRef } from "react";
 import { useMeasure } from "react-use";
 
-interface Props {
+type TreeVisProps = {
   treeResult: TreeResult;
-}
+};
 
 const clamp = (
   n: number,
@@ -109,7 +109,7 @@ const treeSectionToData = (
   return data;
 };
 
-export const TreeVis: FC<Props> = ({ treeResult: treeSections }) => {
+export const TreeVis: FC<TreeVisProps> = ({ treeResult: treeSections }) => {
   const svgRef = useRef(null);
   const [ref, { width, height }] = useMeasure<HTMLDivElement>();
 

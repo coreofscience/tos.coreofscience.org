@@ -3,11 +3,11 @@ import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const AppLayout = React.lazy(() => import("./components/layout/AppLayout"));
-const Tos = React.lazy(() => import("./components/upload/Tos"));
-const New = React.lazy(() => import("./components/upload/Tos/New"));
+const Tos = React.lazy(() => import("./components/pages/tos"));
+const New = React.lazy(() => import("./components/pages/tos/New"));
 const Result = React.lazy(() => import("./components/tree/Result"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
-const History = React.lazy(() => import("./components/pages/trees/History"));
+const History = React.lazy(() => import("./components/pages/history"));
 const LogIn = React.lazy(() => import("./components/pages/account/LogIn"));
 const SignUp = React.lazy(() => import("./components/pages/account/SignUp"));
 const VerifyEmail = React.lazy(
@@ -16,7 +16,7 @@ const VerifyEmail = React.lazy(
 const PasswordReset = React.lazy(
   () => import("./components/pages/account/PasswordReset"),
 );
-const Plans = React.lazy(() => import("./components/pricing/Plans"));
+const Plans = React.lazy(() => import("./components/pages/pricing"));
 const FilesProvider = React.lazy(
   () => import("./components/providers/FilesProvider"),
 );
@@ -29,7 +29,7 @@ const About = React.lazy(() => import("./components/pages/docs/About"));
 const PressRelease = React.lazy(
   () => import("./components/pages/docs/PressRelease"),
 );
-const Home = React.lazy(() => import("./components/pages/Home"));
+const Home = React.lazy(() => import("./components/pages/home"));
 const ProBuyflow = React.lazy(
   () => import("./components/pages/buyflow/ProBuyflow"),
 );

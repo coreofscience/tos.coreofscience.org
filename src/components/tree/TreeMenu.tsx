@@ -3,14 +3,14 @@ import { Info, Section } from "../../types/treeType";
 import TreeMenuButton from "./TreeMenuButton";
 import { FC } from "react";
 
-type Props = {
+type TreeMenuProps = {
   info: Info;
   treeSections: TreeResult;
   show: Section | null;
   toggleShow: (section: Section) => void;
 };
 
-const TreeMenu: FC<Props> = ({ treeSections, show, toggleShow }) => {
+const TreeMenu: FC<TreeMenuProps> = ({ treeSections, show, toggleShow }) => {
   return (
     <>
       <div className="grid grid-cols-buttons gap-4">
