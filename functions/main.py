@@ -4,7 +4,7 @@ from decimal import Decimal
 from enum import Enum
 from functools import reduce
 from io import StringIO
-from typing import Any, Dict, List
+from typing import Any, Dict, List, cast
 
 import arrow
 import networkx as nx
@@ -20,10 +20,11 @@ from firebase_functions.firestore_fn import (
 from firebase_functions.options import MemoryOption
 from firebase_functions.scheduler_fn import ScheduledEvent, on_schedule
 from google.cloud.firestore import DocumentReference, DocumentSnapshot
+from google.cloud.storage.client import Blob
 from pydantic import BaseModel, ValidationError
 
 initialize_app()
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.WARNING)
 
 
 ROOT = "root"
@@ -148,7 +149,11 @@ def get_contents(
     """Get the contents for the files in order to create the graph."""
     names = [f"isi-files/{name}" for name in document_data["files"]]
     logger.info("Reading source files", extra={"names": names})
-    blobs = list(filter(None, [storage.bucket().get_blob(name) for name in names]))
+    bucket = storage.bucket()
+    blobs: list[Blob] = cast(
+        list[Blob],
+        list(filter(None, [bucket.get_blob(blob_name=name) for name in names])),  # type: ignore
+    )
 
     size = 0
     output = {}
@@ -158,7 +163,7 @@ def get_contents(
         size += blob.size or 0
         if (size / 1e6) > max_size_megabytes:
             break
-        output[blob.name] = blob.download_as_text()
+        output[blob.name] = blob.download_as_text()  # type: ignore
     return output
 
 
