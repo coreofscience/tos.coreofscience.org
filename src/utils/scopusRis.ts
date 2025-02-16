@@ -1,6 +1,6 @@
 const RIS_PATTERN = /^(?<key>[A-Z0-9]{2})[ ]{2}-[ ](?<value>.*)$/;
 
-const looksLikeScopus = (content: string): boolean => {
+const looksLikeScopusRis = (content: string): boolean => {
   let currentKey = null;
   for (const line of content.split("\n")) {
     if (!line) {
@@ -75,4 +75,4 @@ const countReferences = (content: string): number =>
       { counting: false, count: 0 },
     ).count;
 
-export { looksLikeScopus, keywords, countArticles, countReferences };
+export { looksLikeScopusRis, keywords, countArticles, countReferences };

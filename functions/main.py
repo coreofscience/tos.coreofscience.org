@@ -24,7 +24,7 @@ from google.cloud.storage.client import Blob
 from pydantic import BaseModel, ValidationError
 
 initialize_app()
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.WARNING)
 
 
 ROOT = "root"

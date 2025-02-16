@@ -1,7 +1,8 @@
 import useError from "../../hooks/useError";
 import useUpload from "../../hooks/useUpload";
 import { looksLikeIsi } from "../../utils/isi";
-import { looksLikeScopus } from "../../utils/scopus";
+import { looksLikeScopusCsv } from "../../utils/scopusCsv";
+import { looksLikeScopusRis } from "../../utils/scopusRis";
 import { FC, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -35,7 +36,11 @@ const FileDropper: FC<FileDropperProps> = ({ maxSize }) => {
           .map((file) => file.text().then((text) => ({ text, file }))),
       ).then((data) => {
         data.forEach(({ text, file }) => {
-          if (looksLikeIsi(text) || looksLikeScopus(text)) {
+          if (
+            looksLikeIsi(text) ||
+            looksLikeScopusRis(text) ||
+            looksLikeScopusCsv(text)
+          ) {
             upload(Object(file).name, file);
           } else {
             error(Object(file).name, file, FileErrorMap.not_supported);

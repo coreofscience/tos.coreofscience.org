@@ -1,7 +1,8 @@
 import { FileMetadata } from "../types/fileMetadata";
 import { mostCommon } from "./arrays";
 import * as isi from "./isi";
-import * as scopus from "./scopus";
+import * as scopusCsv from "./scopusCsv";
+import * as scopusRis from "./scopusRis";
 import md5 from "md5";
 
 const metadata = async (name: string, blob: Blob): Promise<FileMetadata> => {
@@ -20,14 +21,26 @@ const metadata = async (name: string, blob: Blob): Promise<FileMetadata> => {
     };
   }
 
-  if (scopus.looksLikeScopus(content)) {
+  if (scopusRis.looksLikeScopusRis(content)) {
     return {
       name,
       blob,
       hash,
-      keywords: mostCommon(scopus.keywords(content), 3),
-      articles: scopus.countArticles(content),
-      citations: scopus.countReferences(content),
+      keywords: mostCommon(scopusRis.keywords(content), 3),
+      articles: scopusRis.countArticles(content),
+      citations: scopusRis.countReferences(content),
+      valid: true,
+    };
+  }
+
+  if (scopusCsv.looksLikeScopusCsv(content)) {
+    return {
+      name,
+      blob,
+      hash,
+      keywords: mostCommon(scopusCsv.keywords(content), 3),
+      articles: scopusCsv.countArticles(content),
+      citations: scopusCsv.countReferences(content),
       valid: true,
     };
   }
