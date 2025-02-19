@@ -21,7 +21,7 @@ const Download: FC<DownloadProps> = ({ treeSections, analysis }) => {
     return (
       <Link
         aria-label="download"
-        className="fixed bottom-10 right-10 rounded-full bg-slate-400/90 px-4 py-4 shadow-sm hover:shadow-md active:shadow-md"
+        className="fixed bottom-10 right-10 rounded-full bg-slate-400/90 px-4 py-4 shadow-xs hover:shadow-md active:shadow-md"
         title="Become a pro user to download"
         to="/pricing"
       >

@@ -159,7 +159,7 @@ const HowItWorks = () => {
                   data into the Tree of Science application.
                 </p>
               </div>
-              <div className="mt-10 w-[45rem] overflow-hidden rounded-sm bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+              <div className="mt-10 w-[45rem] overflow-hidden rounded-xs bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
                 <img
                   alt=""
                   width="2174"
@@ -186,7 +186,7 @@ const HowItWorks = () => {
                   analyze your data on the fly.
                 </p>
               </div>
-              <div className="mt-10 w-[45rem] overflow-hidden rounded-sm bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+              <div className="mt-10 w-[45rem] overflow-hidden rounded-xs bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
                 <img
                   alt=""
                   width="2174"
@@ -218,7 +218,7 @@ const HowItWorks = () => {
                   essential works (trunk) and newer publications (leaves).
                 </p>
               </div>
-              <div className="mt-10 w-[45rem] overflow-hidden rounded-sm bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+              <div className="mt-10 w-[45rem] overflow-hidden rounded-xs bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
                 <img
                   alt=""
                   width="2174"
@@ -249,7 +249,7 @@ const HowItWorks = () => {
                   Extract your literature list and start writing.
                 </p>
               </div>
-              <div className="mt-10 w-[45rem] overflow-hidden rounded-sm bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+              <div className="mt-10 w-[45rem] overflow-hidden rounded-xs bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
                 <img
                   alt=""
                   width="2174"

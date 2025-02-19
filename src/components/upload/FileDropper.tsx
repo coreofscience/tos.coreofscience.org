@@ -59,7 +59,7 @@ const FileDropper: FC<FileDropperProps> = ({ maxSize }) => {
   });
   return (
     <div
-      className="itemc-center flex h-32 cursor-pointer flex-col overflow-hidden rounded-sm bg-slate-100 p-4 text-stone-500"
+      className="itemc-center flex h-32 cursor-pointer flex-col overflow-hidden rounded-xs bg-slate-100 p-4 text-stone-500"
       {...getRootProps()}
     >
       <input style={{ display: "none" }} {...getInputProps()} />

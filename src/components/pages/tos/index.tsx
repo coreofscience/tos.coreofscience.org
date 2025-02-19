@@ -102,20 +102,20 @@ const Tos = () => {
       <FileErrors />
       <p>Review your input:</p>
       <div className="grid grid-cols-articles items-center gap-2">
-        <div className="flex h-24 flex-col items-center justify-center rounded-sm bg-slate-100">
+        <div className="flex h-24 flex-col items-center justify-center rounded-xs bg-slate-100">
           <span className="text-xl font-semibold">
             {countFormat.format(articleCap)}/{countFormat.format(totalArticles)}
           </span>
           <span className="text-sm text-slate-500">articles</span>
         </div>
-        <div className="flex h-24 flex-col items-center justify-center rounded-sm bg-slate-100">
+        <div className="flex h-24 flex-col items-center justify-center rounded-xs bg-slate-100">
           <span className="text-xl font-semibold">
             {countFormat.format(citationCap)}/
             {countFormat.format(totalCitations)}
           </span>
           <span className="text-sm text-slate-500">citations</span>
         </div>
-        <div className="flex h-24 flex-col items-center justify-center rounded-sm bg-slate-100">
+        <div className="flex h-24 flex-col items-center justify-center rounded-xs bg-slate-100">
           <span className="text-xl font-semibold">
             {weightFormat.format(round(sizeCap, 2))}/
             {weightFormat.format(round(maxSize, 2))}

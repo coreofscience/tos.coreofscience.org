@@ -38,8 +38,8 @@ const FileCard: FC<FileCardProps> = ({
     <div
       className={
         capped
-          ? "relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-sm bg-slate-100 p-8 text-center shadow-md"
-          : "relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-sm p-8 text-center shadow-md"
+          ? "relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-xs bg-slate-100 p-8 text-center shadow-md"
+          : "relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-xs p-8 text-center shadow-md"
       }
     >
       {capped && (
@@ -59,12 +59,12 @@ const FileCard: FC<FileCardProps> = ({
         <CancelIcon />
       </Button>
       <strong
-        className="max-w-[75%] overflow-hidden overflow-ellipsis whitespace-nowrap"
+        className="max-w-[75%] overflow-hidden text-ellipsis whitespace-nowrap"
         title={name}
       >
         {name}
       </strong>
-      <small className="flex flex-grow flex-col items-center justify-center text-sm text-slate-500">
+      <small className="flex grow flex-col items-center justify-center text-sm text-slate-500">
         {keywords.join(", ")}
       </small>
       <div>

@@ -24,7 +24,7 @@ const FloatingButtonMenuItem: FC<FloatingButtonMenuItemPropsType> = ({
     )}
     <button
       onClick={action}
-      className="self-center rounded-full bg-leaf px-2 py-2 shadow-sm hover:shadow-md active:shadow-md"
+      className="self-center rounded-full bg-leaf px-2 py-2 shadow-xs hover:shadow-md active:shadow-md"
       {...attributes}
     >
       <div className="flex h-5 w-5 items-center justify-center">{icon}</div>

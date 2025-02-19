@@ -13,7 +13,7 @@ const EmailVerification = () => {
   };
 
   return !hidden ? (
-    <div className="flex flex-col gap-2 rounded-sm border-2 border-leaf px-8 py-4">
+    <div className="flex flex-col gap-2 rounded-xs border-2 border-leaf px-8 py-4">
       <p>
         Please verify your email.&nbsp;
         <Button variant="link" size="link" onClick={handle}>

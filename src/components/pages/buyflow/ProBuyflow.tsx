@@ -1,6 +1,7 @@
 import useFirebase from "../../../hooks/useFirebase";
 import useUser from "../../../hooks/useUser";
 import { Message } from "../../common/Message";
+import Button from "../../ui/Button";
 import { useMutation } from "@tanstack/react-query";
 import { Firestore, doc, setDoc } from "firebase/firestore";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -85,8 +86,8 @@ const ProBuyflow = () => {
         </div>
       </div>
       <div className="flex flex-row items-center justify-center gap-4">
-        <button
-          className="rounded-sm bg-leaf px-4 py-2 text-center font-tall font-bold uppercase text-slate-50"
+        <Button
+          className="uppercase"
           disabled={subscribeMutation.isPending || subscribeMutation.isSuccess}
           onClick={() =>
             subscribeMutation.mutate({
@@ -101,9 +102,9 @@ const ProBuyflow = () => {
           }
         >
           Buy Montly Subscription ($10/month)
-        </button>
-        <button
-          className="rounded-sm bg-leaf px-4 py-2 text-center font-tall font-bold uppercase text-slate-50"
+        </Button>
+        <Button
+          className="uppercase"
           disabled={subscribeMutation.isPending || subscribeMutation.isSuccess}
           onClick={() =>
             subscribeMutation.mutate({
@@ -118,7 +119,7 @@ const ProBuyflow = () => {
           }
         >
           Buy Annual Subscription ($100/year)
-        </button>
+        </Button>
       </div>
       <Message
         message={

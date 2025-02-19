@@ -40,7 +40,7 @@ const Header = () => {
       <div className="flex flex-row items-center gap-2 text-xs md:gap-4 md:text-lg">
         {user?.uid ? (
           <>
-            <span className="hidden overflow-ellipsis sm:inline">
+            <span className="hidden text-ellipsis sm:inline">
               {user.email}
             </span>
             <Button

@@ -24,7 +24,7 @@ const TreeHistoryItems: FC<TreeHistoryItemsProps> = ({ trees, user }) => {
               <Link to={`/users/${user.uid}/trees/${treeId}`}>
                 {summary?.keywords.join(", ") ?? ""}
                 {planId === "pro" && (
-                  <span className="ml-2 flex-shrink-0 bg-leaf px-3 py-0.5 text-xs font-semibold text-slate-50">
+                  <span className="ml-2 shrink-0 bg-leaf px-3 py-1 text-xs font-semibold text-slate-50">
                     PRO
                   </span>
                 )}

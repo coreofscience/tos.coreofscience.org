@@ -6,7 +6,7 @@ const About = () => {
   }, []);
 
   return (
-    <article className="prose prose-stone m-auto prose-a:text-sky-600 prose-a:hover:text-sky-800 prose-a:active:text-sky-800">
+    <article className="prose prose-stone m-auto prose-a:text-sky-600 hover:prose-a:text-sky-800 active:prose-a:text-sky-800">
       <h1 className="font-tall uppercase">About Tree of Science</h1>
       <p>
         <strong>Tree of Science</strong> is a pioneering division of{" "}
