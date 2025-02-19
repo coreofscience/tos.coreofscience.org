@@ -131,7 +131,7 @@ const Footer = () => {
             <li>
               <Button variant="link" size="link" asChild>
                 <a
-                  href="https://github.com/coreofscience/sap.coreofscience.com"
+                  href="https://github.com/coreofscience/tos.coreofscience.org"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -168,7 +168,7 @@ const Footer = () => {
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href="https://coreofscience.com"
+          href="https://coreofscience.org"
         >
           <CoreOfScience className="h-10 w-10" />
         </a>
@@ -177,7 +177,7 @@ const Footer = () => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://coreofscience.com"
+            href="https://coreofscience.org"
           >
             Core of Science
           </a>{" "}
