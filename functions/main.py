@@ -261,6 +261,7 @@ def create_tree_with_initial_info(event: Event[DocumentSnapshot | None]) -> None
 @on_document_created(
     document="users/{userId}/proAnalysis/{treeId}",
     memory=MemoryOption.GB_1,
+    timeout_sec=600,
 )
 def process_user_pro_tree(event: Event[DocumentSnapshot | None]) -> None:
     """
