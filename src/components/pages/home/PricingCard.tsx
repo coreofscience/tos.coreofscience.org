@@ -24,7 +24,7 @@ const PricingCard: FC<PricingCardProps> = ({
   return (
     <section
       className={`flex flex-col gap-8 rounded-sm px-6 py-8 shadow-xl shadow-slate-900/10 sm:px-8 ${
-        primary ? "order-first bg-leaf lg:order-none" : ""
+        primary ? "bg-leaf order-first lg:order-none" : ""
       }`}
     >
       <h3

@@ -18,7 +18,7 @@ const Sap = () => {
       </p>
       <TableOfContents />
       <section id="info-on-roots">
-        <h2 className="font-tall uppercase text-root">Roots</h2>
+        <h2 className="font-tall text-root uppercase">Roots</h2>
         <p>
           The "Roots" in the Tree of Science algorithm symbolize foundational
           works or seminal papers in a given field. These are the building
@@ -31,7 +31,7 @@ const Sap = () => {
         </p>
       </section>
       <section id="info-on-trunk">
-        <h2 className="font-tall uppercase text-trunk">Trunk</h2>
+        <h2 className="font-tall text-trunk uppercase">Trunk</h2>
         <p>
           The "Trunk" serves as the central column of collective knowledge,
           consisting of works that are derived from the roots and serve as a
@@ -44,7 +44,7 @@ const Sap = () => {
         </p>
       </section>
       <section id="info-on-branches">
-        <h2 className="font-tall uppercase text-branch">Branches</h2>
+        <h2 className="font-tall text-branch uppercase">Branches</h2>
         <p>
           To generate the branches of the Tree of Science, our algorithm
           clusters articles into distinct subfields or specialized areas of
@@ -59,7 +59,7 @@ const Sap = () => {
         </p>
       </section>
       <section id="info-on-leaves">
-        <h2 className="font-tall uppercase text-leaf">Leaves</h2>
+        <h2 className="font-tall text-leaf uppercase">Leaves</h2>
         <p>
           The "Leaves" represent the most recent, edge-cutting research in a
           field. These papers are considered as the ones that have not cited

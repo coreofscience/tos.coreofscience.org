@@ -8,9 +8,9 @@ const PresRelease = () => {
   });
 
   return (
-    <article className="prose prose-stone m-auto prose-a:text-sky-600 prose-a:hover:text-sky-800 prose-a:active:text-sky-800">
+    <article className="prose prose-stone prose-a:text-sky-600 hover:prose-a:text-sky-800 active:prose-a:text-sky-800 m-auto">
       <p>
-        Contact: Sebastian Robledo
+        Contact: Oscar Arbelaez
         <br />
         Email:{" "}
         <a href="mailto:director@coreofscience.org">
@@ -116,8 +116,8 @@ const PresRelease = () => {
         <em>
           For more information about Tree of Science and its capabilities,
           please visit:{" "}
-          <a href="https://tos.coreofscience.com">
-            https://tos.coreofscience.com
+          <a href="https://tos.coreofscience.org">
+            https://tos.coreofscience.org
           </a>
           .
         </em>
@@ -140,8 +140,8 @@ const PresRelease = () => {
       </p>
       <p>
         Discover more about Tree of Science at{" "}
-        <a href="https://tos.coreofscience.com">
-          https://tos.coreofscience.com
+        <a href="https://tos.coreofscience.org">
+          https://tos.coreofscience.org
         </a>
         .
       </p>

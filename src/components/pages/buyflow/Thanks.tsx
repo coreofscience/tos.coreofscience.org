@@ -1,4 +1,5 @@
 import useUser from "../../../hooks/useUser";
+import Button from "../../ui/Button";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const Thanks = () => {
@@ -19,7 +20,7 @@ const Thanks = () => {
   return (
     <div className="flex flex-col gap-24">
       <div className="flex justify-center">
-        <h2 className="text-center font-tall text-5xl font-bold sm:text-7xl">
+        <h2 className="font-tall text-center text-5xl font-bold sm:text-7xl">
           Thanks for purchasing Tree of Science Pro!
         </h2>
       </div>
@@ -37,12 +38,9 @@ const Thanks = () => {
         </p>
       </div>
       <div className="flex flex-row items-center justify-center gap-4">
-        <button
-          className="rounded-sm bg-leaf px-4 py-2 text-center font-tall font-bold uppercase text-slate-50"
-          onClick={() => navigate("/tos")}
-        >
+        <Button className="uppercase" onClick={() => navigate("/tos")}>
           Grow your Pro Tree now!
-        </button>
+        </Button>
       </div>
     </div>
   );

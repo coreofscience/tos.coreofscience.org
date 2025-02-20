@@ -95,7 +95,7 @@ const New = () => {
                   <Input
                     {...field}
                     type="text"
-                    className="text-xl px-6 py-3"
+                    className="px-6 py-3 text-xl"
                     placeholder="bit patterned media OR bit patterned magnetic recording"
                   />
                 </FormControl>

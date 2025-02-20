@@ -6,7 +6,7 @@ const Hero = () => {
     <section className="container flex flex-col gap-8">
       <div className="flex items-center justify-center gap-8">
         <div className="flex max-w-4xl flex-col items-center justify-center gap-4">
-          <h2 className="max-w-4xl text-center font-tall text-5xl sm:text-7xl">
+          <h2 className="font-tall max-w-4xl text-center text-5xl sm:text-7xl">
             Accelerate your <span className="text-leaf">literature</span> search
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-center text-lg">
