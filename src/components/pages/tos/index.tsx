@@ -101,7 +101,7 @@ const Tos = () => {
       <UploadIndicator maxSize={maxSize} />
       <FileErrors />
       <p>Review your input:</p>
-      <div className="grid grid-cols-articles items-center gap-2">
+      <div className="grid-cols-articles grid items-center gap-2">
         <div className="flex h-24 flex-col items-center justify-center rounded-xs bg-slate-100">
           <span className="text-xl font-semibold">
             {countFormat.format(articleCap)}/{countFormat.format(totalArticles)}

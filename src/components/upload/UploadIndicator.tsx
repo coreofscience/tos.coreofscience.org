@@ -37,7 +37,7 @@ const UploadIndicator: FC<UploadIndicatorProps> = ({ maxSize }) => {
   }
 
   return (
-    <div className="grid grid-cols-articles gap-2">
+    <div className="grid-cols-articles grid gap-2">
       <Suspense fallback="loading...">
         {files.map((file) => {
           cumSize += file.blob.size / 2 ** 20;

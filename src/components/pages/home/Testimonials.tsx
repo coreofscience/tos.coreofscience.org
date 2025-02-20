@@ -7,7 +7,7 @@ const Testimonials = () => {
       className="xs:px-0 container mx-auto flex max-w-7xl flex-col gap-10"
     >
       <div className="mx-auto max-w-2xl md:text-center">
-        <h2 className="text-center font-tall text-3xl sm:text-4xl">
+        <h2 className="font-tall text-center text-3xl sm:text-4xl">
           Loved by researchers
         </h2>
       </div>

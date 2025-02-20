@@ -40,7 +40,7 @@ const VerifyEmail = () => {
   return (
     <div className="flex flex-col gap-16">
       <div className="flex justify-center">
-        <h2 className="text-center font-tall text-4xl font-bold sm:text-6xl">
+        <h2 className="font-tall text-center text-4xl font-bold sm:text-6xl">
           Please verify your email
         </h2>
       </div>

@@ -10,17 +10,17 @@ const HamburgerMenu = () => {
           <div className="relative z-20 flex h-[30px] w-[30px] transform items-center justify-center">
             <div className="flex h-[20px] w-[20px] transform flex-col justify-around overflow-hidden">
               <div
-                className={`h-[2.5px] w-7 transform bg-leaf ${
+                className={`bg-leaf h-[2.5px] w-7 transform ${
                   open && "translate-x-10"
                 }`}
               ></div>
               <div
-                className={`h-[2.5px] w-7 transform bg-leaf ${
+                className={`bg-leaf h-[2.5px] w-7 transform ${
                   open && "translate-x-10"
                 }`}
               ></div>
               <div
-                className={`h-[2.5px] w-7 transform bg-leaf ${
+                className={`bg-leaf h-[2.5px] w-7 transform ${
                   open && "translate-x-10"
                 }`}
               ></div>
@@ -31,12 +31,12 @@ const HamburgerMenu = () => {
                 }`}
               >
                 <div
-                  className={`absolute h-[2.5px] w-5 rotate-0 transform bg-leaf ${
+                  className={`bg-leaf absolute h-[2.5px] w-5 rotate-0 transform ${
                     open && "rotate-45"
                   }`}
                 ></div>
                 <div
-                  className={`absolute h-[2.5px] w-5 -rotate-0 transform bg-leaf ${
+                  className={`bg-leaf absolute h-[2.5px] w-5 -rotate-0 transform ${
                     open && "-rotate-45"
                   }`}
                 ></div>
@@ -54,7 +54,7 @@ const HamburgerMenu = () => {
             data-headlessui-state="open"
             onClick={() => setOpen(!open)}
           ></div>
-          <div className="container absolute inset-x-0 z-10 mt-10 flex flex-col bg-white p-4 text-black shadow-md">
+          <div className="absolute inset-x-0 z-10 container mt-10 flex flex-col bg-white p-4 text-black shadow-md">
             <a
               className="block w-full p-2"
               data-headlessui-state="open"

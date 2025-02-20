@@ -27,7 +27,7 @@ const Pricing = () => {
       className="xs:px-0 container mx-auto flex flex-col gap-10"
     >
       <div className="md:text-center">
-        <h2 className="text-center font-tall text-3xl sm:text-4xl">
+        <h2 className="font-tall text-center text-3xl sm:text-4xl">
           Simple pricing for everyone
         </h2>
       </div>

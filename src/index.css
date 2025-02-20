@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin '@tailwindcss/typography';
 
@@ -52,7 +52,7 @@
 }
 
 @utility fancy-areas {
-  grid-template-areas: 'git cite' 'social cite';
+  grid-template-areas: "git cite" "social cite";
 }
 
 @utility area-git {

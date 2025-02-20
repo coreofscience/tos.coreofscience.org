@@ -20,7 +20,7 @@ const Thanks = () => {
   return (
     <div className="flex flex-col gap-24">
       <div className="flex justify-center">
-        <h2 className="text-center font-tall text-5xl font-bold sm:text-7xl">
+        <h2 className="font-tall text-center text-5xl font-bold sm:text-7xl">
           Thanks for purchasing Tree of Science Pro!
         </h2>
       </div>

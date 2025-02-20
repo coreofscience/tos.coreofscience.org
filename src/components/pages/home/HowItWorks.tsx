@@ -23,11 +23,11 @@ const HowItWorks = () => {
     <section
       id="how-it-works"
       aria-label="How Tree of Science works"
-      className="overflow-hidden bg-leaf pb-10 pt-20"
+      className="bg-leaf overflow-hidden pt-20 pb-10"
     >
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
-          <h2 className="text-center font-tall text-3xl text-slate-50 sm:text-4xl md:text-5xl">
+          <h2 className="font-tall text-center text-3xl text-slate-50 sm:text-4xl md:text-5xl">
             How Tree of Science Works
           </h2>
           <p className="mt-6 text-lg text-slate-50">
@@ -39,7 +39,7 @@ const HowItWorks = () => {
         <div className="mt-16 grid grid-cols-1 items-center gap-y-2 pt-10 sm:gap-y-6 md:mt-20 lg:grid-cols-12 lg:pt-0">
           <div className="-mx-4 flex overflow-x-auto pb-4 sm:mx-0 sm:pb-0 lg:col-span-5">
             <div
-              className="relative z-10 flex gap-x-1 whitespace-nowrap px-4 sm:mx-auto sm:px-0 lg:mx-0 lg:block lg:gap-x-0 lg:gap-y-1 lg:whitespace-normal"
+              className="relative z-10 flex gap-x-1 px-4 whitespace-nowrap sm:mx-auto sm:px-0 lg:mx-0 lg:block lg:gap-x-0 lg:gap-y-1 lg:whitespace-normal"
               role="tablist"
             >
               <div
@@ -153,7 +153,7 @@ const HowItWorks = () => {
               hidden={show !== Section.PlantSeeds}
             >
               <div className="relative sm:px-6 lg:hidden">
-                <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0"></div>
+                <div className="absolute -inset-x-4 top-[-6.5rem] bottom-[-4.25rem] bg-white/10 ring-1 ring-white/10 ring-inset sm:inset-x-0"></div>
                 <p className="relative mx-auto max-w-2xl text-base text-slate-50 sm:text-center">
                   Look up your topic on Scopus or Web of Science and import your
                   data into the Tree of Science application.
@@ -180,7 +180,7 @@ const HowItWorks = () => {
               style={show !== Section.BuildTree ? { display: "none" } : {}}
             >
               <div className="relative sm:px-6 lg:hidden">
-                <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0"></div>
+                <div className="absolute -inset-x-4 top-[-6.5rem] bottom-[-4.25rem] bg-white/10 ring-1 ring-white/10 ring-inset sm:inset-x-0"></div>
                 <p className="relative mx-auto max-w-2xl text-base text-slate-50 sm:text-center">
                   Build your Tree of Science with the most modern algoritms and
                   analyze your data on the fly.
@@ -212,7 +212,7 @@ const HowItWorks = () => {
               }
             >
               <div className="relative sm:px-6 lg:hidden">
-                <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0"></div>
+                <div className="absolute -inset-x-4 top-[-6.5rem] bottom-[-4.25rem] bg-white/10 ring-1 ring-white/10 ring-inset sm:inset-x-0"></div>
                 <p className="relative mx-auto max-w-2xl text-base text-slate-50 sm:text-center">
                   Identify relevant theories that the field is based on (roots),
                   essential works (trunk) and newer publications (leaves).
@@ -244,7 +244,7 @@ const HowItWorks = () => {
               }
             >
               <div className="relative sm:px-6 lg:hidden">
-                <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0"></div>
+                <div className="absolute -inset-x-4 top-[-6.5rem] bottom-[-4.25rem] bg-white/10 ring-1 ring-white/10 ring-inset sm:inset-x-0"></div>
                 <p className="relative mx-auto max-w-2xl text-base text-slate-50 sm:text-center">
                   Extract your literature list and start writing.
                 </p>

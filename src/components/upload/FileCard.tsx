@@ -45,7 +45,7 @@ const FileCard: FC<FileCardProps> = ({
       {capped && (
         <button
           onClick={move}
-          className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center bg-root text-slate-50 transition-colors ease-in hover:bg-leaf active:bg-leaf"
+          className="bg-root hover:bg-leaf active:bg-leaf absolute top-0 left-0 flex h-8 w-8 items-center justify-center text-slate-50 transition-colors ease-in"
         >
           <MoveFirstIcon />
         </button>
@@ -54,7 +54,7 @@ const FileCard: FC<FileCardProps> = ({
         size="icon"
         variant="root"
         onClick={remove}
-        className="absolute right-0 top-0 hover:bg-red-500 active:bg-red-500"
+        className="absolute top-0 right-0 hover:bg-red-500 active:bg-red-500"
       >
         <CancelIcon />
       </Button>
@@ -85,7 +85,7 @@ const FileCard: FC<FileCardProps> = ({
           </small>
         </span>
       </div>
-      <div className="absolute bottom-2 right-2">
+      <div className="absolute right-2 bottom-2">
         <small
           className={capped ? "text-[60%] text-red-500" : "text-[60%]"}
           title="To keep our costs down, we need to limit the ammount of data we process for each tree."
@@ -96,7 +96,7 @@ const FileCard: FC<FileCardProps> = ({
       </div>
       <div className="absolute bottom-0 h-[3px] w-full bg-slate-100">
         <div
-          className="h-[3px] w-full origin-left bg-leaf"
+          className="bg-leaf h-[3px] w-full origin-left"
           style={{ transform: `scaleX(${progress / 100})` }}
         />
       </div>

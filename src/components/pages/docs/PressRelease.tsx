@@ -8,7 +8,7 @@ const PresRelease = () => {
   });
 
   return (
-    <article className="prose prose-stone m-auto prose-a:text-sky-600 hover:prose-a:text-sky-800 active:prose-a:text-sky-800">
+    <article className="prose prose-stone prose-a:text-sky-600 hover:prose-a:text-sky-800 active:prose-a:text-sky-800 m-auto">
       <p>
         Contact: Oscar Arbelaez
         <br />

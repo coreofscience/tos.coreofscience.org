@@ -15,17 +15,17 @@ const Header = () => {
   const { nextSearch } = useNext();
 
   return (
-    <div className="flex flex-row items-center justify-between text-leaf">
-      <div className="flex flex-row items-center gap-1 text-leaf md:gap-4 lg:gap-8">
+    <div className="text-leaf flex flex-row items-center justify-between">
+      <div className="text-leaf flex flex-row items-center gap-1 md:gap-4 lg:gap-8">
         <Button variant="asChild" size="link" asChild>
           <Link className="flex flex-row items-center gap-2" to="/">
             <TreeOfScience className="h-20 w-20" />
             {location.pathname === "/" ? (
-              <h1 className="hidden font-tall text-2xl font-bold uppercase sm:inline md:text-4xl">
+              <h1 className="font-tall hidden text-2xl font-bold uppercase sm:inline md:text-4xl">
                 Tree of Science
               </h1>
             ) : (
-              <span className="hidden font-tall text-2xl font-bold uppercase sm:inline md:text-4xl">
+              <span className="font-tall hidden text-2xl font-bold uppercase sm:inline md:text-4xl">
                 Tree of Science
               </span>
             )}
@@ -40,9 +40,7 @@ const Header = () => {
       <div className="flex flex-row items-center gap-2 text-xs md:gap-4 md:text-lg">
         {user?.uid ? (
           <>
-            <span className="hidden text-ellipsis sm:inline">
-              {user.email}
-            </span>
+            <span className="hidden text-ellipsis sm:inline">{user.email}</span>
             <Button
               onClick={() => signOut(firebase.auth)}
               className="uppercase"

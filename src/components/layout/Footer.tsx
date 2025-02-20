@@ -13,7 +13,7 @@ const Footer = () => {
     <div className="flex flex-col gap-4 py-16 md:gap-8">
       <div className="md:fancy-areas grid grid-cols-[1fr] gap-4 md:gap-12">
         <section className="md:area-cite flex flex-col gap-2">
-          <h4 className="font-tall text-xl uppercase text-root">
+          <h4 className="font-tall text-root text-xl uppercase">
             Citing Tree of Science
           </h4>
           <ul className="flex flex-col gap-2">
@@ -93,7 +93,7 @@ const Footer = () => {
           </ul>
         </section>
         <section className="md:area-social flex flex-col gap-2">
-          <h4 className="font-tall text-xl uppercase text-root">
+          <h4 className="font-tall text-root text-xl uppercase">
             Social media
           </h4>
           <ul className="flex min-w-40 flex-row gap-2">
@@ -124,7 +124,7 @@ const Footer = () => {
           </ul>
         </section>
         <section className="md:area-git flex flex-col gap-2">
-          <h4 className="font-tall text-xl uppercase text-root">
+          <h4 className="font-tall text-root text-xl uppercase">
             This project on GitHub
           </h4>
           <ul>

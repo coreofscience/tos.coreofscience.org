@@ -16,7 +16,7 @@ const Home = () => {
     <div className="flex flex-col gap-24">
       <Hero />
       <div className="container flex flex-col gap-8">
-        <h2 className="text-center font-tall text-3xl sm:text-4xl">
+        <h2 className="font-tall text-center text-3xl sm:text-4xl">
           Plant Your Seeds
         </h2>
         <FileDropper maxSize={maxSize} />
