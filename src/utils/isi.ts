@@ -1,4 +1,4 @@
-const ISI_PATTERN = /^(.|null)?((?<key>[0-9A-Z]{2})| {2})( (?<value>.+))?$/;
+const ISI_PATTERN = /^((null)+|.)?((?<key>[0-9A-Z]{2})| {2})( (?<value>.+))?$/;
 
 const looksLikeIsi = (content: string): boolean => {
   for (const line of content.split("\n")) {
