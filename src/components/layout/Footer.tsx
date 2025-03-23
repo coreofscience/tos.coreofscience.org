@@ -21,6 +21,25 @@ const Footer = () => {
               <Reference
                 label=""
                 authors={[
+                  "Sebastian Robledo",
+                  "Luis Valencia",
+                  "Martha Zuluaga",
+                  "Oscar Arbelaez Echeverri",
+                  "Jorge W. Arboleda Valencia",
+                ]}
+                year={2024}
+                title="tosr: Create the Tree of Science from WoS and Scopus"
+                journal="Journal of Scientometric Research"
+                volume="13"
+                issue="2"
+                doi="10.5530/jscires.13.2.36"
+                simple={false}
+              />
+            </li>
+            <li>
+              <Reference
+                label=""
+                authors={[
                   "Zuluaga, M.",
                   "Robledo, S.",
                   "Arbelaez-Echeverri, O.",
@@ -52,41 +71,6 @@ const Footer = () => {
                 issue="1"
                 page="45-49"
                 doi="10.15446/ing.investig.v40n1.77718"
-                simple={false}
-              />
-            </li>
-            <li>
-              <Reference
-                label=""
-                authors={[
-                  "Zuluaga, M.",
-                  "Robledo, S.",
-                  "Osorio-Zuluaga, G. A",
-                  "Yathe, L.",
-                  "González, D.",
-                  "Taborda, G.",
-                ]}
-                year={2016}
-                title="Metabolomics and pesticides: systematic literature review usinggraph theory for analysis of references."
-                journal="Nova"
-                volume="14"
-                issue="25"
-                page="121-138"
-                doi="10.22490/24629448.1735"
-                simple={false}
-              />
-            </li>
-            <li>
-              <Reference
-                label=""
-                authors={["Robledo, S.", "Osorio, G.", "López, C."]}
-                year={2014}
-                title="Networking en pequeña empresa: una revisión bibliográfica utilizando la teoria de grafos."
-                journal="Revista vínculos"
-                volume="11"
-                issue="2"
-                page="6-16"
-                doi="10.14483/2322939X.9664"
                 simple={false}
               />
             </li>
@@ -181,7 +165,7 @@ const Footer = () => {
           >
             Core of Science
           </a>{" "}
-          project. &copy; 2020 Core of Science.
+          project. &copy; {new Date().getFullYear()} Core of Science.
         </span>
       </div>
       <div className="flex sm:justify-center">
