@@ -74,27 +74,6 @@ const Footer = () => {
                 simple={false}
               />
             </li>
-            <li>
-              <Reference
-                label=""
-                authors={[
-                  "Zuluaga, M.",
-                  "Robledo, S.",
-                  "Osorio-Zuluaga, G. A",
-                  "Yathe, L.",
-                  "González, D.",
-                  "Taborda, G.",
-                ]}
-                year={2016}
-                title="Metabolomics and pesticides: systematic literature review usinggraph theory for analysis of references."
-                journal="Nova"
-                volume="14"
-                issue="25"
-                page="121-138"
-                doi="10.22490/24629448.1735"
-                simple={false}
-              />
-            </li>
           </ul>
         </section>
         <section className="md:area-social flex flex-col gap-2">
@@ -186,7 +165,7 @@ const Footer = () => {
           >
             Core of Science
           </a>{" "}
-          project. &copy; 2020 Core of Science.
+          project. &copy; {new Date().getFullYear()} Core of Science.
         </span>
       </div>
       <div className="flex sm:justify-center">
