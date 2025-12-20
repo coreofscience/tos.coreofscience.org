@@ -1,7 +1,6 @@
 ---
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
-import "../styles/global.css";
 import type { ImageMetadata } from "astro";
 import FallbackImage from "../assets/blog-placeholder-1.jpg";
 import { SITE_TITLE } from "../consts";
@@ -20,6 +19,7 @@ const { title, description, image = FallbackImage } = Astro.props;
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="color-scheme" content="dark light" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
@@ -31,19 +31,11 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  rel="preload"
-  href="/fonts/atkinson-regular.woff"
-  as="font"
-  type="font/woff"
-  crossorigin
-/>
-<link
-  rel="preload"
-  href="/fonts/atkinson-bold.woff"
-  as="font"
-  type="font/woff"
-  crossorigin
+  href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+  rel="stylesheet"
 />
 
 <!-- Canonical URL -->

@@ -1,14 +1,15 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import { Button } from "@/components/ui/button";
 
-type Props = HTMLAttributes<"a">;
+type Props = {
+  href: string;
+};
 
-const { href, class: className, ...props } = Astro.props;
-const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
-const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
+const { href } = Astro.props;
 ---
 
-<a href={href} class:list={[className, { active: isActive }]} {...props}>
-  <slot />
-</a>
+<Button variant="link">
+  <a href={href}>
+    <slot />
+  </a>
+</Button>

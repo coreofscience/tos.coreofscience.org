@@ -2,9 +2,11 @@
 const today = new Date();
 ---
 
-<footer>
-  &copy; {today.getFullYear()} Your name here. All rights reserved.
-  <div class="social-links">
+<footer class="container flex justify-between">
+  <span>
+    &copy; {today.getFullYear()} Core of Science. All rights reserved.
+  </span>
+  <div class="flex flex-row gap-2">
     <a href="https://m.webtoo.ls/@astro" target="_blank">
       <span class="sr-only">Follow Astro on Mastodon</span>
       <svg
