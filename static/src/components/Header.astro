@@ -4,13 +4,13 @@ import HeaderLink from "./HeaderLink.astro";
 ---
 
 <header class="container m-auto">
-  <nav class="flex flex-row justify-between">
-    <div class="flex flex-row gap-4">
+  <nav class="flex flex-row items-center justify-between">
+    <div class="flex flex-row items-center gap-4">
       <h2 class="flex flex-row items-center gap-2 font-serif text-2xl">
-        <img src="/icon-white.svg" />
+        <img class="size-(--text-2xl)" src="/icon-white.svg" />
         <a class="text-nowrap" href="/">{SITE_TITLE}</a>
       </h2>
-      <div class="flex flex-row gap-2">
+      <div class="flex flex-row items-center gap-2">
         <HeaderLink href="/">Home</HeaderLink>
         <HeaderLink href="/blog">Blog</HeaderLink>
         <HeaderLink href="/about">About</HeaderLink>
