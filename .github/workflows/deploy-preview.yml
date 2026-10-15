@@ -9,25 +9,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup node
-        uses: actions/setup-node@v4
+      - uses: pnpm/setup@v1
         with:
-          node-version: 24
+          version: 12
+          runtime: node@24
+          cache: true
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm ci
 
       - name: Quality check
         run: |
-          npm run eslint
-          npm run prettier
-          npm test
+          pnpm run eslint
+          pnpm run prettier
+          pnpm test
         env:
           CI: true
 
       - name: Build
         run: |
-          npm run build
+          pnpm run build
         env:
           CI: true
           VITE_APIKEY: ${{ secrets.FIREBASE_WEB_API_KEY_DEV }}
