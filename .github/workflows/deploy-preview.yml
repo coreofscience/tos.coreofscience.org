@@ -9,6 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/setup@v3
+        with:
+          runtime: node@24
+          cache: true
 
       - name: Install dependencies
         run: pnpm ci
