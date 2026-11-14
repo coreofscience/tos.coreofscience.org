@@ -21,7 +21,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 const logInSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().nonempty({ message: "Password is required." }),
 });
 

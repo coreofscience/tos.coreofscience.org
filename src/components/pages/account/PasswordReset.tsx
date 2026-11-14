@@ -31,7 +31,7 @@ const sendEmail = async ({
 };
 
 const passwordResetSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
 });
 
 type PaswordResetFormFieldsType = z.infer<typeof passwordResetSchema>;

@@ -65,7 +65,7 @@ const signUp = async ({
 
 const signUpSchema = z.object({
   name: z.string().nonempty(),
-  email: z.string().email(),
+  email: z.email(),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long." }),
