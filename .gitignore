@@ -39,3 +39,4 @@ dist
 *.log
 tsconfig.tsbuildinfo
 .vitest/
+.cache/
