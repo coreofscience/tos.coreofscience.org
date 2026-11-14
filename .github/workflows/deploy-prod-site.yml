@@ -51,7 +51,7 @@ jobs:
         shell: bash
         run: |
           echo $RAW_CREDENTIALS > $GOOGLE_APPLICATION_CREDENTIALS
-          vp exec firebase deploy -P dev
+          vp exec firebase deploy -P prod
           rm $GOOGLE_APPLICATION_CREDENTIALS
         env:
           RAW_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COREOFSCIENCE }}
