@@ -14,10 +14,10 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup node
-        uses: actions/setup-node@v4
+      - uses: pnpm/setup@v3
         with:
-          node-version: lts/iron
+          runtime: node@24
+          cache: true
 
       - name: Setup python
         uses: actions/setup-python@v5
@@ -26,8 +26,8 @@ jobs:
 
       - name: Build UI
         run: |
-          npm ci
-          npm run build
+          pnpm ci
+          pnpm run build
         env:
           CI: true
           VITE_APIKEY: ${{ secrets.FIREBASE_WEB_API_KEY_DEV }}
@@ -52,7 +52,7 @@ jobs:
         shell: bash
         run: |
           echo $RAW_CREDENTIALS > $GOOGLE_APPLICATION_CREDENTIALS
-          npm run deploy -- -P dev
+          pnpm run deploy -P dev
           rm $GOOGLE_APPLICATION_CREDENTIALS
         env:
           RAW_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COREOFSCIENCE_DEV }}
