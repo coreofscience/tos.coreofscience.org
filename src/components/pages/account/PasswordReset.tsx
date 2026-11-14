@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Auth, sendPasswordResetEmail } from "firebase/auth";
 import { useForm } from "react-hook-form";
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router";
 import { z } from "zod";
 
 const sendEmail = async ({

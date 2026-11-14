@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Auth, signInWithEmailAndPassword } from "firebase/auth";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router";
 import { z } from "zod";
 
 const logInSchema = z.object({
@@ -59,7 +59,7 @@ const LogIn = () => {
   } = useMutation({
     mutationFn: logIn,
     onSuccess: () => {
-      navigate(next || "/tos");
+      void navigate(next || "/tos");
     },
   });
 

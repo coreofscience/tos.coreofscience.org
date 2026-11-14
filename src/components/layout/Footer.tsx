@@ -4,7 +4,7 @@ import CoreOfScience from "../vectors/CoreOfScience";
 import GitHubIcon from "../vectors/GitHubIcon";
 import YoutubeIcon from "../vectors/YoutubeIcon";
 import NavBar from "./NavBar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router";
 
 const currentYear = new Date().getFullYear();
 

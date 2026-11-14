@@ -25,7 +25,7 @@ import {
 import { Firestore, doc, setDoc } from "firebase/firestore";
 import { omit } from "lodash";
 import { useForm } from "react-hook-form";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router";
 import { z } from "zod";
 
 const signUp = async ({
@@ -97,7 +97,7 @@ const SignUp = () => {
     mutationFn: signUp,
     onSuccess: () => {
       setTimeout(() => {
-        navigate(next || "/tos");
+        void navigate(next || "/tos");
       }, 500);
     },
   });

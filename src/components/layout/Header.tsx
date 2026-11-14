@@ -6,7 +6,7 @@ import TreeOfScience from "../vectors/TreeOfScience";
 import HamburgerMenu from "./HamburgerMenu";
 import NavBar from "./NavBar";
 import { signOut } from "firebase/auth";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router";
 
 const Header = () => {
   const firebase = useFirebase();

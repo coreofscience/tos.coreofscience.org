@@ -21,7 +21,7 @@ import { useMutation } from "@tanstack/react-query";
 import { logEvent } from "firebase/analytics";
 import { addDoc, collection } from "firebase/firestore";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import { z } from "zod";
 
 const createOpenAlexTree = async ({
@@ -72,7 +72,7 @@ const New = () => {
     mutationFn: createOpenAlexTree,
     onSuccess: (treePath: string) => {
       logEvent(firebase.analytics, "openalex_tree_created");
-      navigate(`/${treePath}`, { replace: true });
+      void navigate(`/${treePath}`, { replace: true });
     },
   });
 

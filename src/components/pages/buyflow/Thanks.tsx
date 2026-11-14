@@ -1,6 +1,6 @@
 import useUser from "../../../hooks/useUser";
 import Button from "../../ui/Button";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router";
 
 const Thanks = () => {
   const user = useUser();

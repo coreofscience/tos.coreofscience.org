@@ -2,7 +2,7 @@ import cn from "../../utils/cn";
 import Footer from "./Footer";
 import Header from "./Header";
 import { FC, ReactNode } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 
 type AppLayoutProps = {
   children?: ReactNode;

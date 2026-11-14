@@ -2,7 +2,7 @@ import cn from "../../../utils/cn";
 import Button from "../../ui/Button";
 import CheckCircleIcon from "../../vectors/CheckCircleIcon";
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 type PricingCardProps = {
   name: string;

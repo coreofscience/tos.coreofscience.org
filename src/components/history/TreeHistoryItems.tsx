@@ -3,7 +3,7 @@ import { UserContextType } from "../../types/userContextType";
 import Button from "../ui/Button";
 import moment from "moment";
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 type TreeHistoryItemsProps = {
   trees: TreeSummary[];

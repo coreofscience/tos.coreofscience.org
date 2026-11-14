@@ -14,8 +14,8 @@ import { useMutation } from "@tanstack/react-query";
 import { logEvent } from "firebase/analytics";
 import { addDoc, collection } from "firebase/firestore";
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 const FileDropper = React.lazy(() => import("../../upload/FileDropper"));
 const UploadIndicator = React.lazy(

@@ -5,7 +5,7 @@ import Button from "../../ui/Button";
 import { useMutation } from "@tanstack/react-query";
 import { User, sendEmailVerification } from "firebase/auth";
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router";
 
 const sendVerificationEmail = async ({ user }: { user: User | null }) => {
   if (user) await sendEmailVerification(user, { url: window.location.href });
