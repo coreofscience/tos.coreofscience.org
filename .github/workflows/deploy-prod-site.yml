@@ -22,7 +22,7 @@ jobs:
       - name: Use latest python version
         uses: actions/setup-python@v7
         with:
-          python-version: "3.12"
+          python-version: "3.13"
 
       - name: Build
         run: |

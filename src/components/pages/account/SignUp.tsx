@@ -25,7 +25,7 @@ import {
 import { Firestore, doc, setDoc } from "firebase/firestore";
 import { omit } from "lodash";
 import { useForm } from "react-hook-form";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router";
 import { z } from "zod";
 
 const signUp = async ({
@@ -65,7 +65,7 @@ const signUp = async ({
 
 const signUpSchema = z.object({
   name: z.string().nonempty(),
-  email: z.string().email(),
+  email: z.email(),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long." }),
@@ -97,7 +97,7 @@ const SignUp = () => {
     mutationFn: signUp,
     onSuccess: () => {
       setTimeout(() => {
-        navigate(next || "/tos");
+        void navigate(next || "/tos");
       }, 500);
     },
   });

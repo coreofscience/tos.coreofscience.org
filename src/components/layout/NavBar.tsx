@@ -1,6 +1,6 @@
 import Button from "../ui/Button";
 import { FC } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 
 type NavBarProps = {
   origin: "footer" | "header";

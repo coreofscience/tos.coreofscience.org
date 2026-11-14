@@ -4,7 +4,7 @@ import { Message } from "../../common/Message";
 import Button from "../../ui/Button";
 import { useMutation } from "@tanstack/react-query";
 import { Firestore, doc, setDoc } from "firebase/firestore";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router";
 
 type SubscriptionPerios = "month" | "year";
 
@@ -41,7 +41,7 @@ const ProBuyflow = () => {
     onSuccess: () => {
       // Redirect to the thanks page
       setTimeout(() => {
-        navigate("/buy/pro/thanks");
+        void navigate("/buy/pro/thanks");
       }, 500);
     },
   });

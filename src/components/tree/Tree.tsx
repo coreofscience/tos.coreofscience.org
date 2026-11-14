@@ -22,7 +22,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { encode } from "js-base64";
 import orderBy from "lodash/orderBy";
 import { FC, useCallback, useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 type TreeProps = {
   stars: Record<string, boolean>;

@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router";
 
 const AppLayout = React.lazy(() => import("./components/layout/AppLayout"));
 const Tos = React.lazy(() => import("./components/pages/tos"));

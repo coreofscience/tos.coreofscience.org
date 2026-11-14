@@ -5,7 +5,7 @@ import { looksLikeScopusCsv } from "../../utils/scopusCsv";
 import { looksLikeScopusRis } from "../../utils/scopusRis";
 import { FC, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
 const FileErrorMap = {
   not_supported: "does not look like a valid CSV, BIB, or ISI file",
@@ -46,7 +46,7 @@ const FileDropper: FC<FileDropperProps> = ({ maxSize }) => {
             error(Object(file).name, file, FileErrorMap.not_supported);
           }
           if (location.pathname === "/") {
-            navigate("/tos");
+            void navigate("/tos");
           }
         });
       });

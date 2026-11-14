@@ -7,7 +7,7 @@ import AddIcon from "../vectors/AddIcon";
 import CancelIcon from "../vectors/CancelIcon";
 import DownloadIcon from "../vectors/Download";
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 type DownloadProps = {
   treeSections: TreeResult;

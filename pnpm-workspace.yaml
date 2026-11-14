@@ -1,13 +1,14 @@
 allowBuilds:
   protobufjs: true
   re2: true
+  "@firebase/util": false
 minimumReleaseAgeExclude:
   - "@vitest/mocker@5.0.5"
   - "@vitest/spy@5.0.5"
   - vitest@5.0.5
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@1.2.0
-  vite-plus: 1.2.0
+  vite: npm:@voidzero-dev/vite-plus-core@1.6.0
+  vite-plus: 1.6.0
 overrides:
   vite@*: "catalog:"
 peerDependencyRules:
