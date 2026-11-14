@@ -4,7 +4,7 @@ from decimal import Decimal
 from enum import Enum
 from functools import reduce
 from io import StringIO
-from typing import Any, Dict, List, cast
+from typing import Any, cast
 
 import arrow
 import networkx as nx
@@ -35,8 +35,12 @@ LEAF = "leaf"
 INVOICING_LEEWAY_HOURS = 6
 
 
-def set_analysis_property(collection: Collection, ref: DocumentReference) -> None:
-    cited = {str(key): value for key, value in collection.cited_by_year().items()}
+def set_analysis_property(
+    collection: Collection, ref: DocumentReference
+) -> None:
+    cited = {
+        str(key): value for key, value in collection.cited_by_year().items()
+    }
     published = {
         str(key): value for key, value in collection.published_by_year().items()
     }
@@ -47,7 +51,7 @@ def set_analysis_property(collection: Collection, ref: DocumentReference) -> Non
     ref.update({"_analysis": _analysis})
 
 
-def tree_from_strings(strings: List[str], ref: DocumentReference) -> nx.DiGraph:
+def tree_from_strings(strings: list[str], ref: DocumentReference) -> nx.DiGraph:
     """Creates a ToS tree from a list of strings."""
     collections = [read_any(StringIO(text)) for text in strings]
     collection = reduce(lambda x, y: x.merge(y), collections)
@@ -66,7 +70,11 @@ def tree_from_queries(
     for query in queries:
         engine = query["engine"]
         search = query["search"]
-        enrich = EnrichReferences.MOST if plan_id == "pro" else EnrichReferences.COMMON
+        enrich = (
+            EnrichReferences.MOST
+            if plan_id == "pro"
+            else EnrichReferences.COMMON
+        )
         if engine == "openalex":
             collection = query_openalex(search, enrich=enrich)
             collections.append(collection)
@@ -103,7 +111,7 @@ def _clear_datum(datum: dict) -> dict:
     return clear
 
 
-def convert_tos_to_json(tree: nx.DiGraph) -> Dict[str, List[Dict]]:
+def convert_tos_to_json(tree: nx.DiGraph) -> dict[str, list[dict]]:
     """
     Converts a ToS graph in the default format to be processed by the frontend.
     """
@@ -144,8 +152,8 @@ def convert_tos_to_json(tree: nx.DiGraph) -> Dict[str, List[Dict]]:
 
 
 def get_contents(
-    document_data: Dict[str, Any], max_size_megabytes=10
-) -> Dict[str, str]:
+    document_data: dict[str, Any], max_size_megabytes=10
+) -> dict[str, str]:
     """Get the contents for the files in order to create the graph."""
     names = [f"isi-files/{name}" for name in document_data["files"]]
     logger.info("Reading source files", extra={"names": names})
@@ -229,7 +237,9 @@ def create_tree_v2(
 
 
 @on_document_created(document="users/{userId}/trees/{treeId}")
-def create_tree_with_initial_info(event: Event[DocumentSnapshot | None]) -> None:
+def create_tree_with_initial_info(
+    event: Event[DocumentSnapshot | None],
+) -> None:
     logger.info("Running create_tree_with_initial_info")
     if event.data is None or (data := event.data.to_dict()) is None:
         return
@@ -261,7 +271,7 @@ def create_tree_with_initial_info(event: Event[DocumentSnapshot | None]) -> None
 @on_document_created(
     document="users/{userId}/proAnalysis/{treeId}",
     memory=MemoryOption.GB_1,
-    timeout_sec=600,
+    timeout_sec=540,
 )
 def process_user_pro_tree(event: Event[DocumentSnapshot | None]) -> None:
     """
@@ -305,7 +315,8 @@ def add_custom_claim_for_the_plan(_: ScheduledEvent) -> None:
             continue
         data = plan.to_dict()
         if data and (
-            "endDate" not in data or int(data["endDate"].timestamp()) < get_int_utcnow()
+            "endDate" not in data
+            or int(data["endDate"].timestamp()) < get_int_utcnow()
         ):
             auth.set_custom_user_claims(plan.id, {"plan": "basic"})
         else:
@@ -330,7 +341,10 @@ def update_user_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
     ):
         auth.set_custom_user_claims(user_id, {"plan": "basic"})
         return
-    if "endDate" in data and int(data["endDate"].timestamp()) > get_int_utcnow():
+    if (
+        "endDate" in data
+        and int(data["endDate"].timestamp()) > get_int_utcnow()
+    ):
         auth.set_custom_user_claims(user_id, {"plan": "pro"})
         return
     auth.set_custom_user_claims(user_id, {"plan": "basic"})
@@ -408,7 +422,10 @@ def _process_subscription(
     if subscription.end_date and subscription.end_date < processing_time:
         logger.info("subscription %s is expired", user_id)
         return
-    if subscription.start_date is None or processing_time < subscription.start_date:
+    if (
+        subscription.start_date is None
+        or processing_time < subscription.start_date
+    ):
         logger.info("subscription %s hasn't started yet", user_id)
         return
     client = firestore.client()
@@ -416,7 +433,10 @@ def _process_subscription(
     # Create invoice
     invoice = subscription.invoice(processing_time)
     transaction.create(
-        client.collection("users").document(user_id).collection("invoices").document(),
+        client.collection("users")
+        .document(user_id)
+        .collection("invoices")
+        .document(),
         invoice.to_firebase(),
     )
     # Update plan
@@ -424,14 +444,17 @@ def _process_subscription(
         client.collection("plans").document(user_id),
         {
             # Give some leeway for the invoicing process
-            "endDate": invoice.end_date + timedelta(hours=INVOICING_LEEWAY_HOURS),
+            "endDate": invoice.end_date
+            + timedelta(hours=INVOICING_LEEWAY_HOURS),
         },
     )
     transaction.commit()
 
 
 @on_document_written(document="subscriptions/{subscriptionId}")
-def create_subscription_plan(event: Event[Change[DocumentSnapshot | None]]) -> None:
+def create_subscription_plan(
+    event: Event[Change[DocumentSnapshot | None]],
+) -> None:
     """
     When a new subscription is created, add it to the plans collection.
     """
@@ -464,7 +487,9 @@ def _renew_subscriptions(period: Period, renew_time: datetime) -> None:
     client = firestore.client()
     snapshot: DocumentSnapshot
     for snapshot in (
-        client.collection("subscriptions").where("period", "==", period.value).stream()
+        client.collection("subscriptions")
+        .where("period", "==", period.value)
+        .stream()
     ):
         data = snapshot.to_dict()
         if not data:
@@ -473,7 +498,9 @@ def _renew_subscriptions(period: Period, renew_time: datetime) -> None:
         try:
             subscription = Subscription.model_validate(data)
         except ValidationError:
-            logger.error("invalid subscription data for subscription %s", snapshot.id)
+            logger.error(
+                "invalid subscription data for subscription %s", snapshot.id
+            )
             continue
         _process_subscription(
             subscription,
