@@ -38,11 +38,21 @@ jobs:
           VITE_APPID: "1:217902041600:web:54618397fad21282b426e5"
           VITE_MEASUREMENTID: "G-9SHWB33EEK"
 
-      - name: Deploy
+      - name: Prepare functions
+        shell: bash
         run: |
           cd functions
           python3.13 -m venv venv
           source ./venv/bin/activate
           pip install -r requirements.txt
           cd ..
-          vp exec firebase deploy --token=${{ secrets.FIREBASE_TOKEN }} -P prod
+
+      - name: Deploy
+        shell: bash
+        run: |
+          echo $RAW_CREDENTIALS > $GOOGLE_APPLICATION_CREDENTIALS
+          vp exec firebase deploy -P dev
+          rm $GOOGLE_APPLICATION_CREDENTIALS
+        env:
+          RAW_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COREOFSCIENCE }}
+          GOOGLE_APPLICATION_CREDENTIALS: .credentials.json
