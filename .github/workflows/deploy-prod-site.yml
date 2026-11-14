@@ -14,9 +14,9 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: pnpm/setup@v3
+      - uses: voidzero-dev/setup-vp@v1.22.0
         with:
-          runtime: node@24
+          node-version-file: .node-version
           cache: true
 
       - name: Use latest python version
@@ -26,8 +26,7 @@ jobs:
 
       - name: Build
         run: |
-          pnpm ci
-          pnpm run build
+          vp run build
         env:
           CI: true
           VITE_APIKEY: ${{ secrets.FIREBASE_WEB_API_KEY_PROD }}
@@ -46,4 +45,4 @@ jobs:
           source ./venv/bin/activate
           pip install -r requirements.txt
           cd ..
-          pnpm run deploy --token=${{ secrets.FIREBASE_TOKEN }} -P prod
+          vp exec firebase deploy --token=${{ secrets.FIREBASE_TOKEN }} -P prod

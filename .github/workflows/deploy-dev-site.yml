@@ -14,9 +14,9 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: pnpm/setup@v3
+      - uses: voidzero-dev/setup-vp@v1.22.0
         with:
-          runtime: node@24
+          node-version-file: .node-version
           cache: true
 
       - name: Setup python
@@ -26,8 +26,7 @@ jobs:
 
       - name: Build UI
         run: |
-          pnpm ci
-          pnpm run build
+          vp run build
         env:
           CI: true
           VITE_APIKEY: ${{ secrets.FIREBASE_WEB_API_KEY_DEV }}
@@ -52,7 +51,7 @@ jobs:
         shell: bash
         run: |
           echo $RAW_CREDENTIALS > $GOOGLE_APPLICATION_CREDENTIALS
-          pnpm run deploy -P dev
+          vp exec firebase deploy -P dev
           rm $GOOGLE_APPLICATION_CREDENTIALS
         env:
           RAW_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COREOFSCIENCE_DEV }}
