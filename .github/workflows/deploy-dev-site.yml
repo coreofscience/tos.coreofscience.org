@@ -10,24 +10,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 
-      - uses: pnpm/setup@v3
+      - uses: voidzero-dev/setup-vp@v1.22.0
         with:
-          runtime: node@24
+          node-version-file: .node-version
           cache: true
 
       - name: Setup python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
       - name: Build UI
         run: |
-          pnpm ci
-          pnpm run build
+          vp build
         env:
           CI: true
           VITE_APIKEY: ${{ secrets.FIREBASE_WEB_API_KEY_DEV }}
@@ -52,7 +51,7 @@ jobs:
         shell: bash
         run: |
           echo $RAW_CREDENTIALS > $GOOGLE_APPLICATION_CREDENTIALS
-          pnpm run deploy -P dev
+          vp exec firebase deploy -P dev
           rm $GOOGLE_APPLICATION_CREDENTIALS
         env:
           RAW_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COREOFSCIENCE_DEV }}

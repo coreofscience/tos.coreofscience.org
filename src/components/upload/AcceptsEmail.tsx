@@ -11,7 +11,7 @@ const AcceptsEmail = ({ user }: AcceptsEmailProps) => {
   const firebase = useFirebase();
 
   const handleAccept = () => {
-    setDoc(
+    void setDoc(
       doc(firebase.firestore, `/users/${user.uid}`),
       {
         acceptsEmail: true,
@@ -21,7 +21,7 @@ const AcceptsEmail = ({ user }: AcceptsEmailProps) => {
   };
 
   const handleDismiss = () => {
-    setDoc(
+    void setDoc(
       doc(firebase.firestore, `/users/${user.uid}`),
       {
         acceptsEmail: false,

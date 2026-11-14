@@ -10,7 +10,7 @@ const useUpload = () => {
 
   return useCallback(
     (name: string, blob: Blob) => {
-      metadata(name, blob).then((meta) => {
+      void metadata(name, blob).then((meta) => {
         add(meta);
         const fileRef = ref(firebase.storage, `isi-files/${meta.hash}`);
         getDownloadURL(fileRef)

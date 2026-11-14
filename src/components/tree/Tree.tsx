@@ -21,7 +21,7 @@ import { info } from "./constants/info";
 import { doc, setDoc } from "firebase/firestore";
 import { encode } from "js-base64";
 import orderBy from "lodash/orderBy";
-import { FC, useCallback, useState, useEffect, useMemo } from "react";
+import { FC, useCallback, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 type TreeProps = {
@@ -34,28 +34,24 @@ type TreeProps = {
 const Tree: FC<TreeProps> = ({ treeSections, treePath, stars, analysis }) => {
   const firebase = useFirebase();
   const [show, setShow] = useState<Section | null>(null);
-  const [infoEntries, setInfoEntries] = useState<
-    [Section, RootInfo | TrunkInfo | LeafInfo | BranchInfo][]
-  >([]);
   const treeDocRef = useMemo(
     () => doc(firebase.firestore, treePath),
     [firebase, treePath],
   );
 
-  useEffect(() => {
+  const hasBranches = Boolean(treeSections.branch_1);
+  const infoEntries = useMemo(() => {
     const infoClone = structuredClone(info);
-    if (!treeSections.branch_1) {
+    if (!hasBranches) {
       delete infoClone.branch_1;
       delete infoClone.branch_2;
       delete infoClone.branch_3;
     }
-    setInfoEntries(
-      Object.entries(infoClone) as [
-        Section,
-        RootInfo | TrunkInfo | LeafInfo | BranchInfo,
-      ][],
-    );
-  }, [treeSections.branch_1]);
+    return Object.entries(infoClone) as [
+      Section,
+      RootInfo | TrunkInfo | LeafInfo | BranchInfo,
+    ][];
+  }, [hasBranches]);
 
   const keywords: Keywords = useMemo(() => {
     const keywords: Keywords = {
@@ -86,7 +82,7 @@ const Tree: FC<TreeProps> = ({ treeSections, treePath, stars, analysis }) => {
     const article: HTMLElement | null = document.getElementById(label);
     if (article && article.textContent) {
       const text: string = article.textContent;
-      navigator.clipboard.writeText(text);
+      void navigator.clipboard.writeText(text);
     }
   }, []);
 
@@ -198,7 +194,7 @@ const Tree: FC<TreeProps> = ({ treeSections, treePath, stars, analysis }) => {
                             ? "text-yellow-500 hover:text-yellow-600 active:text-yellow-600"
                             : "text-slate-300 hover:text-slate-400 active:text-slate-400"
                         }
-                        onClick={() => toggleStar(labelAsBase64)}
+                        onClick={() => void toggleStar(labelAsBase64)}
                       >
                         <StarImage />
                       </Button>

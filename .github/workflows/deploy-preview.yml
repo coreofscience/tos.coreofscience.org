@@ -8,25 +8,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: pnpm/setup@v3
+      - uses: voidzero-dev/setup-vp@v1.22.0
         with:
-          runtime: node@24
+          node-version-file: .node-version
           cache: true
-
-      - name: Install dependencies
-        run: pnpm ci
 
       - name: Quality check
         run: |
-          pnpm run eslint
-          pnpm run prettier
-          pnpm test
+          vp check
+          vp test
+
+      - name: Type check
+        run: vp exec tsc -b
         env:
           CI: true
 
       - name: Build
         run: |
-          pnpm run build
+          vp build
         env:
           CI: true
           VITE_APIKEY: ${{ secrets.FIREBASE_WEB_API_KEY_DEV }}
