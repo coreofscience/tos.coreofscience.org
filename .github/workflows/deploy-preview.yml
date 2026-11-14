@@ -17,12 +17,15 @@ jobs:
         run: |
           vp check
           vp test
+
+      - name: Type check
+        run: vp exec tsc -b
         env:
           CI: true
 
       - name: Build
         run: |
-          vp run build
+          vp build
         env:
           CI: true
           VITE_APIKEY: ${{ secrets.FIREBASE_WEB_API_KEY_DEV }}

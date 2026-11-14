@@ -39,7 +39,6 @@
     "start": "vp dev",
     "start:emulators": "mkdir -p ~/.cache/tos/ && firebase emulators:start --import ~/.cache/tos/emulators --export-on-exit",
     "start:ui": "VITE_USE_EMULATORS=true vp dev",
-    "build": "tsc -b && vp build",
     "serve": "vp preview",
     "deploy": "firebase deploy",
     "eslint": "vp lint .",

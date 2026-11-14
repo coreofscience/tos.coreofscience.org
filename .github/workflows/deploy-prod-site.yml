@@ -26,7 +26,7 @@ jobs:
 
       - name: Build
         run: |
-          vp run build
+          vp build
         env:
           CI: true
           VITE_APIKEY: ${{ secrets.FIREBASE_WEB_API_KEY_PROD }}
