@@ -38,3 +38,4 @@ dist
 # Firebase log files
 *.log
 tsconfig.tsbuildinfo
+.vitest/
