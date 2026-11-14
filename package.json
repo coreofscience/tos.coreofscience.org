@@ -31,7 +31,7 @@
     "react-router-dom": "^6.30.6",
     "react-use": "^17.6.1",
     "tailwind-merge": "^3.7.0",
-    "zod": "^3.25.76"
+    "zod": "^4.6.7"
   },
   "scripts": {
     "shipit": "git tag v$(date +%y.%m.%d.%H.%M) && git push --tags",
