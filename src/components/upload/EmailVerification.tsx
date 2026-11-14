@@ -9,7 +9,7 @@ const EmailVerification = () => {
 
   const handle = () => {
     const currentUser = firebase.auth.currentUser;
-    if (currentUser) sendEmailVerification(currentUser);
+    if (currentUser) void sendEmailVerification(currentUser);
   };
 
   return !hidden ? (

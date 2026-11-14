@@ -6,6 +6,8 @@ import YoutubeIcon from "../vectors/YoutubeIcon";
 import NavBar from "./NavBar";
 import { Link, useLocation } from "react-router-dom";
 
+const currentYear = new Date().getFullYear();
+
 const Footer = () => {
   const location = useLocation();
 
@@ -165,7 +167,7 @@ const Footer = () => {
           >
             Core of Science
           </a>{" "}
-          project. &copy; {new Date().getFullYear()} Core of Science.
+          project. &copy; {currentYear} Core of Science.
         </span>
       </div>
       <div className="flex sm:justify-center">

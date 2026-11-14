@@ -30,7 +30,7 @@ const FileDropper: FC<FileDropperProps> = ({ maxSize }) => {
           error(Object(file).name, file, FileErrorMap.max_size(maxSize));
         });
 
-      Promise.all(
+      void Promise.all(
         acceptedFiles
           .filter((file) => file.size / 2 ** 20 <= maxSize)
           .map((file) => file.text().then((text) => ({ text, file }))),

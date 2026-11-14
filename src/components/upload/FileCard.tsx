@@ -22,11 +22,11 @@ const FileCard: FC<FileCardProps> = ({
   keywords = [],
   articles = 0,
   citations = 0,
-  progress = 0,
+  progress,
   remove = () => {},
   move = () => {},
   capped = true,
-  cumSize = 0,
+  cumSize,
   maxSize,
 }) => {
   const countFormat = new Intl.NumberFormat(undefined);

@@ -1,6 +1,6 @@
 import FileContext from "../../context/FileContext";
 import useFiles from "../../hooks/useFiles";
-import React, { FC, Suspense, useContext, useEffect, useState } from "react";
+import React, { FC, Suspense, useContext, useMemo } from "react";
 
 const FileCard = React.lazy(() => import("./FileCard"));
 
@@ -13,24 +13,14 @@ const UploadIndicator: FC<UploadIndicatorProps> = ({ maxSize }) => {
   const { progress } = useContext(FileContext);
   const files = useFiles();
 
-  const [cappedFiles, setCappedFiles] = useState<{ [hash: string]: boolean }>(
-    {},
+  const sizing = useMemo(
+    () =>
+      files.reduce<{ cumSize: number; capped: boolean }[]>((acc, file) => {
+        const cumSize = (acc.at(-1)?.cumSize ?? 0) + file.blob.size / 2 ** 20;
+        return [...acc, { cumSize, capped: cumSize > maxSize }];
+      }, []),
+    [files, maxSize],
   );
-
-  let cumSize = 0;
-
-  useEffect(() => {
-    let size = 0;
-    for (const file of files) {
-      size += file.blob.size / 2 ** 20;
-
-      if (size <= maxSize) {
-        setCappedFiles((prev) => ({ ...prev, [file.hash]: false }));
-      } else {
-        setCappedFiles((prev) => ({ ...prev, [file.hash]: true }));
-      }
-    }
-  }, [files, maxSize]);
 
   if (files.length === 0) {
     return null;
@@ -39,19 +29,18 @@ const UploadIndicator: FC<UploadIndicatorProps> = ({ maxSize }) => {
   return (
     <div className="grid-cols-articles grid gap-2">
       <Suspense fallback="loading...">
-        {files.map((file) => {
-          cumSize += file.blob.size / 2 ** 20;
+        {files.map((file, index) => {
           return (
             <FileCard
               name={file.name}
-              progress={progress[file.hash]}
+              progress={progress[file.hash] ?? 0}
               articles={file.articles}
               citations={file.citations}
               keywords={file.keywords}
               remove={() => remove(file.hash)}
               move={() => swap(file.hash)}
-              capped={cappedFiles[file.hash]}
-              cumSize={cumSize}
+              capped={sizing[index].capped}
+              cumSize={sizing[index].cumSize}
               key={file.hash}
               maxSize={maxSize}
             />
